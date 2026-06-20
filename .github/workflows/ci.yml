@@ -54,6 +54,9 @@ jobs:
       - name: Python compile check
         run: find pi -name '*.py' -exec python -m py_compile {} +
 
+      - name: ROS 2 Python compile check
+        run: find ros2 -name '*.py' -exec python -m py_compile {} +
+
       - name: Ruff lint
         run: cd pi && ruff check .
 

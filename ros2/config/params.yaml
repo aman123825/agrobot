@@ -1,0 +1,27 @@
+# Default parameters for AgroBot ROS 2 nodes.
+# Override via launch arguments or individual node remapping.
+
+sensor_publisher:
+  ros__parameters:
+    mqtt_host: "localhost"
+    mqtt_port: 1883
+    rover_id: "rover01"
+    publish_rate_hz: 10.0
+
+drive_subscriber:
+  ros__parameters:
+    serial_port: "/dev/ttyUSB0"
+    serial_baud: 115200
+    wheel_separation: 0.30
+    max_speed: 0.5
+
+ai_node:
+  ros__parameters:
+    model_dir: "models"
+    use_coral: true
+    confidence_threshold: 0.5
+
+mission_node:
+  ros__parameters:
+    missions_file: "missions.json"
+    status_rate_hz: 1.0
