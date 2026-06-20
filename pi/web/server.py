@@ -646,9 +646,14 @@ def main() -> None:
     if SerialBridge is not None:
         try:
             _serial = SerialBridge()
-            logger.info("SerialBridge initialized")
+            _serial.open()  # required before send(); without it commands are dropped
+            logger.info("SerialBridge initialized and opened")
         except Exception as exc:  # noqa: BLE001
             logger.warning("SerialBridge not available: %s", exc)
+            _serial = None
+    # NOTE: the serial port has a single owner. Run EITHER the orchestrator
+    # (pi/main.py) OR this web server as the serial owner - not both against the
+    # same /dev/ttyUSB0, or commands will interleave and corrupt.
 
     # Start telemetry broadcast thread
     telemetry_thread = threading.Thread(target=_telemetry_loop, daemon=True)

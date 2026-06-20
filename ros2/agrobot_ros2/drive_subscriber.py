@@ -142,19 +142,13 @@ if HAS_ROS2:
             v_left = linear_x - angular_z * self._wheel_sep / 2.0
             v_right = linear_x + angular_z * self._wheel_sep / 2.0
 
-            # Map speed to PWM (0-255)
-            pwm_left = int(
-                max(0, min(255, abs(v_left) / self._max_speed * 255))
-            )
-            pwm_right = int(
-                max(0, min(255, abs(v_right) / self._max_speed * 255))
-            )
+            # Map wheel speed to SIGNED PWM (-255..255); sign sets direction.
+            def _to_pwm(v: float) -> int:
+                pwm = int(v / self._max_speed * 255.0) if self._max_speed else 0
+                return max(-255, min(255, pwm))
 
-            # Determine direction
-            dir_left = "F" if v_left >= 0 else "B"
-            dir_right = "F" if v_right >= 0 else "B"
-
-            command = f"DRIVE:{dir_left}{pwm_left},{dir_right}{pwm_right}"
+            # Firmware command vocabulary: "SETPWM <left> <right>" (see comms.cpp).
+            command = f"SETPWM {_to_pwm(v_left)} {_to_pwm(v_right)}"
             self._send_command(command)
 
         def _send_command(self, command: str) -> None:

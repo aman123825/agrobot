@@ -12,7 +12,6 @@ import math
 import os
 import sys
 import threading
-import time
 from typing import TYPE_CHECKING
 
 if TYPE_CHECKING:
@@ -99,7 +98,7 @@ if HAS_ROS2:
             # Latest data cache (written by MQTT thread, read by timer)
             self._lock = threading.Lock()
             self._gps_data: dict | None = None
-            self._temp_data: dict | None = None
+            self._status_data: dict | None = None
             self._vel_data: dict | None = None
             self._odom_data: dict | None = None
             self._npk_data: dict | None = None
@@ -137,8 +136,8 @@ if HAS_ROS2:
             with self._lock:
                 if topic.endswith("/gps"):
                     self._gps_data = payload
-                elif topic.endswith("/temperature"):
-                    self._temp_data = payload
+                elif topic.endswith("/status"):
+                    self._status_data = payload   # contains air_t, batt_v, etc.
                 elif topic.endswith("/velocity"):
                     self._vel_data = payload
                 elif topic.endswith("/odom"):
@@ -152,7 +151,7 @@ if HAS_ROS2:
 
             with self._lock:
                 gps = self._gps_data
-                temp = self._temp_data
+                status = self._status_data
                 vel = self._vel_data
                 odom = self._odom_data
                 npk = self._npk_data
@@ -162,15 +161,15 @@ if HAS_ROS2:
                 msg.header.stamp = now
                 msg.header.frame_id = "gps_link"
                 msg.latitude = float(gps.get("lat", 0.0))
-                msg.longitude = float(gps.get("lon", 0.0))
+                msg.longitude = float(gps.get("lng", 0.0))
                 msg.altitude = float(gps.get("alt", 0.0))
                 self._pub_gps.publish(msg)
 
-            if temp is not None:
+            if status is not None:
                 msg = Temperature()
                 msg.header.stamp = now
                 msg.header.frame_id = "base_link"
-                msg.temperature = float(temp.get("celsius", 0.0))
+                msg.temperature = float(status.get("air_t", 0.0))
                 msg.variance = 0.0
                 self._pub_temp.publish(msg)
 

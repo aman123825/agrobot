@@ -58,7 +58,9 @@ jobs:
         run: find ros2 -name '*.py' -exec python -m py_compile {} +
 
       - name: Ruff lint
-        run: cd pi && ruff check .
+        run: |
+          cd pi && ruff check .
+          cd .. && ruff check ros2
 
       - name: Validate training notebooks
         run: |

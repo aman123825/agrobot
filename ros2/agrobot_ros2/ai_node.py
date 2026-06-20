@@ -82,9 +82,10 @@ if HAS_ROS2:
             self._load_models()
 
         def _load_models(self) -> None:
-            """Attempt to load detection models (pi/ai/ pattern)."""
+            """Load detection models using the pi/ai/ detector classes."""
+            self._obstacle = None
+            self._weed = None
             try:
-                # Add pi directory to path for imports if available
                 pi_path = os.path.join(
                     os.path.dirname(os.path.dirname(os.path.dirname(__file__))),
                     "pi",
@@ -92,11 +93,15 @@ if HAS_ROS2:
                 if os.path.isdir(pi_path) and pi_path not in sys.path:
                     sys.path.insert(0, pi_path)
 
-                # Attempt to import detection modules
-                from ai import obstacle_detection, weed_detection  # noqa: F401
+                from ai.obstacle_detection import ObstacleDetector
+                from ai.weed_detection import WeedDetector
 
+                self._obstacle = ObstacleDetector(use_coral=self._use_coral)
+                self._weed = WeedDetector(conf_threshold=self._threshold)
+                self._obstacle.load()
+                self._weed.load()
                 self._models_loaded = True
-                self.get_logger().info("AI models loaded successfully")
+                self.get_logger().info("AI detector classes initialized")
             except ImportError as exc:
                 self._models_loaded = False
                 self.get_logger().warning(
@@ -108,29 +113,21 @@ if HAS_ROS2:
             obstacle_detected = False
             weed_detected = False
 
-            if self._models_loaded:
+            if self._models_loaded and self._obstacle is not None:
                 try:
-                    from ai import obstacle_detection, weed_detection
+                    import numpy as np
 
-                    # Convert ROS Image to numpy-like data
-                    # (In production, use cv_bridge; here we pass raw bytes)
-                    image_data = bytes(msg.data)
-                    width = msg.width
-                    height = msg.height
-
-                    # Run obstacle detection
-                    obstacle_result = obstacle_detection.detect(
-                        image_data, width, height
-                    )
-                    obstacle_detected = bool(obstacle_result)
-
-                    # Run weed detection
-                    weed_result = weed_detection.detect(image_data, width, height)
-                    weed_detected = bool(weed_result)
-
-                    if obstacle_detected or weed_detected:
-                        self._detection_count += 1
-
+                    # Reconstruct an HxWxC frame from the ROS Image buffer.
+                    flat = np.frombuffer(bytes(msg.data), dtype=np.uint8)
+                    px = msg.width * msg.height
+                    channels = (flat.size // px) if px else 0
+                    if px and channels:
+                        frame = flat.reshape((msg.height, msg.width, channels))
+                        dets = self._obstacle.detect(frame)
+                        obstacle_detected = self._obstacle.should_stop(dets)
+                        weed_detected = self._weed.detect(frame)
+                        if obstacle_detected or weed_detected:
+                            self._detection_count += 1
                 except Exception as exc:
                     self.get_logger().debug(f"Detection error: {exc}")
 

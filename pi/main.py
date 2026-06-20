@@ -16,9 +16,11 @@ Run:  python pi/main.py
 from __future__ import annotations
 
 import argparse
+import json
 import logging
 import os
 import sys
+import threading
 import time
 
 sys.path.append(os.path.dirname(__file__))
@@ -87,6 +89,31 @@ class Orchestrator:
         except Exception as exc:
             logger.warning("serial link unavailable (%s); commands will be dropped", exc)
             self.serial = None  # type: ignore
+
+        # Optional GPS feed so plant tagging uses REAL coordinates (datum =
+        # latest fix). Without it, tags fall back to the (0,0) origin.
+        self._mqtt = None
+        try:
+            import config as _cfg
+            from bridge.mqtt_client import MqttClient
+
+            self._mqtt = MqttClient()
+            self._mqtt.connect()
+            self._mqtt.subscribe(_cfg.TOPICS["gps"], self._on_gps)
+            threading.Thread(target=self._mqtt.loop_forever, daemon=True).start()
+            logger.info("GPS feed subscribed for plant geo-tagging")
+        except Exception as exc:
+            logger.warning("GPS feed unavailable (%s); plant tags use origin", exc)
+
+    def _on_gps(self, payload: str) -> None:
+        """Update the geo-tagging datum from a GPS telemetry message."""
+        try:
+            data = json.loads(payload)
+        except (ValueError, TypeError):
+            return
+        if data.get("fix"):
+            self._gps_datum = (float(data.get("lat", 0.0)),
+                               float(data.get("lng", 0.0)))
 
     def _send(self, cmd: str) -> None:
         if self.serial is not None:
