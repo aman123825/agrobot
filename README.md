@@ -53,6 +53,12 @@ pip install -r requirements.txt
 streamlit run dashboard/app.py
 ```
 
+## Documentation
+
+- **[`BUILD.md`](BUILD.md)** — complete start-to-finish build guide (parts → assembly → wiring → flashing → calibration → field operation → maintenance).
+- **[`docs/circuit-diagram.md`](docs/circuit-diagram.md)** — full electrical design: power distribution, both pin maps, every bus, the dosing sequence, the hardware-safety review, and a coverage matrix for all 110 BOM components + 15 gap items.
+- **[`SECURITY.md`](SECURITY.md)** — threat model and hardening (authenticated command link, MQTT TLS, secrets, ESP32 secure boot).
+
 ## Hardware
 
 The complete electrical design — power distribution, both pin maps, every bus,
