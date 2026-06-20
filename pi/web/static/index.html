@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Agrobot Remote Control</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="top-bar">
+        <h1 class="logo">Agrobot</h1>
+        <div class="connection-status" id="conn-status">
+            <span class="status-led" id="status-led"></span>
+            <span id="status-text">Disconnected</span>
+        </div>
+    </header>
+
+    <main class="grid-layout">
+        <!-- Camera Feed -->
+        <section class="card camera-section" id="camera-card">
+            <h2>Camera Feed</h2>
+            <div class="camera-container">
+                <img id="camera-feed" src="" alt="Camera feed unavailable">
+                <div class="camera-placeholder" id="camera-placeholder">
+                    <span>No camera feed available</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Virtual Joystick -->
+        <section class="card joystick-section" id="joystick-card">
+            <h2>Drive Control</h2>
+            <div class="joystick-container">
+                <div class="joystick-area" id="joystick-area">
+                    <div class="joystick-ring"></div>
+                    <div class="joystick-knob" id="joystick-knob"></div>
+                    <div class="direction-label dir-up">FWD</div>
+                    <div class="direction-label dir-down">BACK</div>
+                    <div class="direction-label dir-left">LEFT</div>
+                    <div class="direction-label dir-right">RIGHT</div>
+                </div>
+                <div class="drive-buttons">
+                    <button class="btn btn-stop" id="btn-stop">STOP</button>
+                </div>
+                <div class="pwm-control">
+                    <label for="pwm-slider">Speed: <span id="pwm-value">180</span></label>
+                    <input type="range" id="pwm-slider" min="80" max="255" value="180">
+                </div>
+            </div>
+        </section>
+
+        <!-- Telemetry Panel -->
+        <section class="card telemetry-section" id="telemetry-card">
+            <h2>Telemetry</h2>
+            <div class="telemetry-grid">
+                <div class="telem-item">
+                    <span class="telem-label">Battery</span>
+                    <span class="telem-value" id="telem-battery">--%</span>
+                </div>
+                <div class="telem-item">
+                    <span class="telem-label">GPS Lat</span>
+                    <span class="telem-value" id="telem-lat">--</span>
+                </div>
+                <div class="telem-item">
+                    <span class="telem-label">GPS Lng</span>
+                    <span class="telem-value" id="telem-lng">--</span>
+                </div>
+                <div class="telem-item">
+                    <span class="telem-label">Speed</span>
+                    <span class="telem-value" id="telem-speed">-- m/s</span>
+                </div>
+                <div class="telem-item">
+                    <span class="telem-label">Mode</span>
+                    <span class="telem-value" id="telem-mode">--</span>
+                </div>
+                <div class="telem-item">
+                    <span class="telem-label">N / P / K</span>
+                    <span class="telem-value" id="telem-npk">-- / -- / --</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Mission Control -->
+        <section class="card mission-section" id="mission-card">
+            <h2>Mission Control</h2>
+            <form id="mission-form" class="mission-form">
+                <select id="mission-type" required>
+                    <option value="">Select type...</option>
+                    <option value="scan">Scan</option>
+                    <option value="dose">Dose</option>
+                    <option value="return_to_base">Return to Base</option>
+                    <option value="custom">Custom</option>
+                </select>
+                <input type="text" id="mission-zone" placeholder='Zone JSON e.g. {"waypoints":[]}' required>
+                <input type="text" id="mission-params" placeholder="Params JSON (optional)">
+                <button type="submit" class="btn btn-primary">Add Mission</button>
+            </form>
+            <div class="mission-list" id="mission-list">
+                <p class="empty-message">No missions</p>
+            </div>
+        </section>
+
+        <!-- Plant Database -->
+        <section class="card plant-section" id="plant-card">
+            <h2>Plant Database</h2>
+            <div class="plant-controls">
+                <input type="text" id="plant-filter" placeholder="Filter plants...">
+                <button class="btn btn-secondary" id="btn-refresh-plants">Refresh</button>
+            </div>
+            <div class="plant-list" id="plant-list">
+                <p class="empty-message">No plants tracked</p>
+            </div>
+        </section>
+    </main>
+
+    <script src="app.js"></script>
+</body>
+</html>

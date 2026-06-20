@@ -1,0 +1,479 @@
+/* Agrobot Remote Control - Dark Theme */
+
+:root {
+    --bg-primary: #1a1a2e;
+    --bg-secondary: #16213e;
+    --bg-card: #0f3460;
+    --accent-green: #16c784;
+    --accent-orange: #f5a623;
+    --accent-red: #e74c3c;
+    --text-primary: #e8e8e8;
+    --text-secondary: #a0a0b0;
+    --border-color: #2a2a4a;
+    --radius: 8px;
+    --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: var(--bg-primary);
+    color: var(--text-primary);
+    min-height: 100vh;
+    overflow-x: hidden;
+}
+
+/* Header */
+.top-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 16px;
+    background: var(--bg-secondary);
+    border-bottom: 1px solid var(--border-color);
+    position: sticky;
+    top: 0;
+    z-index: 100;
+}
+
+.logo {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--accent-green);
+}
+
+.connection-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    color: var(--text-secondary);
+}
+
+.status-led {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: var(--accent-red);
+    transition: background 0.3s ease;
+}
+
+.status-led.connected {
+    background: var(--accent-green);
+    box-shadow: 0 0 6px var(--accent-green);
+}
+
+.status-led.warning {
+    background: var(--accent-orange);
+    box-shadow: 0 0 6px var(--accent-orange);
+}
+
+/* Main Grid Layout */
+.grid-layout {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 12px;
+    padding: 12px;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Cards */
+.card {
+    background: var(--bg-card);
+    border-radius: var(--radius);
+    padding: 16px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--border-color);
+}
+
+.card h2 {
+    font-size: 0.95rem;
+    font-weight: 600;
+    color: var(--accent-green);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* Camera Section */
+.camera-container {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.camera-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    display: none;
+}
+
+.camera-container img.active {
+    display: block;
+}
+
+.camera-placeholder {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--text-secondary);
+    font-size: 0.9rem;
+}
+
+/* Joystick */
+.joystick-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 16px;
+}
+
+.joystick-area {
+    position: relative;
+    width: 200px;
+    height: 200px;
+    border-radius: 50%;
+    background: var(--bg-secondary);
+    border: 2px solid var(--border-color);
+    touch-action: none;
+    user-select: none;
+}
+
+.joystick-ring {
+    position: absolute;
+    inset: 20px;
+    border-radius: 50%;
+    border: 1px dashed var(--border-color);
+}
+
+.joystick-knob {
+    position: absolute;
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--accent-green);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transition: transform 0.05s ease-out;
+    box-shadow: 0 2px 8px rgba(22, 199, 132, 0.4);
+}
+
+.direction-label {
+    position: absolute;
+    font-size: 0.65rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.dir-up { top: 4px; left: 50%; transform: translateX(-50%); }
+.dir-down { bottom: 4px; left: 50%; transform: translateX(-50%); }
+.dir-left { left: 8px; top: 50%; transform: translateY(-50%); }
+.dir-right { right: 8px; top: 50%; transform: translateY(-50%); }
+
+.drive-buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.pwm-control {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+    max-width: 250px;
+}
+
+.pwm-control label {
+    font-size: 0.8rem;
+    color: var(--text-secondary);
+}
+
+.pwm-control input[type="range"] {
+    width: 100%;
+    accent-color: var(--accent-green);
+}
+
+/* Buttons */
+.btn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: var(--radius);
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s, transform 0.1s;
+    min-width: 44px;
+    min-height: 44px;
+}
+
+.btn:active {
+    transform: scale(0.95);
+}
+
+.btn-primary {
+    background: var(--accent-green);
+    color: #000;
+}
+
+.btn-secondary {
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    border: 1px solid var(--border-color);
+}
+
+.btn-stop {
+    background: var(--accent-red);
+    color: #fff;
+    font-size: 1rem;
+    padding: 12px 32px;
+}
+
+.btn-cancel {
+    background: var(--accent-orange);
+    color: #000;
+    padding: 6px 12px;
+    font-size: 0.75rem;
+    min-height: 32px;
+}
+
+/* Telemetry */
+.telemetry-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+}
+
+.telem-item {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+}
+
+.telem-label {
+    font-size: 0.7rem;
+    color: var(--text-secondary);
+    text-transform: uppercase;
+}
+
+.telem-value {
+    font-size: 1rem;
+    font-weight: 600;
+    font-variant-numeric: tabular-nums;
+}
+
+/* Mission Control */
+.mission-form {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.mission-form select,
+.mission-form input {
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    min-height: 44px;
+}
+
+.mission-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.mission-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+    gap: 8px;
+}
+
+.mission-item .mission-info {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    flex: 1;
+    min-width: 0;
+}
+
+.mission-item .mission-id {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.mission-item .mission-type {
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+.status-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 10px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+.status-badge.queued { background: var(--accent-orange); color: #000; }
+.status-badge.active { background: var(--accent-green); color: #000; }
+.status-badge.completed { background: #555; color: #ccc; }
+.status-badge.cancelled { background: #444; color: #999; }
+.status-badge.failed { background: var(--accent-red); color: #fff; }
+
+/* Plant Database */
+.plant-controls {
+    display: flex;
+    gap: 8px;
+    margin-bottom: 12px;
+}
+
+.plant-controls input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    background: var(--bg-secondary);
+    color: var(--text-primary);
+    font-size: 0.85rem;
+    min-height: 44px;
+}
+
+.plant-list {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.plant-item {
+    padding: 10px;
+    background: var(--bg-secondary);
+    border-radius: 4px;
+}
+
+.plant-item .plant-id {
+    font-weight: 600;
+    font-size: 0.85rem;
+    color: var(--accent-green);
+}
+
+.plant-item .plant-coords {
+    font-size: 0.75rem;
+    color: var(--text-secondary);
+    margin-top: 2px;
+}
+
+.plant-item .plant-health {
+    font-size: 0.8rem;
+    margin-top: 4px;
+}
+
+.empty-message {
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    text-align: center;
+    padding: 20px;
+}
+
+/* Responsive: Tablet */
+@media (min-width: 768px) {
+    .grid-layout {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 16px;
+        padding: 16px;
+    }
+
+    .camera-section {
+        grid-column: span 2;
+    }
+
+    .joystick-area {
+        width: 220px;
+        height: 220px;
+    }
+
+    .telemetry-grid {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+/* Responsive: Desktop */
+@media (min-width: 1024px) {
+    .grid-layout {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
+        padding: 20px;
+    }
+
+    .camera-section {
+        grid-column: span 2;
+    }
+
+    .joystick-section {
+        grid-column: span 1;
+    }
+
+    .telemetry-section {
+        grid-column: span 1;
+    }
+
+    .mission-section {
+        grid-column: span 1;
+    }
+
+    .plant-section {
+        grid-column: span 1;
+    }
+
+    .joystick-area {
+        width: 240px;
+        height: 240px;
+    }
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+    width: 6px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--bg-primary);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
