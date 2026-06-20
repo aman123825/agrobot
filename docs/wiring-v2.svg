@@ -1,0 +1,188 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1060" viewBox="0 0 1500 1060" font-family="Helvetica, Arial, sans-serif">
+  <defs>
+    <marker id="arrow" markerWidth="9" markerHeight="9" refX="7" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L7,3 L0,6 Z" fill="#444"/>
+    </marker>
+    <style>
+      .box{stroke:#333;stroke-width:1.5;rx:6;}
+      .pwr{fill:#ffe0b2;} .esp{fill:#bbdefb;} .pi{fill:#c8e6c9;}
+      .sen{fill:#f0f4c3;} .act{fill:#f8bbd0;} .new{fill:#d1c4e9;}
+      .t{font-size:12px;fill:#111;} .tb{font-size:13px;font-weight:bold;fill:#000;}
+      .ti{font-size:11px;fill:#333;} .wire{stroke:#555;stroke-width:1.4;fill:none;}
+      .hi{stroke:#1565c0;stroke-width:2;fill:none;} .pw{stroke:#e65100;stroke-width:3;fill:none;}
+      .safe{font-size:11px;fill:#c62828;font-weight:bold;}
+      .lab{font-size:10px;fill:#444;}
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1500" height="1060" fill="#ffffff"/>
+  <text x="40" y="34" class="tb" font-size="20">AgriRover — Consolidated v2 Wiring Schematic</text>
+  <text x="40" y="54" class="ti">Connection-accurate block diagram (generated from docs/wiring-summary-v2.md). Red = safety-critical wiring.</text>
+
+  <!-- ================= POWER COLUMN ================= -->
+  <text x="40" y="86" class="tb">POWER</text>
+  <rect class="box pwr" x="40" y="94" width="170" height="34"/>  <text x="125" y="116" class="t" text-anchor="middle">3S LiPo 11.1V</text>
+  <rect class="box pwr" x="40" y="150" width="170" height="30"/> <text x="125" y="170" class="t" text-anchor="middle">Blade Fuse 25-30A</text>
+  <rect class="box pwr" x="40" y="194" width="170" height="30"/> <text x="125" y="214" class="t" text-anchor="middle">Anti-Spark XT60</text>
+  <rect class="box pwr" x="40" y="238" width="170" height="30"/> <text x="125" y="258" class="t" text-anchor="middle">Rocker Switch</text>
+  <rect class="box pwr" x="40" y="288" width="320" height="30"/> <text x="200" y="308" class="tb" text-anchor="middle">11.1V BUS</text>
+  <rect class="box pwr" x="40" y="346" width="170" height="34"/> <text x="125" y="368" class="t" text-anchor="middle">LM2596 → 5.00V</text>
+  <rect class="box pwr" x="40" y="398" width="170" height="28"/> <text x="125" y="417" class="t" text-anchor="middle">5V RAIL</text>
+  <rect class="box pwr" x="40" y="442" width="170" height="26"/> <text x="125" y="459" class="t" text-anchor="middle">Ferrite bead</text>
+  <rect class="box pwr" x="40" y="500" width="170" height="34"/> <text x="125" y="522" class="t" text-anchor="middle">Power Bank 5V/3A</text>
+  <rect class="box pwr" x="40" y="556" width="80" height="28"/>  <text x="80" y="575" class="ti" text-anchor="middle">5W Solar</text>
+  <rect class="box pwr" x="130" y="556" width="80" height="28"/> <text x="170" y="575" class="ti" text-anchor="middle">TP4056</text>
+
+  <!-- power chain wires -->
+  <path class="pw" d="M125,128 L125,150"/>
+  <path class="pw" d="M125,180 L125,194"/>
+  <path class="pw" d="M125,224 L125,238"/>
+  <path class="pw" d="M125,268 L125,288"/>
+  <path class="pw" d="M125,318 L125,346"/>
+  <path class="pw" d="M125,380 L125,398"/>
+  <path class="wire" d="M125,426 L125,442" marker-end="url(#arrow)"/>
+  <path class="wire" d="M170,556 L170,540" marker-end="url(#arrow)"/> <text x="215" y="552" class="lab">→ LiPo trickle</text>
+  <path class="wire" d="M120,570 L130,570"/>
+
+  <text x="40" y="612" class="safe">Fuse + anti-spark in LiPo(+) line first.</text>
+  <text x="40" y="628" class="safe">Set buck to 5.00V before connecting logic.</text>
+  <text x="40" y="644" class="lab">Common ground star point at LiPo(−).</text>
+
+  <!-- ================= ESP32 ================= -->
+  <rect class="box esp" x="420" y="94" width="250" height="470"/>
+  <text x="545" y="116" class="tb" text-anchor="middle">ESP32 DevKit V1</text>
+  <text x="430" y="140" class="t">19,21 → L298N#1 IN1/IN2</text>
+  <text x="430" y="160" class="t">22,23 → L298N#2 IN3/IN4</text>
+  <text x="430" y="180" class="t">32,33 → ENA/ENB (PWM)</text>
+  <text x="430" y="200" class="t">25 → US TRIG · 18 → US ECHO*</text>
+  <text x="430" y="220" class="t">27 → SG90 sweep servo</text>
+  <text x="430" y="240" class="t">17/16/4 → MAX485 (NPK)</text>
+  <text x="430" y="260" class="t">14 → DHT22</text>
+  <text x="430" y="280" class="t">34 → Moisture</text>
+  <text x="430" y="300" class="t">36 → TDS</text>
+  <text x="430" y="320" class="t">35 → Batt divider 39k/10k</text>
+  <text x="430" y="340" class="t">39 → GPS RX  ·  15 → GPS RX(DGPS)</text>
+  <text x="430" y="360" class="t">26 → Relay pump</text>
+  <text x="430" y="380" class="t">13 → Relay actuator</text>
+  <text x="430" y="400" class="t">EN → E-STOP (NC→GND)</text>
+  <text x="430" y="420" class="t">VIN ← 5V (via ferrite)</text>
+  <text x="430" y="440" class="t">TX0/RX0 → CP2102 → Pi</text>
+  <text x="430" y="476" class="safe">* ECHO via 2.2k/3.9k divider → 3.2V</text>
+  <text x="430" y="496" class="safe">Moisture(34)+TDS(36): power 3.3V!</text>
+  <text x="430" y="516" class="safe">10k pull-ups on relays 26 &amp; 13</text>
+  <text x="430" y="540" class="lab">ADC1 (34/35/36) WiFi-safe · no flash pins</text>
+
+  <!-- 5V rail -> ESP32 VIN via ferrite -->
+  <path class="hi" d="M210,455 L300,455 L300,420 L420,420" marker-end="url(#arrow)"/>
+  <text x="232" y="448" class="lab">5V (ferrite) → VIN</text>
+
+  <!-- ESP32-CAM -->
+  <rect class="box esp" x="420" y="588" width="250" height="50"/>
+  <text x="545" y="608" class="tb" text-anchor="middle">ESP32-CAM (isolated)</text>
+  <text x="545" y="626" class="ti" text-anchor="middle">5V + GND + 16GB microSD only</text>
+  <path class="hi" d="M210,412 L260,412 L260,613 L420,613" marker-end="url(#arrow)"/>
+
+  <!-- ================= DRIVE / ACTUATION (right of ESP32) ================= -->
+  <rect class="box act" x="720" y="120" width="150" height="30"/> <text x="795" y="140" class="t" text-anchor="middle">L298N #1 LEFT</text>
+  <rect class="box act" x="720" y="158" width="150" height="30"/> <text x="795" y="178" class="t" text-anchor="middle">L298N #2 RIGHT</text>
+  <rect class="box act" x="900" y="120" width="160" height="68"/> <text x="980" y="150" class="t" text-anchor="middle">4× Gear Motors</text>
+  <text x="980" y="170" class="ti" text-anchor="middle">+1N5819 flyback ea.</text>
+  <path class="wire" d="M670,150 L720,135" marker-end="url(#arrow)"/>
+  <path class="wire" d="M670,168 L720,173" marker-end="url(#arrow)"/>
+  <path class="wire" d="M870,135 L900,145" marker-end="url(#arrow)"/>
+  <path class="wire" d="M870,173 L900,165" marker-end="url(#arrow)"/>
+  <path class="pw" d="M360,303 L690,303 L690,143 L720,143"/>
+  <path class="pw" d="M690,143 L690,181 L720,181"/>
+  <text x="540" y="298" class="lab">11.1V BUS → L298N ×2, relay COM</text>
+
+  <rect class="box act" x="720" y="206" width="150" height="44"/> <text x="795" y="224" class="t" text-anchor="middle">2-ch Relay</text>
+  <text x="795" y="240" class="safe" text-anchor="middle">+10k pull-ups</text>
+  <rect class="box act" x="900" y="206" width="160" height="44"/> <text x="980" y="226" class="t" text-anchor="middle">Pump / Actuator</text>
+  <text x="980" y="242" class="ti" text-anchor="middle">12V</text>
+  <path class="wire" d="M670,360 L700,360 L700,222 L720,222" marker-end="url(#arrow)"/>
+  <path class="wire" d="M670,380 L695,380 L695,234 L720,234" marker-end="url(#arrow)"/>
+  <path class="wire" d="M870,228 L900,228" marker-end="url(#arrow)"/>
+
+  <!-- ESP32 sensors group -->
+  <rect class="box sen" x="720" y="270" width="340" height="150"/>
+  <text x="890" y="290" class="tb" text-anchor="middle">ESP32 Sensors</text>
+  <text x="730" y="310" class="t">HC-SR04 front (25/18) · rear → PCF8574</text>
+  <text x="730" y="330" class="t">NPK probe ← MAX485 (RS485, 17/16/4)</text>
+  <text x="730" y="350" class="t">DHT22 (14) · Moisture (34) · TDS (36)</text>
+  <text x="730" y="370" class="t">Battery divider (35) · SG90 sweep (27)</text>
+  <text x="730" y="390" class="t">Neo-6M GPS: TX→39 ; 15→GPS RX (DGPS)</text>
+  <text x="730" y="410" class="safe">Power Moisture &amp; TDS from 3.3V</text>
+  <path class="wire" d="M670,300 L720,330" marker-end="url(#arrow)"/>
+
+  <!-- ================= INTER-CONTROLLER LINK ================= -->
+  <path class="hi" d="M670,440 L900,440 L900,300 L1100,300" marker-end="url(#arrow)"/>
+  <rect class="box" x="900" y="430" width="120" height="26" fill="#fff9c4"/>
+  <text x="960" y="448" class="ti" text-anchor="middle">CP2102 (USB)</text>
+  <text x="700" y="434" class="lab">UART0 · HMAC-signed + anti-replay</text>
+
+  <!-- ================= RASPBERRY PI ================= -->
+  <rect class="box pi" x="1100" y="94" width="360" height="330"/>
+  <text x="1280" y="116" class="tb" text-anchor="middle">Raspberry Pi 4</text>
+  <text x="1110" y="140" class="t">USB ← power bank (separate domain)</text>
+  <text x="1110" y="162" class="t">GPIO17 ← Left encoder</text>
+  <text x="1110" y="182" class="t">GPIO27 ← Right encoder  (moved from 18)</text>
+  <text x="1110" y="202" class="t">GPIO24 ← DS18B20 (4.7k)</text>
+  <text x="1110" y="222" class="t">GPIO25 ← Float · GPIO26 ← Rain</text>
+  <text x="1110" y="242" class="t">GPIO18 → WS2812B (DMA; level-shift)</text>
+  <text x="1110" y="262" class="t">GPIO5/6/12/16 ← Buttons · 20/21 ← Mode</text>
+  <text x="1110" y="282" class="t">SPI: CE0(8)→LoRa NSS · CE1(7)→SD CS</text>
+  <text x="1110" y="302" class="t">USB3 → Coral TPU · CSI → Pi Camera</text>
+  <text x="1110" y="322" class="t">I2C (2/3) → device bus (below)</text>
+  <text x="1110" y="344" class="lab">Conflicts resolved: enc 18→27, WS 23→18,</text>
+  <text x="1110" y="360" class="lab">rain→26, LoRa→CE0, SD→CE1.</text>
+  <text x="1110" y="382" class="safe">Pi powered from power bank — never buck rail</text>
+  <text x="1110" y="402" class="safe">4.7k pull-ups on SDA/SCL</text>
+
+  <path class="hi" d="M210,517 L1080,517 L1080,135 L1100,135" marker-end="url(#arrow)"/>
+  <text x="700" y="512" class="lab">Power bank 5V/3A → Pi (independent supply)</text>
+
+  <!-- I2C bus -->
+  <rect class="box sen" x="1100" y="450" width="360" height="70"/>
+  <text x="1280" y="470" class="tb" text-anchor="middle">I2C BUS (GPIO2/3, 4.7k pull-ups)</text>
+  <text x="1110" y="490" class="t">INA219 0x40 · MPU6050 0x68 · VL53L1X 0x29</text>
+  <text x="1110" y="508" class="t">OLED 0x3C · PCF8574 0x20 · ADS1115 0x48</text>
+  <path class="wire" d="M1280,424 L1280,450" marker-end="url(#arrow)"/>
+
+  <!-- ADS1115 + ACS712 (NEW) -->
+  <rect class="box new" x="1100" y="540" width="170" height="60"/>
+  <text x="1185" y="560" class="tb" text-anchor="middle">ADS1115 0x48</text>
+  <text x="1185" y="578" class="ti" text-anchor="middle">NEW — 16-bit ADC</text>
+  <text x="1185" y="594" class="ti" text-anchor="middle">A0=left  A1=right rail</text>
+  <rect class="box new" x="1290" y="540" width="170" height="60"/>
+  <text x="1375" y="560" class="tb" text-anchor="middle">2× ACS712-30A</text>
+  <text x="1375" y="578" class="ti" text-anchor="middle">NEW — motor current</text>
+  <text x="1375" y="594" class="ti" text-anchor="middle">stall detection</text>
+  <path class="wire" d="M1290,570 L1270,570" marker-end="url(#arrow)"/>
+  <path class="wire" d="M1185,540 L1185,520" marker-end="url(#arrow)"/>
+  <text x="1120" y="534" class="lab">on I2C bus</text>
+
+  <!-- PCF8574 expander outputs -->
+  <rect class="box act" x="1100" y="620" width="360" height="70"/>
+  <text x="1280" y="640" class="tb" text-anchor="middle">PCF8574 outputs</text>
+  <text x="1110" y="660" class="t">P0 grass-cutter · P1 misting · P2 seed servo</text>
+  <text x="1110" y="678" class="t">P3/P4 rear HC-SR04</text>
+
+  <!-- Comms / SPI -->
+  <rect class="box sen" x="1100" y="710" width="360" height="56"/>
+  <text x="1280" y="730" class="tb" text-anchor="middle">SPI0 + LoRa</text>
+  <text x="1110" y="750" class="t">LoRa SX1276 (CE0/8) + 868MHz ant · SD (CE1/7)</text>
+
+  <!-- Legend -->
+  <text x="40" y="700" class="tb">Legend</text>
+  <rect class="box pwr" x="40" y="710" width="20" height="14"/> <text x="68" y="722" class="ti">Power</text>
+  <rect class="box esp" x="130" y="710" width="20" height="14"/> <text x="158" y="722" class="ti">ESP32 domain</text>
+  <rect class="box pi" x="280" y="710" width="20" height="14"/> <text x="308" y="722" class="ti">Pi domain</text>
+  <rect class="box sen" x="400" y="710" width="20" height="14"/> <text x="428" y="722" class="ti">Sensors/bus</text>
+  <rect class="box act" x="540" y="710" width="20" height="14"/> <text x="568" y="722" class="ti">Actuation</text>
+  <rect class="box new" x="660" y="710" width="20" height="14"/> <text x="688" y="722" class="ti">v2 NEW part</text>
+  <line x1="40" y1="744" x2="60" y2="744" class="pw"/> <text x="68" y="748" class="ti">11.1V high-current</text>
+  <line x1="220" y1="744" x2="240" y2="744" class="hi"/> <text x="248" y="748" class="ti">5V / data link</text>
+  <text x="40" y="772" class="safe">RED = safety-critical (verify before power-on)</text>
+
+  <text x="40" y="1040" class="lab">Authoritative source: docs/wiring-summary-v2.md (connection table) + docs/circuit-diagram.md. This SVG is a block-level view — wire from the table.</text>
+</svg>
