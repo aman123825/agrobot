@@ -21,6 +21,7 @@ complete we implement the open ones together in a single pass.
 | FC-07 | Pi/ESP32 comms link drops mid-drive | ✅ Implemented (heartbeat dead-man) |
 | FC-08 | Dust, dew, irrigation spray on electronics | ✅ Implemented (sealing + coating) |
 | FC-09 | Wheel/cutter jam (stall) | ✅ Implemented (current/stall stop) |
+| FC-10 | Motor driver under-spec (L298N) for soil load | 🔶 Decision pending (recommend BTS7960) |
 
 ---
 
@@ -113,6 +114,25 @@ lid, grommets on chassis pass-throughs.
 **ADS1115 + ACS712** current sensing detects a stall → STOP + alert before a motor
 burns.
 
+### FC-10 — Motor driver under-spec for soil load 🔶
+**Situation:** The L298N (2 A/channel, 2–4 V drop, BJT) drives 2 soil-loaded
+gear motors per channel — it crowds its current limit, wastes torque/runtime to
+heat, and thermal-shuts-down in a hot field (feeds FC-02).
+
+**Analysis:** Motors draw ~1.5–2.5 A each at stall; paired per channel exceeds
+the L298N. MOSFET drivers (low Rds(on), low drop) are the fix.
+
+**Solution (recommended):** **2× BTS7960 / IBT-2** (one per side, ~43 A peak,
+~₹250 each). Low drop = more torque + runtime; thermal headroom solves the
+field-heat shutdown. **Bonus:** its current-sense (IS) output can feed the
+**ADS1115**, potentially **replacing the 2× ACS712** (FC-09).
+- Alt premium: **2× Cytron MD10C** (~30 A, PWM+DIR, fewest pins, robotics-grade).
+- Avoid **DRV8871** here (3.6 A too low for paired soil-loaded motors).
+
+**To build:** update `drive.cpp` `applySide()` for RPWM/LPWM (BTS7960) or PWM+DIR
+(MD10C); remap `pins.h`; update circuit diagram + shopping list; optionally route
+BTS7960 IS → ADS1115 and drop the ACS712s.
+
 ---
 
 ## Pending build queue (open items to implement together at the end)
@@ -120,6 +140,8 @@ burns.
 2. FC-02 thermal guardian (firmware + Pi) + cool-hours scheduling
 3. FC-02 hardware: pack NTC, sun shade, enclosure; **LiFePO4 vs LiPo decision**
 4. FC-03 DPDT relay wiring **once actuator type is confirmed**
+5. FC-10 motor-driver swap to **BTS7960** (or Cytron MD10C): `drive.cpp` +
+   `pins.h` + circuit + shopping list; optionally fold current-sense into ADS1115
 
 > Add new situations above this line as they come up; we will implement the whole
 > open queue in one consolidated pass.
