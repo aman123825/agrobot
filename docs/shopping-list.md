@@ -89,7 +89,12 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 | Float sensor | 1 | 50–80 | 50–80 |
 | Silicone tubing 6mm (1m) | 1 | 50–100 | 50–100 |
 | PCF8574 expander | 1 | 80–150 | 80–150 |
+| DPDT relay *(Branch B actuator only — see note)* | 1 | 60–120 | (cond) |
 | **Subtotal** | | | **1,560–3,030** |
+
+> **Open item — actuator retraction (decide before ordering):**
+> - **Spring-return actuator (Branch A):** the 2-channel relay above is sufficient — **do not** buy the DPDT relay.
+> - **DC-reversible actuator (Branch B):** add **1× DPDT relay** (polarity reversal for retract) + **1 control GPIO** (free a pin, or it's already covered by the PCF8574 expander above). See `circuit-diagram.md` §5.2.
 
 ## 7. Communication
 | Component | Qty | Unit ₹ | Line ₹ |
@@ -156,6 +161,11 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 | Rubber grommets pack | 1 | 30–60 | 30–60 |
 | Nylon trimmer line 10m | 1 | 80–150 | 80–150 |
 | **Subtotal** | | | **2,070–3,880** |
+
+> **Note on the "15 gap-audit items":** this section lists **13**. The other two
+> — **4.7kΩ I2C pull-up resistors (G11)** and **100nF decoupling caps (G12)** —
+> are not omitted; they're bought as part of **Section 9 (Passives & wiring)**
+> (resistor + capacitor lines). 13 here + 2 in Section 9 = the full 15.
 
 ## 12. v2 UPGRADE parts (needed to use the new firmware/software)
 | Component | Qty | Unit ₹ | Line ₹ |
