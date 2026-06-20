@@ -60,6 +60,7 @@ streamlit run dashboard/app.py
 - **[`docs/wiring-summary-v2.md`](docs/wiring-summary-v2.md)** — one-page consolidated v2 wiring (single Mermaid graph + complete connection table) reflecting all upgrades; use this to redraw the circuit.
 - **[`docs/wiring-v2.svg`](docs/wiring-v2.svg)** — rendered block schematic (open in a browser). **[`docs/wiring-v2.dot`](docs/wiring-v2.dot)** — Graphviz source (`dot -Tpng wiring-v2.dot -o out.png`).
 - **[`SECURITY.md`](SECURITY.md)** — threat model and hardening (authenticated command link, MQTT TLS, secrets, ESP32 secure boot).
+- **[`docs/field-challenges-and-solutions.md`](docs/field-challenges-and-solutions.md)** — running register of real-world field situations (weed height, heat/burnout, etc.) and the chosen solution + status for each.
 
 ## Hardware
 
