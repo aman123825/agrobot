@@ -19,6 +19,7 @@ static Telemetry      snap;
 
 void sensors_init() {
     analogReadResolution(12);                 // 0..4095 on ADC1
+    analogSetAttenuation(ADC_11db);           // full ~0..3.3V range (inputs must stay <=3.3V)
     pinMode(PIN_RS485_DE_RE, OUTPUT);
     digitalWrite(PIN_RS485_DE_RE, LOW);        // default to receive
     dht.begin();

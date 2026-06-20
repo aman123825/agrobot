@@ -9,18 +9,14 @@
 #include <WiFi.h>
 #include <PubSubClient.h>
 #include "config.h"
+#include "events.h"
 #include "sensors.h"
 #include "drive.h"
 #include "comms.h"
 
-// Event bits mirror main.cpp.
-#define EVT_HALT        (1 << 0)
-#define EVT_LOW_BATTERY (1 << 1)
-#define EVT_PAUSE_IRRIG (1 << 3)
-
 static WiFiClient       wifiClient;
 static PubSubClient     mqtt(wifiClient);
-static EventGroupHandle_t gEvents = nullptr;
+static EventGroupHandle_t sEvents = nullptr;
 
 static void ensureConnected() {
     if (WiFi.status() != WL_CONNECTED) {
@@ -33,7 +29,7 @@ static void ensureConnected() {
 }
 
 void comms_init(EventGroupHandle_t events) {
-    gEvents = events;
+    sEvents = events;
     WiFi.mode(WIFI_STA);
     ensureConnected();
 }
@@ -63,11 +59,11 @@ void comms_poll_pi() {
             line[idx] = '\0';
             idx = 0;
             if (!strcmp(line, "STOP") || !strcmp(line, "EVT_TILT_HALT"))
-                xEventGroupSetBits(gEvents, EVT_HALT);
+                xEventGroupSetBits(sEvents, EVT_HALT);
             else if (!strcmp(line, "RESUME"))
-                xEventGroupClearBits(gEvents, EVT_HALT);
+                xEventGroupClearBits(sEvents, EVT_HALT);
             else if (!strcmp(line, "PAUSE_IRRIGATION"))
-                xEventGroupSetBits(gEvents, EVT_PAUSE_IRRIG);
+                xEventGroupSetBits(sEvents, EVT_PAUSE_IRRIG);
             // TODO: LEFT/RIGHT/SPRAY_ON/SPRAY_OFF/PUMP_DISABLE
         } else {
             line[idx++] = c;

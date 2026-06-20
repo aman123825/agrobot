@@ -546,3 +546,71 @@ Status: **E** = electrically wired in this diagram · **M** = mechanical/consuma
 | G15 | Nylon trimmer line | M | grass cutter consumable |
 
 **Result: all 110 BOM components + 15 gap items accounted for.** Every electrical item (E) has a pin/bus assignment; mechanical (M) and bench (B) items are noted where they intersect the electrical build. The only remaining decision is the actuator retraction type (§5.2), which is a parts/wiring branch, not a missing component.
+
+
+
+---
+
+## 9. Hardware-Safety Review — MUST-DO before power-on
+
+A pin-by-pin and line-by-line audit against ESP32 DevKit V1 (WROOM-32) silicon
+rules, the Pi BCM map, and the BOM. These items prevent board damage and
+unsafe motion. Items marked (FW) are already handled in firmware; the rest are
+**wiring actions you must do physically**.
+
+### 9.1 ADC over-voltage — power moisture + TDS sensors from 3.3V (CRITICAL)
+The capacitive moisture sensor (#29) and TDS meter (#34) are spec'd 3.3-5V. If
+powered at **5V**, their analog output can swing **above 3.3V** and destroy the
+ESP32 ADC pins (GPIO34/36, which have NO internal protection).
+- **Action:** power both sensors from the **3.3V** pin, OR put a 2.2k/3.9k
+  divider on each AOUT (same network as the HC-SR04 echo, §6.1).
+- Battery divider (§6.2) and HC-SR04 echo divider (§6.1) are already safe.
+
+### 9.2 Relay default-OFF at boot (CRITICAL)
+Active-LOW relay inputs float during the ~300ms ESP32 boot window before
+firmware drives the pins, so the pump/actuator can twitch ON at every power-up
+or reset.
+- **Action (hardware):** add a **10k pull-up to 3.3V** on GPIO26 and GPIO13.
+- (FW) `setup()` now forces both relays OFF as its first action.
+
+### 9.3 Drive freeze during dosing (CRITICAL) — (FW)
+The rover must not move while the probe is in the soil.
+- (FW) `dosing_run_sequence()` asserts `EVT_DOSING`; the drive task holds the
+  motors stopped for the whole insert/dose/retract cycle.
+
+### 9.4 Pi emergency-stop path (CRITICAL) — (FW)
+- (FW) `comms_poll_pi()` is now called every drive-loop (50 Hz), so the Pi's
+  `STOP` / `EVT_TILT_HALT` commands actually halt the motors.
+
+### 9.5 UART0 / Pi link contention (IMPORTANT)
+UART0 (TX0/RX0) is shared by the DevKit's onboard USB-serial chip AND the
+separate CP2102 (#6). Two drivers on one line + boot/debug noise corrupts the
+command stream.
+- **Action:** pick ONE link. Simplest: connect the Pi USB directly to the
+  DevKit's onboard USB port (uses UART0 through the onboard bridge) and drop the
+  extra CP2102, OR wire the CP2102 to RX0/TX0 and do not also plug in the
+  onboard USB. Keep heavy debug prints off this port (or frame the protocol).
+
+### 9.6 WS2812B LED strip pin on the Pi (IMPORTANT)
+`rpi_ws281x` needs a DMA-capable pin: **GPIO10 (SPI MOSI), GPIO12, GPIO18
+(PWM), or GPIO21 (PCM)**. Plain GPIO23 (current §3 assignment) will not drive
+the strip reliably.
+- **Action:** either move the strip to **GPIO18** (and relocate the right
+  encoder), or drive the 9-LED strip from the **ESP32 RMT** peripheral instead
+  (ESP32 is the better WS2812 driver). Update §3 once chosen.
+
+### 9.7 Items confirmed SAFE (no action)
+- Analog sensors all on **ADC1** (34/35/36) -> no WiFi/ADC2 conflict.
+- **No flash pins** (GPIO6-11) used anywhere.
+- **Strapping pins** GPIO0/2/5/12/15 left unused.
+- UART1 (GPS, pin 39 RX-only) and UART2 (RS485, 16/17) correctly remapped off
+  the flash pins.
+- I2C addresses unique (0x40/0x68/0x29/0x3C/0x20); Pi BCM map has no duplicates.
+- LEDC: motor channels 0/1 share timer0 at 1 kHz (OK); servo channel 2 uses
+  timer1 (must be set to 50 Hz when the sweep is implemented).
+
+### 9.8 Lower-priority follow-ups
+- Servo PWM (GPIO27) not yet implemented (needs a 50 Hz LEDC setup).
+- `gps_fix` is never reset on signal loss; add a staleness timeout.
+- ESP32 VIN(5V) + onboard USB(5V) at once can back-feed the regulator; power
+  from one source, or rely on the board's input diode.

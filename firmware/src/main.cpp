@@ -15,23 +15,32 @@
 
 #include "pins.h"
 #include "config.h"
+#include "events.h"
 #include "drive.h"
 #include "sensors.h"
 #include "dosing.h"
 #include "comms.h"
 
-// ---- Cross-core event bits ----
+// ---- Cross-core event group (bits live in events.h) ----
 EventGroupHandle_t gEvents;
-#define EVT_HALT          (1 << 0)  // e-stop / tilt / obstacle -> stop motors
-#define EVT_LOW_BATTERY   (1 << 1)  // LiPo below cutoff -> return-to-base
-#define EVT_DOSE_REQUEST  (1 << 2)  // waypoint reached -> run dosing sequence
-#define EVT_PAUSE_IRRIG   (1 << 3)  // rain detected (relayed from Pi)
+
+// Fail-safe: force both dosing relays OFF immediately, before tasks start.
+// The relay module is active-LOW, so OFF == drive the pin HIGH. This closes the
+// boot window where the pins float and could energize the pump/actuator.
+// (External 10k pull-ups to 3.3V on these pins are still required - see §5.2.)
+static void relaysFailSafeOff() {
+    pinMode(PIN_RELAY_PUMP, OUTPUT);
+    digitalWrite(PIN_RELAY_PUMP, HIGH);
+    pinMode(PIN_RELAY_ACTUATOR, OUTPUT);
+    digitalWrite(PIN_RELAY_ACTUATOR, HIGH);
+}
 
 static void driveTask(void *pv) {
     drive_init();
     for (;;) {
+        comms_poll_pi();  // read Pi commands EVERY loop so STOP/tilt-halt are honored fast
         EventBits_t bits = xEventGroupGetBits(gEvents);
-        if (bits & (EVT_HALT | EVT_LOW_BATTERY)) {
+        if (bits & EVT_DRIVE_INHIBIT) {   // halt | low-battery | dosing-in-progress
             drive_stop();
         } else {
             drive_update();  // applies current velocity target + obstacle avoidance
@@ -42,12 +51,12 @@ static void driveTask(void *pv) {
 
 static void sensorTask(void *pv) {
     sensors_init();
-    dosing_init();
+    dosing_init(gEvents);
     for (;;) {
         sensors_poll();          // NPK (Modbus), DHT22, moisture, TDS, GPS, battery
         comms_publish_telemetry();
         if (xEventGroupGetBits(gEvents) & EVT_DOSE_REQUEST) {
-            dosing_run_sequence();  // pump pre-soak -> actuator -> dose -> retract
+            dosing_run_sequence();  // sets EVT_DOSING internally so the drive halts
             xEventGroupClearBits(gEvents, EVT_DOSE_REQUEST);
         }
         vTaskDelay(pdMS_TO_TICKS(200));  // 5 Hz sensor loop
@@ -56,6 +65,8 @@ static void sensorTask(void *pv) {
 
 void setup() {
     Serial.begin(115200);
+    relaysFailSafeOff();   // FIRST: guarantee pump + actuator are off at boot
+
     gEvents = xEventGroupCreate();
 
     comms_init(gEvents);   // WiFi + MQTT + UART link to Pi; routes Pi commands to events
