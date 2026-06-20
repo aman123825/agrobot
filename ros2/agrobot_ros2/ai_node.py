@@ -152,7 +152,7 @@ def main(args=None) -> None:
     """Entry point for the ai_node."""
     if not HAS_ROS2:
         logger.error("rclpy is not installed; cannot run ai_node")
-        return
+        sys.exit(1)
     rclpy.init(args=args)
     node = AiDetectionNode()
     try:

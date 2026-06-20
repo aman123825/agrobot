@@ -100,6 +100,21 @@ class MissionStore:
                     return True
             return False
 
+    def peek_current(self) -> dict | None:
+        """Return the current active or next queued mission without promotion.
+
+        This is a read-only operation that does NOT transition queued missions
+        to active. Use get_current() when you want auto-promotion semantics.
+        """
+        with self._lock:
+            for m in self._missions:
+                if m["status"] == "active":
+                    return dict(m)
+            for m in self._missions:
+                if m["status"] == "queued":
+                    return dict(m)
+            return None
+
     def get_current(self) -> dict | None:
         with self._lock:
             for m in self._missions:
@@ -172,8 +187,12 @@ if HAS_ROS2:
             self.get_logger().info("MissionNode ready")
 
         def _publish_status(self) -> None:
-            """Publish the current mission status as JSON."""
-            current = self._store.get_current()
+            """Publish the current mission status as JSON.
+
+            Uses peek_current() to avoid the side-effect of promoting
+            queued missions to active on every status tick.
+            """
+            current = self._store.peek_current()
             msg = String()
             if current is not None:
                 msg.data = json.dumps(current)
@@ -227,7 +246,7 @@ def main(args=None) -> None:
     """Entry point for the mission_node."""
     if not HAS_ROS2:
         logger.error("rclpy is not installed; cannot run mission_node")
-        return
+        sys.exit(1)
     rclpy.init(args=args)
     node = MissionNode()
     try:

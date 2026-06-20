@@ -11,6 +11,7 @@ import hashlib
 import hmac
 import logging
 import os
+import sys
 import threading
 import time
 from typing import TYPE_CHECKING
@@ -180,7 +181,7 @@ def main(args=None) -> None:
     """Entry point for the drive_subscriber node."""
     if not HAS_ROS2:
         logger.error("rclpy is not installed; cannot run drive_subscriber node")
-        return
+        sys.exit(1)
     rclpy.init(args=args)
     node = DriveSubscriberNode()
     try:

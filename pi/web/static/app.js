@@ -259,7 +259,16 @@
     }
 
     function sendDriveCommand(cmd) {
+        // Send directional drive command
         sendWsMessage({ type: "drive", cmd: cmd });
+        // Also send PWM speed from slider so the rover uses the selected speed
+        var pwmSlider = document.getElementById("pwm-slider");
+        var pwmVal = parseInt(pwmSlider.value, 10) || 150;
+        if (cmd === "STOP") {
+            sendWsMessage({ type: "setpwm", left: 0, right: 0 });
+        } else {
+            sendWsMessage({ type: "setpwm", left: pwmVal, right: pwmVal });
+        }
     }
 
     // =========================================================================

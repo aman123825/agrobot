@@ -10,6 +10,7 @@ import json
 import logging
 import math
 import os
+import sys
 import threading
 import time
 from typing import TYPE_CHECKING
@@ -216,7 +217,7 @@ def main(args=None) -> None:
     """Entry point for the sensor_publisher node."""
     if not HAS_ROS2:
         logger.error("rclpy is not installed; cannot run sensor_publisher node")
-        return
+        sys.exit(1)
     rclpy.init(args=args)
     node = SensorPublisherNode()
     try:

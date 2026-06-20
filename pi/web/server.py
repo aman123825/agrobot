@@ -60,6 +60,15 @@ _WS_OPCODE_CLOSE = 0x8
 _WS_OPCODE_PING = 0x9
 _WS_OPCODE_PONG = 0xA
 
+# Maximum WebSocket receive buffer size (bytes). Connections exceeding this
+# limit are forcibly closed to prevent memory exhaustion attacks.
+MAX_WS_BUFFER = 65536
+
+# Authentication token for WebSocket connections. If set, the client must
+# provide this token as a query parameter: /ws?token=<value>.
+# If not set (empty string), authentication is disabled (development mode).
+_WS_AUTH_TOKEN = os.getenv("AGROBOT_WEB_TOKEN", "")
+
 # ---------------------------------------------------------------------------
 # Globals (initialized in main)
 # ---------------------------------------------------------------------------
@@ -221,6 +230,15 @@ def _handle_ws_client(client: WebSocketClient) -> None:
         except OSError:
             break
 
+        # Guard against unbounded buffer growth (slow-loris / memory exhaustion).
+        if len(buf) > MAX_WS_BUFFER:
+            logger.warning(
+                "WebSocket buffer exceeded %d bytes for %s; disconnecting",
+                MAX_WS_BUFFER,
+                client.addr,
+            )
+            break
+
         # Process all complete frames in buffer.
         while buf:
             try:
@@ -320,6 +338,16 @@ class RoverRequestHandler(BaseHTTPRequestHandler):
         upgrade_header = self.headers.get("Upgrade", "").lower()
         if upgrade_header != "websocket":
             return False
+
+        # Token authentication: if AGROBOT_WEB_TOKEN is set, require matching
+        # token query parameter on the WebSocket URL.
+        if _WS_AUTH_TOKEN:
+            parsed = urllib.parse.urlparse(self.path)
+            qs = urllib.parse.parse_qs(parsed.query)
+            token = qs.get("token", [""])[0]
+            if token != _WS_AUTH_TOKEN:
+                self.send_error(403, "Invalid or missing authentication token")
+                return True
 
         key = self.headers.get("Sec-WebSocket-Key", "")
         if not key:
@@ -558,7 +586,15 @@ def _telemetry_loop(interval: float = 2.0) -> None:
 
         # Also broadcast mission status if scheduler is available
         if _scheduler is not None:
-            current = _scheduler.get_current()
+            missions = _scheduler.list_missions(include_completed=False)
+            current = None
+            for m in missions:
+                if m["status"] == "active":
+                    current = m
+                    break
+            if current is None and missions:
+                # Show next queued without promoting it
+                current = missions[0]
             mission_msg = json.dumps({
                 "type": "mission_status",
                 "data": {"current": current},
