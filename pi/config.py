@@ -13,11 +13,12 @@ MQTT_PORT = int(os.getenv("MQTT_PORT", "8883" if MQTT_TLS else "1883"))
 MQTT_USERNAME = os.getenv("MQTT_USERNAME", "")
 MQTT_PASSWORD = os.getenv("MQTT_PASSWORD", "")
 MQTT_CA_CERT = os.getenv("MQTT_CA_CERT", "")  # path to broker CA when TLS is on
+ROVER_ID = os.getenv("ROVER_ID", "rover01")
 TOPICS = {
-    "npk": "rover/npk",
-    "gps": "rover/gps",
-    "status": "rover/status",
-    "alert": "rover/alert",
+    "npk": f"rover/{ROVER_ID}/npk",
+    "gps": f"rover/{ROVER_ID}/gps",
+    "status": f"rover/{ROVER_ID}/status",
+    "alert": f"rover/{ROVER_ID}/alert",
 }
 
 # --- Serial link to ESP32 (via CP2102) ---

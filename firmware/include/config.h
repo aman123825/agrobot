@@ -52,11 +52,18 @@
 #define CMD_LOCK_COOLDOWN_MS     10000  // lockout duration after threshold
 #define CMD_CTR_PERSIST_INTERVAL_MS 30000  // throttle NVS counter writes (wear)
 
+// ---- Rover identity (fleet support) ----
+// Override at build time: -DROVER_ID=\"rover02\"
+#ifndef ROVER_ID
+#define ROVER_ID "rover01"
+#endif
+
 // ---- MQTT topics (match docs/circuit-diagram.md §4.4 + BOM #101) ----
-#define TOPIC_NPK     "rover/npk"
-#define TOPIC_GPS     "rover/gps"
-#define TOPIC_STATUS  "rover/status"
-#define TOPIC_ALERT   "rover/alert"
+// Topics now include rover ID for fleet support (C string concatenation).
+#define TOPIC_NPK     "rover/" ROVER_ID "/npk"
+#define TOPIC_GPS     "rover/" ROVER_ID "/gps"
+#define TOPIC_STATUS  "rover/" ROVER_ID "/status"
+#define TOPIC_ALERT   "rover/" ROVER_ID "/alert"
 
 // ---- NPK probe (Modbus RTU over RS485) ----
 #define NPK_BAUD          9600

@@ -119,6 +119,14 @@ def main() -> None:
     st.set_page_config(page_title="AgriRover", layout="wide")
     st.title("AgriRover - Field Dashboard")
 
+    # Fleet support: select which rover to display
+    rover_id = os.getenv("ROVER_ID", "rover01")
+    rover_id = st.sidebar.text_input("Rover ID", value=rover_id)
+    st.sidebar.caption(
+        f"Showing data for **{rover_id}**. "
+        "Change the ID to view a different rover in a multi-rover fleet."
+    )
+
     csv_dir = os.getenv("FIELD_LOG_DIR", ".")
     path = _latest_csv(csv_dir)
 
