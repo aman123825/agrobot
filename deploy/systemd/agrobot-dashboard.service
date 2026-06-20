@@ -1,0 +1,16 @@
+[Unit]
+Description=AgriRover Streamlit Dashboard
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=agrobot
+WorkingDirectory=/home/agrobot/agrobot/pi
+EnvironmentFile=/home/agrobot/agrobot/pi/.env
+ExecStart=/home/agrobot/agrobot/pi/.venv/bin/streamlit run dashboard/app.py --server.port 8501 --server.headless true
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

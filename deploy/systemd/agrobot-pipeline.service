@@ -1,0 +1,16 @@
+[Unit]
+Description=AgriRover Pathway Stream Processor
+After=mosquitto.service agrobot-orchestrator.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=agrobot
+WorkingDirectory=/home/agrobot/agrobot/pi
+EnvironmentFile=/home/agrobot/agrobot/pi/.env
+ExecStart=/home/agrobot/agrobot/pi/.venv/bin/python /home/agrobot/agrobot/pi/pipeline/pathway_stream.py
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

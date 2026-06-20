@@ -212,6 +212,17 @@ Harden the Pi:
 sudo deploy/harden_pi.sh
 ```
 
+Enable **auto-start on boot** via systemd:
+```bash
+sudo deploy/install_services.sh
+```
+This installs three service units (`agrobot-orchestrator`, `agrobot-pipeline`,
+`agrobot-dashboard`) that run the Pi software automatically as the `agrobot`
+user after the MQTT broker is up. To start them immediately without rebooting:
+```bash
+sudo systemctl start agrobot-orchestrator agrobot-pipeline agrobot-dashboard
+```
+
 ---
 
 ## Phase 11 — AI models (Full AI tier only)
