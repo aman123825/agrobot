@@ -18,6 +18,7 @@
 #include "events.h"
 #include "drive.h"
 #include "sensors.h"
+#include "servo.h"
 #include "dosing.h"
 #include "comms.h"
 
@@ -51,6 +52,7 @@ static void driveTask(void *pv) {
 
 static void sensorTask(void *pv) {
     sensors_init();
+    servo_us_init();   // ultrasonic sweep mount (centered on startup)
     dosing_init(gEvents);
     for (;;) {
         sensors_poll();          // NPK (Modbus), DHT22, moisture, TDS, GPS, battery

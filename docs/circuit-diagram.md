@@ -210,8 +210,8 @@ flowchart LR
     subgraph PI["Raspberry Pi 4 — 40-pin header"]
         direction TB
         G2["GPIO2 SDA"]; G3["GPIO3 SCL"]
-        G17["GPIO17"]; G18["GPIO18"]; G24["GPIO24"]; G25["GPIO25"]
-        G23["GPIO23"]; G26["GPIO26"]
+        G17["GPIO17"]; G27["GPIO27"]; G24["GPIO24"]; G25["GPIO25"]
+        G18["GPIO18 PWM"]; G26["GPIO26"]
         G56["GPIO5/6/12/16 buttons"]; G2021["GPIO20/21 mode sel"]
         SPI["GPIO10/11/9/8 SPI"]
         FIVEV["5V pin"]; USB["USB3.0"]; CSI["CSI port"]
@@ -219,11 +219,11 @@ flowchart LR
     G2 --- I2C["I2C BUS: INA219, MPU6050, VL53L1X, OLED, PCF8574"]
     G3 --- I2C
     G17 --- ENC["Left wheel encoder (pulse)"]
-    G18 --- ENCB["Right wheel encoder (pulse)"]
+    G27 --- ENCB["Right wheel encoder (pulse)"]
     G24 --- DS18["DS18B20 OneWire"]
     G25 --- FLT["Float sensor (tank level)"]
     G26 --- RAIN["Rain sensor (digital)"]
-    G23 --- WS["WS2812B RGB strip"]
+    G18 --- WS["WS2812B RGB strip (PWM/DMA)"]
     G56 --- BTN["4x directional buttons"]
     G2021 --- MODE["3-pos mode selector"]
     SPI --- LORA["LoRa SX1276 (CE0)"]
@@ -241,11 +241,11 @@ flowchart LR
 | GPIO2 (SDA) | I2C-SDA | INA219, MPU6050, VL53L1X, OLED, PCF8574 | I2C | **add 4.7k pull-up to 3.3V** |
 | GPIO3 (SCL) | I2C-SCL | (same bus) | I2C | **add 4.7k pull-up to 3.3V** |
 | GPIO17 | ENC_L | Left Hall encoder pulse | pulse | one channel per side for velocity |
-| GPIO18 | ENC_R | Right Hall encoder pulse | pulse | conflict resolved (rain moved to 26) |
+| GPIO27 | ENC_R | Right Hall encoder pulse | pulse | moved off GPIO18 (see §9.6) |
 | GPIO24 | OW | DS18B20 data | OneWire | **4.7k pull-up mandatory** |
-| GPIO25 | FLOAT | Tank float sensor | digital | conflict resolved (LoRa CS → CE1) |
+| GPIO25 | FLOAT | Tank float sensor | digital | conflict resolved (LoRa CS → CE0) |
 | GPIO26 | RAIN | Rain sensor digital out | digital | relocated off GPIO18 |
-| GPIO23 | WS_DIN | WS2812B data-in | digital | level-shift to 5V recommended |
+| GPIO18 | WS_DIN | WS2812B data-in (PWM/DMA) | digital | required by rpi_ws281x; level-shift 3.3V→5V |
 | GPIO5/6/12/16 | BTN_U/D/L/R | 4× directional buttons (#61) | digital | 10k pull-ups, GND on press |
 | GPIO20/21 | MODE_A/B | 3-pos mode selector (#60) | digital | 2 lines encode AUTO/MANUAL/SCAN |
 | GPIO8 (CE0) | LoRa_NSS | LoRa SX1276 chip-select | SPI | |
@@ -591,13 +591,13 @@ command stream.
   extra CP2102, OR wire the CP2102 to RX0/TX0 and do not also plug in the
   onboard USB. Keep heavy debug prints off this port (or frame the protocol).
 
-### 9.6 WS2812B LED strip pin on the Pi (IMPORTANT)
+### 9.6 WS2812B LED strip pin on the Pi (IMPORTANT) — RESOLVED
 `rpi_ws281x` needs a DMA-capable pin: **GPIO10 (SPI MOSI), GPIO12, GPIO18
-(PWM), or GPIO21 (PCM)**. Plain GPIO23 (current §3 assignment) will not drive
-the strip reliably.
-- **Action:** either move the strip to **GPIO18** (and relocate the right
-  encoder), or drive the 9-LED strip from the **ESP32 RMT** peripheral instead
-  (ESP32 is the better WS2812 driver). Update §3 once chosen.
+(PWM), or GPIO21 (PCM)**. The original GPIO23 assignment would not drive the
+strip reliably.
+- **Done:** WS2812B moved to **GPIO18** (PWM/DMA), and the right wheel encoder
+  moved from GPIO18 to the free **GPIO27**. Reflected in §3 and `pi/config.py`.
+- Still add a 3.3V->5V level shifter on the data line for reliable latching.
 
 ### 9.7 Items confirmed SAFE (no action)
 - Analog sensors all on **ADC1** (34/35/36) -> no WiFi/ADC2 conflict.
@@ -610,7 +610,9 @@ the strip reliably.
   timer1 (must be set to 50 Hz when the sweep is implemented).
 
 ### 9.8 Lower-priority follow-ups
-- Servo PWM (GPIO27) not yet implemented (needs a 50 Hz LEDC setup).
+- Servo PWM — **DONE**: implemented in `firmware/src/servo.cpp` (50 Hz LEDC on
+  ESP32 GPIO27). Note this is ESP32 GPIO27, which is unrelated to the Pi's
+  BCM27 (right encoder) — different chips, no conflict.
 - `gps_fix` is never reset on signal loss; add a staleness timeout.
 - ESP32 VIN(5V) + onboard USB(5V) at once can back-feed the regulator; power
   from one source, or rely on the board's input diode.

@@ -23,11 +23,11 @@ SERIAL_BAUD = 115200
 # --- BCM GPIO map (circuit §3, conflicts resolved) ---
 GPIO = {
     "encoder_left": 17,
-    "encoder_right": 18,
+    "encoder_right": 27,  # moved off GPIO18 to free the PWM/DMA pin for the LED strip
     "ds18b20": 24,        # OneWire (also needs dtoverlay=w1-gpio)
     "float_sensor": 25,
     "rain_sensor": 26,
-    "ws2812b": 23,
+    "ws2812b": 18,        # GPIO18 = hardware PWM/DMA; required by rpi_ws281x (GPIO23 won't work)
     "btn_up": 5, "btn_down": 6, "btn_left": 12, "btn_right": 16,
     "mode_sel_a": 20, "mode_sel_b": 21,
 }
