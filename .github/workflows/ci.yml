@@ -1,0 +1,55 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install clang and ruff
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y clang
+          pip install ruff
+
+      - name: C++ syntax check
+        run: |
+          for f in firmware/src/*.cpp; do
+            echo "Checking $f"
+            clang++ -fsyntax-only -std=gnu++17 \
+              -I firmware/test/mocks \
+              -I firmware/include \
+              -I firmware/src \
+              "$f"
+          done
+
+      - name: C++ host tests
+        run: |
+          clang++ -std=gnu++17 \
+            -I firmware/test/mocks \
+            -I firmware/include \
+            -I firmware/src \
+            firmware/src/sensors.cpp \
+            firmware/src/gps.cpp \
+            firmware/test/test_modbus.cpp \
+            -o /tmp/test_host
+          /tmp/test_host
+
+      - name: Python compile check
+        run: find pi -name '*.py' -exec python -m py_compile {} +
+
+      - name: Ruff lint
+        run: cd pi && ruff check .
