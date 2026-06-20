@@ -17,6 +17,7 @@ static const uint8_t* sKey = nullptr;
 static size_t         sKeyLen = 0;
 static Preferences    sPrefs;
 static unsigned long long sLastCounter = 0;
+static unsigned long  sLastPersistMs = 0;
 static int            sFailCount = 0;
 static unsigned long  sLockUntilMs = 0;
 
@@ -42,6 +43,7 @@ void secure_link_init(const char* key, size_t keyLen) {
     sKeyLen = keyLen;
     sPrefs.begin("agro", false);
     sLastCounter = sPrefs.getULong64("ctr", 0);
+    sLastPersistMs = millis();
 }
 
 SecureResult secure_link_check(const char* line, char* outCmd, size_t outSz) {
@@ -81,7 +83,15 @@ SecureResult secure_link_check(const char* line, char* outCmd, size_t outSz) {
     // Authentic + fresh: commit the new counter and extract the command.
     sFailCount = 0;
     sLastCounter = ctr;
-    sPrefs.putULong64("ctr", ctr);
+    // Throttle NVS writes (the counter advances every command). Persisting the
+    // actual counter at most every CMD_CTR_PERSIST_INTERVAL_MS bounds flash
+    // wear; the worst case after an ungraceful power loss is that commands from
+    // the last interval could be replayed - an acceptable, tiny window.
+    unsigned long now = millis();
+    if (now - sLastPersistMs >= CMD_CTR_PERSIST_INTERVAL_MS) {
+        sPrefs.putULong64("ctr", sLastCounter);
+        sLastPersistMs = now;
+    }
 
     size_t cmdLen = (size_t)(barL - cmd);
     if (cmdLen >= outSz) cmdLen = outSz - 1;

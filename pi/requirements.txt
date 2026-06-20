@@ -12,7 +12,8 @@ ultralytics            # YOLOv8n (obstacle + weed detection)
 paho-mqtt==1.6.*
 pyserial==3.5
 RPi.GPIO              # encoders, float, rain, buttons, mode selector
-smbus2               # I2C: INA219, MPU6050, VL53L1X, OLED, PCF8574
+smbus2               # I2C: INA219, MPU6050, VL53L1X, OLED, PCF8574, ADS1115
+pi-ina219            # coulomb-counting battery fuel gauge (BOM #10)
 
 # --- Stream processing + dashboard ---
 pathway
@@ -20,6 +21,10 @@ streamlit==1.28.*
 pandas
 folium
 pydeck
+
+# --- Optional: history + smoother heatmaps (degrade gracefully if absent) ---
+# influxdb-client    # time-series history store
+# pykrige            # ordinary kriging soil heatmaps
 
 # --- Alerts ---
 requests             # Telegram Bot API

@@ -33,6 +33,7 @@ static PubSubClient       mqtt(netClient);
 static EventGroupHandle_t sEvents = nullptr;
 static unsigned long      sLastReconnectMs = 0;
 static unsigned long      sLastTamperAlertMs = 0;
+static unsigned long      sLastCmdMs = 0;
 
 static void ensureConnected() {
     if (WiFi.status() == WL_CONNECTED && mqtt.connected()) return;
@@ -52,6 +53,7 @@ static void ensureConnected() {
 
 void comms_init(EventGroupHandle_t events) {
     sEvents = events;
+    sLastCmdMs = millis();   // grace period before heartbeat can trip
     secure_link_init(COMMAND_HMAC_KEY, strlen(COMMAND_HMAC_KEY));
 
     WiFi.mode(WIFI_STA);
@@ -109,9 +111,23 @@ static void executeCommand(const char* cmd) {
     else if (!strcmp(cmd, "PUMP_ENABLE"))       xEventGroupClearBits(sEvents, EVT_PUMP_DISABLE);
     else if (!strcmp(cmd, "PAUSE_IRRIGATION"))  xEventGroupSetBits(sEvents, EVT_PAUSE_IRRIG);
     else if (!strcmp(cmd, "RESUME_IRRIGATION")) xEventGroupClearBits(sEvents, EVT_PAUSE_IRRIG);
+    else if (!strncmp(cmd, "SETPWM", 6)) {
+        // Closed-loop output from the Pi's velocity PID: "SETPWM <left> <right>"
+        int l = 0, r = 0;
+        if (sscanf(cmd, "SETPWM %d %d", &l, &r) == 2) {
+            l = (l > 255) ? 255 : (l < -255 ? -255 : l);
+            r = (r > 255) ? 255 : (r < -255 ? -255 : r);
+            drive_set((int16_t)l, (int16_t)r);
+        } else { Serial.printf("NAK parse %s\n", cmd); return; }
+    }
+    else if (!strcmp(cmd, "PING")) { /* heartbeat only; SECURE_OK refreshed it */ }
     else { Serial.printf("NAK unknown %s\n", cmd); return; }
 
     Serial.printf("ACK %s\n", cmd);
+}
+
+unsigned long comms_ms_since_cmd() {
+    return millis() - sLastCmdMs;
 }
 
 static void onAuthFailure(SecureResult r) {
@@ -136,7 +152,7 @@ void comms_poll_pi() {
             if (idx > 0) {
                 line[idx] = '\0';
                 SecureResult r = secure_link_check(line, cmd, sizeof(cmd));
-                if (r == SECURE_OK) executeCommand(cmd);
+                if (r == SECURE_OK) { sLastCmdMs = millis(); executeCommand(cmd); }
                 else                onAuthFailure(r);
                 idx = 0;
             }

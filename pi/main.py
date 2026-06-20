@@ -26,8 +26,14 @@ from actuators import Pcf8574  # noqa: E402
 from ai.obstacle_detection import ObstacleDetector  # noqa: E402
 from ai.weed_detection import WeedDetector  # noqa: E402
 from bridge.serial_bridge import SerialBridge  # noqa: E402
+from control.imu import MPU6050  # noqa: E402
+from data.recorder import BlackBox  # noqa: E402
+from sensors.current_monitor import CurrentMonitor  # noqa: E402
+from sensors.fuel_gauge import FuelGauge  # noqa: E402
 
 logger = logging.getLogger(__name__)
+
+HEARTBEAT_INTERVAL_S = 0.4   # < firmware LINK_HEARTBEAT_TIMEOUT_MS (1500 ms)
 
 
 def _open_camera(index: int):
@@ -51,9 +57,15 @@ class Orchestrator:
         self.weed = WeedDetector()
         self.actuators = Pcf8574()
         self.serial = SerialBridge()
+        self.imu = MPU6050()
+        self.current_mon = CurrentMonitor()
+        self.fuel = FuelGauge()
+        self.blackbox = BlackBox()
         self.cap = _open_camera(camera_index)
         self._stopped = False
         self._frame_no = 0
+        self._last_ping = 0.0
+        self._last_fuel = 0.0
 
     def setup(self) -> None:
         self.obstacle.load()
@@ -83,24 +95,45 @@ class Orchestrator:
 
     def step(self, frame) -> None:
         self._frame_no += 1
+        now = time.time()
 
+        # Heartbeat: keep the firmware dead-man satisfied while we're alive.
+        if now - self._last_ping >= HEARTBEAT_INTERVAL_S:
+            self._send("PING")
+            self._last_ping = now
+
+        # Combine all local stop reasons: AI obstacle, tilt, motor stall.
         detections = self.obstacle.detect(frame)
-        if self.obstacle.should_stop(detections):
+        tilt = self.imu.tilt_unsafe()
+        stall = self.current_mon.check_stall(now)
+        stop = self.obstacle.should_stop(detections) or tilt or stall
+
+        if stop:
             if not self._stopped:
+                reason = "tilt" if tilt else "stall" if stall else "obstacle"
                 self._send("STOP")
                 self._stopped = True
-                logger.info("OBSTACLE -> STOP (%d detections)", len(detections))
+                logger.info("STOP (%s, %d detections)", reason, len(detections))
+                self.blackbox.log("stop", {"reason": reason, "detections": len(detections)})
         else:
             if self._stopped:
                 self._send("RESUME")
                 self._stopped = False
                 logger.info("clear -> RESUME")
+                self.blackbox.log("resume", {})
 
-        # Spot-spray on weed detection, but never while halted for an obstacle.
+        # Spot-spray on weed detection, but never while halted.
         if not self._stopped and self._frame_no % self.weed_every == 0:
             if self.weed.detect(frame):
                 logger.info("WEED -> spray burst")
                 self.actuators.spray()
+                self.blackbox.log("spray", {"frame": self._frame_no})
+
+        # Battery fuel gauge (coulomb counting) ~1 Hz.
+        if now - self._last_fuel >= 1.0:
+            soc = self.fuel.update()
+            self._last_fuel = now
+            self.blackbox.log("fuel", {"soc": round(soc, 1)})
 
         self._read_acks()
 

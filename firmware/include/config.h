@@ -50,6 +50,7 @@
 #define CMD_AUTH_TRUNC_BYTES     16     // HMAC truncated to 128 bits (32 hex chars)
 #define CMD_FAIL_LOCK_THRESHOLD  8      // bad signatures before lockout
 #define CMD_LOCK_COOLDOWN_MS     10000  // lockout duration after threshold
+#define CMD_CTR_PERSIST_INTERVAL_MS 30000  // throttle NVS counter writes (wear)
 
 // ---- MQTT topics (match docs/circuit-diagram.md §4.4 + BOM #101) ----
 #define TOPIC_NPK     "rover/npk"
@@ -77,6 +78,36 @@
 
 // ---- Telemetry / loop cadence ----
 #define GPS_FIX_MAX_AGE_MS  5000   // treat fix as stale beyond this
+
+// ---- ADC calibration & oversampling (accuracy) ----
+#define ADC_OVERSAMPLE      16     // averaged raw reads per sample
+#define ADC_VREF_MV         1100   // fallback Vref (mV) if eFuse not burned
+
+// ---- NPK robustness ----
+#define NPK_MAX_RETRIES     3      // retry a failed Modbus read this many times
+
+// ---- Ultrasonic accuracy ----
+#define US_MEDIAN_SAMPLES   5      // median-of-N pings rejects spurious echoes
+
+// ---- GPS (Neo-6M) accuracy: SBAS/GAGAN + stationary averaging ----
+#define GPS_BAUD            9600
+#define GPS_SBAS_ENABLE     1      // enable SBAS augmentation (India: GAGAN)
+#define GPS_AVG_SAMPLES     30     // fixes averaged at a stationary waypoint
+#define GPS_AVG_GAP_MS      100    // spacing between averaged fixes
+
+// ---- Link heartbeat / dead-man (safety) ----
+#define LINK_HEARTBEAT_TIMEOUT_MS 1500  // halt if no valid command within this
+
+// ---- Watchdog ----
+#define WDT_TIMEOUT_S       5      // task watchdog timeout
+
+// ---- OTA firmware update ----
+#ifndef OTA_HOSTNAME
+#define OTA_HOSTNAME        "agrorover"
+#endif
+#ifndef OTA_PASSWORD
+#define OTA_PASSWORD        "CHANGE_ME_OTA_PASSWORD"  // set in secrets.h
+#endif
 
 // ---- Battery (3S LiPo) thresholds ----
 #define LIPO_FULL_V       12.6f

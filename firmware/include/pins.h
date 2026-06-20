@@ -34,8 +34,13 @@
 #define PIN_VBAT_SENSE    35   // battery divider 39k/10k (ADC1_CH7, input-only)
 #define PIN_TDS           36   // TDS meter (ADC1_CH0, input-only)
 
-// ---- GPS (Neo-6M on UART1, receive-only) ----
+// ---- GPS (Neo-6M on UART1) ----
 #define PIN_GPS_RX        39   // UART1 RX <- GPS TX (input-only)
+// DGPS/RTCM correction output to the GPS RX pin (optional, experimental).
+// GPIO15 is a strapping pin whose required boot level (HIGH) matches an idle
+// UART TX line, so it is safe to use here. Leave the GPS RX pin unconnected if
+// you are not feeding RTCM corrections.
+#define PIN_GPS_TX        15   // UART1 TX -> GPS RX (RTCM/DGPS injection)
 
 // ---- Dosing relays (2-channel module) ----
 #define PIN_RELAY_PUMP    26   // Ch1: pump (pre-soak + micro-dose)

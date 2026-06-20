@@ -13,3 +13,4 @@ void comms_init(EventGroupHandle_t events);
 void comms_publish_telemetry();   // publish latest sensor snapshot to MQTT topics
 void comms_publish_alert(const char* msg);  // publish to rover/alert
 void comms_poll_pi();             // drain UART commands from the Pi
+unsigned long comms_ms_since_cmd();  // ms since last authenticated command (heartbeat)

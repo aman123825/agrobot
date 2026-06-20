@@ -141,6 +141,7 @@ flowchart LR
     P35 ~~~ VBAT["Battery divider 39k/10k"]
     P36 ~~~ TDS["TDS meter"]
     P39 --- GPS["Neo-6M GPS TX (RX-only)"]
+    P15 --- GPSTX["Neo-6M GPS RX (DGPS/RTCM, optional)"]
     P26 --- R1["Relay Ch1 (pump)"]
     P13 --- R2["Relay Ch2 (actuator)"]
     EN  --- ESTOP["E-Stop (NC) → GND"]
@@ -168,6 +169,7 @@ flowchart LR
 | GPIO35 | A_VBAT | Battery divider tap | ADC1_CH7 | input-only; 2.57V @12.6V |
 | GPIO36 | A_TDS | TDS meter AOUT | ADC1_CH0 | input-only pin |
 | GPIO39 | GPS_RX | Neo-6M TX | UART1 RX | receive-only |
+| GPIO15 | GPS_TX | Neo-6M RX | UART1 TX | DGPS/RTCM injection (optional); strapping-safe (idles HIGH) |
 | GPIO26 | RLY1 | Relay Ch1 (pump) | OUT | active per module logic |
 | GPIO13 | RLY2 | Relay Ch2 (actuator) | OUT | sequenced after Ch1 |
 | EN | E-STOP | E-Stop NC → GND | RST | pulls EN low = halt |
@@ -216,7 +218,7 @@ flowchart LR
         SPI["GPIO10/11/9/8 SPI"]
         FIVEV["5V pin"]; USB["USB3.0"]; CSI["CSI port"]
     end
-    G2 --- I2C["I2C BUS: INA219, MPU6050, VL53L1X, OLED, PCF8574"]
+    G2 --- I2C["I2C BUS: INA219, MPU6050, VL53L1X, OLED, PCF8574, ADS1115"]
     G3 --- I2C
     G17 --- ENC["Left wheel encoder (pulse)"]
     G27 --- ENCB["Right wheel encoder (pulse)"]
@@ -238,7 +240,7 @@ flowchart LR
 
 | Pi Pin | Net | Connects To | Bus | Notes |
 |--------|-----|-------------|-----|-------|
-| GPIO2 (SDA) | I2C-SDA | INA219, MPU6050, VL53L1X, OLED, PCF8574 | I2C | **add 4.7k pull-up to 3.3V** |
+| GPIO2 (SDA) | I2C-SDA | INA219, MPU6050, VL53L1X, OLED, PCF8574, ADS1115 | I2C | **add 4.7k pull-up to 3.3V** |
 | GPIO3 (SCL) | I2C-SCL | (same bus) | I2C | **add 4.7k pull-up to 3.3V** |
 | GPIO17 | ENC_L | Left Hall encoder pulse | pulse | one channel per side for velocity |
 | GPIO27 | ENC_R | Right Hall encoder pulse | pulse | moved off GPIO18 (see §9.6) |
@@ -275,13 +277,16 @@ flowchart LR
 
 ### 4.1 I2C bus (Pi side)
 ```
-3.3V ──[4.7k]──┬───────┬───────┬───────┬───────┬─── SDA (GPIO2)
-3.3V ──[4.7k]──┼──┬────┼──┬────┼──┬────┼──┬────┼──┬ SCL (GPIO3)
-               │  │    │  │    │  │    │  │    │  │
-            INA219  MPU6050  VL53L1X  SSD1306  PCF8574
-            0x40    0x68     0x29     0x3C     0x20
+3.3V ──[4.7k]──┬───────┬───────┬───────┬───────┬───────┬─── SDA (GPIO2)
+3.3V ──[4.7k]──┼──┬────┼──┬────┼──┬────┼──┬────┼──┬────┼──┬ SCL (GPIO3)
+               │  │    │  │    │  │    │  │    │  │    │  │
+            INA219  MPU6050  VL53L1X  SSD1306  PCF8574  ADS1115
+            0x40    0x68     0x29     0x3C     0x20     0x48
 ```
 Each device: 100nF decoupling cap across its VCC–GND, within 5mm of the chip (gap item #12).
+ADS1115 (16-bit ADC) reads two ACS712-30A motor-current sensors (A0=left rail,
+A1=right rail) for stall/over-current detection — neither the ESP32 (ADC1 full)
+nor the Pi (no ADC) has a free analog input, so the ADS1115 provides it.
 
 ### 4.2 RS485 — NPK probe (ESP32 UART2)
 ```
@@ -616,3 +621,64 @@ strip reliably.
 - `gps_fix` is never reset on signal loss; add a staleness timeout.
 - ESP32 VIN(5V) + onboard USB(5V) at once can back-feed the regulator; power
   from one source, or rely on the board's input diode.
+
+
+
+---
+
+## 10. Advanced upgrades — accuracy, autonomy, reliability, data
+
+This section documents the v2 upgrades and the wiring they add. The firmware
+runs the real-time safety layer; the Pi runs odometry, fusion, planning, and
+analytics (it has the encoders and the compute).
+
+### 10.1 New components / wires
+
+| Item | Where | Purpose |
+|------|-------|---------|
+| **ADS1115** 16-bit I2C ADC (0x48) | Pi I2C bus (SDA/SCL) | analog inputs the ESP32/Pi lack |
+| **ACS712-30A** ×2 | motor left rail → ADS1115 A0; right rail → A1 | per-side motor current → stall/over-current detection |
+| **GPS RX wire** | ESP32 **GPIO15** → Neo-6M RX | optional DGPS/RTCM correction injection |
+
+> ACS712 sensors are powered at 5 V; their output centers at 2.5 V and stays
+> within the ADS1115 ±4.096 V range — do **not** wire them to an ESP32 ADC pin.
+
+### 10.2 Positioning accuracy (Neo-6M, no new module)
+- **SBAS/GAGAN** enabled at boot (UBX-CFG-SBAS) → ~1–1.5 m absolute.
+- **Stationary averaging** with 2σ outlier rejection at each sampling waypoint
+  (`gps_collect_average`) → sub-meter logged positions.
+- **EKF fusion** (`pi/nav/ekf.py`) of GPS + wheel odometry + IMU yaw → smooth
+  sub-meter relative pose between fixes.
+- **Vision plant geo-tagging** (`pi/ai/plant_tagging.py`) → ~10–20 cm relative
+  plant positions using camera geometry + fused pose.
+- **DGPS/RTCM** hook (`gps_inject_rtcm` + GPIO15 wire) → ~0.5–1 m if corrections
+  are supplied (optional/experimental on a single-band receiver).
+
+### 10.3 Autonomy
+- **Closed-loop velocity PID** on the Pi (`pi/control/velocity_pid.py`) reads the
+  encoders and emits `SETPWM <left> <right>` to the ESP32 → straight rows and
+  repeatable seed spacing.
+- **Boustrophedon path planner** (`pi/nav/path_planner.py`) with cross-track-
+  error guidance for snake coverage of a field.
+- **Secure OTA** (`firmware/src/ota.cpp`, password-protected ArduinoOTA).
+
+### 10.4 Reliability & safety
+- **Heartbeat dead-man**: ESP32 halts (`EVT_LINK_LOST`) if no authenticated
+  command arrives within `LINK_HEARTBEAT_TIMEOUT_MS`; the Pi sends `PING`.
+- **Task watchdog** on the drive loop (`esp_task_wdt`) → auto-reset on hang.
+- **Motor stall detection** (`pi/sensors/current_monitor.py`) → STOP + alert.
+- **Coulomb-counting fuel gauge** (`pi/sensors/fuel_gauge.py`, INA219) → accurate
+  battery SoC vs voltage-only.
+- **NVS-wear-safe** anti-replay counter persistence (time-throttled).
+
+### 10.5 Data & AI
+- **Calibrated ADC** (esp_adc_cal + 16× oversample), **multi-point moisture**
+  curve, **temperature-compensated TDS**, **median ultrasonic**.
+- **Black-box recorder** (`pi/data/recorder.py`), **kriging/IDW heatmaps**
+  (`pi/data/heatmap.py`), optional **InfluxDB** history (`pi/data/influx.py`).
+- **INT8 quantization** helper (`pi/ai/quantize.py`) for the Coral Edge TPU.
+
+### 10.6 Updated ESP32 pin usage
+GPIO15 is now used as UART1 TX → GPS RX (DGPS). It is a strapping pin, but its
+required boot level (HIGH) matches an idle UART TX line, so it is safe. Leave
+the GPS RX pin disconnected if you are not injecting RTCM.

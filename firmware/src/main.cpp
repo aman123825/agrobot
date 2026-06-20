@@ -12,6 +12,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 #include "freertos/event_groups.h"
+#include "esp_task_wdt.h"
 
 #include "pins.h"
 #include "config.h"
@@ -21,6 +22,7 @@
 #include "servo.h"
 #include "dosing.h"
 #include "comms.h"
+#include "ota.h"
 
 // ---- Cross-core event group (bits live in events.h) ----
 EventGroupHandle_t gEvents;
@@ -38,13 +40,23 @@ static void relaysFailSafeOff() {
 
 static void driveTask(void *pv) {
     drive_init();
+    esp_task_wdt_add(NULL);   // this fast loop is the watchdog-monitored task
     for (;;) {
+        esp_task_wdt_reset();
         comms_poll_pi();  // read Pi commands EVERY loop so STOP/tilt-halt are honored fast
+        ota_handle();     // service OTA update requests
+
+        // Dead-man: if no authenticated command within the timeout, halt.
+        if (comms_ms_since_cmd() > LINK_HEARTBEAT_TIMEOUT_MS)
+            xEventGroupSetBits(gEvents, EVT_LINK_LOST);
+        else
+            xEventGroupClearBits(gEvents, EVT_LINK_LOST);
+
         EventBits_t bits = xEventGroupGetBits(gEvents);
-        if (bits & EVT_DRIVE_INHIBIT) {   // halt | low-battery | dosing-in-progress
+        if (bits & EVT_DRIVE_INHIBIT) {   // halt | low-batt | dosing | obstacle | link-lost
             drive_stop();
         } else {
-            drive_update();  // applies current velocity target + obstacle avoidance
+            drive_update();
         }
         vTaskDelay(pdMS_TO_TICKS(20));  // 50 Hz control loop
     }
@@ -95,6 +107,9 @@ void setup() {
     gEvents = xEventGroupCreate();
 
     comms_init(gEvents);   // WiFi + MQTT + UART link to Pi; routes Pi commands to events
+    ota_init();            // password-protected OTA over WiFi
+
+    esp_task_wdt_init(WDT_TIMEOUT_S, true);  // reset the chip if a monitored task hangs
 
     xTaskCreatePinnedToCore(driveTask,  "drive",  TASK_STACK_WORDS, nullptr, 2,
                             nullptr, TASK_DRIVE_CORE);

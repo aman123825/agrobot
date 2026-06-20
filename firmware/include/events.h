@@ -15,9 +15,10 @@
 #define EVT_DOSING        (1 << 4)  // dosing in progress -> drive MUST stay stopped
 #define EVT_OBSTACLE      (1 << 5)  // local ultrasonic obstacle within stop distance
 #define EVT_PUMP_DISABLE  (1 << 6)  // tank empty / Pi override -> block dosing
+#define EVT_LINK_LOST     (1 << 7)  // no valid command within heartbeat timeout
 
 // Bits that must force the drive to a stop.
-#define EVT_DRIVE_INHIBIT (EVT_HALT | EVT_LOW_BATTERY | EVT_DOSING | EVT_OBSTACLE)
+#define EVT_DRIVE_INHIBIT (EVT_HALT | EVT_LOW_BATTERY | EVT_DOSING | EVT_OBSTACLE | EVT_LINK_LOST)
 
 // Shared event group (defined in main.cpp).
 extern EventGroupHandle_t gEvents;
