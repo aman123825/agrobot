@@ -1,0 +1,32 @@
+# --- Python ---
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+env/
+*.egg-info/
+.pytest_cache/
+
+# --- PlatformIO / ESP32 ---
+.pio/
+.pioenvs/
+.piolibdeps/
+
+# --- Secrets (never commit credentials) ---
+secrets.h
+.env
+*.secret
+
+# --- Trained model binaries (track via release/LFS, not git) ---
+models/*.tflite
+models/*.pt
+models/*.onnx
+
+# --- Field data / logs ---
+field_log_*.csv
+*.log
+
+# --- OS / editor ---
+.DS_Store
+.vscode/
+.idea/
