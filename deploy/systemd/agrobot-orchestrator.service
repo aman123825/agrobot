@@ -1,3 +1,8 @@
+# NOTE: All paths below assume the default deployment layout where the
+# repository is cloned to /home/agrobot/agrobot and a virtualenv exists at
+# /home/agrobot/agrobot/pi/.venv.  If deploying to a different user or path,
+# update WorkingDirectory, EnvironmentFile, and ExecStart accordingly.
+
 [Unit]
 Description=AgriRover Orchestrator (main control loop)
 After=mosquitto.service network-online.target

@@ -26,6 +26,9 @@ jobs:
           pip install ruff
 
       - name: C++ syntax check
+        # Note: only .cpp files are checked directly. Header-only changes are
+        # validated transitively because each header is #included by at least
+        # one .cpp file in the build.
         run: |
           for f in firmware/src/*.cpp; do
             echo "Checking $f"
@@ -53,3 +56,8 @@ jobs:
 
       - name: Ruff lint
         run: cd pi && ruff check .
+
+      - name: Python import smoke test
+        run: |
+          cd pi
+          python -c "from sim.rover_model import RoverSim; from mission.scheduler import MissionScheduler; from data.prescription_map import PrescriptionMap; print('Import OK')"

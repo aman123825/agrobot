@@ -40,8 +40,9 @@ class MissionScheduler:
         }
     """
 
-    def __init__(self, path: str = "missions.json"):
+    def __init__(self, path: str = "missions.json", max_history: int = 100):
         self.path = path
+        self.max_history = max_history
         self._lock = threading.Lock()
         self._missions: list[dict] = []
         self._load()
@@ -71,7 +72,13 @@ class MissionScheduler:
             self._missions = []
 
     def _save(self) -> None:
-        """Atomically persist current state to disk (caller holds lock)."""
+        """Atomically persist current state to disk (caller holds lock).
+
+        Before writing, trims completed/failed/cancelled missions beyond
+        max_history to prevent unbounded file growth on long-running systems.
+        Keeps the most recent finished missions (by completed_at).
+        """
+        self._prune_history()
         try:
             tmp = self.path + ".tmp"
             with open(tmp, "w", encoding="utf-8") as fh:
@@ -79,6 +86,21 @@ class MissionScheduler:
             os.replace(tmp, self.path)
         except OSError as exc:
             logger.warning("MissionScheduler: save failed (%s)", exc)
+
+    def _prune_history(self) -> None:
+        """Remove oldest completed/failed/cancelled missions beyond max_history."""
+        terminal = {"completed", "failed", "cancelled"}
+        finished = [m for m in self._missions if m["status"] in terminal]
+        if len(finished) <= self.max_history:
+            return
+        # Sort by completed_at descending; keep the most recent max_history
+        finished.sort(key=lambda m: m.get("completed_at") or 0, reverse=True)
+        keep_ids = {m["id"] for m in finished[: self.max_history]}
+        self._missions = [
+            m
+            for m in self._missions
+            if m["status"] not in terminal or m["id"] in keep_ids
+        ]
 
     # ------------------------------------------------------------------
     # Public API

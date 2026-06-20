@@ -27,6 +27,16 @@ from sim.rover_model import RoverSim  # noqa: E402
 _KEY = os.getenv("AGRO_LINK_KEY", "").encode()
 _TRUNC_HEX = 32  # 16 bytes, 32 hex chars
 
+if not _KEY:
+    import logging as _logging
+
+    _logging.getLogger(__name__).warning(
+        "AGRO_LINK_KEY is empty -- SimSerial will accept ANY correctly "
+        "formatted envelope (HMAC computed with empty key). This is "
+        "acceptable for local development but differs from production "
+        "security.py which refuses to operate without the key."
+    )
+
 
 def _verify_envelope(raw: str) -> tuple[bool, str]:
     """Parse and verify an HMAC-signed command envelope.

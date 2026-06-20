@@ -117,7 +117,6 @@ def _render_plant_section(plants: dict) -> None:
 
 def main() -> None:
     st.set_page_config(page_title="AgriRover", layout="wide")
-    st.title("AgriRover - Field Dashboard")
 
     # Fleet support: select which rover to display
     rover_id = os.getenv("ROVER_ID", "rover01")
@@ -127,6 +126,11 @@ def main() -> None:
         "Change the ID to view a different rover in a multi-rover fleet."
     )
 
+    st.title(f"AgriRover - {rover_id}")
+
+    # FIELD_LOG_DIR can be set per-rover (e.g. ./logs/rover01/) to isolate
+    # CSV data in multi-rover deployments.  When a single directory contains
+    # logs from multiple rovers, the display shows all data.
     csv_dir = os.getenv("FIELD_LOG_DIR", ".")
     path = _latest_csv(csv_dir)
 

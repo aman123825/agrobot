@@ -3,6 +3,13 @@
 Integrates with nav/geo and nav/path_planner to convert a zone boundary
 (list of lat/lng waypoints) into an ordered list of coverage waypoints using
 boustrophedon planning.
+
+This is a utility module used when creating missions with zone coverage.
+The MissionScheduler stores zone definitions and callers invoke
+zone_waypoints() to expand a zone boundary into a full coverage path before
+sending waypoints to the rover.  It is not imported by the scheduler itself
+because waypoint expansion is the responsibility of the orchestrator or
+mission creator at mission-add time.
 """
 from __future__ import annotations
 
