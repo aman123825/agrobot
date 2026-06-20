@@ -54,9 +54,32 @@ static void sensorTask(void *pv) {
     sensors_init();
     servo_us_init();   // ultrasonic sweep mount (centered on startup)
     dosing_init(gEvents);
+    bool lowBattAlerted = false;
+
     for (;;) {
         sensors_poll();          // NPK (Modbus), DHT22, moisture, TDS, GPS, battery
+        const Telemetry& t = sensors_snapshot();
+
+        // Local fast obstacle reaction (independent of the Pi's AI stop).
+        if (t.front_distance_cm > 0 && t.front_distance_cm < US_STOP_DISTANCE_CM)
+            xEventGroupSetBits(gEvents, EVT_OBSTACLE);
+        else
+            xEventGroupClearBits(gEvents, EVT_OBSTACLE);
+
+        // Battery cutoff -> latch low-battery (return-to-base) + one alert.
+        if (t.battery_v < LIPO_CUTOFF_V) {
+            xEventGroupSetBits(gEvents, EVT_LOW_BATTERY);
+            if (!lowBattAlerted) {
+                comms_publish_alert("{\"type\":\"low_battery\"}");
+                lowBattAlerted = true;
+            }
+        } else if (t.battery_v > LIPO_CUTOFF_V + 0.3f) {
+            xEventGroupClearBits(gEvents, EVT_LOW_BATTERY);  // hysteresis
+            lowBattAlerted = false;
+        }
+
         comms_publish_telemetry();
+
         if (xEventGroupGetBits(gEvents) & EVT_DOSE_REQUEST) {
             dosing_run_sequence();  // sets EVT_DOSING internally so the drive halts
             xEventGroupClearBits(gEvents, EVT_DOSE_REQUEST);

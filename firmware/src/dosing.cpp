@@ -35,7 +35,10 @@ void dosing_init(EventGroupHandle_t events) {
 }
 
 bool dosing_run_sequence() {
-    // TODO: check float-sensor / PUMP_DISABLE flag relayed from Pi before starting.
+    // Abort if dosing is blocked (e.g. tank empty / Pi override).
+    if (sEvents && (xEventGroupGetBits(sEvents) & EVT_PUMP_DISABLE)) {
+        return false;
+    }
 
     // Freeze the drive for the entire insertion. driveTask sees EVT_DOSING in
     // EVT_DRIVE_INHIBIT and holds the motors stopped.

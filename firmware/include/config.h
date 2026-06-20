@@ -30,6 +30,22 @@
 #define NPK_BAUD          9600
 #define NPK_SLAVE_ADDR    0x01
 #define NPK_FRAME_TIMEOUT_MS 1000
+#define NPK_REG_START     0x0000   // first holding register
+#define NPK_REG_COUNT     7        // moisture,temp,EC,pH,N,P,K (vendor-dependent)
+
+// ---- Front ultrasonic obstacle safety ----
+#define US_STOP_DISTANCE_CM 25.0f  // local hard-stop threshold
+#define US_TIMEOUT_US       30000UL
+
+// ---- Manual drive speed (0..255 duty) ----
+#define MANUAL_DRIVE_SPEED  180
+
+// ---- Capacitive soil-moisture calibration (raw 12-bit ADC) ----
+#define MOIST_RAW_DRY       3000   // sensor in air (calibrate)
+#define MOIST_RAW_WET       1200   // sensor in water (calibrate)
+
+// ---- Telemetry / loop cadence ----
+#define GPS_FIX_MAX_AGE_MS  5000   // treat fix as stale beyond this
 
 // ---- Battery (3S LiPo) thresholds ----
 #define LIPO_FULL_V       12.6f

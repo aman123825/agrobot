@@ -1,31 +1,91 @@
 """Obstacle detection (YOLOv8n) with optional Coral Edge TPU acceleration.
 
 Runs ~30 fps on Coral vs ~3 fps CPU-only (BOM #41, #97). When an obstacle is
-detected within the stop distance, the caller forwards a STOP command to the
-ESP32 over the serial bridge.
+detected within the stop distance, the orchestrator forwards STOP to the ESP32.
+
+The heavy import (ultralytics) is lazy and guarded so this module imports
+cleanly even on a machine without the model stack installed; `load()` reports
+whether a real backend came up.
 """
 from __future__ import annotations
 
-import config
+import logging
+import os
+import sys
+
+sys.path.append(os.path.dirname(os.path.dirname(__file__)))
+import config  # noqa: E402
+
+logger = logging.getLogger(__name__)
 
 
 class ObstacleDetector:
-    def __init__(self, model_path: str | None = None, use_coral: bool = config.USE_CORAL):
-        self.model_path = model_path or f"{config.MODEL_DIR}/yolov8n_obstacle.tflite"
+    def __init__(
+        self,
+        model_path: str | None = None,
+        use_coral: bool = config.USE_CORAL,
+        stop_distance_mm: float = 400.0,
+        conf_threshold: float = 0.40,
+    ):
+        self.model_path = model_path or f"{config.MODEL_DIR}/yolov8n_obstacle.pt"
         self.use_coral = use_coral
-        self.model = None  # lazy-loaded
+        self.stop_distance_mm = stop_distance_mm
+        self.conf_threshold = conf_threshold
+        self.model = None
+        self.backend: str | None = None
 
-    def load(self) -> None:
-        """Load the YOLOv8n model, delegating to the Edge TPU if available."""
-        # TODO: from ultralytics import YOLO; or tflite_runtime.Interpreter with
-        # the libedgetpu delegate when self.use_coral is True.
-        raise NotImplementedError
+    def load(self) -> bool:
+        """Load YOLOv8n. Returns True if a usable backend is available."""
+        try:
+            from ultralytics import YOLO
 
-    def detect(self, frame):
-        """Return a list of detections [{label, conf, bbox, distance_mm}].
+            self.model = YOLO(self.model_path)
+            self.backend = "ultralytics"
+            logger.info("ObstacleDetector: ultralytics backend ready (%s)", self.model_path)
+            return True
+        except Exception as exc:  # model/lib missing -> degrade, do not crash
+            logger.warning("ObstacleDetector: no backend (%s); detect() returns []", exc)
+            self.model = None
+            self.backend = None
+            return False
 
-        Distance is fused with the VL53L1X ToF reading (circuit §4 / BOM #38)
-        for a 3D obstacle profile.
+    def detect(self, frame, distance_mm: float | None = None) -> list[dict]:
+        """Return [{label, conf, bbox=(x1,y1,x2,y2), distance_mm}] for the frame.
+
+        `distance_mm` (from the VL53L1X ToF, circuit §4) is attached to every
+        detection so the caller can reason in real-world distance.
         """
-        # TODO: run inference, parse boxes, attach ToF distance.
-        raise NotImplementedError
+        if self.model is None:
+            return []
+        detections: list[dict] = []
+        results = self.model(frame, verbose=False)
+        for res in results:
+            boxes = getattr(res, "boxes", None) or []
+            for box in boxes:
+                conf = float(box.conf[0]) if box.conf is not None else 0.0
+                if conf < self.conf_threshold:
+                    continue
+                cls_id = int(box.cls[0]) if box.cls is not None else -1
+                label = res.names.get(cls_id, str(cls_id)) if hasattr(res, "names") else str(cls_id)
+                xyxy = [float(v) for v in box.xyxy[0]]
+                detections.append(
+                    {
+                        "label": label,
+                        "conf": conf,
+                        "bbox": tuple(xyxy),
+                        "distance_mm": distance_mm,
+                    }
+                )
+        return detections
+
+    def should_stop(self, detections: list[dict]) -> bool:
+        """Decide whether to command a STOP.
+
+        Stop if any detection is closer than the stop distance, or - when ToF
+        distance is unknown - if any obstacle is detected at all (fail-safe).
+        """
+        for det in detections:
+            dist = det.get("distance_mm")
+            if dist is None or dist < self.stop_distance_mm:
+                return True
+        return False

@@ -13,9 +13,11 @@
 #define EVT_DOSE_REQUEST  (1 << 2)  // waypoint reached -> run dosing sequence
 #define EVT_PAUSE_IRRIG   (1 << 3)  // rain detected (relayed from Pi)
 #define EVT_DOSING        (1 << 4)  // dosing in progress -> drive MUST stay stopped
+#define EVT_OBSTACLE      (1 << 5)  // local ultrasonic obstacle within stop distance
+#define EVT_PUMP_DISABLE  (1 << 6)  // tank empty / Pi override -> block dosing
 
 // Bits that must force the drive to a stop.
-#define EVT_DRIVE_INHIBIT (EVT_HALT | EVT_LOW_BATTERY | EVT_DOSING)
+#define EVT_DRIVE_INHIBIT (EVT_HALT | EVT_LOW_BATTERY | EVT_DOSING | EVT_OBSTACLE)
 
 // Shared event group (defined in main.cpp).
 extern EventGroupHandle_t gEvents;

@@ -3,6 +3,7 @@
 
 # --- Vision / AI ---
 opencv-python==4.8.*
+numpy
 tflite-runtime==2.14.*
 ultralytics            # YOLOv8n (obstacle + weed detection)
 # pycoral             # install from Coral's apt/whl for the Edge TPU delegate
@@ -16,6 +17,7 @@ smbus2               # I2C: INA219, MPU6050, VL53L1X, OLED, PCF8574
 # --- Stream processing + dashboard ---
 pathway
 streamlit==1.28.*
+pandas
 folium
 pydeck
 
