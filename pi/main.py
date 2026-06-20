@@ -25,8 +25,11 @@ sys.path.append(os.path.dirname(__file__))
 from actuators import Pcf8574  # noqa: E402
 from ai.obstacle_detection import ObstacleDetector  # noqa: E402
 from ai.weed_detection import WeedDetector  # noqa: E402
+from ai.disease_detection import DiseaseClassifier  # noqa: E402
+from ai.plant_tagging import CameraGeometry, tag_plant  # noqa: E402
 from bridge.serial_bridge import SerialBridge  # noqa: E402
 from control.imu import MPU6050  # noqa: E402
+from data.plant_db import PlantDB  # noqa: E402
 from data.recorder import BlackBox  # noqa: E402
 from sensors.current_monitor import CurrentMonitor  # noqa: E402
 from sensors.fuel_gauge import FuelGauge  # noqa: E402
@@ -51,25 +54,34 @@ def _open_camera(index: int):
 
 
 class Orchestrator:
-    def __init__(self, camera_index: int = 0, weed_every: int = 15):
+    def __init__(self, camera_index: int = 0, weed_every: int = 15,
+                 plant_db_path: str = "plant_db.json"):
         self.weed_every = weed_every
         self.obstacle = ObstacleDetector()
         self.weed = WeedDetector()
+        self.disease = DiseaseClassifier()
         self.actuators = Pcf8574()
         self.serial = SerialBridge()
         self.imu = MPU6050()
         self.current_mon = CurrentMonitor()
         self.fuel = FuelGauge()
         self.blackbox = BlackBox()
+        self.plant_db = PlantDB(path=plant_db_path)
+        self.cam_geom = CameraGeometry()
         self.cap = _open_camera(camera_index)
         self._stopped = False
         self._frame_no = 0
         self._last_ping = 0.0
         self._last_fuel = 0.0
+        # Rover pose (x, y, heading) and GPS datum for plant tagging.
+        # Updated externally or via EKF; default to origin.
+        self._rover_pose: tuple[float, float, float] = (0.0, 0.0, 0.0)
+        self._gps_datum: tuple[float, float] = (0.0, 0.0)
 
     def setup(self) -> None:
         self.obstacle.load()
         self.weed.load()
+        self.disease.load()
         try:
             self.serial.open()
         except Exception as exc:
@@ -123,11 +135,41 @@ class Orchestrator:
                 self.blackbox.log("resume", {})
 
         # Spot-spray on weed detection, but never while halted.
+        # Also run disease classification and record the observation in the
+        # per-plant database for health history tracking.
         if not self._stopped and self._frame_no % self.weed_every == 0:
-            if self.weed.detect(frame):
+            weed_result = self.weed.detect(frame)
+            if weed_result:
                 logger.info("WEED -> spray burst")
                 self.actuators.spray()
                 self.blackbox.log("spray", {"frame": self._frame_no})
+
+            # Disease classification on the same frame.
+            disease_class, confidence = self.disease.classify(frame)
+            if confidence > 0.3:
+                # Attempt to geo-tag the detection for plant DB.
+                h, w = (frame.shape[0], frame.shape[1]) if hasattr(frame, "shape") else (480, 640)
+                # Use center of frame as the bounding box (full-frame classify).
+                bbox = (w * 0.25, h * 0.25, w * 0.75, h * 0.75)
+                pos = tag_plant(bbox, w, h, self.cam_geom,
+                                self._rover_pose, self._gps_datum)
+                if pos is not None:
+                    lat, lng = pos
+                    pid = self.plant_db.record_observation(
+                        lat=lat, lng=lng,
+                        disease_class=disease_class,
+                        confidence=confidence,
+                        notes="weed" if weed_result else "",
+                    )
+                    self.blackbox.log("plant_obs", {
+                        "plant_id": pid,
+                        "disease": disease_class,
+                        "conf": round(confidence, 3),
+                        "lat": round(lat, 7),
+                        "lng": round(lng, 7),
+                    })
+                    logger.debug("plant %s: %s (%.0f%%)", pid,
+                                 disease_class, confidence * 100)
 
         # Battery fuel gauge (coulomb counting) ~1 Hz.
         if now - self._last_fuel >= 1.0:
@@ -160,6 +202,7 @@ class Orchestrator:
         finally:
             self._send("STOP")
             self.actuators.all_off()
+            self.plant_db.close()
             self.cap.release()
             cv2.destroyAllWindows()
 

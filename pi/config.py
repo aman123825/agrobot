@@ -53,3 +53,7 @@ USE_CORAL = os.getenv("USE_CORAL", "1") == "1"
 # --- Telegram alerts ---
 TELEGRAM_TOKEN = os.getenv("TELEGRAM_TOKEN", "")
 TELEGRAM_CHAT_ID = os.getenv("TELEGRAM_CHAT_ID", "")
+
+# --- Plant database ---
+PLANT_DB_PATH = os.getenv("PLANT_DB_PATH", "plant_db.json")
+PLANT_MATCH_TOLERANCE_M = float(os.getenv("PLANT_MATCH_TOLERANCE_M", "0.5"))
