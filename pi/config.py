@@ -8,7 +8,11 @@ import os
 
 # --- MQTT (Mosquitto runs locally on the Pi) ---
 MQTT_HOST = os.getenv("MQTT_HOST", "localhost")
-MQTT_PORT = int(os.getenv("MQTT_PORT", "1883"))
+MQTT_TLS = os.getenv("MQTT_TLS", "0") == "1"
+MQTT_PORT = int(os.getenv("MQTT_PORT", "8883" if MQTT_TLS else "1883"))
+MQTT_USERNAME = os.getenv("MQTT_USERNAME", "")
+MQTT_PASSWORD = os.getenv("MQTT_PASSWORD", "")
+MQTT_CA_CERT = os.getenv("MQTT_CA_CERT", "")  # path to broker CA when TLS is on
 TOPICS = {
     "npk": "rover/npk",
     "gps": "rover/gps",

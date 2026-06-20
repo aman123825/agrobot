@@ -7,18 +7,49 @@
  */
 #pragma once
 
-// ---- WiFi / MQTT (override in secrets.h or platformio build flags) ----
+// Local secrets (gitignored). Copy include/secrets.example.h -> include/secrets.h
+// and fill in real values, or pass -D flags from platformio.ini build_flags.
+#if defined(__has_include)
+#  if __has_include("secrets.h")
+#    include "secrets.h"
+#  endif
+#endif
+
+// ---- WiFi ----
 #ifndef WIFI_SSID
 #define WIFI_SSID        "CHANGE_ME"
 #endif
 #ifndef WIFI_PASSWORD
 #define WIFI_PASSWORD    "CHANGE_ME"
 #endif
+
+// ---- MQTT ----
 #ifndef MQTT_BROKER_HOST
 #define MQTT_BROKER_HOST "192.168.1.10"   // Pi running Mosquitto
 #endif
-#define MQTT_BROKER_PORT 1883
+#ifndef MQTT_USER
+#define MQTT_USER        "agrorover"
+#endif
+#ifndef MQTT_PASS
+#define MQTT_PASS        ""               // set in secrets.h - never commit
+#endif
+// Define MQTT_USE_TLS (and provide MQTT_CA_CERT in secrets.h) for encrypted MQTT.
+#ifdef MQTT_USE_TLS
+#  define MQTT_BROKER_PORT 8883
+#else
+#  define MQTT_BROKER_PORT 1883
+#endif
 #define MQTT_CLIENT_ID   "agrorover-esp32"
+
+// ---- Authenticated command link (HMAC-SHA256 + anti-replay) ----
+// Shared 32+ byte random secret, identical to the Pi's AGRO_LINK_KEY.
+// Set it in secrets.h. The default below is a placeholder and MUST be changed.
+#ifndef COMMAND_HMAC_KEY
+#define COMMAND_HMAC_KEY "CHANGE_ME_32_BYTE_RANDOM_SECRET!"
+#endif
+#define CMD_AUTH_TRUNC_BYTES     16     // HMAC truncated to 128 bits (32 hex chars)
+#define CMD_FAIL_LOCK_THRESHOLD  8      // bad signatures before lockout
+#define CMD_LOCK_COOLDOWN_MS     10000  // lockout duration after threshold
 
 // ---- MQTT topics (match docs/circuit-diagram.md §4.4 + BOM #101) ----
 #define TOPIC_NPK     "rover/npk"

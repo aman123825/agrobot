@@ -19,6 +19,12 @@ class MqttClient:
         self._handlers: dict[str, Callable[[str], None]] = {}
         self._client.on_message = self._on_message
 
+        # Authentication + optional TLS (hardening).
+        if config.MQTT_USERNAME:
+            self._client.username_pw_set(config.MQTT_USERNAME, config.MQTT_PASSWORD)
+        if config.MQTT_TLS:
+            self._client.tls_set(ca_certs=config.MQTT_CA_CERT or None)
+
     def connect(self) -> None:
         self._client.connect(self.host, self.port)
 

@@ -1,0 +1,12 @@
+# Mosquitto ACL for AgriRover -> /etc/mosquitto/acl
+# The ESP32 may only publish telemetry; dashboard/pipeline may only read.
+# No client may publish arbitrary control topics over MQTT.
+
+user agrorover
+topic write rover/npk
+topic write rover/gps
+topic write rover/status
+topic write rover/alert
+
+user dashboard
+topic read rover/#

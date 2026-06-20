@@ -60,6 +60,7 @@ public:
     void flush() {}
     int  printf(const char* fmt, ...) { (void)fmt; return 0; }
     size_t print(const char* s) { (void)s; return 0; }
+    size_t println(const char* s) { (void)s; return 0; }
 };
 
 extern HardwareSerial Serial;

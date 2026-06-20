@@ -1,13 +1,16 @@
 /**
- * comms.cpp - WiFi/MQTT publish + the UART command link to the Raspberry Pi.
+ * comms.cpp - WiFi/MQTT publish + the AUTHENTICATED UART command link to the Pi.
  *
- * Pi -> ESP32 (newline-terminated commands over UART0):
+ * Inbound commands must be HMAC-signed envelopes (see secure_link.h). Plain or
+ * replayed commands are rejected. Recognized inner commands:
  *   STOP, RESUME, EVT_TILT_HALT          - hard halt / release
  *   FWD, BACK, LEFT, RIGHT, DRIVE_STOP   - manual drive
  *   DOSE                                 - request one dosing cycle
- *   PUMP_DISABLE, PUMP_ENABLE            - block / allow dosing (tank empty)
+ *   PUMP_DISABLE, PUMP_ENABLE            - block / allow dosing
  *   PAUSE_IRRIGATION, RESUME_IRRIGATION  - rain pause
- * ESP32 -> Pi: "ACK <cmd>" plus periodic telemetry is published over MQTT.
+ *
+ * MQTT uses username/password and, when MQTT_USE_TLS is defined, TLS with a
+ * pinned CA certificate.
  */
 #include <Arduino.h>
 #include <WiFi.h>
@@ -16,32 +19,45 @@
 #include "events.h"
 #include "sensors.h"
 #include "drive.h"
+#include "secure_link.h"
 #include "comms.h"
 
-static WiFiClient         wifiClient;
-static PubSubClient       mqtt(wifiClient);
+#ifdef MQTT_USE_TLS
+#include <WiFiClientSecure.h>
+static WiFiClientSecure netClient;
+#else
+static WiFiClient netClient;
+#endif
+
+static PubSubClient       mqtt(netClient);
 static EventGroupHandle_t sEvents = nullptr;
 static unsigned long      sLastReconnectMs = 0;
+static unsigned long      sLastTamperAlertMs = 0;
 
 static void ensureConnected() {
-    // Throttle reconnect attempts so we never block the drive loop hard.
     if (WiFi.status() == WL_CONNECTED && mqtt.connected()) return;
     unsigned long now = millis();
-    if (now - sLastReconnectMs < 3000) return;
+    if (now - sLastReconnectMs < 3000) return;   // throttle; never block the loop hard
     sLastReconnectMs = now;
 
     if (WiFi.status() != WL_CONNECTED) {
-        WiFi.begin(WIFI_SSID, WIFI_PASSWORD);   // non-blocking
+        WiFi.begin(WIFI_SSID, WIFI_PASSWORD);     // non-blocking
+        return;
     }
-    if (WiFi.status() == WL_CONNECTED && !mqtt.connected()) {
+    if (!mqtt.connected()) {
         mqtt.setServer(MQTT_BROKER_HOST, MQTT_BROKER_PORT);
-        mqtt.connect(MQTT_CLIENT_ID);
+        mqtt.connect(MQTT_CLIENT_ID, MQTT_USER, MQTT_PASS);  // authenticated
     }
 }
 
 void comms_init(EventGroupHandle_t events) {
     sEvents = events;
+    secure_link_init(COMMAND_HMAC_KEY, strlen(COMMAND_HMAC_KEY));
+
     WiFi.mode(WIFI_STA);
+#ifdef MQTT_USE_TLS
+    netClient.setCACert(MQTT_CA_CERT);            // pin the broker's CA
+#endif
     WiFi.begin(WIFI_SSID, WIFI_PASSWORD);
     mqtt.setServer(MQTT_BROKER_HOST, MQTT_BROKER_PORT);
 }
@@ -77,37 +93,51 @@ void comms_publish_alert(const char* msg) {
     if (mqtt.connected()) mqtt.publish(TOPIC_ALERT, msg);
 }
 
-static void handleCommand(const char* cmd) {
+static void executeCommand(const char* cmd) {
     const int spd = MANUAL_DRIVE_SPEED;
 
     if      (!strcmp(cmd, "STOP") || !strcmp(cmd, "EVT_TILT_HALT"))
         xEventGroupSetBits(sEvents, EVT_HALT);
-    else if (!strcmp(cmd, "RESUME"))
-        xEventGroupClearBits(sEvents, EVT_HALT);
-    else if (!strcmp(cmd, "FWD"))         drive_set(spd,  spd);
-    else if (!strcmp(cmd, "BACK"))        drive_set(-spd, -spd);
-    else if (!strcmp(cmd, "LEFT"))        drive_set(-spd, spd);
-    else if (!strcmp(cmd, "RIGHT"))       drive_set(spd,  -spd);
-    else if (!strcmp(cmd, "DRIVE_STOP"))  drive_set(0, 0);
-    else if (!strcmp(cmd, "DOSE"))        xEventGroupSetBits(sEvents, EVT_DOSE_REQUEST);
-    else if (!strcmp(cmd, "PUMP_DISABLE"))xEventGroupSetBits(sEvents, EVT_PUMP_DISABLE);
-    else if (!strcmp(cmd, "PUMP_ENABLE")) xEventGroupClearBits(sEvents, EVT_PUMP_DISABLE);
+    else if (!strcmp(cmd, "RESUME"))            xEventGroupClearBits(sEvents, EVT_HALT);
+    else if (!strcmp(cmd, "FWD"))               drive_set(spd,  spd);
+    else if (!strcmp(cmd, "BACK"))              drive_set(-spd, -spd);
+    else if (!strcmp(cmd, "LEFT"))              drive_set(-spd, spd);
+    else if (!strcmp(cmd, "RIGHT"))             drive_set(spd,  -spd);
+    else if (!strcmp(cmd, "DRIVE_STOP"))        drive_set(0, 0);
+    else if (!strcmp(cmd, "DOSE"))              xEventGroupSetBits(sEvents, EVT_DOSE_REQUEST);
+    else if (!strcmp(cmd, "PUMP_DISABLE"))      xEventGroupSetBits(sEvents, EVT_PUMP_DISABLE);
+    else if (!strcmp(cmd, "PUMP_ENABLE"))       xEventGroupClearBits(sEvents, EVT_PUMP_DISABLE);
     else if (!strcmp(cmd, "PAUSE_IRRIGATION"))  xEventGroupSetBits(sEvents, EVT_PAUSE_IRRIG);
     else if (!strcmp(cmd, "RESUME_IRRIGATION")) xEventGroupClearBits(sEvents, EVT_PAUSE_IRRIG);
-    else { Serial.printf("NAK %s\n", cmd); return; }
+    else { Serial.printf("NAK unknown %s\n", cmd); return; }
 
     Serial.printf("ACK %s\n", cmd);
 }
 
+static void onAuthFailure(SecureResult r) {
+    // Rate-limit tamper alerts to avoid flooding under attack.
+    unsigned long now = millis();
+    if (now - sLastTamperAlertMs > 5000) {
+        sLastTamperAlertMs = now;
+        if (r == SECURE_BAD_SIG || r == SECURE_LOCKED)
+            comms_publish_alert("{\"type\":\"tamper\",\"link\":\"unauthorized_command\"}");
+    }
+    Serial.println("NAK auth");
+}
+
 void comms_poll_pi() {
-    static char line[64];
+    static char line[160];   // signed envelope is longer than a bare command
     static size_t idx = 0;
+    char cmd[48];
+
     while (Serial.available()) {
         char c = (char)Serial.read();
         if (c == '\n' || c == '\r') {
             if (idx > 0) {
                 line[idx] = '\0';
-                handleCommand(line);
+                SecureResult r = secure_link_check(line, cmd, sizeof(cmd));
+                if (r == SECURE_OK) executeCommand(cmd);
+                else                onAuthFailure(r);
                 idx = 0;
             }
         } else if (idx < sizeof(line) - 1) {
