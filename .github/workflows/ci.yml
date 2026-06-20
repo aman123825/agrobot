@@ -60,6 +60,19 @@ jobs:
       - name: Ruff lint
         run: cd pi && ruff check .
 
+      - name: Validate training notebooks
+        run: |
+          python -c "
+          import json, sys
+          notebooks = ['training/disease_classification.ipynb', 'training/weed_detection.ipynb', 'training/obstacle_detection.ipynb']
+          for nb_path in notebooks:
+              with open(nb_path) as f:
+                  nb = json.load(f)
+              assert nb.get('nbformat') == 4, f'{nb_path}: bad nbformat'
+              assert len(nb.get('cells', [])) >= 8, f'{nb_path}: too few cells'
+              print(f'{nb_path}: OK ({len(nb[\"cells\"])} cells)')
+          "
+
       - name: Python import smoke test
         run: |
           cd pi
