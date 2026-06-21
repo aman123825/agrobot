@@ -140,7 +140,9 @@
 //     extra GPIO. 1 = Branch B (DC reversible): a DPDT relay on PIN_ACTUATOR_DIR
 //     flips polarity to power the retract phase. Leave at 0 unless a reversible
 //     actuator + DPDT relay are physically wired (see pins.h / circuit §5.2).
+#ifndef ACTUATOR_DC_REVERSIBLE
 #define ACTUATOR_DC_REVERSIBLE 0
+#endif
 
 // ---- FreeRTOS task config ----
 #define TASK_DRIVE_CORE    1
