@@ -36,14 +36,14 @@ flowchart TB
   EN["E-STOP NC"] -->|EN pin| E
 
   subgraph DRIVE["DRIVE"]
-    L1["L298N #1 LEFT"]
-    L2["L298N #2 RIGHT"]
+    L1["BTS7960 #1 LEFT"]
+    L2["BTS7960 #2 RIGHT"]
     M["4x Gear Motors<br/>+1N5819 flyback each"]
   end
   BUS === L1
   BUS === L2
-  E -->|"19,21 IN1/2 · 32 ENA"| L1
-  E -->|"22,23 IN3/4 · 33 ENB"| L2
+  E -->|"19 RPWM · 21 LPWM"| L1
+  E -->|"22 RPWM · 23 LPWM"| L2
   L1 --> M
   L2 --> M
 
@@ -100,12 +100,14 @@ flowchart TB
   P --- PCF
   P --- ADS
 
-  subgraph CUR["CURRENT SENSE"]
-    ACSL["ACS712 left rail"]
-    ACSR["ACS712 right rail"]
+  subgraph CUR["CURRENT SENSE + PACK TEMP"]
+    ACSL["ACS712 left rail (opt: BTS7960 IS)"]
+    ACSR["ACS712 right rail (opt: BTS7960 IS)"]
+    NTC["10k NTC on battery pack"]
   end
   ACSL -->|A0| ADS
   ACSR -->|A1| ADS
+  NTC -->|A2| ADS
 
   subgraph PISENS["Pi GPIO"]
     ENCL["Left encoder = 17"]
@@ -116,6 +118,8 @@ flowchart TB
     WS["WS2812B = 18 (level-shift)"]
     BTN["Buttons = 5,6,12,16"]
     MODE["Mode sel = 20,21"]
+    SPAN["Spray pan servo = 13 (PWM)"]
+    STILT["Spray tilt servo = 19 (PWM)"]
   end
   P --- ENCL
   P --- ENCR
@@ -125,6 +129,8 @@ flowchart TB
   P --- WS
   P --- BTN
   P --- MODE
+  P --- SPAN
+  P --- STILT
 
   subgraph SPI["Pi SPI0"]
     LORA["LoRa SX1276 NSS=CE0(8)"]
@@ -164,9 +170,9 @@ flowchart TB
 ### ESP32 DevKit V1
 | Pin | Net | Notes |
 |-----|-----|-------|
-| 19, 21 | L298N#1 IN1, IN2 | left motor dir |
-| 22, 23 | L298N#2 IN3, IN4 | right motor dir |
-| 32, 33 | ENA, ENB | LEDC PWM speed |
+| 19, 21 | BTS7960#1 RPWM, LPWM | left fwd/rev (BTS7960, FC-10) |
+| 22, 23 | BTS7960#2 RPWM, LPWM | right fwd/rev (BTS7960, FC-10) |
+| 32, 33 | free (was L298N ENA/ENB) | BTS7960 R_EN/L_EN tied to 3.3V |
 | 25 | HC-SR04 TRIG | |
 | 18 | HC-SR04 ECHO | **via 2.2k/3.9k divider -> 3.2V** |
 | 27 | SG90 servo (ultrasonic sweep) | 50 Hz |
@@ -179,6 +185,7 @@ flowchart TB
 | 15 | -> Neo-6M RX (DGPS) | **NEW**, optional |
 | 26 | Relay Ch1 (pump) | **add 10k pull-up** |
 | 13 | Relay Ch2 (actuator) | **add 10k pull-up** |
+| 2 | DPDT actuator direction | **Branch B only** (FC-03); idle unless `ACTUATOR_DC_REVERSIBLE=1` |
 | EN | E-stop (NC -> GND) | hardware kill |
 | VIN | 5V rail via **ferrite bead** | |
 | TX0/RX0 | CP2102 -> Pi (USB) | authenticated link |
@@ -195,6 +202,8 @@ flowchart TB
 | 18 | WS2812B data | **moved from 23**; 3.3->5V level shifter |
 | 5, 6, 12, 16 | Buttons U/D/L/R | 10k pull-ups |
 | 20, 21 | Mode selector | 2-line, 3 positions |
+| 13 | Spray pan servo | **NEW** (FC-01); hardware-PWM SG90 |
+| 19 | Spray tilt servo | **NEW** (FC-01); hardware-PWM SG90 |
 | 8 (CE0) | LoRa NSS | |
 | 7 (CE1) | SD card CS | |
 | 10/9/11 | SPI MOSI/MISO/SCLK | shared LoRa + SD |
@@ -204,8 +213,9 @@ flowchart TB
 ### ADS1115 (NEW)
 | Input | From |
 |-------|------|
-| A0 | ACS712 left motor rail |
-| A1 | ACS712 right motor rail |
+| A0 | ACS712 left motor rail *(or BTS7960 #1 IS, optional — FC-10)* |
+| A1 | ACS712 right motor rail *(or BTS7960 #2 IS, optional — FC-10)* |
+| A2 | Battery-pack 10kΩ NTC thermistor *(NEW — FC-02 thermal guardian)* |
 
 ### PCF8574 expander
 | Bit | Net |
@@ -218,7 +228,7 @@ flowchart TB
 ### Power chain
 `LiPo(+) -> Blade Fuse 25-30A -> Anti-Spark XT60 -> Rocker Switch -> 11.1V BUS`
 `BUS -> LM2596 (set 5.00V) -> 5V rail (1000uF caps) -> ferrite -> ESP32 VIN`
-`BUS === L298N x2, Relay COM` · `P6KE15A TVS across BUS` · `1N5819 across each motor`
+`BUS === BTS7960 x2, Relay COM` · `P6KE15A TVS across BUS` · `1N5819 across each motor`
 `Pi <- 10000mAh power bank (separate domain)` · `Solar -> TP4056 -> LiPo`
 Common ground star point at LiPo (-).
 
@@ -229,3 +239,7 @@ Common ground star point at LiPo (-).
 - **Assigned:** mode selector 20/21 · buttons 5/6/12/16
 - **Added:** ADS1115 (0x48) + 2x ACS712 on motor rails · GPS-RX wire on ESP32 GPIO15
 - **Safety wiring:** moisture+TDS on 3.3V · 10k pull-ups on relays (13,26) · 4.7k I2C pull-ups · fuse+anti-spark+ferrite+flyback+TVS
+- **FC-10 drive:** L298N ×2 -> **2× BTS7960 (IBT-2)**; ESP32 19/21 + 22/23 are RPWM/LPWM; GPIO32/33 freed; R_EN/L_EN tied to 3.3V; optional BTS7960 **IS** -> ADS1115 (can drop the 2× ACS712)
+- **FC-02 thermal:** **10k NTC** on battery pack -> **ADS1115 A2**; reflective enclosure / sun shade; ESP32 die-temp overtemp halt; cool-hours mission window
+- **FC-01 aimed spray:** **pan/tilt SG90 ×2** on Pi **GPIO13 (pan) / GPIO19 (tilt)** (hardware-PWM)
+- **FC-03 actuator:** Branch B (DC-reversible) **code-ready** behind `ACTUATOR_DC_REVERSIBLE` (default off); DPDT direction line on ESP32 **GPIO2** when enabled

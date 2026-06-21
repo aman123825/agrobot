@@ -122,11 +122,25 @@
 #define LIPO_CUTOFF_V      9.9f   // triggers EVT_LOW_BATTERY -> return-to-base
 #define VBAT_DIVIDER_RATIO (10.0f / (39.0f + 10.0f))  // 39k/10k
 
+// ---- Thermal guardian (FC-02): ESP32 die-temperature limits ----
+// temperatureRead() returns the internal SoC temperature (degC). Above the
+// limit we assert EVT_OVERTEMP (in EVT_DRIVE_INHIBIT) and publish one alert;
+// the bit clears below the lower threshold (hysteresis) to avoid chatter.
+#define ESP32_OVERTEMP_C        85.0f  // assert EVT_OVERTEMP at/above this
+#define ESP32_OVERTEMP_CLEAR_C  80.0f  // clear EVT_OVERTEMP below this
+
 // ---- Dosing sequence timing (circuit §5.2) ----
 #define DOSE_PRESOAK_MS   1500    // Ch1 pump pre-soak before actuator extends
 #define DOSE_DWELL_MS      800    // hold at full insertion before dosing
 #define DOSE_INJECT_MS    1500    // micro-dose pulse (1ml @ 40ml/min peristaltic)
 #define ACTUATOR_TRAVEL_MS 4000   // worst-case extend/retract (limit-switch backed)
+
+// ---- Actuator retraction type (FC-03) ----
+// 0 = Branch A (spring-return): de-energizing Ch2 retracts. Default; needs no
+//     extra GPIO. 1 = Branch B (DC reversible): a DPDT relay on PIN_ACTUATOR_DIR
+//     flips polarity to power the retract phase. Leave at 0 unless a reversible
+//     actuator + DPDT relay are physically wired (see pins.h / circuit §5.2).
+#define ACTUATOR_DC_REVERSIBLE 0
 
 // ---- FreeRTOS task config ----
 #define TASK_DRIVE_CORE    1

@@ -2,8 +2,8 @@
  * servo.h - SG90 servo driver for the ultrasonic sweep mount (GPIO27).
  *
  * Uses LEDC channel LEDC_CH_SERVO at 50 Hz. This channel maps to a different
- * LEDC timer than the motor PWM channels (0/1), so there is no interference
- * with the 1 kHz drive PWM.
+ * LEDC timer (channel 4 -> timer 2) than the four BTS7960 motor PWM channels
+ * (0-3 -> timers 0/1), so there is no interference with the 1 kHz drive PWM.
  */
 #pragma once
 #include <stdint.h>

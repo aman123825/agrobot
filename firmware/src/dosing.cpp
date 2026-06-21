@@ -9,10 +9,11 @@
  * drive task to keep the motors stopped. The rover must not move while the
  * actuator/probe is in the soil.
  *
- * Actuator retraction (OPEN ITEM):
- *   Branch A (spring-return): de-energizing Ch2 retracts. Implemented below.
- *   Branch B (DC reversible): add PIN_ACTUATOR_DIR + DPDT relay, flip polarity
- *                             before the retract phase. See pins.h.
+ * Actuator retraction (FC-03, config.h ACTUATOR_DC_REVERSIBLE):
+ *   Branch A (spring-return, flag=0, default): de-energizing Ch2 retracts.
+ *   Branch B (DC reversible, flag=1): a DPDT relay on PIN_ACTUATOR_DIR flips
+ *                             polarity to actively drive the retract phase.
+ *                             Compiles both ways; see pins.h / config.h.
  */
 #include <Arduino.h>
 #include "pins.h"
@@ -32,6 +33,11 @@ void dosing_init(EventGroupHandle_t events) {
     pinMode(PIN_RELAY_ACTUATOR, OUTPUT);
     relayOff(PIN_RELAY_PUMP);
     relayOff(PIN_RELAY_ACTUATOR);
+#if ACTUATOR_DC_REVERSIBLE
+    // Branch B: DPDT direction line idles LOW (extend polarity).
+    pinMode(PIN_ACTUATOR_DIR, OUTPUT);
+    digitalWrite(PIN_ACTUATOR_DIR, LOW);
+#endif
 }
 
 bool dosing_run_sequence() {
@@ -59,10 +65,21 @@ bool dosing_run_sequence() {
     vTaskDelay(pdMS_TO_TICKS(DOSE_INJECT_MS));
     relayOff(PIN_RELAY_PUMP);
 
-    // 4) Retract.  Branch A: power off = spring return.
-    relayOff(PIN_RELAY_ACTUATOR);
-    // Branch B would set PIN_ACTUATOR_DIR for reverse polarity here.
+    // 4) Retract.
+#if ACTUATOR_DC_REVERSIBLE
+    // Branch B (DC reversible): set the DPDT direction line to reverse polarity,
+    // then power Ch2 to actively drive the actuator back (limit switch ends it),
+    // then de-energize and restore the extend polarity.
+    digitalWrite(PIN_ACTUATOR_DIR, HIGH);
+    relayOn(PIN_RELAY_ACTUATOR);
     vTaskDelay(pdMS_TO_TICKS(ACTUATOR_TRAVEL_MS));
+    relayOff(PIN_RELAY_ACTUATOR);
+    digitalWrite(PIN_ACTUATOR_DIR, LOW);
+#else
+    // Branch A (spring-return): power off = spring pulls the actuator back.
+    relayOff(PIN_RELAY_ACTUATOR);
+    vTaskDelay(pdMS_TO_TICKS(ACTUATOR_TRAVEL_MS));
+#endif
 
     // Release the drive freeze (only this bit; never clears a real EVT_HALT).
     if (sEvents) xEventGroupClearBits(sEvents, EVT_DOSING);

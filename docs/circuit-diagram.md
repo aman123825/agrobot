@@ -37,8 +37,8 @@ flowchart TB
 
     RAIL5 -->|ferrite bead| E32
     PBANK ==> RPI
-    BUS ==> L298L["L298N #1 LEFT"]
-    BUS ==> L298R["L298N #2 RIGHT"]
+    BUS ==> L298L["BTS7960 #1 LEFT"]
+    BUS ==> L298R["BTS7960 #2 RIGHT"]
     BUS ==> RLY["2-Ch Relay COM"]
 
     E32 <-->|"UART via CP2102"| RPI
@@ -71,8 +71,8 @@ Two **independent** 5V domains by design: motors+logic from the LiPo, and the Pi
       │                          ┌─────────────────────╝   ║   ║   ║
       │                          ║   ┌─────────────────────╝   ║   ║
       │                  ┌───────▼───────┐                     ║   ║
-      │                  │  LM2596 BUCK  │            L298N#1◄══╝   ║
-      │                  │ 11.1V → 5.00V │            L298N#2◄══════╝
+      │                  │  LM2596 BUCK  │            BTS7960#1◄╝   ║
+      │                  │ 11.1V → 5.00V │            BTS7960#2◄════╝
       │                  │ (set w/ DMM)  │            Relay COM ◄═══ (12V loads)
       │                  └───────┬───────┘            P6KE15A TVS ── across bus
       │                          │ 5.00V LOGIC RAIL
@@ -89,7 +89,7 @@ Two **independent** 5V domains by design: motors+logic from the LiPo, and the Pi
       │
    ╔══▼═══════════════════════════════════════════════════════════╗
    ║  COMMON GROUND STAR POINT  (LiPo (-) = buck GND = Pi GND =    ║
-   ║  L298N GND = relay GND = all sensor GND = power bank GND)     ║
+   ║  BTS7960 GND = relay GND = all sensor GND = power bank GND)   ║
    ╚══════════════════════════════════════════════════════════════╝
 ```
 
@@ -98,8 +98,8 @@ Two **independent** 5V domains by design: motors+logic from the LiPo, and the Pi
 | Item | Part | Placement | Purpose |
 |------|------|-----------|---------|
 | Fuse | Blade 25–30A | series, LiPo (+) before bus | fault-current cutoff (LiPo can dump 55A into a short) |
-| Anti-spark | XT60 w/ pre-charge | LiPo → bus | limits inrush into 1000µF + L298N caps |
-| TVS | P6KE15A ×2 | across 11.1V bus at L298N | clamps motor-reversal transients |
+| Anti-spark | XT60 w/ pre-charge | LiPo → bus | limits inrush into 1000µF + BTS7960 caps |
+| TVS | P6KE15A ×2 | across 11.1V bus at BTS7960 | clamps motor-reversal transients |
 | Flyback | 1N5819 ×4 | across each motor terminal | clamps back-EMF on motor stop |
 | Bulk | 1000µF 16V ×2 | across 5V rail | absorbs WiFi/servo current spikes |
 | Ferrite bead | series | 5V into ESP32 VIN | blocks HF motor noise → prevents brownout |
@@ -124,12 +124,12 @@ flowchart LR
         TX0["TX0/RX0 USB"]
     end
 
-    P19 --- L1["L298N#1 IN1"]
-    P21 --- L2["L298N#1 IN2"]
-    P22 --- L3["L298N#2 IN3"]
-    P23 --- L4["L298N#2 IN4"]
-    P32 --- ENA["L298N ENA (PWM)"]
-    P33 --- ENB["L298N ENB (PWM)"]
+    P19 --- L1["BTS7960#1 RPWM (left fwd)"]
+    P21 --- L2["BTS7960#1 LPWM (left rev)"]
+    P22 --- L3["BTS7960#2 RPWM (right fwd)"]
+    P23 --- L4["BTS7960#2 LPWM (right rev)"]
+    P32 --- ENA["free (was L298N ENA)"]
+    P33 --- ENB["free (was L298N ENB)"]
     P25 --- TRIG["HC-SR04 front TRIG"]
     P18 --- ECHO["HC-SR04 front ECHO (via divider)"]
     P27 --- SERVO["SG90 ultrasonic sweep"]
@@ -152,12 +152,12 @@ flowchart LR
 
 | ESP32 Pin | Net | Connects To | Type | Notes |
 |-----------|-----|-------------|------|-------|
-| GPIO19 | IN1 | L298N #1 IN1 | OUT | left motor dir |
-| GPIO21 | IN2 | L298N #1 IN2 | OUT | left motor dir |
-| GPIO22 | IN3 | L298N #2 IN3 | OUT | right motor dir |
-| GPIO23 | IN4 | L298N #2 IN4 | OUT | right motor dir |
-| GPIO32 | ENA | L298N ENA (both, or per-side) | PWM (LEDC) | left speed |
-| GPIO33 | ENB | L298N ENB | PWM (LEDC) | right speed |
+| GPIO19 | L_RPWM | BTS7960 #1 RPWM | PWM (LEDC) | left forward |
+| GPIO21 | L_LPWM | BTS7960 #1 LPWM | PWM (LEDC) | left reverse |
+| GPIO22 | R_RPWM | BTS7960 #2 RPWM | PWM (LEDC) | right forward |
+| GPIO23 | R_LPWM | BTS7960 #2 LPWM | PWM (LEDC) | right reverse |
+| GPIO32 | — | free (was L298N ENA) | — | BTS7960 R_EN/L_EN tied to 3.3V |
+| GPIO33 | — | free (was L298N ENB) | — | reclaimable; optional EN drive |
 | GPIO25 | TRIG | HC-SR04 front TRIG | OUT | 3.3V trigger OK |
 | GPIO18 | ECHO | HC-SR04 front ECHO | IN | **via 2.2k/3.9k divider → 3.2V** |
 | GPIO27 | SERVO | SG90 ultrasonic mount signal | PWM | 180° sweep |
@@ -172,13 +172,18 @@ flowchart LR
 | GPIO15 | GPS_TX | Neo-6M RX | UART1 TX | DGPS/RTCM injection (optional); strapping-safe (idles HIGH) |
 | GPIO26 | RLY1 | Relay Ch1 (pump) | OUT | active per module logic |
 | GPIO13 | RLY2 | Relay Ch2 (actuator) | OUT | sequenced after Ch1 |
+| GPIO2 | ACT_DIR | DPDT direction (Branch B only) | OUT | FC-03, idle unless `ACTUATOR_DC_REVERSIBLE=1` |
 | EN | E-STOP | E-Stop NC → GND | RST | pulls EN low = halt |
 | TX0/RX0 | USB | CP2102 → Pi | UART0 | AI command link |
 | 3V3 | 3.3V | DHT pull-up, dividers top ref | PWR | |
 | VIN | 5V | from 5V rail **via ferrite bead** | PWR | |
 | GND | GND | common star ground | PWR | |
 
-> **ESP32 is fully allocated.** Any new control line (e.g. actuator DPDT direction in Branch B) requires reclaiming a pin or adding an I2C expander on the ESP32's *own* bus — do not route time-critical dosing through the Pi's PCF8574.
+> **ESP32 drive pins freed by the BTS7960 swap.** Moving to dual-PWM BTS7960
+> drivers releases GPIO32/33 (the old L298N ENA/ENB). Branch B's actuator DPDT
+> direction line now uses **GPIO2** (a strapping pin left free); GPIO32/33 remain
+> available for future control lines. Do not route time-critical dosing through
+> the Pi's PCF8574.
 
 ---
 
@@ -250,6 +255,8 @@ flowchart LR
 | GPIO18 | WS_DIN | WS2812B data-in (PWM/DMA) | digital | required by rpi_ws281x; level-shift 3.3V→5V |
 | GPIO5/6/12/16 | BTN_U/D/L/R | 4× directional buttons (#61) | digital | 10k pull-ups, GND on press |
 | GPIO20/21 | MODE_A/B | 3-pos mode selector (#60) | digital | 2 lines encode AUTO/MANUAL/SCAN |
+| GPIO13 | SERVO_PAN | Pan SG90 (aimed spray, FC-01) | PWM | hardware-PWM (PWM1); nozzle lateral aim |
+| GPIO19 | SERVO_TILT | Tilt SG90 (aimed spray, FC-01) | PWM | hardware-PWM (PWM1); nozzle height aim |
 | GPIO8 (CE0) | LoRa_NSS | LoRa SX1276 chip-select | SPI | |
 | GPIO7 (CE1) | SD_CS | SD card module chip-select | SPI | |
 | GPIO10/9/11 | SPI0 | MOSI/MISO/SCLK shared | SPI | LoRa + SD share the bus |
@@ -287,6 +294,7 @@ Each device: 100nF decoupling cap across its VCC–GND, within 5mm of the chip (
 ADS1115 (16-bit ADC) reads two ACS712-30A motor-current sensors (A0=left rail,
 A1=right rail) for stall/over-current detection — neither the ESP32 (ADC1 full)
 nor the Pi (no ADC) has a free analog input, so the ADS1115 provides it.
+A2 reads the **battery-pack 10kΩ NTC thermistor** (FC-02 thermal guardian).
 
 ### 4.2 RS485 — NPK probe (ESP32 UART2)
 ```
@@ -319,33 +327,50 @@ ESP32 → Pi:  sensor_ack, gps_coords, battery_pct, mode_status, rover_velocity_
 
 ## 5. Motor Drive, Relay Sequencing & Expander
 
-### 5.1 Four-wheel tank drive (2× L298N)
+### 5.1 Four-wheel tank drive (2× BTS7960 / IBT-2) — FC-10
 ```
         11.1V BUS ═══════════════╦═══════════════════╗
-                                 ║ +12V              ║ +12V
+                                 ║ +Vmot             ║ +Vmot
                         ┌────────▼────────┐  ┌────────▼────────┐
-   ESP32 IN1/IN2/ENA ──►│   L298N #1 LEFT │  │ L298N #2 RIGHT  │◄── IN3/IN4/ENB
-                        │ [14mm heatsink] │  │ [14mm heatsink] │
+ESP32 19/21 (R/LPWM) ─►│  BTS7960 #1 LEFT│  │BTS7960 #2 RIGHT │◄─ 22/23 (R/LPWM)
+                        │ R_EN+L_EN→3.3V  │  │ R_EN+L_EN→3.3V  │
                         └──┬───────────┬──┘  └──┬───────────┬──┘
-                       OUT1│          OUT2     OUT3         OUT4
+                       M+  │          M-       M+           │ M-
                            │           │        │           │
                       ┌────▼──┐   ┌────▼──┐ ┌───▼───┐  ┌────▼──┐
                       │MotorFL│   │MotorRL│ │MotorFR│  │MotorRR│   (1N5819 across
                       └───────┘   └───────┘ └───────┘  └───────┘    each terminal)
-   Encoders on RL & RR axles ──► Pi GPIO17/18
+   Encoders on RL & RR axles ──► Pi GPIO17/27
 ```
-ENA/ENB driven by ESP32 LEDC PWM (NOT jumpered high) — required for velocity → seed-drop offset.
+
+| Side | RPWM (fwd) | LPWM (rev) | R_EN / L_EN | LEDC ch |
+|------|-----------|-----------|-------------|---------|
+| LEFT  | GPIO19 | GPIO21 | tie to 3.3V | 0 / 1 |
+| RIGHT | GPIO22 | GPIO23 | tie to 3.3V | 2 / 3 |
+
+BTS7960 is a dual half-bridge per board: **forward** = PWM on RPWM with LPWM=0,
+**reverse** = PWM on LPWM with RPWM=0, **stop** = both 0. The four PWM lines are
+LEDC-driven at 1 kHz (timers 0/1); the servo uses LEDC ch4/timer2 at 50 Hz. The
+low Rds(on) MOSFET bridge gives more torque/runtime and the thermal headroom
+that solves the L298N hot-field shutdown (feeds FC-02). The old ENA/ENB speed
+pins (GPIO32/33) are now free. **Optional:** route each driver's current-sense
+**IS** output to the **ADS1115** to replace the 2× ACS712 (see §10.1).
 
 ### 5.2 Relay-driven actuation (dosing sequence)
 ```
 ESP32 GPIO26 ──► Relay Ch1 ──► COM=11.1V ──► 12V Submersible/Peristaltic Pump
 ESP32 GPIO13 ──► Relay Ch2 ──► COM=11.1V ──► 12V Linear Actuator (150N, limit sw)
+ESP32 GPIO2  ──► DPDT direction (Branch B only) ──► actuator polarity reversal
 
 Sequence (Core 0, never simultaneous):
   Ch1 ON 1.5s (pre-soak) → Ch1 OFF → Ch2 ON (extend→limit) → dose → Ch2 OFF (retract)
 ```
-> **OPEN ITEM — actuator retraction:** Branch A (spring-return) = above scheme works as-is.
-> Branch B (DC reversible) = add **DPDT relay** for polarity + 1 control line; let built-in limit switches end travel.
+> **Actuator retraction (FC-03) — code-ready, wiring-pending:** firmware compiles
+> both branches behind `config.h ACTUATOR_DC_REVERSIBLE` (default 0).
+> Branch A (spring-return, flag=0) = above scheme works as-is — **no DPDT relay**.
+> Branch B (DC reversible, flag=1) = add a **DPDT relay** for polarity driven by
+> **GPIO2** (`PIN_ACTUATOR_DIR`); firmware flips it to power the retract phase and
+> the built-in limit switches end travel.
 
 ### 5.3 PCF8574 expander (offloads Pi outputs)
 ```
@@ -439,7 +464,7 @@ Status: **E** = electrically wired in this diagram · **M** = mechanical/consuma
 | # | Component | Status | Where |
 |---|-----------|--------|-------|
 | 20 | 12V gear motor ×4 | E | §5.1 |
-| 21 | L298N ×2 | E | §2, §5.1 |
+| 21 | 2× BTS7960 (IBT-2) | E | §2, §5.1 (replaces L298N ×2, FC-10) |
 | 22 | Hall encoder ×2 | E | §3 (GPIO17/18) |
 | 23 | Encoder magnet disc | M | pressed on shaft |
 | 24 | Rubber wheels | M | — |
@@ -537,7 +562,7 @@ Status: **E** = electrically wired in this diagram · **M** = mechanical/consuma
 | G1 | Blade fuse 25–30A | E | §1 |
 | G2 | Anti-spark XT60 | E | §1 |
 | G3 | LiPo balance charger | B | bench, off-rover |
-| G4 | L298N heatsinks ×2 | E/M | §5.1 (on IC) |
+| G4 | BTS7960 heatsinks (onboard) | E/M | §5.1 (IBT-2 ships with heatsink) |
 | G5 | Pi heatsink kit | M | thermal |
 | G6 | 30mm fan | E | §3 (Pi 5V) |
 | G7 | Loctite 243 | M | §7 step 10 |
@@ -639,9 +664,21 @@ analytics (it has the encoders and the compute).
 | **ADS1115** 16-bit I2C ADC (0x48) | Pi I2C bus (SDA/SCL) | analog inputs the ESP32/Pi lack |
 | **ACS712-30A** ×2 | motor left rail → ADS1115 A0; right rail → A1 | per-side motor current → stall/over-current detection |
 | **GPS RX wire** | ESP32 **GPIO15** → Neo-6M RX | optional DGPS/RTCM correction injection |
+| **10kΩ NTC thermistor** (FC-02) | battery pack → **ADS1115 A2** (10k series divider to 3.3V) | pack temperature for the thermal guardian (fire risk) |
+| **Pan/tilt SG90 ×2** (FC-01) | Pi **GPIO13** (pan) + **GPIO19** (tilt), hardware-PWM | aim the misting nozzle at weeds at bed height |
+| **BTS7960 IS** (optional, FC-10) | each driver IS → ADS1115 (in place of an ACS712) | fold motor current-sense into the drivers; can drop the 2× ACS712 |
 
 > ACS712 sensors are powered at 5 V; their output centers at 2.5 V and stays
 > within the ADS1115 ±4.096 V range — do **not** wire them to an ESP32 ADC pin.
+> The pack NTC on **ADS1115 A2** uses a 10k/10k divider from 3.3V (beta=3950);
+> firmware/`pi/sensors/thermal_guardian.py` converts it with the beta model.
+> If the BTS7960 **IS** pins feed the ADS1115 instead of the ACS712s, set
+> `use_bts7960_is=True` on `CurrentMonitor` (IS is unipolar, ~0 V at rest).
+
+> **ESP32 over-temperature (FC-02):** firmware reads the SoC die temperature
+> (`temperatureRead()`); above **85 °C** it asserts `EVT_OVERTEMP` (in
+> `EVT_DRIVE_INHIBIT`, halting the drive) and publishes one alert, clearing
+> below **80 °C** (hysteresis). See `config.h ESP32_OVERTEMP_C`.
 
 ### 10.2 Positioning accuracy (Neo-6M, no new module)
 - **SBAS/GAGAN** enabled at boot (UBX-CFG-SBAS) → ~1–1.5 m absolute.

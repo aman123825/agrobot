@@ -29,12 +29,15 @@ from ai.obstacle_detection import ObstacleDetector  # noqa: E402
 from ai.weed_detection import WeedDetector  # noqa: E402
 from ai.disease_detection import DiseaseClassifier  # noqa: E402
 from ai.plant_tagging import CameraGeometry, tag_plant  # noqa: E402
+from ai.spray_targeting import SprayTargeter  # noqa: E402
 from bridge.serial_bridge import SerialBridge  # noqa: E402
 from control.imu import MPU6050  # noqa: E402
+from control.servo_pwm import PanTiltServo  # noqa: E402
 from data.plant_db import PlantDB  # noqa: E402
 from data.recorder import BlackBox  # noqa: E402
 from sensors.current_monitor import CurrentMonitor  # noqa: E402
 from sensors.fuel_gauge import FuelGauge  # noqa: E402
+from sensors.thermal_guardian import ThermalGuardian  # noqa: E402
 
 logger = logging.getLogger(__name__)
 
@@ -70,11 +73,21 @@ class Orchestrator:
         self.blackbox = BlackBox()
         self.plant_db = PlantDB(path=plant_db_path)
         self.cam_geom = CameraGeometry()
+        # FC-01 aimed spray: pan/tilt nozzle + bbox->angle targeting.
+        self.spray_targeter = SprayTargeter(hfov_deg=self.cam_geom.hfov_deg,
+                                            vfov_deg=self.cam_geom.vfov_deg)
+        self.pan_tilt = PanTiltServo()
+        # FC-02 thermal guardian (CPU + pack NTC + ambient).
+        self.thermal = ThermalGuardian()
+        self.telegram = None
         self.cap = _open_camera(camera_index)
         self._stopped = False
         self._frame_no = 0
         self._last_ping = 0.0
         self._last_fuel = 0.0
+        self._last_thermal = 0.0
+        self._ambient_c: float | None = None
+        self._thermal_shutdown = False
         # Rover pose (x, y, heading) and GPS datum for plant tagging.
         # Updated externally or via EKF; default to origin.
         self._rover_pose: tuple[float, float, float] = (0.0, 0.0, 0.0)
@@ -84,6 +97,16 @@ class Orchestrator:
         self.obstacle.load()
         self.weed.load()
         self.disease.load()
+        # Optional Telegram alerter for critical events (FC-02). Guarded so a
+        # missing 'requests' dependency or credentials never breaks startup.
+        try:
+            from alerts.telegram_bot import send_alert
+
+            self.telegram = send_alert
+            logger.info("Telegram alerter available")
+        except Exception as exc:
+            logger.warning("Telegram alerter unavailable (%s)", exc)
+            self.telegram = None
         try:
             self.serial.open()
         except Exception as exc:
@@ -114,6 +137,58 @@ class Orchestrator:
         if data.get("fix"):
             self._gps_datum = (float(data.get("lat", 0.0)),
                                float(data.get("lng", 0.0)))
+
+    def _telegram_alert(self, message: str) -> None:
+        """Best-effort Telegram push; never raises (FC-02 critical alerts)."""
+        if self.telegram is None:
+            return
+        try:
+            self.telegram(message)
+        except Exception as exc:
+            logger.debug("telegram alert failed (%s)", exc)
+
+    def _read_target_depth(self) -> float | None:
+        """Read VL53L1X ToF depth (m) for spray aiming. None if unavailable.
+
+        Guarded: returns None on any failure so the pinhole aim still works
+        (depth is advisory for the angle under a pinhole model).
+        """
+        reader = getattr(self, "_tof", None)
+        if reader is None:
+            return None
+        try:
+            mm = reader.range  # VL53L1X driver convention (mm)
+            return mm / 1000.0 if mm and mm > 0 else None
+        except Exception:
+            return None
+
+    def _run_thermal_guard(self) -> None:
+        """Evaluate thermal state; on a pack-critical reading STOP + alert (FC-02)."""
+        decision = self.thermal.check(ambient_c=self._ambient_c)
+        action = decision["action"]
+        if action == "ok":
+            return
+        self.blackbox.log("thermal", {"action": action,
+                                      "reasons": decision["reasons"]})
+        # pack-critical (stop/shutdown) -> halt the rover + critical alert.
+        if action in ("stop", "shutdown"):
+            if not self._stopped:
+                self._send("STOP")
+                self._stopped = True
+            if action == "shutdown":
+                self._thermal_shutdown = True
+            reasons = "; ".join(decision["reasons"])
+            logger.error("THERMAL %s: %s", action.upper(), reasons)
+            self._telegram_alert(f"AgriRover thermal {action}: {reasons}")
+        elif action == "pause":
+            if not self._stopped:
+                self._send("STOP")
+                self._stopped = True
+            logger.warning("THERMAL pause: %s", "; ".join(decision["reasons"]))
+            self._telegram_alert("AgriRover thermal pause: " +
+                                 "; ".join(decision["reasons"]))
+        elif action == "throttle":
+            logger.info("THERMAL throttle: %s", "; ".join(decision["reasons"]))
 
     def _send(self, cmd: str) -> None:
         if self.serial is not None:
@@ -165,11 +240,20 @@ class Orchestrator:
         # Also run disease classification and record the observation in the
         # per-plant database for health history tracking.
         if not self._stopped and self._frame_no % self.weed_every == 0:
-            weed_result = self.weed.detect(frame)
+            weed_box = self.weed.detect_best(frame)
+            weed_result = weed_box is not None
             if weed_result:
-                logger.info("WEED -> spray burst")
+                # FC-01: point the pan/tilt nozzle at the weed before spraying.
+                bbox, _conf = weed_box
+                depth_m = self._read_target_depth()
+                pan_deg, tilt_deg = self.spray_targeter.aim(bbox, depth_m=depth_m)
+                self.pan_tilt.point(pan_deg, tilt_deg)
+                logger.info("WEED -> aim pan=%.1f tilt=%.1f -> spray burst",
+                            pan_deg, tilt_deg)
                 self.actuators.spray()
-                self.blackbox.log("spray", {"frame": self._frame_no})
+                self.blackbox.log("spray", {"frame": self._frame_no,
+                                            "pan": round(pan_deg, 1),
+                                            "tilt": round(tilt_deg, 1)})
 
             # Disease classification on the same frame.
             disease_class, confidence = self.disease.classify(frame)
@@ -204,6 +288,11 @@ class Orchestrator:
             self._last_fuel = now
             self.blackbox.log("fuel", {"soc": round(soc, 1)})
 
+        # Thermal guardian ~1 Hz (FC-02): CPU + pack NTC + ambient.
+        if now - self._last_thermal >= 1.0:
+            self._last_thermal = now
+            self._run_thermal_guard()
+
         self._read_acks()
 
     def run(self, max_frames: int | None = None) -> None:
@@ -229,6 +318,8 @@ class Orchestrator:
         finally:
             self._send("STOP")
             self.actuators.all_off()
+            self.pan_tilt.center()
+            self.pan_tilt.close()
             self.plant_db.close()
             self.cap.release()
             cv2.destroyAllWindows()

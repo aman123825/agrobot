@@ -12,16 +12,16 @@ complete we implement the open ones together in a single pass.
 
 | ID | Situation | Status |
 |----|-----------|--------|
-| FC-01 | Weeds grow at a different height than the pathway | 🛠 Proposed |
-| FC-02 | High field temperature → thermal burnout / battery fire | 🛠 Proposed + 🔶 battery choice |
-| FC-03 | Linear actuator retraction type (spring vs DC) | 🔶 Decision pending |
+| FC-01 | Weeds grow at a different height than the pathway | ✅ Implemented (code) · hardware pending |
+| FC-02 | High field temperature → thermal burnout / battery fire | ✅ Implemented (code) · hardware pending · LiFePO4 recommended |
+| FC-03 | Linear actuator retraction type (spring vs DC) | ✅ Code-ready (compile flag) · wiring pending |
 | FC-04 | Per-plant location precision with Neo-6M | ✅ Implemented (vision tagging) |
 | FC-05 | Analog sensors over-volt the ESP32 ADC | ✅ Implemented (3.3V power) |
 | FC-06 | Relays twitch ON at boot | ✅ Implemented (pull-ups + fail-safe) |
 | FC-07 | Pi/ESP32 comms link drops mid-drive | ✅ Implemented (heartbeat dead-man) |
 | FC-08 | Dust, dew, irrigation spray on electronics | ✅ Implemented (sealing + coating) |
 | FC-09 | Wheel/cutter jam (stall) | ✅ Implemented (current/stall stop) |
-| FC-10 | Motor driver under-spec (L298N) for soil load | 🔶 Decision pending (recommend BTS7960) |
+| FC-10 | Motor driver under-spec (L298N) for soil load | ✅ Implemented (code: BTS7960) · hardware pending |
 
 ---
 
@@ -46,8 +46,13 @@ weed's position in the frame, so the right fix is **vision-guided aimed spraying
   cutter is possible but adds weight/cost — avoid unless mechanical removal at
   height is mandatory.)
 
-**To build:** `aim_nozzle(bbox, img_size, geom, depth) -> (pan_deg, tilt_deg)`,
-pan/tilt servo driver (via PCF8574 / PWM), wire into the weed-detection branch.
+**Implemented (code) — hardware pending:** `pi/ai/spray_targeting.py`
+(`aim_angles(bbox, img_w, img_h, hfov, vfov, depth) -> (pan_deg, tilt_deg)` +
+`SprayTargeter`, clamped ±80°); `pi/control/servo_pwm.py` (guarded RPi.GPIO
+pan/tilt driver on **GPIO13/19**, added to `pi/config.py`); `pi/main.py` weed
+branch now aims the nozzle from the YOLO bbox (+ optional ToF depth) before
+firing the mist relay (`WeedDetector.detect_best`). **Pending:** physically
+mount the 2× SG90 pan/tilt and wire GPIO13/19 (circuit §3, §10.1).
 
 ---
 
@@ -79,18 +84,28 @@ throttling, or — worst case — the battery igniting.
 - 📌 Operational: **cool-hours-only** mission mode (auto-run early morning /
   evening; refuse to start in peak heat).
 
-**To build:** `pi/sensors/thermal_guardian.py` (CPU + NTC + ambient logic),
-ESP32 chip-temp monitor, mission-scheduler cool-hours window; circuit diagram +
-shopping list updates (NTC, pan/tilt servos, sun shade).
+**Implemented (code) — hardware pending:** `pi/sensors/thermal_guardian.py`
+(`ntc_temp_c` beta model, `evaluate(cpu, pack, ambient)` with CPU>75 throttle /
+>80 pause, pack>55 STOP+no-charge / >65 shutdown; guarded CPU sysfs + ADS1115
+**A2** NTC reads). ESP32 firmware reads the die temp (`temperatureRead()`),
+asserts `EVT_OVERTEMP` >85 °C / clears <80 °C (`config.h ESP32_OVERTEMP_C`),
+publishing one alert. `pi/main.py` runs the guardian ~1 Hz → pack-critical sends
+STOP + black-box log + Telegram alert. Cool-hours gating via
+`mission/scheduler.py within_operating_window()`. **Pending hardware:** 10k pack
+NTC → ADS1115 A2, reflective enclosure / sun canopy, second/larger fan;
+**LiFePO4 strongly recommended** over LiPo for hot climates (shopping §2).
 
 ---
 
 ## Already-resolved situations (recorded for completeness)
 
-### FC-03 — Actuator retraction type 🔶
+### FC-03 — Actuator retraction type ✅ code-ready / 🔶 wiring pending
 Spring-return (Branch A) works with the 2-channel relay; DC-reversible (Branch B)
-needs a **DPDT relay + 1 GPIO**. Decide before ordering. (shopping-list §6,
-circuit §5.2; firmware has a `PIN_ACTUATOR_DIR` placeholder.)
+needs a **DPDT relay + 1 GPIO**. **Both branches now compile** behind
+`config.h ACTUATOR_DC_REVERSIBLE` (default **0** = Branch A). When set to 1,
+`dosing.cpp` drives `PIN_ACTUATOR_DIR` (**ESP32 GPIO2**, freed by the BTS7960
+swap) to reverse polarity for the retract phase. **Decide actuator type before
+ordering** the DPDT relay (shopping-list §6, circuit §5.2).
 
 ### FC-04 — Per-plant precision with Neo-6M ✅
 Neo-6M is ~1 m. Solved with SBAS/GAGAN + stationary averaging + EKF + **vision
@@ -114,7 +129,7 @@ lid, grommets on chassis pass-throughs.
 **ADS1115 + ACS712** current sensing detects a stall → STOP + alert before a motor
 burns.
 
-### FC-10 — Motor driver under-spec for soil load 🔶
+### FC-10 — Motor driver under-spec for soil load ✅ Implemented (code) / hardware pending
 **Situation:** The L298N (2 A/channel, 2–4 V drop, BJT) drives 2 soil-loaded
 gear motors per channel — it crowds its current limit, wastes torque/runtime to
 heat, and thermal-shuts-down in a hot field (feeds FC-02).
@@ -129,19 +144,29 @@ field-heat shutdown. **Bonus:** its current-sense (IS) output can feed the
 - Alt premium: **2× Cytron MD10C** (~30 A, PWM+DIR, fewest pins, robotics-grade).
 - Avoid **DRV8871** here (3.6 A too low for paired soil-loaded motors).
 
-**To build:** update `drive.cpp` `applySide()` for RPWM/LPWM (BTS7960) or PWM+DIR
-(MD10C); remap `pins.h`; update circuit diagram + shopping list; optionally route
-BTS7960 IS → ADS1115 and drop the ACS712s.
+**Implemented (code) — hardware pending:** `drive.cpp` `applySide()` rewritten
+for BTS7960 dual-PWM (fwd=RPWM, rev=LPWM, stop=both 0); `pins.h` remapped
+(LEFT RPWM19/LPWM21, RIGHT RPWM22/LPWM23, 4 LEDC channels, R_EN/L_EN→3.3V,
+GPIO32/33 freed); public drive API unchanged so `main.cpp`/`comms.cpp` compile
+untouched. `pi/sensors/current_monitor.py` gains an optional BTS7960 **IS**
+current source (`use_bts7960_is`, `bts7960_is_amps`) keeping ACS712 as default.
+Circuit §5.1 + shopping §3 updated. **Pending:** swap in the 2× BTS7960 boards
+and (optionally) route IS → ADS1115 to drop the ACS712s.
 
 ---
 
-## Pending build queue (open items to implement together at the end)
-1. FC-01 vision-guided aimed spray (pan/tilt + targeting code)
-2. FC-02 thermal guardian (firmware + Pi) + cool-hours scheduling
-3. FC-02 hardware: pack NTC, sun shade, enclosure; **LiFePO4 vs LiPo decision**
-4. FC-03 DPDT relay wiring **once actuator type is confirmed**
-5. FC-10 motor-driver swap to **BTS7960** (or Cytron MD10C): `drive.cpp` +
-   `pins.h` + circuit + shopping list; optionally fold current-sense into ADS1115
+## Pending build queue (status after the consolidated implementation pass)
+1. ✅ FC-01 vision-guided aimed spray — **code done** (`spray_targeting.py`,
+   `servo_pwm.py`, `main.py` weed branch). Hardware: mount 2× SG90 pan/tilt on
+   GPIO13/19.
+2. ✅ FC-02 thermal guardian — **code done** (firmware `EVT_OVERTEMP` +
+   `thermal_guardian.py` + `main.py` ~1 Hz loop + cool-hours window).
+3. 🔶 FC-02 hardware: pack NTC (ADS1115 A2), sun canopy, enclosure; **LiFePO4
+   recommended over LiPo** (documented; not yet purchased/installed).
+4. ✅ FC-03 actuator Branch B — **code-ready** behind `ACTUATOR_DC_REVERSIBLE`
+   (default off). Wire the DPDT relay + GPIO2 once actuator type is confirmed.
+5. ✅ FC-10 motor-driver swap to **BTS7960** — **code done** (`drive.cpp`,
+   `pins.h`, optional IS→ADS1115). Hardware: fit the 2× BTS7960 boards.
 
-> Add new situations above this line as they come up; we will implement the whole
-> open queue in one consolidated pass.
+> Remaining work is **physical assembly/wiring**, not code. Add new situations
+> above this line as they come up.

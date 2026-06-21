@@ -24,6 +24,7 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 | Component | Qty | Unit ₹ | Line ₹ |
 |-----------|-----|--------|--------|
 | 3S LiPo 2200mAh | 1 | 800–1,200 | 800–1,200 |
+| 4S LiFePO4 *(recommended hot-climate alt to LiPo — FC-02)* | 1 | 1,500–2,800 | (alt) |
 | LM2596 buck | 1 | 100–200 | 100–200 |
 | 10,000mAh power bank | 1 | 600–1,000 | 600–1,000 |
 | INA219 | 1 | 100–200 | 100–200 |
@@ -37,16 +38,23 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 | Velcro strap + tray | 2 | 40–60 | 80–120 |
 | **Subtotal** | | | **2,350–4,040** |
 
+> **Battery chemistry (FC-02):** the LiPo above remains the baseline. For hot
+> climates a **4S LiFePO4** pack is the *recommended* alternative — it tolerates
+> 45 °C+ and will not catch fire. It is listed *(alt)* and excluded from the
+> running total; swap it in (not added on top) if you choose LiFePO4. Either way,
+> add the **10k pack NTC** (section 12) for the thermal guardian and keep the
+> pack shaded/ventilated.
+
 ## 3. Motor & Drive
 | Component | Qty | Unit ₹ | Line ₹ |
 |-----------|-----|--------|--------|
 | 12V DC gear motor | 4 | 200–400 | 800–1,600 |
-| L298N module | 2 | 150–250 | 300–500 |
+| 2× BTS7960 (IBT-2) motor driver | 2 | 200–350 | 400–700 |
 | Hall wheel encoder | 2 | 100–200 | 200–400 |
 | Encoder magnet disc | 2 | 20–50 | 40–100 |
 | Rubber wheels 65mm | 4 | 100–200 | 400–800 |
 | Motor mounts *(printed)* | 4 | — | 0 |
-| **Subtotal** | | | **1,740–3,400** |
+| **Subtotal** | | | **1,840–3,600** |
 
 ## 4. Sensing (ESP32 side)
 | Component | Qty | Unit ₹ | Line ₹ |
@@ -84,17 +92,24 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 | Peristaltic pump *(opt)* | 1 | 500–1,200 | (opt) |
 | 12V 775 grass-cutter motor | 1 | 200–400 | 200–400 |
 | SG90 servo (seed sower) | 1 | 100–150 | 100–150 |
+| SG90 servo (pan/tilt aimed spray, FC-01) | 2 | 100–150 | 200–300 |
 | Misting nozzle + tubing | 1 | 150–300 | 150–300 |
 | Water/fertilizer tank 500ml | 1 | 100–200 | 100–200 |
 | Float sensor | 1 | 50–80 | 50–80 |
 | Silicone tubing 6mm (1m) | 1 | 50–100 | 50–100 |
 | PCF8574 expander | 1 | 80–150 | 80–150 |
 | DPDT relay *(Branch B actuator only — see note)* | 1 | 60–120 | (cond) |
-| **Subtotal** | | | **1,560–3,030** |
+| **Subtotal** | | | **1,760–3,330** |
 
-> **Open item — actuator retraction (decide before ordering):**
-> - **Spring-return actuator (Branch A):** the 2-channel relay above is sufficient — **do not** buy the DPDT relay.
-> - **DC-reversible actuator (Branch B):** add **1× DPDT relay** (polarity reversal for retract) + **1 control GPIO** (free a pin, or it's already covered by the PCF8574 expander above). See `circuit-diagram.md` §5.2.
+> **Open item — actuator retraction (FC-03, code-ready / wiring-pending):**
+> Firmware now compiles **both** branches behind `config.h ACTUATOR_DC_REVERSIBLE`
+> (default **0** = Branch A). Decide before ordering:
+> - **Spring-return actuator (Branch A, default):** the 2-channel relay above is sufficient — **do not** buy the DPDT relay.
+> - **DC-reversible actuator (Branch B):** add **1× DPDT relay** (polarity reversal for retract) + **1 control GPIO** (ESP32 **GPIO2** = `PIN_ACTUATOR_DIR`, freed by the BTS7960 swap). See `circuit-diagram.md` §5.2.
+>
+> **SG90 servo count:** the build now uses **4× SG90** total — 1 ultrasonic
+> sweep (§4), 1 seed sower (§6), and **2 new pan/tilt** for the aimed spray
+> (§6, FC-01). Buy accordingly.
 
 ## 7. Communication
 | Component | Qty | Unit ₹ | Line ₹ |
@@ -160,23 +175,26 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 | Ferrite bead pack | 1 | 30–60 | 30–60 |
 | Rubber grommets pack | 1 | 30–60 | 30–60 |
 | Nylon trimmer line 10m | 1 | 80–150 | 80–150 |
-| **Subtotal** | | | **2,070–3,880** |
+| Reflective enclosure wrap / sun canopy *(FC-02 thermal)* | 1 | 150–400 | 150–400 |
+| **Subtotal** | | | **2,220–4,280** |
 
-> **Note on the "15 gap-audit items":** this section lists **13**. The other two
-> — **4.7kΩ I2C pull-up resistors (G11)** and **100nF decoupling caps (G12)** —
-> are not omitted; they're bought as part of **Section 9 (Passives & wiring)**
-> (resistor + capacitor lines). 13 here + 2 in Section 9 = the full 15.
+> **Note on the "15 gap-audit items":** the original gap-audit list has **13**
+> items here. The other two — **4.7kΩ I2C pull-up resistors (G11)** and **100nF
+> decoupling caps (G12)** — are bought as part of **Section 9 (Passives &
+> wiring)**. 13 here + 2 in Section 9 = the full 15. (The **reflective sun
+> canopy** above is a *new* FC-02 thermal addition, not one of the original 15.)
 
 ## 12. v2 UPGRADE parts (needed to use the new firmware/software)
 | Component | Qty | Unit ₹ | Line ₹ |
 |-----------|-----|--------|--------|
 | ADS1115 16-bit I2C ADC | 1 | 150–300 | 150–300 |
-| ACS712-30A current sensor | 2 | 100–180 | 200–360 |
+| ACS712-30A current sensor *(optional if BTS7960 IS used — FC-10)* | 2 | 100–180 | 200–360 |
+| 10kΩ NTC thermistor (battery pack temp — FC-02) | 1 | 20–60 | 20–60 |
 | Logic level shifter (3.3↔5V) | 1 | 40–100 | 40–100 |
 | TDS calibration solution (1413µS) | 1 | 200–400 | 200–400 |
 | pH buffer solution (4.0 & 7.0) | 1 set | 150–350 | 150–350 |
 | GPS-RX jumper wire | — | (from wire) | 0 |
-| **Subtotal** | | | **740–1,510** |
+| **Subtotal** | | | **760–1,570** |
 
 ## 13. Tools & consumables (one-time)
 | Item | Qty | Unit ₹ | Line ₹ |
@@ -200,23 +218,23 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 |---------|---------|
 | 1. Brain & Compute | 5,880–8,150 |
 | 2. Power | 2,350–4,040 |
-| 3. Motor & Drive | 1,740–3,400 |
+| 3. Motor & Drive | 1,840–3,600 |
 | 4. Sensing (ESP32) | 3,740–8,080 |
 | 5. AI Sensing (Pi) | 4,680–7,100 |
-| 6. Actuation | 1,560–3,030 |
+| 6. Actuation | 1,760–3,330 |
 | 7. Communication | 500–1,000 |
 | 8. Interface | 480–870 |
 | 9. Passives & wiring | 790–1,530 |
 | 10. Chassis | 1,420–2,600 |
-| 11. Safety/Thermal | 2,070–3,880 |
-| 12. v2 Upgrade parts | 740–1,510 |
+| 11. Safety/Thermal | 2,220–4,280 |
+| 12. v2 Upgrade parts | 760–1,570 |
 | 13. Tools | 1,410–2,760 |
-| **TOTAL (Full AI build)** | **₹27,360 – 47,950** |
+| **TOTAL (Full AI build)** | **₹27,830 – 48,910** |
 
 ### Build-tier shortcuts
 - **Core only (ITSP demo):** sections 2, 3, 6 (relay dosing), 9 + ESP32 + moisture + NPK ≈ **₹8,000–14,000**
 - **Core + Navigation:** add GPS, encoders, INA219, OLED, safety ≈ **₹12,000–20,000**
-- **Full AI (this sheet):** everything ≈ **₹27,000–48,000**
+- **Full AI (this sheet):** everything ≈ **₹28,000–49,000**
 
 ### Optional future upgrades (NOT in total)
 | Component | Qty | ₹ | For |
@@ -230,5 +248,9 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 
 ### Notes
 - Prices are **indicative** (Indian maker vendors) and not live quotes — verify before ordering. The Coral, Pi 4, and NPK probe are the biggest swing items.
-- The **only 5 things new vs. the original BOM**: ADS1115, 2× ACS712, level shifter, TDS solution, pH buffers (section 12).
+- The **v2 upgrade additions vs. the original BOM**: ADS1115, 2× ACS712 (now
+  optional if BTS7960 IS is used), level shifter, TDS solution, pH buffers
+  (section 12), plus the field-challenge build-queue parts — **2× BTS7960**
+  replacing the L298N pair (FC-10), a **10k pack NTC** + **reflective sun
+  canopy** (FC-02), and **2× pan/tilt SG90** for the aimed spray (FC-01).
 - Software (FreeRTOS, Pi OS, OpenCV, TFLite, YOLOv8n, Mosquitto, Pathway, Streamlit, etc.) is **free**.

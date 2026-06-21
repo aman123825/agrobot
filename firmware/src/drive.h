@@ -1,5 +1,5 @@
 /**
- * drive.h - Four-wheel tank drive over 2x L298N (circuit §5.1).
+ * drive.h - Four-wheel tank drive over 2x BTS7960 / IBT-2 (circuit §5.1).
  */
 #pragma once
 #include <stdint.h>

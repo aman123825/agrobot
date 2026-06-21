@@ -41,6 +41,9 @@ void delayMicroseconds(uint32_t us);
 unsigned long millis(void);
 unsigned long pulseIn(uint8_t pin, uint8_t state, unsigned long timeout);
 
+// ---- ESP32 internal die-temperature sensor ----
+float temperatureRead(void);
+
 // ---- LEDC PWM ----
 double ledcSetup(uint8_t channel, double freq, uint8_t resolutionBits);
 void   ledcAttachPin(uint8_t pin, uint8_t channel);

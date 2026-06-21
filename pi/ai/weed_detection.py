@@ -49,3 +49,30 @@ class WeedDetector:
                 if conf >= self.conf_threshold:
                     return True
         return False
+
+    def detect_best(self, frame):
+        """Return (bbox, conf) for the highest-confidence weed, or None.
+
+        bbox is (x1, y1, x2, y2) in pixels. Used by the aimed-spray path
+        (FC-01) so the nozzle can be pointed at the weed before firing. Falls
+        back to None when no backend or no detection clears the threshold.
+        """
+        if self.model is None:
+            return None
+        best = None
+        best_conf = self.conf_threshold
+        results = self.model(frame, verbose=False)
+        for res in results:
+            boxes = getattr(res, "boxes", None) or []
+            for box in boxes:
+                conf = float(box.conf[0]) if box.conf is not None else 0.0
+                if conf >= best_conf:
+                    try:
+                        xyxy = box.xyxy[0]
+                        bbox = (float(xyxy[0]), float(xyxy[1]),
+                                float(xyxy[2]), float(xyxy[3]))
+                    except (AttributeError, IndexError, TypeError):
+                        continue
+                    best = (bbox, conf)
+                    best_conf = conf
+        return best

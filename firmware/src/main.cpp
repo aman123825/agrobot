@@ -67,6 +67,7 @@ static void sensorTask(void *pv) {
     servo_us_init();   // ultrasonic sweep mount (centered on startup)
     dosing_init(gEvents);
     bool lowBattAlerted = false;
+    bool overTempAlerted = false;
 
     for (;;) {
         sensors_poll();          // NPK (Modbus), DHT22, moisture, TDS, GPS, battery
@@ -88,6 +89,21 @@ static void sensorTask(void *pv) {
         } else if (t.battery_v > LIPO_CUTOFF_V + 0.3f) {
             xEventGroupClearBits(gEvents, EVT_LOW_BATTERY);  // hysteresis
             lowBattAlerted = false;
+        }
+
+        // Thermal guardian (FC-02): ESP32 die temperature. Above the limit we
+        // latch EVT_OVERTEMP (forces the drive to stop via EVT_DRIVE_INHIBIT)
+        // and publish one alert; clear below the lower threshold (hysteresis).
+        float chip_c = temperatureRead();
+        if (chip_c > ESP32_OVERTEMP_C) {
+            xEventGroupSetBits(gEvents, EVT_OVERTEMP);
+            if (!overTempAlerted) {
+                comms_publish_alert("{\"type\":\"overtemp\",\"source\":\"esp32\"}");
+                overTempAlerted = true;
+            }
+        } else if (chip_c < ESP32_OVERTEMP_CLEAR_C) {
+            xEventGroupClearBits(gEvents, EVT_OVERTEMP);
+            overTempAlerted = false;
         }
 
         comms_publish_telemetry();

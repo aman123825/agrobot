@@ -35,6 +35,9 @@ GPIO = {
     "ws2812b": 18,        # GPIO18 = hardware PWM/DMA; required by rpi_ws281x (GPIO23 won't work)
     "btn_up": 5, "btn_down": 6, "btn_left": 12, "btn_right": 16,
     "mode_sel_a": 20, "mode_sel_b": 21,
+    # Aimed-spray pan/tilt servos (FC-01). Hardware-PWM-capable pins.
+    "servo_pan": 13,      # GPIO13 (PWM1) -> pan SG90 (lateral aim)
+    "servo_tilt": 19,     # GPIO19 (PWM1) -> tilt SG90 (height aim)
 }
 
 # --- I2C addresses (circuit §4.1) ---
