@@ -26,7 +26,7 @@ digraph agrover_v2 {
   }
 
   // ---------- ESP32 ----------
-  esp [fillcolor="#bbdefb", label="ESP32 DevKit V1\l\l19,21->L298N#1 IN1/2\l22,23->L298N#2 IN3/4\l32,33->ENA/ENB PWM\l25->US TRIG  18->US ECHO*\l27->SG90 sweep\l17/16/4->MAX485 (NPK)\l14->DHT22\l34->Moisture(3.3V!)\l36->TDS(3.3V!)\l35->Batt divider\l39->GPS RX  15->GPS RX(DGPS)\l26->Relay pump(10k)\l13->Relay actuator(10k)\lEN->E-STOP\lVIN<-5V via ferrite\lTX0/RX0->CP2102->Pi\l"];
+  esp [fillcolor="#bbdefb", label="ESP32 DevKit V1\l\l19,21->BTS7960#1 RPWM/LPWM\l22,23->BTS7960#2 RPWM/LPWM\l32,33 FREE (old ENA/ENB)\l25->US TRIG  18->US ECHO*\l27->SG90 sweep\l17/16/4->MAX485 (NPK)\l14->DHT22\l34->Moisture(3.3V!)\l36->TDS(3.3V!)\l35->Batt divider\l39->GPS RX  15->GPS RX(DGPS)\l26->Relay pump(10k)\l13->Relay actuator(10k)\lEN->E-STOP\lVIN<-5V via ferrite\lTX0/RX0->CP2102->Pi\l"];
   fer->esp [color="#1565c0", penwidth=2, label="5V VIN"];
 
   cam [fillcolor="#bbdefb", label="ESP32-CAM (isolated)\n5V+GND+16GB SD"];
@@ -36,13 +36,13 @@ digraph agrover_v2 {
   subgraph cluster_drive {
     label="DRIVE / ACTUATION"; color="#fce4ec"; style=filled;
     node [fillcolor="#f8bbd0"];
-    l1 [label="L298N #1 LEFT"]; l2 [label="L298N #2 RIGHT"];
+    l1 [label="BTS7960 #1 LEFT\nR_EN/L_EN->3.3V"]; l2 [label="BTS7960 #2 RIGHT\nR_EN/L_EN->3.3V"];
     motors [label="4x Gear Motors\n+1N5819 flyback"];
     relay [label="2-ch Relay\n+10k pull-ups"];
     pumpact [label="Pump / Actuator 12V"];
   }
-  esp->l1 [label="19,21,32"]; esp->l2 [label="22,23,33"];
-  l1->motors; l2->motors;
+  esp->l1 [label="19 RPWM,21 LPWM"]; esp->l2 [label="22 RPWM,23 LPWM"];
+  l1->motors [label="M+/M-"]; l2->motors [label="M+/M-"];
   bus->l1 [color="#e65100", penwidth=2]; bus->l2 [color="#e65100", penwidth=2];
   bus->relay [color="#e65100", penwidth=2, label="COM"];
   esp->relay [label="26,13"]; relay->pumpact;

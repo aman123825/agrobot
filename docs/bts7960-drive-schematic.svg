@@ -1,0 +1,178 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 820" font-family="Helvetica, Arial, sans-serif">
+  <style>
+    .title{font-size:21px;font-weight:bold;fill:#14532d}
+    .sub{font-size:12px;fill:#5b6b63}
+    .hdr{font-size:14px;font-weight:bold;fill:#ffffff}
+    .pin{font-size:12px;fill:#1a2421}
+    .pinL{font-size:12px;fill:#1a2421;font-weight:bold}
+    .note{font-size:12px;fill:#1a2421}
+    .noteb{font-size:12px;fill:#1a2421;font-weight:bold}
+    .cap{font-size:11px;fill:#5b6b63}
+    .wsig{stroke:#1565c0;stroke-width:2;fill:none}
+    .w3v3{stroke:#2e7d32;stroke-width:2;fill:none}
+    .wpwr{stroke:#e65100;stroke-width:3;fill:none}
+    .wgnd{stroke:#37474f;stroke-width:3;fill:none}
+    .nd{fill:#263238}
+    .box{fill:#ffffff;stroke:#90a4ae;stroke-width:1.5;rx:6}
+  </style>
+
+  <rect x="0" y="0" width="1200" height="820" fill="#ffffff"/>
+  <text x="30" y="34" class="title">AgriRover — BTS7960 (IBT-2) Drive Schematic</text>
+  <text x="30" y="52" class="sub">FC-10: 2× L298N replaced by 2× BTS7960, one per side. Tank drive, 4× 12 V gear motors. Every signal/power pin shown.</text>
+
+  <!-- ===== POWER RAIL (top) ===== -->
+  <line x1="360" y1="96" x2="1140" y2="96" class="wpwr"/>
+  <text x="362" y="88" class="noteb" fill="#e65100">11.1 V MAIN BUS  (LiPo → 25-30 A fuse → anti-spark XT60 → rocker switch)</text>
+
+  <!-- ===== GROUND RAIL (bottom) ===== -->
+  <line x1="120" y1="772" x2="1140" y2="772" class="wgnd"/>
+  <text x="122" y="790" class="noteb" fill="#37474f">COMMON GROUND  (single star point at LiPo −  =  ESP32 GND = both BTS7960 GND/B− = motor − = Pi GND)</text>
+
+  <!-- ===== ESP32 ===== -->
+  <rect x="70" y="150" width="215" height="360" class="box" fill="#e3f2fd" stroke="#1565c0" stroke-width="2"/>
+  <rect x="70" y="150" width="215" height="32" fill="#1565c0"/>
+  <text x="80" y="172" class="hdr">ESP32 DevKit V1</text>
+  <text x="84" y="210" class="pinL">GPIO19</text><text x="150" y="210" class="pin">LEDC0 · L_RPWM</text>
+  <text x="84" y="245" class="pinL">GPIO21</text><text x="150" y="245" class="pin">LEDC1 · L_LPWM</text>
+  <text x="84" y="280" class="pinL">GPIO22</text><text x="150" y="280" class="pin">LEDC2 · R_RPWM</text>
+  <text x="84" y="315" class="pinL">GPIO23</text><text x="150" y="315" class="pin">LEDC3 · R_LPWM</text>
+  <text x="84" y="372" class="pinL">3V3</text><text x="150" y="372" class="pin">enable + logic</text>
+  <text x="84" y="440" class="pinL">GND</text>
+  <text x="84" y="485" class="pin" fill="#b26a00">32/33 FREE</text><text x="178" y="485" class="cap">(old ENA/ENB)</text>
+  <!-- nodes on right edge -->
+  <circle cx="285" cy="205" r="3" class="nd"/><line x1="285" y1="205" x2="320" y2="205" class="wsig"/>
+  <circle cx="285" cy="240" r="3" class="nd"/><line x1="285" y1="240" x2="320" y2="240" class="wsig"/>
+  <circle cx="285" cy="275" r="3" class="nd"/><line x1="285" y1="275" x2="320" y2="275" class="wsig"/>
+  <circle cx="285" cy="310" r="3" class="nd"/><line x1="285" y1="310" x2="320" y2="310" class="wsig"/>
+  <circle cx="285" cy="367" r="3" class="nd"/><line x1="285" y1="367" x2="345" y2="367" class="w3v3"/>
+  <circle cx="285" cy="435" r="3" class="nd"/><line x1="285" y1="435" x2="335" y2="435" class="wgnd"/>
+
+  <!-- ===== BTS7960 #1 LEFT ===== -->
+  <rect x="510" y="150" width="250" height="250" class="box" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+  <rect x="510" y="150" width="250" height="30" fill="#c62828"/>
+  <text x="520" y="171" class="hdr">BTS7960 #1  —  LEFT</text>
+  <!-- left signal pins -->
+  <text x="522" y="210" class="pinL">RPWM</text>
+  <text x="522" y="243" class="pinL">LPWM</text>
+  <text x="522" y="276" class="pinL">R_EN</text>
+  <text x="522" y="306" class="pinL">L_EN</text>
+  <text x="522" y="336" class="pinL">VCC</text>
+  <text x="522" y="366" class="pinL">GND</text>
+  <text x="600" y="276" class="cap">↶ tied</text>
+  <text x="600" y="306" class="cap">↶ tied</text>
+  <!-- right power/output terminal block -->
+  <text x="748" y="210" class="pinL" text-anchor="end">B+</text>
+  <text x="748" y="245" class="pinL" text-anchor="end">B−</text>
+  <text x="748" y="300" class="pinL" text-anchor="end">M+</text>
+  <text x="748" y="345" class="pinL" text-anchor="end">M−</text>
+  <!-- left pin nodes -->
+  <circle cx="510" cy="205" r="3" class="nd"/><line x1="475" y1="205" x2="510" y2="205" class="wsig"/>
+  <circle cx="510" cy="240" r="3" class="nd"/><line x1="475" y1="240" x2="510" y2="240" class="wsig"/>
+  <circle cx="510" cy="272" r="3" class="nd"/><line x1="370" y1="272" x2="510" y2="272" class="w3v3"/>
+  <circle cx="510" cy="302" r="3" class="nd"/><line x1="370" y1="302" x2="510" y2="302" class="w3v3"/>
+  <circle cx="510" cy="332" r="3" class="nd"/><line x1="370" y1="332" x2="510" y2="332" class="w3v3"/>
+  <circle cx="510" cy="362" r="3" class="nd"/><line x1="350" y1="362" x2="510" y2="362" class="wgnd"/>
+  <!-- right terminal nodes -->
+  <circle cx="760" cy="205" r="3" class="nd"/>
+  <circle cx="760" cy="240" r="3" class="nd"/>
+  <circle cx="760" cy="295" r="3" class="nd"/>
+  <circle cx="760" cy="340" r="3" class="nd"/>
+
+  <!-- ===== BTS7960 #2 RIGHT ===== -->
+  <rect x="510" y="470" width="250" height="250" class="box" fill="#fce4ec" stroke="#c62828" stroke-width="2"/>
+  <rect x="510" y="470" width="250" height="30" fill="#c62828"/>
+  <text x="520" y="491" class="hdr">BTS7960 #2  —  RIGHT</text>
+  <text x="522" y="530" class="pinL">RPWM</text>
+  <text x="522" y="563" class="pinL">LPWM</text>
+  <text x="522" y="596" class="pinL">R_EN</text>
+  <text x="522" y="626" class="pinL">L_EN</text>
+  <text x="522" y="656" class="pinL">VCC</text>
+  <text x="522" y="686" class="pinL">GND</text>
+  <text x="600" y="596" class="cap">↶ tied</text>
+  <text x="600" y="626" class="cap">↶ tied</text>
+  <text x="748" y="530" class="pinL" text-anchor="end">B+</text>
+  <text x="748" y="565" class="pinL" text-anchor="end">B−</text>
+  <text x="748" y="620" class="pinL" text-anchor="end">M+</text>
+  <text x="748" y="665" class="pinL" text-anchor="end">M−</text>
+  <circle cx="510" cy="525" r="3" class="nd"/><line x1="475" y1="525" x2="510" y2="525" class="wsig"/>
+  <circle cx="510" cy="560" r="3" class="nd"/><line x1="475" y1="560" x2="510" y2="560" class="wsig"/>
+  <circle cx="510" cy="592" r="3" class="nd"/><line x1="370" y1="592" x2="510" y2="592" class="w3v3"/>
+  <circle cx="510" cy="622" r="3" class="nd"/><line x1="370" y1="622" x2="510" y2="622" class="w3v3"/>
+  <circle cx="510" cy="652" r="3" class="nd"/><line x1="370" y1="652" x2="510" y2="652" class="w3v3"/>
+  <circle cx="510" cy="682" r="3" class="nd"/><line x1="350" y1="682" x2="510" y2="682" class="wgnd"/>
+  <circle cx="760" cy="525" r="3" class="nd"/>
+  <circle cx="760" cy="560" r="3" class="nd"/>
+  <circle cx="760" cy="615" r="3" class="nd"/>
+  <circle cx="760" cy="660" r="3" class="nd"/>
+
+  <!-- ===== SIGNAL WIRES ESP32 -> drivers (elbow) ===== -->
+  <polyline points="320,205 400,205 400,205 475,205" class="wsig"/>
+  <polyline points="320,240 415,240 415,240 475,240" class="wsig"/>
+  <polyline points="320,275 430,275 430,525 475,525" class="wsig"/>
+  <polyline points="320,310 445,310 445,560 475,560" class="wsig"/>
+
+  <!-- ===== 3V3 distribution (green trunk) ===== -->
+  <line x1="345" y1="367" x2="370" y2="367" class="w3v3"/>
+  <line x1="370" y1="272" x2="370" y2="652" class="w3v3"/>
+  <text x="312" y="362" class="cap" fill="#2e7d32">3V3</text>
+
+  <!-- ===== GND trunk (dark) ===== -->
+  <line x1="335" y1="435" x2="350" y2="435" class="wgnd"/>
+  <line x1="350" y1="362" x2="350" y2="772" class="wgnd"/>
+
+  <!-- ===== POWER B+ feeds (orange) ===== -->
+  <polyline points="760,205 870,205 870,96" class="wpwr"/>
+  <polyline points="760,525 900,525 900,96" class="wpwr"/>
+  <!-- B- to ground -->
+  <polyline points="760,240 845,240 845,772" class="wgnd"/>
+  <polyline points="760,560 925,560 925,772" class="wgnd"/>
+
+  <!-- ===== MOTORS ===== -->
+  <rect x="980" y="250" width="170" height="110" class="box" fill="#eceff1" stroke="#37474f" stroke-width="1.5"/>
+  <text x="1065" y="285" class="noteb" text-anchor="middle">LEFT motors ×2</text>
+  <text x="1065" y="306" class="note" text-anchor="middle">FL + RL (parallel)</text>
+  <text x="1065" y="330" class="cap" text-anchor="middle">1N5819 flyback</text>
+  <text x="1065" y="346" class="cap" text-anchor="middle">across each motor</text>
+  <polyline points="760,295 980,295" class="wpwr"/>
+  <polyline points="760,340 965,340 965,355 980,355" class="wgnd"/>
+
+  <rect x="980" y="570" width="170" height="110" class="box" fill="#eceff1" stroke="#37474f" stroke-width="1.5"/>
+  <text x="1065" y="605" class="noteb" text-anchor="middle">RIGHT motors ×2</text>
+  <text x="1065" y="626" class="note" text-anchor="middle">FR + RR (parallel)</text>
+  <text x="1065" y="650" class="cap" text-anchor="middle">1N5819 flyback</text>
+  <text x="1065" y="666" class="cap" text-anchor="middle">across each motor</text>
+  <polyline points="760,615 980,615" class="wpwr"/>
+  <polyline points="760,660 965,660 965,675 980,675" class="wgnd"/>
+
+  <!-- encoders note -->
+  <text x="985" y="420" class="cap">RL &amp; RR axles → Hall</text>
+  <text x="985" y="435" class="cap">encoders → Pi GPIO17/27</text>
+
+  <!-- ===== TRUTH TABLE ===== -->
+  <rect x="70" y="545" width="360" height="150" class="box" fill="#f3f8f1" stroke="#2e7d32" stroke-width="1.5"/>
+  <text x="84" y="568" class="noteb" fill="#14532d">Drive logic (per side)</text>
+  <text x="84" y="592" class="note"><tspan class="noteb">Forward</tspan> : RPWM = PWM duty,  LPWM = 0</text>
+  <text x="84" y="614" class="note"><tspan class="noteb">Reverse</tspan> : RPWM = 0,  LPWM = PWM duty</text>
+  <text x="84" y="636" class="note"><tspan class="noteb">Stop</tspan>    : RPWM = 0,  LPWM = 0  (coast)</text>
+  <text x="84" y="658" class="note"><tspan class="noteb">Enable</tspan>  : R_EN = L_EN = 3.3 V  (always on)</text>
+  <text x="84" y="682" class="cap">Speed = LEDC duty 0–255 · |left|,|right| from comms</text>
+
+  <!-- ===== NOTES ===== -->
+  <rect x="450" y="745" width="690" height="0" fill="none"/>
+  <rect x="455" y="40" width="0" height="0"/>
+  <rect x="820" y="150" width="330" height="90" class="box" fill="#fffaf0" stroke="#e0934b" stroke-width="1.5"/>
+  <text x="834" y="172" class="noteb" fill="#b26a00">Optional current sense</text>
+  <text x="834" y="194" class="note">R_IS / L_IS  →  ADS1115 A0 (left), A1 (right)</text>
+  <text x="834" y="214" class="note">lets you drop the 2× ACS712 shunts.</text>
+  <text x="834" y="232" class="cap">Stall / over-current detection (FC-09).</text>
+
+  <!-- ===== LEGEND ===== -->
+  <text x="455" y="730" class="noteb">Legend:</text>
+  <line x1="515" y1="726" x2="545" y2="726" class="wpwr"/><text x="550" y="730" class="cap">11.1 V power</text>
+  <line x1="645" y1="726" x2="675" y2="726" class="wsig"/><text x="680" y="730" class="cap">PWM signal</text>
+  <line x1="765" y1="726" x2="795" y2="726" class="w3v3"/><text x="800" y="730" class="cap">3.3 V / enable</text>
+  <line x1="900" y1="726" x2="930" y2="726" class="wgnd"/><text x="935" y="730" class="cap">ground</text>
+
+  <text x="455" y="700" class="cap">PWM: ESP32 LEDC, 1 kHz, 8-bit, channels 0–3 (timers 0/1). Servo uses ch4/timer2 @ 50 Hz — no clash.</text>
+  <text x="455" y="716" class="cap">R_EN &amp; L_EN of both drivers tied to 3.3 V (always enabled); direction &amp; speed set purely by the 4 PWM lines. P6KE15A TVS across the 11.1 V bus.</text>
+</svg>

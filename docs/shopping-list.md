@@ -165,7 +165,7 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 | Blade fuse 25–30A + holder | 1 | 30–60 | 30–60 |
 | Anti-spark XT60 | 1 | 80–150 | 80–150 |
 | LiPo balance charger (iMAX B6) | 1 | 800–1,500 | 800–1,500 |
-| L298N heatsink (14×14mm) | 2 | 20–50 | 40–100 |
+| BTS7960 thermal pads / spare heatsink (IBT-2 ships with one) | 2 | 20–50 | 40–100 |
 | Pi 4 heatsink kit | 1 | 150–300 | 150–300 |
 | 30mm 5V fan | 1 | 80–150 | 80–150 |
 | Loctite 243 (blue) | 1 | 150–250 | 150–250 |

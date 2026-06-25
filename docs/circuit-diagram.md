@@ -42,8 +42,8 @@ flowchart TB
     BUS ==> RLY["2-Ch Relay COM"]
 
     E32 <-->|"UART via CP2102"| RPI
-    E32 --- L298L
-    E32 --- L298R
+    E32 ---|"19 RPWM / 21 LPWM"| L298L
+    E32 ---|"22 RPWM / 23 LPWM"| L298R
     E32 --- RLY
     RPI --- CORAL["Coral USB TPU"]
     RPI --- CAM["Pi Camera v2 (CSI)"]
@@ -348,6 +348,24 @@ ESP32 19/21 (R/LPWM) ─►│  BTS7960 #1 LEFT│  │BTS7960 #2 RIGHT │◄�
 | LEFT  | GPIO19 | GPIO21 | tie to 3.3V | 0 / 1 |
 | RIGHT | GPIO22 | GPIO23 | tie to 3.3V | 2 / 3 |
 
+> **Professional pin-level schematic:** [`bts7960-drive-schematic.svg`](bts7960-drive-schematic.svg) — open in a browser; shows every signal/power terminal of both drivers.
+
+#### BTS7960 (IBT-2) complete per-board pinout
+
+| Module terminal | Driver #1 (LEFT) | Driver #2 (RIGHT) | Dir | Notes |
+|-----------------|------------------|-------------------|-----|-------|
+| **RPWM** | ESP32 GPIO19 (LEDC0) | ESP32 GPIO22 (LEDC2) | ESP32→drv | PWM, **forward** |
+| **LPWM** | ESP32 GPIO21 (LEDC1) | ESP32 GPIO23 (LEDC3) | ESP32→drv | PWM, **reverse** |
+| **R_EN** | 3.3 V | 3.3 V | tie HIGH | half-bridge always enabled |
+| **L_EN** | 3.3 V | 3.3 V | tie HIGH | half-bridge always enabled |
+| **VCC** | 3.3 V (logic ref) | 3.3 V (logic ref) | — | module logic rail (5 V-tolerant; use 3.3 V to match ESP32) |
+| **GND** | common star GND | common star GND | — | tie to §1 star point |
+| **R_IS / L_IS** | *(opt)* ADS1115 **A0** | *(opt)* ADS1115 **A1** | drv→ADC | current-sense out; can replace the 2× ACS712 (§10.1, FC-09) |
+| **B+** | 11.1 V bus | 11.1 V bus | power | battery + (after fuse/anti-spark, §1) |
+| **B−** | common star GND | common star GND | power | battery − |
+| **M+** | Left motors + (FL+RL) | Right motors + (FR+RR) | output | per-side parallel pair |
+| **M−** | Left motors − | Right motors − | output | **1N5819 flyback across each motor** |
+
 BTS7960 is a dual half-bridge per board: **forward** = PWM on RPWM with LPWM=0,
 **reverse** = PWM on LPWM with RPWM=0, **stop** = both 0. The four PWM lines are
 LEDC-driven at 1 kHz (timers 0/1); the servo uses LEDC ch4/timer2 at 50 Hz. The
@@ -632,12 +650,15 @@ strip reliably.
 ### 9.7 Items confirmed SAFE (no action)
 - Analog sensors all on **ADC1** (34/35/36) -> no WiFi/ADC2 conflict.
 - **No flash pins** (GPIO6-11) used anywhere.
-- **Strapping pins** GPIO0/2/5/12/15 left unused.
+- **Strapping pins**: GPIO0/5/12 left unused. GPIO2 carries the Branch-B
+  actuator-direction line (idle/LOW unless `ACTUATOR_DC_REVERSIBLE=1`) and GPIO15
+  is the optional DGPS TX (idles HIGH) — both are boot-strapping-safe in these roles.
 - UART1 (GPS, pin 39 RX-only) and UART2 (RS485, 16/17) correctly remapped off
   the flash pins.
 - I2C addresses unique (0x40/0x68/0x29/0x3C/0x20); Pi BCM map has no duplicates.
-- LEDC: motor channels 0/1 share timer0 at 1 kHz (OK); servo channel 2 uses
-  timer1 (must be set to 50 Hz when the sweep is implemented).
+- LEDC: the **four** BTS7960 PWM lines use channels **0–3** (timers 0/1) at
+  1 kHz; the ultrasonic-sweep servo uses channel **4** (timer 2) at 50 Hz, so the
+  1 kHz drive PWM never disturbs the 20 ms servo frame.
 
 ### 9.8 Lower-priority follow-ups
 - Servo PWM — **DONE**: implemented in `firmware/src/servo.cpp` (50 Hz LEDC on
