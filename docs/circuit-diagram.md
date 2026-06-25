@@ -374,6 +374,24 @@ that solves the L298N hot-field shutdown (feeds FC-02). The old ENA/ENB speed
 pins (GPIO32/33) are now free. **Optional:** route each driver's current-sense
 **IS** output to the **ADS1115** to replace the 2× ACS712 (see §10.1).
 
+#### BTS7960 wiring checklist (terminal-to-terminal, do in this order)
+
+Repeat for **#1 LEFT** and **#2 RIGHT**:
+
+1. **Mount** the IBT-2 with its heatsink facing airflow; keep B+/B− leads short and thick (≥18 AWG).
+2. **High-current power:** `B+` → 11.1 V bus (after the fuse + anti-spark XT60, §1); `B−` → common ground star point.
+3. **Logic supply:** `VCC` → **3.3 V**; module `GND` → common ground (same star point as B−).
+4. **Enable:** tie `R_EN` **and** `L_EN` together → **3.3 V** (both half-bridges always enabled).
+5. **PWM signals:**
+   - #1 LEFT — `RPWM` ← ESP32 **GPIO19**, `LPWM` ← ESP32 **GPIO21**
+   - #2 RIGHT — `RPWM` ← ESP32 **GPIO22**, `LPWM` ← ESP32 **GPIO23**
+6. **Motor output:** `M+` / `M−` → that side's motor pair (FL+RL or FR+RR) in parallel; fit a **1N5819 flyback across each motor**.
+7. *(Optional)* `R_IS` → ADS1115 **A0** (left), `L_IS`→ **A1** (right) for current/stall sensing — then the 2× ACS712 can be dropped (§10.1, FC-09).
+8. **Pre-power checks (DMM):** R_EN/L_EN = 3.3 V · both PWM lines idle LOW · common-ground continuity B−↔VCC GND↔ESP32 GND · **no B+↔M+ short**.
+9. **First spin:** command ~20 % duty **forward**; verify wheel direction. If a side runs backward, **swap that driver's M+/M−** (do *not* swap PWM pins).
+
+> Direction truth: **forward** = RPWM = PWM, LPWM = 0 · **reverse** = LPWM = PWM, RPWM = 0 · **stop** = both 0 (coast).
+
 ### 5.2 Relay-driven actuation (dosing sequence)
 ```
 ESP32 GPIO26 ──► Relay Ch1 ──► COM=11.1V ──► 12V Submersible/Peristaltic Pump
