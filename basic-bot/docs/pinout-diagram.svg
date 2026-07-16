@@ -1,0 +1,199 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="1000" viewBox="0 0 1500 1000" font-family="Consolas, 'DejaVu Sans Mono', monospace">
+  <defs>
+    <marker id="ar" markerWidth="8" markerHeight="8" refX="6" refY="3" orient="auto" markerUnits="strokeWidth">
+      <path d="M0,0 L6,3 L0,6 Z" fill="#555"/>
+    </marker>
+    <style>
+      .board{stroke:#222;stroke-width:2;}
+      .esp{fill:#bbdefb;}
+      .pin{stroke:#333;stroke-width:1;}
+      .pio{fill:#fff59d;}        /* digital I/O */
+      .ppwm{fill:#ffcc80;}       /* PWM/LEDC */
+      .padc{fill:#ce93d8;}       /* ADC input-only */
+      .puart{fill:#90caf9;}      /* UART */
+      .ppwr{fill:#ef9a9a;}       /* power */
+      .pdot{fill:#c62828;stroke:#000;stroke-width:0.8;}
+      .t{font-size:12px;fill:#111;}
+      .tp{font-size:11px;fill:#000;font-weight:bold;}
+      .tn{font-size:11px;fill:#222;}
+      .tb{font-size:15px;font-weight:bold;fill:#000;}
+      .th{font-size:22px;font-weight:bold;fill:#000;}
+      .ti{font-size:11px;fill:#444;}
+      .safe{font-size:11px;fill:#c62828;font-weight:bold;}
+      .w{stroke:#666;stroke-width:1.2;fill:none;}
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1500" height="1000" fill="#ffffff"/>
+  <text x="40" y="40" class="th">AgriRover — BASIC BOT (no-AI) Verified Pin-Point Circuit Diagram</text>
+  <text x="40" y="62" class="ti">Single ESP32 DevKit V1, driven from a laptop over USB serial. Every pin cross-checked against basic-bot/firmware/include/pins.h,</text>
+  <text x="40" y="78" class="ti">config.h and src/{drive,sensors,dosing,main}.cpp. Colour = pin function (see legend). No Raspberry Pi, no I2C, no camera/AI.</text>
+
+  <!-- =====================  ESP32 DevKit V1  ===================== -->
+  <rect class="board esp" x="620" y="130" width="240" height="620" rx="8"/>
+  <text x="740" y="162" class="tb" text-anchor="middle">ESP32 DevKit V1</text>
+  <text x="740" y="180" class="ti" text-anchor="middle">WROOM-32, 38-pin</text>
+  <text x="740" y="196" class="ti" text-anchor="middle">Core1: drive @50Hz</text>
+  <text x="740" y="212" class="ti" text-anchor="middle">Core0: sensors @5/1Hz</text>
+
+  <!-- ================ LEFT column pins ================ -->
+  <!-- GPIO19 -->
+  <rect class="pin ppwm" x="590" y="240" width="30" height="20"/><text x="605" y="254" class="tp" text-anchor="middle">19</text>
+  <circle class="pdot" cx="590" cy="250" r="3"/>
+  <line class="w" x1="590" y1="250" x2="360" y2="250" marker-end="url(#ar)"/>
+  <text x="60" y="246" class="t">BTS7960 #1 LEFT — RPWM  (forward, LEDC0)</text>
+  <!-- GPIO21 -->
+  <rect class="pin ppwm" x="590" y="270" width="30" height="20"/><text x="605" y="284" class="tp" text-anchor="middle">21</text>
+  <circle class="pdot" cx="590" cy="280" r="3"/>
+  <line class="w" x1="590" y1="280" x2="360" y2="280" marker-end="url(#ar)"/>
+  <text x="60" y="276" class="t">BTS7960 #1 LEFT — LPWM  (reverse, LEDC1)</text>
+  <!-- GPIO22 -->
+  <rect class="pin ppwm" x="590" y="300" width="30" height="20"/><text x="605" y="314" class="tp" text-anchor="middle">22</text>
+  <circle class="pdot" cx="590" cy="310" r="3"/>
+  <line class="w" x1="590" y1="310" x2="360" y2="310" marker-end="url(#ar)"/>
+  <text x="60" y="306" class="t">BTS7960 #2 RIGHT — RPWM (forward, LEDC2)</text>
+  <!-- GPIO23 -->
+  <rect class="pin ppwm" x="590" y="330" width="30" height="20"/><text x="605" y="344" class="tp" text-anchor="middle">23</text>
+  <circle class="pdot" cx="590" cy="340" r="3"/>
+  <line class="w" x1="590" y1="340" x2="360" y2="340" marker-end="url(#ar)"/>
+  <text x="60" y="336" class="t">BTS7960 #2 RIGHT — LPWM (reverse, LEDC3)</text>
+  <!-- GPIO25 -->
+  <rect class="pin pio" x="590" y="370" width="30" height="20"/><text x="605" y="384" class="tp" text-anchor="middle">25</text>
+  <circle class="pdot" cx="590" cy="380" r="3"/>
+  <line class="w" x1="590" y1="380" x2="360" y2="380" marker-end="url(#ar)"/>
+  <text x="60" y="376" class="t">HC-SR04 front — TRIG  (3.3V out OK)</text>
+  <!-- GPIO18 -->
+  <rect class="pin pio" x="590" y="400" width="30" height="20"/><text x="605" y="414" class="tp" text-anchor="middle">18</text>
+  <circle class="pdot" cx="590" cy="410" r="3"/>
+  <line class="w" x1="590" y1="410" x2="360" y2="410" marker-end="url(#ar)"/>
+  <text x="60" y="406" class="t">HC-SR04 front — ECHO</text>
+  <text x="60" y="420" class="safe">via 2.2k/3.9k divider → 3.2V (never raw 5V)</text>
+  <!-- GPIO17 -->
+  <rect class="pin puart" x="590" y="440" width="30" height="20"/><text x="605" y="454" class="tp" text-anchor="middle">17</text>
+  <circle class="pdot" cx="590" cy="450" r="3"/>
+  <line class="w" x1="590" y1="450" x2="360" y2="450" marker-end="url(#ar)"/>
+  <text x="60" y="446" class="t">MAX485 DI  (UART2 TX → NPK probe)</text>
+  <!-- GPIO16 -->
+  <rect class="pin puart" x="590" y="470" width="30" height="20"/><text x="605" y="484" class="tp" text-anchor="middle">16</text>
+  <circle class="pdot" cx="590" cy="480" r="3"/>
+  <line class="w" x1="590" y1="480" x2="360" y2="480" marker-end="url(#ar)"/>
+  <text x="60" y="476" class="t">MAX485 RO  (UART2 RX ← NPK probe)</text>
+  <!-- GPIO4 -->
+  <rect class="pin pio" x="590" y="500" width="30" height="20"/><text x="605" y="514" class="tp" text-anchor="middle">4</text>
+  <circle class="pdot" cx="590" cy="510" r="3"/>
+  <line class="w" x1="590" y1="510" x2="360" y2="510" marker-end="url(#ar)"/>
+  <text x="60" y="506" class="t">MAX485 DE+RE (tied; HIGH = transmit)</text>
+  <!-- GPIO14 -->
+  <rect class="pin pio" x="590" y="530" width="30" height="20"/><text x="605" y="544" class="tp" text-anchor="middle">14</text>
+  <circle class="pdot" cx="590" cy="540" r="3"/>
+  <line class="w" x1="590" y1="540" x2="360" y2="540" marker-end="url(#ar)"/>
+  <text x="60" y="536" class="t">DHT22 data  (10k pull-up → 3.3V)</text>
+  <!-- GPIO34 -->
+  <rect class="pin padc" x="590" y="560" width="30" height="20"/><text x="605" y="574" class="tp" text-anchor="middle">34</text>
+  <circle class="pdot" cx="590" cy="570" r="3"/>
+  <line class="w" x1="590" y1="570" x2="360" y2="570" marker-end="url(#ar)"/>
+  <text x="60" y="566" class="t">Capacitive moisture AOUT (ADC1_CH6, in-only)</text>
+  <!-- GPIO35 -->
+  <rect class="pin padc" x="590" y="590" width="30" height="20"/><text x="605" y="604" class="tp" text-anchor="middle">35</text>
+  <circle class="pdot" cx="590" cy="600" r="3"/>
+  <line class="w" x1="590" y1="600" x2="360" y2="600" marker-end="url(#ar)"/>
+  <text x="60" y="596" class="t">Battery divider 39k/10k tap (ADC1_CH7, in-only)</text>
+
+  <!-- ================ RIGHT column pins ================ -->
+  <!-- GPIO26 -->
+  <rect class="pin pio" x="860" y="250" width="30" height="20"/><text x="875" y="264" class="tp" text-anchor="middle">26</text>
+  <circle class="pdot" cx="890" cy="260" r="3"/>
+  <line class="w" x1="890" y1="260" x2="1120" y2="260" marker-end="url(#ar)"/>
+  <text x="1126" y="256" class="t">Relay Ch1 → 12V pump (pre-soak/dose)</text>
+  <text x="1126" y="270" class="safe">10k pull-up → 3.3V (OFF at boot)</text>
+  <!-- GPIO13 -->
+  <rect class="pin pio" x="860" y="290" width="30" height="20"/><text x="875" y="304" class="tp" text-anchor="middle">13</text>
+  <circle class="pdot" cx="890" cy="300" r="3"/>
+  <line class="w" x1="890" y1="300" x2="1120" y2="300" marker-end="url(#ar)"/>
+  <text x="1126" y="296" class="t">Relay Ch2 → 12V linear actuator (extend)</text>
+  <text x="1126" y="310" class="safe">10k pull-up → 3.3V (OFF at boot)</text>
+  <!-- EN -->
+  <rect class="pin ppwr" x="860" y="340" width="30" height="20"/><text x="875" y="354" class="tp" text-anchor="middle">EN</text>
+  <circle class="pdot" cx="890" cy="350" r="3"/>
+  <line class="w" x1="890" y1="350" x2="1120" y2="350" marker-end="url(#ar)"/>
+  <text x="1126" y="346" class="t">E-Stop button (NC → GND)</text>
+  <text x="1126" y="360" class="ti">hardware kill, independent of software</text>
+  <!-- USB / UART0 -->
+  <rect class="pin puart" x="860" y="390" width="30" height="20"/><text x="875" y="404" class="tp" text-anchor="middle">U0</text>
+  <circle class="pdot" cx="890" cy="400" r="3"/>
+  <line class="w" x1="890" y1="400" x2="1120" y2="400" marker-end="url(#ar)"/>
+  <text x="1126" y="396" class="t">USB (UART0) → Laptop</text>
+  <text x="1126" y="410" class="ti">plain-text cmds + "TLM {json}" @115200</text>
+
+  <!-- Power pins -->
+  <rect class="pin ppwr" x="860" y="450" width="30" height="20"/><text x="875" y="464" class="tp" text-anchor="middle">VIN</text>
+  <circle class="pdot" cx="890" cy="460" r="3"/>
+  <line class="w" x1="890" y1="460" x2="1120" y2="460" marker-end="url(#ar)"/>
+  <text x="1126" y="456" class="t">5.00V rail (via ferrite bead)</text>
+  <rect class="pin ppwr" x="860" y="480" width="30" height="20"/><text x="875" y="494" class="tp" text-anchor="middle">3V3</text>
+  <circle class="pdot" cx="890" cy="490" r="3"/>
+  <line class="w" x1="890" y1="490" x2="1120" y2="490" marker-end="url(#ar)"/>
+  <text x="1126" y="486" class="t">3.3V — DHT/relay pull-ups, divider ref,</text>
+  <text x="1126" y="500" class="t">BTS7960 R_EN/L_EN/VCC (tie HIGH)</text>
+  <rect class="pin ppwr" x="860" y="520" width="30" height="20"/><text x="875" y="534" class="tp" text-anchor="middle">GND</text>
+  <circle class="pdot" cx="890" cy="530" r="3"/>
+  <line class="w" x1="890" y1="530" x2="1120" y2="530" marker-end="url(#ar)"/>
+  <text x="1126" y="526" class="t">Common star ground (LiPo −)</text>
+
+  <!-- ============ Peripheral group boxes (left) ============ -->
+  <rect class="board" x="40" y="640" width="300" height="86" rx="6" fill="#f8bbd0"/>
+  <text x="190" y="660" class="tp" text-anchor="middle">Drive — 2× BTS7960 (IBT-2)</text>
+  <text x="50" y="678" class="tn">#1 LEFT: RPWM←19, LPWM←21 → FL+RL motors</text>
+  <text x="50" y="694" class="tn">#2 RIGHT: RPWM←22, LPWM←23 → FR+RR motors</text>
+  <text x="50" y="710" class="ti">R_EN/L_EN→3.3V · B+←11.1V bus · 1N5819 across each motor</text>
+
+  <rect class="board" x="40" y="740" width="300" height="66" rx="6" fill="#f0f4c3"/>
+  <text x="190" y="760" class="tp" text-anchor="middle">Soil / ambient sensors</text>
+  <text x="50" y="778" class="tn">NPK probe ← MAX485 (RS485 Modbus, 9600 8N1)</text>
+  <text x="50" y="794" class="tn">Moisture(34) · DHT22(14) · Battery(35) · HC-SR04(25/18)</text>
+
+  <!-- ============ Peripheral group boxes (right) ============ -->
+  <rect class="board" x="1120" y="560" width="330" height="70" rx="6" fill="#f8bbd0"/>
+  <text x="1285" y="580" class="tp" text-anchor="middle">Dosing (Branch A: spring-return)</text>
+  <text x="1130" y="598" class="tn">Ch1 pump(26) 1.5s pre-soak → Ch2 actuator(13) extend</text>
+  <text x="1130" y="614" class="tn">→ dwell → dose → de-energize (spring retracts)</text>
+
+  <!-- =====================  POWER CHAIN  ===================== -->
+  <text x="40" y="120" class="tb">Power distribution</text>
+  <g class="tn">
+    <rect class="pin ppwr" x="40" y="132" width="150" height="24" rx="4"/><text x="115" y="148" text-anchor="middle" class="tp">3S LiPo 11.1V</text>
+    <rect class="pin ppwr" x="40" y="162" width="150" height="22" rx="4"/><text x="115" y="177" text-anchor="middle">Blade Fuse 25–30A</text>
+    <rect class="pin ppwr" x="40" y="190" width="150" height="22" rx="4"/><text x="115" y="205" text-anchor="middle">Anti-Spark XT60</text>
+    <rect class="pin ppwr" x="40" y="218" width="150" height="22" rx="4"/><text x="115" y="233" text-anchor="middle">Rocker Switch</text>
+    <rect class="pin ppwr" x="40" y="246" width="300" height="24" rx="4"/><text x="190" y="262" text-anchor="middle" class="tp">11.1V MAIN BUS</text>
+    <rect class="pin ppwr" x="40" y="300" width="150" height="24" rx="4"/><text x="115" y="316" text-anchor="middle">LM2596 → 5.00V</text>
+    <rect class="pin ppwr" x="210" y="300" width="130" height="24" rx="4"/><text x="275" y="316" text-anchor="middle" class="tp">5.00V RAIL</text>
+  </g>
+  <line class="w" x1="115" y1="156" x2="115" y2="162"/>
+  <line class="w" x1="115" y1="184" x2="115" y2="190"/>
+  <line class="w" x1="115" y1="212" x2="115" y2="218"/>
+  <line class="w" x1="115" y1="240" x2="115" y2="246"/>
+  <line class="w" x1="115" y1="270" x2="115" y2="300"/>
+  <line class="w" x1="190" y1="312" x2="210" y2="312" marker-end="url(#ar)"/>
+  <text x="360" y="262" class="tn">BUS → BTS7960 ×2 B+, Relay COM, P6KE15A TVS</text>
+  <text x="360" y="315" class="tn">5V RAIL → ESP32 VIN (ferrite), HC-SR04, MAX485, sensors</text>
+  <text x="360" y="138" class="safe">Set buck to exactly 5.00V with a DMM BEFORE connecting the ESP32.</text>
+
+  <!-- Divider details -->
+  <text x="40" y="836" class="ti">Battery sense: LiPo+ (12.6V) —[39k]—•— GPIO35 ; •—[10k]—GND  ⇒  2.57V @ full charge (&lt; 3.3V ✓)</text>
+  <text x="40" y="852" class="ti">HC-SR04 echo: ECHO(5V) —[2.2k]—•— GPIO18 ; •—[3.9k]—GND  ⇒  3.2V (&lt; 3.3V ✓)</text>
+  <text x="40" y="868" class="ti">Relays are ACTIVE-LOW (config.h RELAY_ACTIVE_LOW=1 → ON=pin LOW). main.cpp forces both OFF before tasks start.</text>
+  <text x="40" y="884" class="safe">Power the moisture sensor from 3.3V (not 5V): a 5V-fed AOUT can exceed 3.3V and destroy the input-only ADC pin.</text>
+
+  <!-- =====================  LEGEND  ===================== -->
+  <text x="40" y="924" class="tb">Legend — pin function</text>
+  <rect class="pin pio"  x="40" y="936" width="20" height="14"/><text x="66" y="947" class="ti">Digital I/O</text>
+  <rect class="pin ppwm" x="160" y="936" width="20" height="14"/><text x="186" y="947" class="ti">PWM / LEDC</text>
+  <rect class="pin padc" x="290" y="936" width="20" height="14"/><text x="316" y="947" class="ti">ADC (input-only)</text>
+  <rect class="pin puart" x="440" y="936" width="20" height="14"/><text x="466" y="947" class="ti">UART</text>
+  <rect class="pin ppwr" x="540" y="936" width="20" height="14"/><text x="566" y="947" class="ti">Power / ground</text>
+  <circle class="pdot" cx="680" cy="943" r="3"/><text x="692" y="947" class="ti">connected pin point</text>
+
+  <text x="40" y="978" class="ti">Verified against basic-bot/firmware/include/pins.h · config.h · src/{drive,sensors,dosing,main}.cpp. Signal-level pin map; wire</text>
+  <text x="40" y="994" class="ti">high-current B+/B−/M± from ../docs/circuit-diagram.md §5.1.  Deliberately absent (vs full AI build): Pi, I2C, sweep servo(27), TDS(36), GPS(39/15), DPDT dir(2).</text>
+</svg>
