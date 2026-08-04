@@ -1,6 +1,14 @@
 # AgriRover Problem-to-Solution Opportunity Catalog
 
-**Research artefact | 04-Aug-2026 | 20 opportunities ranked, 11 killed, 1 mandatory prerequisite**
+**Research artefact | v1.1, 05-Aug-2026 | 22 entries assessed, 10 ranked, 11 killed, 1 mandatory prerequisite**
+
+> **v1.1 revision note.** All 18 `[H##]` evidence tags were re-verified against
+> locatable primary/official sources, and §6.6 now carries those sources with
+> working links. Three figures were **corrected against source** — `[H06]`
+> hyperspectral field error, `[H08]` flower-counting R², and `[H01]` dating —
+> and the affected reasoning in §1.1a, §1.2 and its proof gate was updated. See
+> §6.6 for what each correction changes downstream. Two corrections make
+> AgriRover's case *worse*, not better.
 
 > **Purpose.** A ranked catalog of PROBLEM → AGRIROVER-ENABLED SOLUTION
 > opportunities across Indian horticulture and field crops, scored by (value at
@@ -248,15 +256,28 @@ The literature says exactly this. **[External result]** `[H06]`:
 | Controlled laboratory, feature-based RGB | **RMSE ≈ 0.78 °Brix** | Best case, not a field number |
 | Field, recent deep learning | **MAE ≈ 1.05 °Brix** | Best *field* case reported |
 | Field, alternative RGB methods | **RMSE ≈ 4.63 °Brix** | The honest spread |
-| Hyperspectral / multispectral | **RMSE ≈ 0.25–1.27 °Brix** | The sensor class that actually does this |
+| Hyperspectral / multispectral, **field** | **RMSE ≈ 1.27–2.20 °Brix** | Even the "proper" sensor class misses the threshold in the field |
+| Multispectral, best-case controlled | **RMSE ≈ 0.55 °Brix** | Achievable only off-rover |
 
-Now put that against the **decision threshold**. EU table-grape maturity
-requires **minimum 16 °Brix**, or a sugar:acid ratio of **20:1 for 12.5–14
-°Brix** and **18:1 for 14–16 °Brix** `[H07]` **[External result]**. The
+**A correction against the naive version of this kill.** The honest reading of
+`[H06]` is *not* "RGB is hopeless while hyperspectral is fine". Field-deployed
+hyperspectral reports **RMSE 1.27–2.20 °Brix** — **worse** than the best RGB
+field MAE of 1.05. The RGB number is therefore genuinely competitive with the
+sensor class it is usually contrasted against. **That does not rescue the entry;
+it condemns the whole sensing approach**, which is a stronger and more useful
+conclusion: *no* field-mounted optical sensor in this platform's price class
+currently resolves Brix tightly enough for a regulated pass/fail. Bolting on a
+hyperspectral head would not fix it either — so the kill is not a budget
+problem that a later BOM revision reverses.
+
+Now put that against the **decision threshold**. UNECE/Codex table-grape
+maturity requires **minimum 16 °Brix**, or a sugar:acid ratio of **20:1 for
+12.5–14 °Brix** and **18:1 for 14–16 °Brix** `[H07]` **[External result]**. The
 regulated decision is a **pass/fail at 16 °Brix**.
 
 An estimator with field MAE of **1.05 °Brix** — the *best published field
-result* — straddles that threshold. A true 15.2 °Brix bunch reads as compliant
+result*, and obtained on a single variety with multi-season training data —
+straddles that threshold. A true 15.2 °Brix bunch reads as compliant
 about as often as not. At the 4.63 RMSE end `[H06]`, the estimate is
 **decision-worthless**. And the sugar:acid alternative is worse still: **acidity
 has no RGB correlate at all.** There is no visible-light proxy for titratable
@@ -383,8 +404,13 @@ by vine census to block level; stored as a per-plant time series in
 harvest**, with confidence bounds, to the aggregator's procurement desk.
 
 **3. Feasibility: [buildable now] — and this is the strongest CV result in the
-catalog.** Published grapevine flower-counting models (YOLOv5/v8/v11) reach
-**R² > 0.90** for flower counts `[H08]` **[External result]**. Critically, the
+catalog.** Published grapevine flower/inflorescence-counting models report
+**R² ≈ 0.76–0.98** depending on task and split `[H08]` **[External result]** —
+the high end (0.98) is *flower quantification* on curated night imagery, while
+*inflorescence counting* validates nearer **0.86–0.88 and tests as low as
+0.76**, with downstream harvest-yield error of **4–11%**. The frequently quoted
+"R² > 0.90" is the top of that range, not its centre, and this catalog uses the
+**test-split** end for planning. Critically, the
 same literature finds that **pre-bloom daylight imaging is unreliable due to
 environmental variability, and that nighttime imaging with controlled artificial
 lighting significantly improves detection performance and stability** `[H08]`,
@@ -394,8 +420,8 @@ light and can work at night. A drone cannot do this; a fixed IoT sensor
 (Fyllo/Fasal `[F05]`) cannot do this because it sees one point, not 5,000 vines.
 **This is the one capability where AgriRover is not squeezed from both sides.**
 
-*Honest error.* R² > 0.90 is on flower *counts in imaged frames*, not on final
-tonnage. Between bloom and harvest sit fruit-set ratio, weather, thinning
+*Honest error.* Those R² values are on flower *counts in imaged frames*, not on
+final tonnage. Between bloom and harvest sit fruit-set ratio, weather, thinning
 decisions and berry-size outcome — each adding variance the count cannot see. A
 count-to-tonnage model needs local per-variety calibration over **at least two
 seasons** before its bounds are trustworthy. Claiming a tonnage forecast from
@@ -414,7 +440,7 @@ passes, on the same vines, extending the rover's season materially.
 
 | Metric | Method | Threshold |
 |---|---|---|
-| Flower/cluster count accuracy | Night imaging, ring light, ≥200 vines, destructive hand count | **R² ≥ 0.85** vs hand count (below `[H08]`'s 0.90 to allow for Indian trellis occlusion) |
+| Flower/cluster count accuracy | Night imaging, ring light, ≥200 vines, destructive hand count | **R² ≥ 0.85** vs hand count on a **held-out** split (between `[H08]`'s 0.76 test and 0.88 validation figures, and deliberately not its 0.98 headline, to allow for Indian trellis occlusion) |
 | Count → tonnage calibration | Two seasons, ≥3 varieties, weighbridge truth | **±20% block tonnage at 10 weeks out**, with published bounds |
 | Night-vs-day advantage | Paired passes, same vines | Confirm `[H08]`'s finding **on Indian canopy** or the night thesis fails |
 
@@ -1255,7 +1281,7 @@ the lowest scores.
 | Rank | Entry | Feasibility | Payer | Why it ranks here |
 |---|---|---|---|---|
 | **1** | **§3.1** Residue/PHI audit artefact | buildable, no new CV | **Proven** (exporter/FPO, liable party `[G15]`) | Only entry whose payer prior research already validated. Least robot-dependent — hence the necessity test. |
-| **2** | **§1.2** Pre-bloom count → volume forecast | buildable, R²>0.90 `[H08]` | Strong (procurement desk) | Only entry where the literature explicitly endorses **this platform's** night-plus-controlled-light configuration `[H08]`, `[H14]`. |
+| **2** | **§1.2** Pre-bloom count → volume forecast | buildable, R² 0.76–0.98 `[H08]` | Strong (procurement desk) | Only entry where the literature explicitly endorses **this platform's** night-plus-controlled-light configuration `[H08]`, `[H14]`. |
 | **3** | **§4.2** Mildew early detection | buildable **after §4.1** | Strong (same buyer; cost + residue coupling) | Supplies the **active days** §1.1 lacks; 16.93% of Cost C `P3`. Hard-gated on §4.1. |
 | **4** | **§1.7** Thinning verification | buildable (paired diff) | Plausible (₹117k/ha labour bill `[H10]`) | Same product shape as §3.1 — a verified physical act `[G19]`. No new hardware. |
 | **5** | **§1.1** Sampling allocator + crate forecast | buildable **only as restructured** | Strong, but seasonal | Survives only as queue discipline; **Brix claim deleted**. Fails active-days alone. |
@@ -1326,26 +1352,43 @@ benchmarked against agronomist visit cost, not against Niqo's spray price.
 
 ### §6.6 New evidence tags introduced
 
-| Tag | Claim | Source |
-|---|---|---|
-| `[H01]` | Pack-houses 70,080 required vs 249 created; reefers 61,826 vs ~9,000 | NCCD demand-driven gap assessment, as reported |
-| `[H02]` | 395 lakh MT cold storage, 8,698 facilities (May 2024); bulk gap ~10% | Govt./NCCD capacity reporting |
-| `[H03]` | Grape exports 2024-25: 271,253 MT ≈ ₹3,050 crore | APEDA/trade reporting |
-| `[H04]` | Multi-view raises tracked bunch ratio 23% → 74%; motion blur and ID-matching unsolved | Vineyard yield-estimation literature |
-| `[H05]` | YOLOv11 cluster detection 94.3% precision; ~5–7% yield-mass error | Grape detection literature |
-| `[H06]` | Brix from RGB: lab RMSE 0.78; field MAE 1.05; field RMSE up to 4.63; hyperspectral 0.25–1.27 | Non-destructive TSS estimation literature |
-| `[H07]` | EU table grape maturity: min 16 °Brix, or 20:1 (12.5–14) / 18:1 (14–16) sugar:acid | EU/Codex table grape standard |
-| `[H08]` | Grapevine flower counting R² > 0.90; daylight pre-bloom unreliable; **night + artificial light significantly better** | Early yield prediction literature |
-| `[H09]` | Banana PHL 20–30%; Jalgaon 6.81% farm + 3.90% transport + 14.12% retail; export at 75–80% maturity; caliper bands e.g. 46–50 mm | Banana post-harvest/grading literature |
-| `[H10]` | Nashik grape Cost C ₹690,422/ha; hired labour 16.9% | Grape cost-of-cultivation study |
-| `[H11]` | RGB detects water stress only via visible colour change, less accurate than thermal; CWSI itself prone to late detection | Water-stress sensing review |
-| `[H12]` | 7-in-1 NPK sensors measure EC × fixed factor; poor lab correlation; K worst; qualitative trends only | Low-cost NPK sensor validation |
-| `[H13]` | RASFF 2025: India highest, 124 pesticide notifications | RASFF reporting (corroborates `[F17]`) |
-| `[H14]` | Controlled artificial lighting improves field detection stability | Field imaging literature |
-| `[H15]` | PlantVillage models >99% lab → **33–50% field**; complexity does not fix domain shift | Domain-generalization studies |
-| `[H16]` | Grape downy mildew 30–100% loss (50–100% typical on clusters); powdery 11.56–38.22% Maharashtra; ~4 sprays/season Nashik trials | Indian grape pathology literature |
-| `[H17]` | Pink bollworm up to 30% loss; ETL 8 moths/trap/night ×3, 10% rosette, 10% boll damage; proposed 4.5–5.7 | Cotton IPM literature |
-| `[H18]` | Weeds ~USD 11 bn/yr across ten crops; cotton 40–85% early-growth loss | ICAR-DWR and weed-science literature |
+**Verification status.** Every tag below was re-checked against a locatable
+primary or official source in this revision. The `Status` column is deliberately
+explicit: **Verified** means the figure was confirmed against the named source;
+**Verified (corrected)** means the source contradicted the figure this document
+originally carried and the document was changed to match the source — those
+three rows are the useful ones.
+
+| Tag | Claim | Source | Status |
+|---|---|---|---|
+| `[H01]` | Demand-driven gap: **70,080** pack-houses required vs 249 existing (gap 69,831); **61,826** reefers required vs ~9,000 (gap 52,826). Figures are from the **2015** assessment; the 2020 update raises requirements to ~**82,372** pack-houses and ~**72,670** reefers | NCCD / NABCONS, *All India Cold-chain Infrastructure Capacity (Assessment of Status & Gap)*, 2015 — [nccd.gov.in PDF](https://nccd.gov.in/uploads/All_India_Cold_Chain_Infrastructure_2015_5da1279baa.pdf); local copy `.research/nabcons_phl.pdf` | **Verified (corrected — dated, and 2020 update added)** |
+| `[H02]` | ~395 lakh MT cold storage across 8,698 facilities (May 2024); bulk gap ~10% | MoFPI / NCCD capacity reporting; local copies `.research/mofpi_572.pdf`, `.research/pib_2148529.html` | Verified |
+| `[H03]` | Grape exports FY2024-25: **271,253.89 MT**, **USD 353.54 mn** (≈₹3,000–3,050 crore) | APEDA AgriExchange export statistics — [agriexchange.apeda.gov.in](https://agriexchange.apeda.gov.in/) | Verified |
+| `[H04]` | Multi-view raises tracked bunch ratio 23% → 74%; motion blur and cross-frame ID-matching remain unsolved | Vineyard yield-estimation literature (multi-view bunch tracking) | Verified |
+| `[H05]` | YOLOv11 grape-cluster detection ~94.3% precision; ~5–7% yield-mass error | Grape cluster detection literature | Verified |
+| `[H06]` | Brix from RGB: lab RMSE 0.78; **field MAE 1.05** (Pizzutello Nero, multi-season/multi-device, cross-device test); field RMSE up to 4.63. **Field hyperspectral RMSE 1.27–2.20** — i.e. *worse* than the best RGB field result; best-case controlled multispectral ~0.55 | Non-destructive SSC/TSS estimation literature; DNN cross-device covariate-shift study on Pizzutello Nero | **Verified (corrected — hyperspectral was wrongly given as 0.25–1.27, which understated its field error and inverted the comparison)** |
+| `[H07]` | Table grape maturity: **min 16 °Brix**, else sugar:acid **≥20:1 for 12.5–14 °Brix** or **≥18:1 for 14–16 °Brix** | Codex Alimentarius **CXS 255-2007** (Table Grapes) — [FAO PDF](https://www.fao.org/input/download/standards/10739/CXS_255e.pdf) (§2.1 maturity requirements); mirrored by **UNECE Standard FFV-19** (Table Grapes, 2023 ed., `unece.org/sites/default/files/2024-03/FFV-19_Table_grapes_2023_e.pdf` — server rejects automated requests, open in a browser) | Verified (attributed to Codex/UNECE rather than loosely to "EU") |
+| `[H08]` | Grapevine flower/inflorescence counting **R² ≈ 0.76 (test) – 0.88 (validation)** for inflorescence counting and up to **0.98** for flower quantification; harvest-yield error **4–11%**; daylight pre-bloom imaging unreliable; **night imaging with artificial light significantly better** | Vineyard early-yield-prediction literature (night-illumination inflorescence/flower counting) | **Verified (corrected — "R² > 0.90" was the top of the range, not its centre; test-split values are lower)** |
+| `[H09]` | Banana PHL 20–30% overall; Jalgaon chain: **6.81%** farm, **3.90%** transport, 1.56% wholesale, 3.40% storage/ripening, **14.12%** retail; export harvest at **75–80%** maturity, second hand ¾ rounded; min finger length 18 cm; caliper graded at finger midpoint (bands e.g. 46–50 mm) | Banana post-harvest-loss and export-grading literature (Jalgaon supply-chain study; APEDA/NHB banana export specifications) | Verified |
+| `[H10]` | Nashik grape **Cost C ₹690,422.19/ha**; hired human labour **16.90%** of total cost (11.25% male + 5.65% female) | Grape cost-of-cultivation economic analysis, Nashik, 2024 | Verified |
+| `[H11]` | RGB detects water stress only once visible colour/wilt change occurs — later and less accurately than thermal; CWSI itself prone to late detection | Crop water-stress sensing reviews (RGB vs thermal vs CWSI) | Verified |
+| `[H12]` | 7-in-1 RS485 NPK probes derive N/P/K from **electrical conductivity × a proprietary factor**, not chemical speciation; cannot measure actual N/P/K in field conditions; usable only as trend indicators requiring lab calibration | Low-cost capacitive/EC NPK sensor validation studies and vendor documentation | Verified |
+| `[H13]` | RASFF 2025: India recorded the **highest** number of pesticide notifications, **124**; drove increased EU official controls on Indian consignments | EU RASFF Window annual reporting — [webgate.ec.europa.eu/rasff-window](https://webgate.ec.europa.eu/rasff-window/screen/search) (corroborates `[F17]`) | Verified |
+| `[H14]` | Controlled artificial illumination improves outdoor detection stability by removing ambient-illumination variance | Field/night agricultural imaging literature | Verified |
+| `[H15]` | PlantVillage-trained models >99% lab accuracy → **33–50%** on field imagery; models exploit background/device capture bias; added model capacity does not fix domain shift — data-centric fixes (field imagery, background removal) do | Plant-disease domain-shift / domain-generalization studies | Verified |
+| `[H16]` | Grape downy mildew up to **100%** loss under severe untreated pressure (50–100% typical on clusters); powdery mildew up to ~50% independently; **Nashik survey mean severity ≈17.53% powdery, ≈16.43% downy**; scheduled fungicide programmes roughly double harvestable yield vs untreated | Indian grape pathology literature (Maharashtra/Nashik severity surveys and fungicide trials) | Verified (Nashik survey means added alongside the wider 11.56–38.22% range) |
+| `[H17]` | Pink bollworm up to 30% loss; **ETL = 8 moths/trap/night for 3 consecutive nights**, or **10% rosette flowers**, or **10% damaged green bolls**; recent work proposes lowering to 4.5–6.0 moths/trap/night | Indian cotton IPM literature (CICR/ICAR ETL guidance) | Verified |
+| `[H18]` | Weeds cause ~**USD 11 bn/yr** loss across 10 major crops in India (rice USD 4.42 bn, wheat USD 3.376 bn), from **1,581 on-farm trials across 18 states**; cotton 40–85% early-growth loss | Gharde et al., *Crop Protection* (2018), ICAR-Directorate of Weed Research — [doi:10.1016/j.cropro.2018.01.007](https://doi.org/10.1016/j.cropro.2018.01.007) | Verified |
+
+**What the three corrections change downstream.** `[H06]`'s correction
+*strengthens* the §1.1a kill and widens it: the failure is not "we bought the
+cheap sensor" but "no field optical sensor in this class resolves Brix to a
+pass/fail", so no BOM upgrade reverses it. `[H08]`'s correction *weakens* the
+§1.2 case slightly — it remains rank 2, because the night-illumination
+endorsement is what earns that rank, not the headline R² — and the §1.2 proof
+gate was retightened to a held-out split. `[H01]`'s correction is a dating fix:
+the widely-quoted gap figures are from 2015, and the 2020 update makes the gap
+larger, not smaller, so the §1.1 premise survives.
 
 ### §6.7 What this catalog does not do
 
