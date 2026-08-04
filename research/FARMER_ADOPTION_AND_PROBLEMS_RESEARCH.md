@@ -1603,6 +1603,33 @@ we are running the pilot that will tell us."*
 Our pass costs far more than that. So we are not selling you advice — and if we
 cannot find something worth more than advice, we will tell you and stop."*
 
+**v3 adds a third sentence (§15.6) and, more importantly, converts these gates
+into a staged framework with numeric thresholds and an explicit decision at each
+stage — see §15.**
+
+### 8.1 Disposition of the five gaps v2 flagged against itself (v3)
+
+v2 closed by naming five things it did not know. This is what happened to each.
+
+| v2 gap | v3 disposition | Where | Evidence |
+|---|---|---|---|
+| **1. Junnar route density / acreage** | **UNRESOLVED — declared unclosable from public sources.** The spread *widened* to ~20× (1,000–20,000 acres). No taluka-level official series exists. Replaced with a measurement protocol and a cost-per-acre-pass model driven by plots/km² | §11.1, §11.4 | `[G04]`, `[G05]`, `[G06]`, `[G07]` |
+| **2. Tomato-specific Maharashtra MRL violation rate** | **PARTIALLY RESOLVED, state-specific figure declared unobtainable.** Bounded at **2.3–13%** from other-state studies; Maharashtra × tomato is not disaggregated in any public release. **Per-consignment residue-test cost fully resolved at ₹5,000–20,000** | §3.3 v3 resolution | `[G20]`, `[G21]`, `[G22]` |
+| **3. Reconciling ₹17,000 vs ₹3,918/ha protection spend** | **UNRESOLVED with a structural reason — invoices are not published anywhere.** v3 adds no source supporting the high figure, so the prior hardens onto the **low band**. A full measurement instrument is now specified so gate G1 can be executed | §4.1.1 | `[F19]`, `[F20]`, `[E02]` |
+| **4. JTFPC's real turnover (v2 gate 11)** | **RESOLVED SUFFICIENTLY TO DISQUALIFY.** FY22: ₹1.19 lakh revenue, ₹4,920 profit, ₹1.36 lakh total assets, **−₹11,960 reserves**. The ~100× gap against ">₹1 crore" reports is still unexplained, but the filed entity cannot fund a season either way. **First-payer hypothesis re-pointed to a large processor/exporter FPO** | §13.1, §13.2 | `[G10]`, `[G11]`, `[G12]` |
+| **5. Whether a compliance buyer exists for *tomato*** | **RESOLVED — and the answer is no.** The wedge is real, funded and legally grounded, but it is **grape-shaped and exporter-shaped**. Tomato is not among RASFF's high-frequency Indian commodities, and **the grower is statutorily exempt from FSSAI liability**, which removes the domestic buyer entirely | §10.2, §14.2, §14.3 | `[G03]`, `[G15]`, `[G17]`, `[G31]`, `[G32]`, `[F17]` |
+
+**Two gaps v3 opened that v2 did not know it had:**
+
+1. **No professional indemnity cover.** A signed advisory creates attributable
+   liability under a label-locked regime `[G23]`; nothing in this repository
+   addresses insurance. §10.3, §15.3 G12.
+2. **Bio-input logistics are incompatible with threshold advice.** A 3–7 day
+   trichocard shelf life against a 45-day advance indent `[G28]` means most
+   biocontrol recommendations are unactionable without a cold chain that is not in
+   the BOM. Pheromone traps are the only bio-input v1 can honestly recommend.
+   §11.5, §15.3 G11.
+
 ---
 
 ## 10. Regulatory and liability — who may legally advise, and who actually carries the risk (new in v3)
@@ -2238,7 +2265,11 @@ conversation:
 
 ---
 
-## 9. Sources list with labels
+## 16. Sources list with labels
+
+*Renumbered from §9 in v2, since v3 inserted §10–§15 above it. All in-document
+references to "§9" for sources should be read as §16; the `[E..]`, `[F..]` and
+`[G..]` ledgers all live here.*
 
 ### External results — Junnar / Narayangaon cluster specific
 - **[External result]** [Lokmat Times — "Junnar Tomato Prices Crash: From ₹900 To ₹150 Per Crate"](https://www.lokmattimes.com/maharashtra/junnar-tomato-prices-crash-from-rs900-to-rs150-per-crate-farmers-seek-government-support-a525/): ₹900 → ₹600 → ₹150–300/crate; ~₹1.5 lakh/acre cultivation cost. *Limit: newspaper report; a single season and a grower-stated cost.*
@@ -2320,6 +2351,58 @@ marked as such.
 | **F23** | Junnar/Narayangaon tomato area: historical **2,200 acres across 150 villages**, with more recent estimates **as high as 10,000 acres**; no official hectare series located; Junnar (Narayangaon) APMC modal price **₹1,500/quintal (₹15/kg)** on 22-Jul-2026, trading ₹1,500–2,001/quintal in late July | §1.1, §3.7 | Mixed press and market-data sources. *Limit: the 2,200 vs 10,000 acre spread is unreconciled and **route density — AgriRover's key cost driver — cannot be established from it.** Must be measured on the ground.* |
 | **F24** | Maharashtra horticulture labour: harvesting costs for crops such as onion up **30–40%**; growing reliance on migrant labour from MP, Gujarat and Bihar who demand higher pay or leave unexpectedly; mechanisation shifting notably in sugarcane | §3.5 | Current agricultural labour reporting. *Limit: press-derived and largely onion/sugarcane; corroborates `[E17]` and the Indie Journal figures for direction.* |
 
+### v3 evidence ledger — `[G01]`–`[G41]`
+
+New research for the v3 revision. Every row is **[External result]** unless stated.
+Limits are mandatory reading. Rows marked **UNRESOLVED** record a search that
+failed and explain why more desk research will not close it.
+
+| ID | Finding used | Where used | Quality and limit |
+|---|---|---|---|
+| **G01** | **BharatAgri shut down in 2025.** AI-led per-acre advisory + input e-commerce; **₹49/month, ₹399/12 months, ₹800/6 months**, reported ~**₹600/acre per six months**; raised ~**USD 20.99 M** across 8 rounds from 22 investors. Reportedly achieved positive **unit** economics but never profitability; blamed high overheads/marketing/staff cost and inability to raise fresh capital; investors described as sceptical of B2C agritech TAM | v3 headline 1, §4.8, §15.2, §15.5, §15.6 | **The single most decision-relevant new finding in v3, and the strongest evidence in the whole dossier** because it is *revealed*, not stated: a funded, Maharashtra-active team sold approximately AgriRover's subscription product at ~40× the `[F01]` WTP anchor and still died. *Limit: startup-ecosystem reporting and company-database aggregation, not a liquidator's report or audited accounts; the shutdown mechanics and the exact per-acre price point should be confirmed from a primary filing or a founder statement before external citation.* |
+| **G02** | Indian agritech funding context around the shutdown: B2C farm-advisory TAM questioned by investors; sector consolidation and closures reported | v3 headline 1, §4.8 | Sector reporting. *Limit: narrative, not quantified; used only to characterise `[G01]`'s cause, never as a market-size figure.* |
+| **G03** | **Under the Food Safety and Standards Act 2006, farming operations, crops and products produced at farm level are exempt from the Act.** A farmer is **not liable under FSSAI for pesticide residues on his own produce**; the Act attaches once food leaves the farmer's hands, with penalties for unsafe food falling on manufacturers, wholesalers, distributors and sellers | v3 headline 2, exec 16, §3.3 v3 resolution, §4.8, §10.2, §14.2, §14.3, §15.2, §15.5, §15.6 | **The most consequential legal fact in v3.** It voids every domestic-grower compliance and liability-transfer pitch and confines §14's wedge to the FBO/exporter side. *Limit: statutory-scope summary from legal/compliance commentary on the FSS Act, not a citation of the section text or a legal opinion. **Obtain a written opinion before relying on it commercially — including before relying on it to* exclude *a pitch.*** |
+| **G04** | Marathi local reporting: **~20,000 acres ("वीस हजार एकर") of tomato across Junnar *and* Ambegaon talukas**, covering summer plus monsoon seasons **combined** | v3 headline 3, exec 17, §11.1 | The **only** located acreage figure whose scope is stated precisely, which is why it anchors §11.1's reconciliation to ~5,000 standing acres for Junnar alone. *Limit: local-language press, not an official series; "20,000 acres" is a round number and the two-taluka two-season scope makes it non-comparable with the other figures as published.* |
+| **G05** | Junnar tomato area described as fluctuating between roughly **1,000 and 5,000 acres**; state horticulture reporting is published at state/district level | §11.1 | Press/market commentary. *Limit: no method given; used only to bound the range.* |
+| **G06** | **Maharashtra publishes horticulture and crop-area statistics at state and district level; taluka-level crop area is not routinely released** | v3 headline 3, §11.1, §4.1.1 | **UNRESOLVED (structural).** Explains why §11.1 cannot be closed by desk research. *Limit: absence-of-evidence finding — established by failing to locate a series across official horticulture and state statistical sources, which is weaker than a documented statement that none exists.* |
+| **G07** | **Agriculture Census does not publish Junnar taluka holdings separately**; holding-size distribution is available by district size-group only | §11.1 | **UNRESOLVED (structural).** *Limit: as `[G06]`.* |
+| **G08** | **SMAM: Farm Machinery Bank via FPO/co-operative/SHG funded at 80% of project cost up to ₹30 lakh**; projects above ₹30 lakh capped at ₹24 lakh assistance. **Custom Hiring Centre at 40%** | v3 headline 4, exec 18, §12.1, §12.2, §12.3 | Scheme-guideline rates; the **2:1 FPO-vs-individual subsidy asymmetry is the finding that reframes the buyer question**. *Limit: guideline text, not an approval. **Requires machine testing and empanelment `[E14]`, which AgriRover does not have and which has no test standard for this machine class** — so the 80% is currently theoretical.* |
+| **G09** | **10,000-FPO scheme:** management cost **up to ₹18 lakh over 3 years**; matching equity grant **1:1, ₹2,000/member, max ₹15 lakh/FPO**; credit guarantee on project loans to **₹2 crore** — **85% up to ₹1 crore**, 75% for ₹1–2 crore | v3 headline 4, exec 18, §12.1, §12.3 | Official scheme design. *Limit: eligibility and windows vary by implementing agency and FPO age/registration; the ₹18 lakh management cost is the line that could fund §11.5's agronomist desk, but that use must be confirmed as permissible.* |
+| **G10** | **JTFPC audited position at 31-Mar-2022: total revenue ₹1.19 lakh; net profit ₹4,920; total assets ₹1.36 lakh; share capital ₹1.00 lakh; reserves and surplus −₹11,960 (negative).** Active private company, incorporated 2013, RoC Pune. A separate **Junnar Women Farmers Producer Co. Ltd** exists, financials not located | v3 headline 4, exec 18, §4.8, §13.1, §13.2, §15.2, §15.5 | **Resolves v2 gate 11 sufficiently to disqualify JTFPC as first payer** — total assets ₹1.36 lakh cannot fund a ₹200,000 season or a 20% subsidy share. *Limit: filing-derived data from company-information aggregators, **not a signed audit report read directly**; FY22 is the latest public balance sheet located; the ~100× gap against historical ">₹1 crore turnover" reports is still unexplained and is most plausibly commission/agency turnover flowing outside the P&L. **Gate G2 still requires reading the accounts directly.*** |
+| **G11** | **Sahyadri Farms: ₹1,549 crore FY23-24, ₹1,955 crore consolidated FY25**; 30,000+ farmers; 40,000+ acres; fruit and vegetable processing; **tomato ≈35% of domestic revenue**; **Sahyadri Tomato Producer Company Ltd subsidiary at ₹80.91 crore FY2025** | v3 headline 4, exec 18–19, §13.2, §13.3 | **Identifies the best-qualified first payer found in three revisions** — solvent, tomato-specific, and itself the liable party under `[G03]`. *Limit: company-reported and press-reported consolidated figures; the subsidiary revenue line should be confirmed from filings. Being well-qualified as a payer also makes it a demanding technical buyer — see §13.3.* |
+| **G12** | Sahyadri Farms operates **IoT sensors and end-to-end sowing-to-shelf traceability** | exec 18–19, §13.2, §13.3 | Company/press reporting. *Limit: capability described, not audited; but sufficient to establish that this buyer already purchases the category and will benchmark against Fasal/Fyllo (§5.1).* |
+| **G13** | Indian drone-service operators: **150–200 operational days/year to break even**; **25–35 acres/day typical, 40–50 ideal**; ₹300–700/acre with 35–50% net margin for efficient operators; **idle time from scheduling, transit and farmer availability named as the primary threat to profitability** | v3 headline 5, exec 17, §4.8, §11.2, §11.3, §11.4, §15.2, §15.3 | **The hardest external benchmark in v3, and it contradicts AgriRover's plan directly**: the model assumes 100 days at 2.5 acres/day — roughly half the operating days and a tenth of the daily coverage of a service class that itself struggles. *Limit: operator-survey and industry-aggregator figures, not audited fleet data; drones and ground rovers differ in transport and coverage, and the comparison is used for the* utilisation *lesson, not as a coverage target.* |
+| **G14** | **e-Velanmai** (ICT extension, Tamil Nadu — scientists plus field coordinators): farmer fee **₹50/yr up to 5 acres, ₹100 for 5.1–10 acres, ₹150 above 10 acres**; evaluations report yield and income gains under a **paid** model | exec 15, §4.8, §15.2 | **Structurally the closest analogue to AgriRover's agronomist-review layer, and it charges ₹50–150 per farmer per *year*.** Sets the floor of the revealed-WTP corridor. *Limit: Tamil Nadu, project-supported, fee likely subsidised at the margin; the fee is a participation charge, not full cost recovery.* |
+| **G15** | Export-chain residue liability: responsibility and loss rest with the **farmer-of-record and exporter at the time of export**; a failed sample triggers action against **that specific exporter and registered farm**; courts have allowed compensation claims **against the pesticide supplier/manufacturer** where residue levels were misrepresented and the farmer relied on that representation | exec 16, §10.2, §14.1, §14.2 | Establishes that liability *does* exist and *is* identifiable — but on the exporter side. **The supplier-claim line is the one genuinely attractive commercial opening in §10**: a timestamped application record is exactly the evidence needed to shift loss onto a supplier. *Limit: legal commentary and case summaries, not a judgment read in full; **the supplier-claim theory is untested for this use and needs a written legal opinion before it is offered as a benefit.*** |
+| **G16** | **Maharashtra MahaDBT mechanisation: 40% general, 50% for SC/ST, small and marginal, and women farmers.** **PoCRA 2.0 (Nanaji Deshmukh Krushi Sanjeevani)** offers higher rates, **sometimes up to 100%** for eligible interventions in covered villages for holdings <5 ha, on a separate portal. Applications require Aadhaar, 7/12 extract, 8A land record and a vendor quotation | v3 headline 4, exec 18, §12.1, §12.3 | State-scheme rates. *Limit: PoCRA coverage is **village-specific and must be checked village by village**; the "up to 100%" applies to listed climate-resilient interventions, and **there is no evidence a novel robot qualifies as one**. Do not model 100%.* |
+| **G17** | **APEDA grape/export procedure: plot registration mandatory annually 1 Sep–31 Dec at ₹50 per plot per year**; residue sampling by accredited labs under the Residue Monitoring Plan; **APEDA does not standardise lab cost** — labs set it; historical APEDA assistance **₹3,500/sample** against an agreed analysis rate of **₹7,000 plus taxes** | exec 19, §3.3 v3 resolution, §4.8, §14.1, §14.3 | **The ₹50/plot/year figure is the most useful discipline in v3**: the statutory price of a plot record is ₹50, so AgriRover cannot sell "a plot record" — it must sell the residue *outcome* the record evidences. *Limit: procedure-document and scheme figures of differing vintages; the ₹3,500/₹7,000 assistance rates are historical and may not be current.* |
+| **G18** | **Niqo Robotics**: **₹300–500/acre** to the farmer; machine **leased to a village-level entrepreneur at ₹4.5 lakh/season** with the VLE reported to net ~**₹9 lakh/yr**; **USD 22.17 M** raised; **180,000+ acres** treated; group-level profitability targeted **FY2026-27** | §4.8, §11.3 | Updates and extends `[F04]`. **The key comparison in the dossier**: this is the price AgriRover must beat, and it is charged for a spray that *happened*. *Limit: company-reported acreage, pricing and VLE earnings; the ₹9 lakh VLE figure is a vendor-side illustration and should be treated as marketing until an operator confirms it.* |
+| **G19** | **Fasal: FY25 revenue ₹6.2 crore on 80,000+ acres under management**, ~USD 18 M raised | §4.8, §11.3 | **Implies roughly ₹775 of annual revenue per acre under management across the book** — a sobering ceiling for per-acre digital agronomy revenue in India, and materially below AgriRover's ₹3,600/acre season package. *Limit: revenue and acreage may not be co-extensive (acres "under management" can include non-paying or trial acreage), so the per-acre figure is indicative, not a measured ARPA.* |
+| **G20** | **Export-grade multi-residue testing costs ₹5,000–20,000 per sample**: ₹8,000–20,000 at private NABL labs for 200–400+ compound panels by GC-MS/MS and LC-MS/MS; ₹5,000–14,000 at government/research institutions | exec 15, exec 19, §3.3 v3 resolution, §4.8, §14.1, §14.3 | **The largest recurring per-unit cheque located anywhere in this dossier — 6–25× a deep-scan pass — and it is paid without argument, per consignment.** The strongest quantitative support for §14's wedge, with the crucial rider that **the exporter pays it, not the grower.** *Limit: quotation-based ranges, no official tariff; cost varies with panel size and destination MRL list.* |
+| **G21** | **No tomato-specific, Maharashtra-specific MRL violation rate is published.** Government and FSSAI disclosures aggregate nationally by commodity group, not as state × commodity violation rates | §3.3 v3 resolution | **UNRESOLVED — v2 gap 2 declared closed as unclosable.** *Limit: absence-of-evidence finding from failing to locate a disaggregated release; a state agriculture department RTI or a direct request to a state residue laboratory is the only remaining route.* |
+| **G22** | Tomato/vegetable MRL exceedance from other Indian studies: **tomato Ghaziabad 13%**; **7%** of contaminated farmgate vegetable samples exceeded MRL; **all fruit and vegetables Gujarat 2.3%** | §3.3 v3 resolution | Bounds the plausible tomato range at **2.3–13%**, up to ~4.6× the 2.8% all-commodity aggregate `[F22]`. **Does not rescue the domestic grower case**, because `[G03]` means even 13% carries no statutory consequence for the farmer. *Limit: different states, crops, years and sampling designs; not transferable to Junnar as a rate, only as a range.* |
+| **G23** | **Insecticides Act 1968: a lawful recommendation must conform to the CIB&RC-approved label.** Licensed dealers may advise on dosage and safety **only "label-locked"**; efficacy or safety claims beyond the label, or any off-label suggestion, are unlawful, and a dealer advising outside label parameters **carries legal liability for resulting residue problems or crop damage**. There is **no licensed agronomist profession with prescription authority** analogous to medicine | §10.1, §10.3, §14.3, §15.3 | **Reframes "agronomist-signed advisory" from a value-add into an uninsured liability-creating artefact**, and makes PHI transcription the only legally safe advisory output for v1. *Limit: regulatory summary and dealer-compliance commentary, not the statute text or a legal opinion; **obtain an opinion before issuing any signed advisory.*** |
+| **G24** | Pesticide **misbranding** enforcement: state Insecticide Inspectors; prosecution under **Section 29** with officer liability under **Section 33** (nominated/quality-responsible officers only); proceedings **vitiated** where authorities miss statutory mandates such as the **30-day analysis-reporting window** or the right to CIL re-testing; a parliamentary panel has flagged penalties as **insufficient to deter repeat offenders** | §10.1 | Recasts §3.10's spurious-input warning as a **legal** constraint: AgriRover must never attribute a control failure to counterfeiting on image evidence. *Limit: legal-commentary synthesis; section references should be verified against the Act before external use.* |
+| **G25** | **Namo Drone Didi** status and the **80% assistance for multi-utility transport vehicles** added in response to transport-driven idle time | §11.2, §11.3, §12.1, §12.3, §15.5 | Extends `[F16]`. **The most transferable negative precedent in the dossier**: the state's response to a utilisation failure was *more subsidy*, not better utilisation — which is why §12.3 concludes subsidy makes the failure cheaper to buy, not less likely. *Limit: press-derived; no audited utilisation dataset exists.* |
+| **G26** | Scouting-robot throughput splits sharply by platform class: fast vehicle-mounted platforms reach **28–100 acres/hour**, while **under-canopy platforms operate at ~0.3 m/s** — the class AgriRover belongs to | §11.3, §15.3 | **Establishes that sentinel sampling is a physical necessity, not a cost-saving choice.** At 0.3 m/s and 1.5 m row spacing a rover fully traverses only ~0.4 acre/hour, so `[E26]`'s 25-plant protocol is what makes the platform viable at all and `[F07]`'s 50-plant protocol may not be. *Limit: figures span heterogeneous research and commercial platforms in non-Indian field conditions; used for the order-of-magnitude split between platform classes, not as a coverage prediction for AgriRover.* |
+| **G27** | Indian agronomist compensation: **₹4–12 lakh/yr entry-level (0–2 yrs)**, **₹12–35 lakh mid-career**, **₹15–35 lakh** for specialised digital-agronomist roles; agricultural **extension officers ₹34,000–48,500/month** at entry level (≈₹4.1–5.8 lakh/yr) | §11.5, §15.3 | Prices the review layer for the first time. At the extension-officer band (~₹1,730/working day) the desk costs **₹43–346/pass depending on utilisation, and ~₹577/pass at pilot volumes** — which is why §11.5 concludes the layer only works shared across rovers or inside an FPO that already employs agronomists. *Limit: salary-aggregator ranges spanning roles, cities and employer types; not a quoted local hire.* |
+| **G28** | Bio-input supply: ICAR-NRRI **trichocards ₹60/card** (~18,000–20,000 eggs) requiring a **45-day prior indent** above 50 cards and **in-person collection**; other suppliers ~₹100–120/box; **shelf life 3–5 days from receipt (up to 7 days at 4–8 °C), one study reporting up to 21 days at 10 °C**; parasitoids documented as **unavailable when farmers need them**; pheromone traps ~**1-year** shelf life, ~25 traps/ha in trials | §11.5, §15.3 | **Quantifies `[F10]`'s availability barrier into a specific incompatibility**: a 3–7 day action window against a 45-day advance indent. **Consequence: trichocard recommendations are unactionable in the pilot without a cold-chain micro-distribution operation that is nowhere in the BOM, and pheromone traps are the only bio-input whose logistics AgriRover can satisfy.** *Limit: one institute's published terms plus supplier listings; commercial biocontrol labs nearer Pune may offer better terms and must be checked before the constraint is treated as binding.* |
+| **G29** | **KCC / crop loan limits have no flat rate**: the ceiling is the **district Scale of Finance × area**, plus 10% for post-harvest and 20% for asset maintenance, set by the **District Level Technical Committee** | §12.1 | Confirms crop credit is **working capital, not capex** — it cannot fund a rover. *Limit: no Pune-district tomato Scale of Finance figure was located, so the per-acre rupee limit for the target grower remains unknown.* |
+| **G30** | Sahyadri Farms scale detail corroborating `[G11]`: farmer base, acreage, processing operations and the tomato subsidiary revenue line | §13.2, §13.3 | Corroboration only. *Limit: as `[G11]`.* |
+| **G31** | **India fresh vegetable exports USD 894 million in FY2024-25**; a RASFF entry triggers **mandatory testing and increased costs on all subsequent shipments of that product from India**; tomato exports described as volatile and recently declining | §14.1, §14.2 | Sizes the export market and establishes the **collective** cost of a notification — the mechanism that makes exporter demand insurance-shaped. *Limit: aggregate trade statistics; the tomato-specific export series was not isolated, which itself supports §14.2's conclusion that the wedge is not tomato-shaped.* |
+| **G32** | **Nashik grape exports 1.4 lakh tonnes in the 2025-26 season, down 9.6%** on unseasonal rain and hail | exec 19, §14.1, §14.2, §14.3 | Sizes the crop the compliance wedge actually fits. *Limit: season-to-date trade reporting.* |
+| **G33** | **GlobalGAP certification ₹1–3 lakh individually**, with group (Option 2) certification sharing cost; **mandatory pesticide-use, irrigation, harvest-date and worker-safety logs plus annual MRL testing evidence** | §14.1, §14.2, §14.3 | **The record fields GlobalGAP mandates are a direct match for AgriRover's output**, and the ₹1–3 lakh budget is the second existing line item §14.3 prices against. *Limit: cost ranges are quotation-based and vary with scope, group size and certification body.* |
+| **G34** | Indian smallholder adoption evidence: driven by **direct demonstration and peer diffusion**, with KVK **frontline demonstrations** effective because they show tangible yield and economic benefit; spillover runs through social networks with **gendered asymmetry** — male networks propagate adoption on positive outcomes while female networks can **reduce** demand when outcomes are non-positive; **information access is often secondary to household agency**; and **informing private input suppliers significantly boosts adoption** relative to government-only channels | §15.4, §6.4 correction 2 | **Converts §6.4's two-track design and its dealer-co-option correction from hypotheses into evidence-backed strategy**, and establishes that a non-positive first season *actively destroys* future demand — which is why §15.4's trajectory caps season 2 at 10–30% of one village. *Limit: synthesis across adoption studies of differing crops, states and technologies; the gendered-asymmetry and supplier-channel findings come from specific trials and are directional for Junnar, not measured there.* |
+
+*Note on ledger numbering: `[G35]`–`[G41]` were reserved during drafting for
+additional threads (a tomato-specific Maharashtra residue series, Junnar taluka
+acreage, local plant-protection invoices, Junnar Women FPC financials, a Pune
+tomato Scale of Finance figure, professional-indemnity market pricing for
+agri-advisory, and a commercial biocontrol lab quotation near Pune). **All seven
+searches failed or were not closable from public sources and are recorded as open
+in §11.1, §3.3, §4.1.1, §13.2, §12.1 and §10.3 rather than being given IDs.** They
+are listed here so the gaps are visible rather than silently dropped.*
+
 ### Repository facts
 - **[Repository fact]** `README.md`: dual-controller architecture; Narayangaon/Junnar tomato crop-protection hypothesis; **first pilot keeps pesticide application manual and does not use the low-cost NPK probe to prescribe fertilizer**; launch-critical tomato classes still need local field data and held-out per-class validation.
 - **[Repository fact]** `docs/BOM-top20-groww-trackA.md`: planned hardware total **₹41,150**; CPU-only scout **₹34,800**; Groww Track A ceiling **₹50,000**; unallocated ₹8,850.
@@ -2338,6 +2421,18 @@ marked as such.
 - **[Analyst scenario]** ~250 acre-passes per rover-year at 100 days × 2.5 acres/day; ₹200,000 revenue at ₹800/pass.
 - **[Analyst scenario]** SDRF compensation of ~₹17,000/ha capped at 2 ha recovers on the order of 5% of a 2-acre tomato loss at ₹1.5 lakh/acre.
 
+**v3 analyst scenarios (all derived, none measured)**
+- **[Analyst scenario]** Cost per acre-pass across the density band (§11.3): **₹387 dense / ₹573 moderate / ₹648 repository model / ₹946 sparse / ₹1,599 very sparse**, at a ₹1,119 rover-day plus a ₹200 support allowance. At 70 active days instead of 100, the moderate row rises to ~**₹733**.
+- **[Analyst scenario]** Junnar single-season standing tomato area inferred at **~5,000 acres** by dividing `[G04]`'s two-taluka, two-season ~20,000 acres — **an inference, not a measurement** (§11.1).
+- **[Analyst scenario]** Under-canopy traverse arithmetic: 0.3 m/s `[G26]` ≈ 1.08 km of row/hour ≈ **~0.4 acre/hour** fully traversed at 1.5 m row spacing (§11.3).
+- **[Analyst scenario]** Agronomist review desk at ~₹1,730/working day `[G27]`: **₹43/pass at 40 passes/day, ₹87 at 20, ₹144 at 12, ₹346 at 5, and ~₹577 at pilot volumes of 3** (§11.5).
+- **[Analyst scenario]** True per-acre-pass economic cost assembled at moderate density: **₹700–1,000 before margin** (₹573 + ₹87 review + trap hardware) — **1.2–20× the entire revealed annual advisory spend per farmer** (§11.5).
+- **[Analyst scenario]** Subsidised payback on ₹48,150 capital at ₹6,800/yr saving: **11.0 yrs unsubsidised / 6.6 yrs at 40% / 5.5 yrs at 50% / 2.2 yrs at 80%** — but **~9.4 yrs even at 80%** if the protection budget is ₹4,000/acre rather than ₹17,000 (§12.3).
+- **[Analyst scenario]** JTFPC scale gap: §4.4's ₹200,000 modelled annual revenue is **~168× JTFPC's filed FY22 revenue and ~147× its total assets**; a ₹4.5 lakh/yr agronomist is **~3.8×** its filed annual revenue (§13.1).
+- **[Analyst scenario]** Fasal implied revenue per acre under management: **₹6.2 crore ÷ 80,000+ acres ≈ ₹775/acre/yr** `[G19]` (§4.8).
+- **[Analyst scenario]** Revealed farmer-paid advisory corridor **₹50–600/farmer-year** `[G14]`, `[G01]`, against which AgriRover's ₹3,600/acre season package is **6–72×** (§4.8).
+- **[Analyst scenario]** Realistic adoption trajectory: **3–5 paid demonstration plots in season 1; 10–30% of one village in season 2; first unsubsidised cluster in season 3** (§15.4).
+
 ### AgriRover targets (nothing here is proven)
 Local protection-spend baseline from invoices; per-class detection accuracy vs
 KVK expert counts; measured productive acres/day; timed review minutes and true
@@ -2347,11 +2442,41 @@ label/PHI compliance workflow sign-off; a booked and paid repeat order as the
 only acceptable willingness-to-pay evidence; and a mock APEDA-style audit passed
 on the record set.
 
+**Added in v3:** a measured route-density survey (plots/km², mean plot size,
+median inter-plot travel time) before any pricing; measured active days per year
+against the 150–200 drone benchmark `[G13]`; **professional indemnity insurance in
+force before any signed advisory is issued — a gap discovered in v3 and present
+nowhere in this repository**; a label-locked recommendation workflow tied to
+CIB&RC labels `[G23]`; a written legal opinion on the FSSAI farm-level exemption
+`[G03]` and on the supplier-claim theory `[G15]`; JTFPC's accounts read directly
+rather than from filing aggregators `[G10]`; a Junnar acreage figure measured
+rather than cited; a tomato-specific Maharashtra residue rate obtained by RTI or
+from a state residue laboratory `[G21]`; a bio-input actionability rate against the
+3–7 day trichocard window `[G28]`; and a dated, signed product-form decision
+between FPO cluster surveillance and the exporter compliance ledger (§15.3, G7).
+
 ---
 
 **Status:** buyer-side research complete for the Junnar/Narayangaon tomato
-wedge. No claim in this document may be used in a sales conversation or deck
-without its label, its source and its stated limit. The two weakest citations —
-the aggregated *H. armigera* loss range and the aggregated resistance-management
-synthesis — are flagged in §9 and must be replaced with opened primary papers
-before external use.
+wedge, **extended in v3** to regulatory liability, route-density economics,
+subsidy structure, the first-payer shortlist, the exporter wedge and a numeric
+go/no-go framework. No claim in this document may be used in a sales conversation
+or deck without its label, its source and its stated limit. The two weakest
+citations — the aggregated *H. armigera* loss range and the aggregated
+resistance-management synthesis — are flagged in §9 and must be replaced with
+opened primary papers before external use.
+
+**v3 closing position, stated without hedging.** Three revisions of buyer-side
+research have not found a grower who can pay AgriRover's cost. v3 adds four
+reasons the search should now stop being repeated in the same place: the grower
+has **no residue liability to insure against** `[G03]`; the best-funded attempt to
+sell him per-acre advisory **closed in 2025** `[G01]`; the presumed first-payer FPO
+has **₹1.36 lakh of total assets** `[G10]`; and the cost per acre-pass is
+**₹387–1,599** against a revealed advisory corridor of **₹50–600 per farmer-year**
+`[G13]`, `[G14]`. One viable business remains — an audit artefact sold to a solvent,
+liable processor or exporter — and it sits in a **different district, on a
+different crop, in a different product form** than the one currently being built
+(§14.3, §13.3). §15 exists so that this becomes a decision with a date on it
+rather than a finding that gets read and set aside. **Three of the four Stage 1
+gates require no hardware, no software and no capital — only invoices, audited
+accounts and a GPS walk. They should be run before anything else is built.**
