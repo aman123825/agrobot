@@ -14,16 +14,12 @@ import os
 import sys
 import threading
 import time
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    pass
 
 # Guard ROS 2 imports for py_compile compatibility.
 try:
     import rclpy
-    from rclpy.node import Node
     from geometry_msgs.msg import Twist
+    from rclpy.node import Node
 
     HAS_ROS2 = True
 except ImportError:

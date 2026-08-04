@@ -22,8 +22,8 @@ from collections import deque
 from datetime import datetime, timezone
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-import config  # noqa: E402
-from bridge.mqtt_client import MqttClient  # noqa: E402
+import config
+from bridge.mqtt_client import MqttClient
 
 logger = logging.getLogger(__name__)
 
@@ -124,7 +124,7 @@ def main() -> None:
     try:
         from alerts.telegram_bot import send_alert
     except Exception:
-        send_alert = None  # noqa: N806
+        send_alert = None
     StreamProcessor(alert_fn=send_alert).run()
 
 

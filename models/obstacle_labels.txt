@@ -1,0 +1,7 @@
+person
+vehicle
+animal
+rock
+stump
+fence
+ditch

@@ -12,17 +12,13 @@ import math
 import os
 import sys
 import threading
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    pass
 
 # Guard all ROS 2 imports so py_compile passes without rclpy installed.
 try:
     import rclpy
-    from rclpy.node import Node
     from geometry_msgs.msg import TwistStamped
     from nav_msgs.msg import Odometry
+    from rclpy.node import Node
     from sensor_msgs.msg import NavSatFix, Temperature
     from std_msgs.msg import Float32MultiArray
 

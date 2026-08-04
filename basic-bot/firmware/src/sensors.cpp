@@ -25,8 +25,8 @@ static Telemetry      snap;
 static esp_adc_cal_characteristics_t sAdcChars;
 static uint32_t       sNpkNextAttemptMs = 0;
 
-#define CH_MOISTURE  ADC1_CHANNEL_6   // GPIO34
-#define CH_VBAT      ADC1_CHANNEL_7   // GPIO35
+#define CH_MOISTURE  ADC1_CHANNEL_4   // GPIO32
+#define CH_VBAT      ADC1_CHANNEL_3   // GPIO39
 
 // Multi-point capacitive-moisture calibration: ascending mV with the matching
 // percent (capacitive sensors read LOWER voltage when wetter). CALIBRATE for

@@ -9,10 +9,6 @@ from __future__ import annotations
 import logging
 import os
 import sys
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    pass
 
 # Guard ROS 2 imports for py_compile compatibility.
 try:

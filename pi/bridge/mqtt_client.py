@@ -1,18 +1,21 @@
 """Thin paho-mqtt wrapper for subscribing to rover telemetry and publishing
 alerts (BOM #108). The ESP32 publishes; the Pi subscribes and routes to
 Pathway + the dashboard.
+
+paho is imported lazily so modules that *reference* MqttClient still import on
+a machine without it; constructing MqttClient without paho raises.
 """
 from __future__ import annotations
 
-from typing import Callable
-
-import paho.mqtt.client as mqtt
+from collections.abc import Callable
 
 import config
 
 
 class MqttClient:
     def __init__(self, host: str = config.MQTT_HOST, port: int = config.MQTT_PORT):
+        import paho.mqtt.client as mqtt
+
         self.host = host
         self.port = port
         self._client = mqtt.Client()

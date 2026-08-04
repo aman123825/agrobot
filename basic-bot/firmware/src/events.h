@@ -12,6 +12,8 @@
 #define EVT_DOSE_REQUEST  (1 << 4)  // DOSE command pending
 #define EVT_PUMP_DISABLE  (1 << 5)  // PUMP_DISABLE command (blocks dosing)
 #define EVT_OVERTEMP      (1 << 6)  // ESP32 die temperature too high
+#define EVT_PROBE_DOWN_REQ (1 << 7) // manual: lower the NPK probe (servo)
+#define EVT_PROBE_UP_REQ   (1 << 8) // manual: raise the NPK probe (servo)
 
 // Any of these forces the motors to a stop. EVT_OBSTACLE is deliberately NOT
 // here: it only blocks forward motion so you can still back away / turn.

@@ -17,7 +17,7 @@ import sys
 import serial
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-import security  # noqa: E402
+import security
 
 logger = logging.getLogger(__name__)
 

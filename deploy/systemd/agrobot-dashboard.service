@@ -5,16 +5,21 @@
 
 [Unit]
 Description=AgriRover Streamlit Dashboard
-After=network-online.target
+After=network-online.target mosquitto.service
 Wants=network-online.target
+# Field deployment: never stop retrying (docs/UPGRADES.md §10 "Watchdogs").
+StartLimitIntervalSec=0
 
 [Service]
 Type=simple
 User=agrobot
 WorkingDirectory=/home/agrobot/agrobot/pi
-EnvironmentFile=/home/agrobot/agrobot/pi/.env
+# /etc/agrirover.env is the canonical secrets home (last file wins).
+# Both are optional ("-") so a missing file never blocks boot.
+EnvironmentFile=-/home/agrobot/agrobot/pi/.env
+EnvironmentFile=-/etc/agrirover.env
 ExecStart=/home/agrobot/agrobot/pi/.venv/bin/streamlit run dashboard/app.py --server.port 8501 --server.headless true
-Restart=on-failure
+Restart=always
 RestartSec=5
 
 [Install]

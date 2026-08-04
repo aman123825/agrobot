@@ -9,6 +9,7 @@
 #include "config.h"
 #include "events.h"
 #include "sensors.h"
+#include "mobile_server.h"
 #include "telemetry.h"
 
 static EventGroupHandle_t sEvents = nullptr;
@@ -64,4 +65,5 @@ void telemetry_print() {
              air_c, air_rh, dist_l, dist_c, dist_r, t.chip_temp_c,
              (bits & EVT_PUMP_DISABLE) ? "true" : "false", npk);
     Serial.println(line);
+    mobile_server_broadcast_line(line);
 }

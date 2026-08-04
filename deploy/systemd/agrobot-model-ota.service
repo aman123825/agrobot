@@ -1,0 +1,27 @@
+# NOTE: All paths below assume the default deployment layout where the
+# repository is cloned to /home/agrobot/agrobot and a virtualenv exists at
+# /home/agrobot/agrobot/pi/.venv.  If deploying to a different user or path,
+# update WorkingDirectory, EnvironmentFile, and ExecStart accordingly.
+
+[Unit]
+Description=AgriRover model OTA update (docs/UPGRADES.md §8)
+# Needs the network; runs fine even if the orchestrator is down.
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=oneshot
+User=agrobot
+WorkingDirectory=/home/agrobot/agrobot
+# /etc/agrirover.env is the canonical secrets home (last file wins).
+# MODEL_MANIFEST_URL unset => the script logs "OTA disabled" and exits 0,
+# so this unit never fails on unconfigured rovers.
+EnvironmentFile=-/home/agrobot/agrobot/pi/.env
+EnvironmentFile=-/etc/agrirover.env
+ExecStart=/home/agrobot/agrobot/pi/.venv/bin/python /home/agrobot/agrobot/pi/ai/model_ota.py update --restart
+# Restarting agrobot-orchestrator via --restart needs systemctl access:
+# grant it narrowly with polkit or run `sudo systemctl edit` to add a drop-in;
+# simplest field setup is a sudoers line limited to that one command.
+
+[Install]
+WantedBy=multi-user.target

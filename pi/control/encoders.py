@@ -14,7 +14,7 @@ import threading
 import time
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-import config  # noqa: E402
+import config
 
 logger = logging.getLogger(__name__)
 
@@ -35,7 +35,7 @@ class Encoders:
 
     def start(self) -> bool:
         try:
-            import RPi.GPIO as GPIO
+            from RPi import GPIO
 
             self._gpio = GPIO
             GPIO.setmode(GPIO.BCM)

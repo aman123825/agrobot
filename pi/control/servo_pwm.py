@@ -21,7 +21,7 @@ import os
 import sys
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-import config  # noqa: E402
+import config
 
 logger = logging.getLogger(__name__)
 
@@ -54,7 +54,7 @@ class PanTiltServo:
         self._pan_pwm = None
         self._tilt_pwm = None
         try:
-            import RPi.GPIO as GPIO
+            from RPi import GPIO
 
             GPIO.setmode(GPIO.BCM)
             GPIO.setup(self.pan_pin, GPIO.OUT)

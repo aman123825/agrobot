@@ -18,7 +18,7 @@ import sys
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
 try:
-    from nav.geo import local_to_latlng  # noqa: E402
+    from nav.geo import local_to_latlng
 except ImportError:  # pragma: no cover - standalone testing
     def local_to_latlng(east: float, north: float, lat0: float, lng0: float) -> tuple[float, float]:
         """Fallback if nav.geo is unavailable."""

@@ -6,6 +6,7 @@ venv/
 env/
 *.egg-info/
 .pytest_cache/
+.ruff_cache/
 
 # --- PlatformIO / ESP32 ---
 .pio/
@@ -30,3 +31,7 @@ field_log_*.csv
 .DS_Store
 .vscode/
 .idea/
+
+# --- Agent tooling / scratch (not project deliverables) ---
+.claude/
+.workbuddy-ai/

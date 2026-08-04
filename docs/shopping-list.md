@@ -14,11 +14,14 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 |-----------|-----|--------|--------|
 | ESP32 DevKit V1 | 1 | 300–500 | 300–500 |
 | ESP32-CAM (OV2640) | 1 | 400–600 | 400–600 |
-| Raspberry Pi 4 (2GB) | 1 | 4,500–6,000 | 4,500–6,000 |
+| Raspberry Pi 5 (8GB) *(primary — Hailo AI HAT+ host)* | 1 | 7,200–8,000 | 7,200–8,000 |
+| Raspberry Pi 4 (2GB) *(fallback/prototype — Coral host)* | 1 | 4,500–6,000 | (alt) |
+| Pi 5 27W USB-C PSU | 1 | 700–1,200 | 700–1,200 |
+| Pi 5 active cooler | 1 | 600–800 | 600–800 |
 | 32GB microSD (Pi OS) | 1 | 400–600 | 400–600 |
 | 16GB microSD (CAM) | 1 | 200–300 | 200–300 |
 | CP2102 USB–serial | 1 | 80–150 | 80–150 |
-| **Subtotal** | | | **5,880–8,150** |
+| **Subtotal** | | | **9,880–11,850** |
 
 ## 2. Power
 | Component | Qty | Unit ₹ | Line ₹ |
@@ -78,10 +81,11 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 |-----------|-----|--------|--------|
 | Pi Camera v2 | 1 | 1,200–1,800 | 1,200–1,800 |
 | Wide-angle M12 160° lens | 1 | 300–500 | 300–500 |
-| Google Coral USB | 1 | 3,000–4,500 | 3,000–4,500 |
+| AI HAT+ 26 TOPS (Hailo-8) *(primary — Pi 5 PCIe)* | 1 | 10,000–11,000 | 10,000–11,000 |
+| Google Coral USB *(fallback/prototype — Pi 4/5 USB)* | 1 | 3,000–4,500 | (alt) |
 | 30cm CSI ribbon | 1 | 100–150 | 100–150 |
 | Pi GPIO header | 1 | 80–150 | 80–150 |
-| **Subtotal** | | | **4,680–7,100** |
+| **Subtotal** | | | **11,680–13,600** |
 
 ## 6. Actuation & Output
 | Component | Qty | Unit ₹ | Line ₹ |
@@ -165,7 +169,7 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 | Blade fuse 25–30A + holder | 1 | 30–60 | 30–60 |
 | Anti-spark XT60 | 1 | 80–150 | 80–150 |
 | LiPo balance charger (iMAX B6) | 1 | 800–1,500 | 800–1,500 |
-| L298N heatsink (14×14mm) | 2 | 20–50 | 40–100 |
+| BTS7960 thermal pads / spare heatsink (IBT-2 ships with one) | 2 | 20–50 | 40–100 |
 | Pi 4 heatsink kit | 1 | 150–300 | 150–300 |
 | 30mm 5V fan | 1 | 80–150 | 80–150 |
 | Loctite 243 (blue) | 1 | 150–250 | 150–250 |
@@ -210,17 +214,33 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 | Anti-static mat + strap | 1 | 150–300 | 150–300 |
 | **Subtotal** | | | **1,410–2,760** |
 
+## 14. Durability pack — multi-season hardening (see `farmer-needs-and-durability.md`)
+| Component | Qty | Unit ₹ | Line ₹ |
+|-----------|-----|--------|--------|
+| Industrial pSLC microSD 32GB (Pi boot — replaces consumer card as #1 field-failure fix) | 1 | 800–1,500 | 800–1,500 |
+| Gore-type membrane vent (enclosure condensation) | 1 | 100–300 | 100–300 |
+| Silica-gel desiccant packs | 4 | 10–25 | 40–100 |
+| GX12/M12 aviation screw-lock connector pairs (all inter-enclosure cables) | 8 | 60–150 | 480–1,200 |
+| Rubber anti-vibration standoff/grommet kit (Pi + ESP32 mounts) | 1 | 100–250 | 100–250 |
+| Field spares kit (spare SD, ESP32 board, 1× BTS7960, pump+nozzle, fuses, connector pigtails) | 1 | 2,500–4,000 | 2,500–4,000 |
+| **Subtotal** | | | **4,020–7,350** |
+
+> Already covered elsewhere (do NOT re-buy): conformal coating, cable glands,
+> RTV sealant, Loctite 243, heatsinks, grommets — Section 11. Software side of
+> durability (read-only rootfs/OverlayFS, tmpfs logs, low-battery clean
+> shutdown, health telemetry) is free — see `farmer-needs-and-durability.md` §2.2.
+
 ---
 
 ## GRAND TOTAL (running budget)
 
 | Section | ₹ range |
 |---------|---------|
-| 1. Brain & Compute | 5,880–8,150 |
+| 1. Brain & Compute | 9,880–11,850 |
 | 2. Power | 2,350–4,040 |
 | 3. Motor & Drive | 1,840–3,600 |
 | 4. Sensing (ESP32) | 3,740–8,080 |
-| 5. AI Sensing (Pi) | 4,680–7,100 |
+| 5. AI Sensing (Pi) | 11,680–13,600 |
 | 6. Actuation | 1,760–3,330 |
 | 7. Communication | 500–1,000 |
 | 8. Interface | 480–870 |
@@ -229,12 +249,21 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 | 11. Safety/Thermal | 2,220–4,280 |
 | 12. v2 Upgrade parts | 760–1,570 |
 | 13. Tools | 1,410–2,760 |
-| **TOTAL (Full AI build)** | **₹27,830 – 48,910** |
+| 14. Durability pack | 4,020–7,350 |
+| **TOTAL (Full AI build + durability)** | **₹42,850 – 66,460** |
+
+> **Compute (primary vs fallback):** the total uses the **Pi 5 + Hailo-8 AI HAT+**
+> primary platform (`docs/accelerator-alternatives.md` Tier B). The **Pi 4** and
+> **Coral USB** lines are marked *(alt)* and excluded — they are the working
+> prototype/fallback path (swap in, not add on). Choosing the **Hailo-8L 13 TOPS**
+> HAT (~₹6,350) instead of the 26-TOPS Hailo-8 trims ~₹4,000.
 
 ### Build-tier shortcuts
 - **Core only (ITSP demo):** sections 2, 3, 6 (relay dosing), 9 + ESP32 + moisture + NPK ≈ **₹8,000–14,000**
 - **Core + Navigation:** add GPS, encoders, INA219, OLED, safety ≈ **₹12,000–20,000**
-- **Full AI (this sheet):** everything ≈ **₹28,000–49,000**
+- **Full AI, Pi 4 + Coral fallback:** everything on the prototype path ≈ **₹28,000–49,000**
+- **Full AI, Pi 5 + Hailo primary:** everything on the production path ≈ **₹39,000–61,000**
+- **Field-deployable (Pi 5 + Hailo + §14 durability pack):** ≈ **₹43,000–66,000** — the only tier meant to survive 5+ seasons with a farmer
 
 ### Optional future upgrades (NOT in total)
 | Component | Qty | ₹ | For |

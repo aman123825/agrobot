@@ -6,10 +6,6 @@ with configurable parameters loaded from config/params.yaml.
 from __future__ import annotations
 
 import os
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    pass
 
 # Guard launch imports for py_compile compatibility.
 try:

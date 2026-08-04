@@ -20,9 +20,9 @@ import time
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from sim.rover_model import RoverSim  # noqa: E402
-from sim.sensor_sim import SensorSim, Obstacle  # noqa: E402
-from sim.serial_sim import SimSerial  # noqa: E402
+from sim.rover_model import RoverSim
+from sim.sensor_sim import Obstacle, SensorSim
+from sim.serial_sim import SimSerial
 
 _KEY = os.getenv("AGRO_LINK_KEY", "").encode()
 _TRUNC_HEX = 32

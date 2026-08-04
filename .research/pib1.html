@@ -1,0 +1,1334 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1"><title>
+	Press Release Page | Press Information Bureau
+</title><link href="css/style.css" rel="stylesheet" type="text/css" /><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="alternate stylesheet" href="css/change.css" media="screen" title="change" /><link rel="alternate stylesheet" href="css/green.css" media="screen" title="green" /><link rel="alternate stylesheet" href="css/yellow.css" media="screen" title="yellow" /><link rel="stylesheet" type="text/css" href="css/prtint.css" media="print" /><link rel="stylesheet" href="css/style3.1.css" type="text/css" />
+
+
+      <script src="js/jquery.min.js" type="text/javascript"></script>
+      <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" /><link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet" />
+
+      <script type="text/javascript">
+            $(document).ready(function () {
+                  function getParameterByName(name) {
+                        var url = window.location.href;
+                        name = name.replace(/[\[\]]/g, '\\$&');
+                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                              results = regex.exec(url);
+                        if (!results) return null;
+                        if (!results[2]) return '';
+                        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                  }
+                  // Get the IDs from the current page's URL
+                  let prid = parseInt(getParameterByName('PRID'), 10);
+
+                  if (!isNaN(prid) && prid > 0) {
+                        $.ajax({
+                              type: "POST",
+                              url: "AjaxMethod.aspx/UpdatePRHitCount",
+                              async: false,
+                              data: JSON.stringify({ 'PermId': prid }),
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              success: function (response) {
+                                    console.log(response);
+                              },
+                              error: function (error) {
+                                    console.log("Error in AJAX request", error);
+                              }
+                        });
+                  } else {
+                        console.log("Invalid parameters:", prid);
+                  }
+
+            });
+      </script>
+      <style type="text/css">
+            .table-responsive {
+                  width: 100%;
+                  overflow-x: auto;
+            }
+
+            .banner {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  background-color: #000;
+                  color: #fff;
+                  padding: 20px;
+            }
+
+            full-width {
+                  width: 100%;
+            }
+
+            .logo-left, .logo-center, .countdown {
+                  display: flex;
+                  align-items: center;
+            }
+
+                  .logo-left img, .logo-center img {
+                        height: 70px;
+                  }
+
+            .countdown {
+                  text-align: center;
+                  background-color: #444;
+                  border-radius: 10px;
+                  padding: 10px;
+                  border: 2px solid grey;
+            }
+
+            .firstnumber {
+                  color: #000000;
+                  position: absolute;
+                  top: 50px;
+                  right: 90px;
+                  font-size: 30px;
+            }
+
+            .secondnumber {
+                  position: absolute;
+                  color: #000000;
+                  right: 45px;
+                  top: 50px;
+                  font-size: 30px;
+            }
+
+            .countdown .days {
+                  font-size: 35px;
+                  color: gold;
+            }
+
+            .countdown p {
+                  margin: 0;
+            }
+
+            .countdown .text {
+                  font-size: 16px;
+            }
+
+            a {
+                  word-break: break-all;
+            }
+
+            iframe, img {
+                  max-width: 100%;
+            }
+
+            @media(max-width:1199px) {
+                  .firstnumber {
+                        top: 40px;
+                        right: 72px;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 35px;
+                        top: 40px;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:990px) {
+                  .firstnumber {
+                        top: 25px;
+                        right: 54px;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 25px;
+                        top: 25px;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:768px) {
+                  .countdown, .days {
+                        font-size: 12px !important;
+                  }
+
+
+                  .firstnumber {
+                        top: 25%;
+                        right: 8%;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 4.5%;
+                        top: 25%;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:475px) {
+                  .countdown, .days {
+                        font-size: 10px !important;
+                        top: 20%;
+                  }
+
+                  .bannerimgdiv {
+                        padding: 0 !important;
+                  }
+
+                  .bannerimg {
+                        width: 108% !important;
+                  }
+            }
+      </style>
+      <script type="text/javascript">
+            $(function () {
+                  $("[id*=printPDF]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+            $(function () {
+                  $("[id*=printPDFEvent]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+      </script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112591026-1"></script>
+      <script>
+
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() { dataLayer.push(arguments); }
+
+            gtag('js', new Date());
+
+
+
+            gtag('config', 'UA-112591026-1');
+
+      </script>
+
+<meta property="og:title" content="Contribution of Agriculture Sector towards GDP" /><meta property="og:url" content="www.pib.gov.in/Pressreleaseshare.aspx?PRID=1741942" /><meta property="og:description" content="As per Provisional Estimates of Annual of National Income, released by National Statistical Office (" /><meta property="og:image" content="https:/pib.gov.in/images/indian-emblem.png" />
+                                <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="C4E7H-KSCMC-422L4-W3EM5-U36MF",function(){function e(){if(!i){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,o.parentNode.appendChild(e),i=!0}}function t(e){i=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(o.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",o.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"C4E7H-KSCMC-422L4-W3EM5-U36MF";var o=document.currentScript||document.getElementsByTagName("script")[0],i=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!i)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),o.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="m4kx4ufydpcfg2tquaqa-f-e0b716a58-clientnsv4-s.akamaihd.net",o="false"=="true"?2:1,i={"ak.v":"41","ak.cp":"1825201","ak.ai":parseInt("1215205",10),"ak.ol":"0","ak.cr":3,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"1a025f2c","ak.r":39689,"ak.a2":n,"ak.m":"dscb","ak.n":"ff","ak.cport":19107,"ak.gh":"184.27.196.79","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1785765920","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==OBNQdkW0jmDsMI/1wqkD56jAP2AK1WIF4H36AJneAEewGfW2/htEaz6NXaXdwO3iT4WUjiN2pXuQuxvQdGwguHuAGJ6E5vxRsbQuFouoiomPNYSO108Z7/vWgpqdyclijmwrAWQdVYSsfahVlfXf/bu8sRI7NHNfIRMU5IZiBufPD10V+k2wjhNVGln0eKEjmYehjIqxZL7EerRSbMQDECaBYa9VVqCeDEfLx0dz/9eZeoko8O8eJmcK3nAnp+jc1GfZuA81bKXiX/n5waS0QTCv3acWRt/iG4l3JXyRywXPYTDJvLxO/SWIiCoA1ooE4k/x2V/o2tiyyGBwhF2IXNFBh4lRbnohO+d7hKJYuHi0/hfEWkY3vi+67luw77rllU4xyrPLBfFvQCWBnbfaFYXJCa/NigaYNc2u3UeJFVk=","ak.pv":"9","ak.dpoabenc":"","ak.tf":o};if(""!==t)i["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))i["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var e=["ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+<body>
+      <form method="post" action="./PressReleasePage.aspx?PRID=1741942&amp;reg=48&amp;lang=2" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="sc_HiddenField" id="sc_HiddenField" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=b94hX14NMWluUQ9a73g0LYFvtKhY52TK8cbDkYB_F2GuPre4tdh-ebiiI4xuhXnRu6Q5dQjaQA4oN3PEeL0GrtKEyEY1&amp;t=638942408819057530" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=YwOa_0w_u3oCLFqmIIOf-XEz4GWZ1DuyQIpxIA4LVkywj39sZSps12NbK5wNl5XN9JF3m7d-ey7BFDgj6i0380qRQ5IMWCL54sYNVU1IjMmiOWpp0&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=_shmykYI80CxCNR43Ii1nLy9PBGhuSe6SPp3CEYu0wDEuLqDAuIcsXVNhTIgQn0iyiwPorMflXuK31FftDX9GnB0m366MCEoOmY-eKQ3YAO9xRL0gIigzgRbtbVOgSQkJbJpFg2&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/PressReleasePage.aspx?_TSM_HiddenField_=sc_HiddenField&amp;_TSM_CombinedScripts_=%3b%3bAjaxControlToolkit%2c+Version%3d3.5.7.123%2c+Culture%3dneutral%2c+PublicKeyToken%3d28f01b0e84b6d53e%3aen-US%3a5a4df314-b4a2-4da2-a207-9284f1b1e96c%3ade1feab2%3af2c8e708%3a720a52bf%3af9cec9bc%3a589eaa30%3aa67c2700%3aab09e3fe%3a87104b7c%3a8613aea7%3a3202a5a2%3abe6fb298" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="59B53027" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="zkc0yorioHmpgJl1l3v9JFa8F8GKXZOMdkUKdj45c4o1p3zwfG+rHQPtBqPm/2fBiDlKb9NbH5qjKkvpKP2c05QCmRRQzz5Uujdb9Mjcxf3bplOW2BMeLCtIoU3zeQEvIe+Xx0rm/SjMBVxDL2V5HW24Tox5BPHWfAvnARg8PLEhnHz1BQK369HhBD4G3WqNRRhVrV+VRe6xXCn5EfkrAVnrbX0kaLlQixIRVLuEyy4kR0xnNVPlFl2KxofXtetk4lCBM0qBZn1L1Vjo0cMyhi2Z0+7M3g9f925KEpg1HUAGwc1L" />
+</div>
+                              
+            <div id="templateCss"></div>
+            <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('sc', 'form1', ['tupdate12','update12'], [], [], 90, '');
+//]]>
+</script>
+
+            <input type="hidden" name="hfGridHtml" id="hfGridHtml" />
+            <div class="container" style='margin-bottom: 50px;'>
+                  <div id="accessories">
+
+                        
+                        <div class="pull-right" style="display: flex">
+                              <div id="voll"></div>
+                              <div id="vollDT"></div>
+                              
+                              
+<div class="print-icons">
+<input type="image" name="Print1$print" id="Print1_print" aria-label="Print" src="images/printer_icon.png" alt="print page button" style="padding: 5px 10px 5px 10px;" />
+</div>
+                        </div>
+                  </div>
+                  <input type="hidden" name="hydpermid" id="hydpermid" value="1741942" />
+                  
+
+
+
+                  <div class="innner-page-main-about-us-content-right-part">
+
+                        <div id="MinistryName" class="MinistryNameSubhead text-center">
+                              Ministry of Agriculture &
+Farmers Welfare
+                        </div>
+                        
+                        <div id="lg_g">
+                        </div>
+
+
+
+
+
+                        <div class="text-center event-heading-background">
+                              
+                              <h2 id="Titleh2">
+                                    Contribution of Agriculture Sector towards GDP
+                              </h2>
+                              <h3 id="Subtitleh3">
+                                    <span id="ltrSubtitle"><br/>Agriculture has been the bright spot in the Economy despite COVID-19<br/><br/></span>
+                              </h3>
+                        </div>
+
+                        <div id="PrDateTime" class="ReleaseDateSubHeaddateTime text-center pt20">
+                              प्रविष्टि तिथि:
+                03 AUG 2021 5:31PM by PIB Delhi
+                        </div>
+                        
+                        <div class='pt20'>
+                        </div>
+                        <input type="hidden" name="hydphotoUrl" id="hydphotoUrl" />
+                        
+                        <p style="margin-left:-9.0pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">As per Provisional Estimates of Annual of National Income, released by National Statistical Office (NSO), Ministry of Statistics and Programme Implementation on 31st May 2021, the share of Agriculture and Allied Sectors in Gross Value Added (GVA) of the country during the last three years at current prices is given below.</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ( in percent)</span></span></p>
+
+<div>
+<table border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="Table" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td style="width:52.75pt">
+			<p style="margin-right:-21.15pt"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Year</span></span></p>
+			</td>
+			<td style="width:297.1pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Percentage Share of GVA of Agriculture and Allied sector to Total Economy</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:52.75pt">
+			<p style="margin-right:-21.15pt"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2018-19</span></span></p>
+			</td>
+			<td style="width:297.1pt">
+			<p style="margin-right:-21.15pt; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">17.6</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:52.75pt">
+			<p style="margin-right:-21.15pt"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2019-20</span></span></p>
+			</td>
+			<td style="width:297.1pt">
+			<p style="margin-right:-21.15pt; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">18.4</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:52.75pt">
+			<p style="margin-right:-21.15pt"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2020-21</span></span></p>
+			</td>
+			<td style="width:297.1pt">
+			<p style="margin-right:-21.15pt; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">20.2</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<p style="margin-left:9.0pt; margin-right:-21.15pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source: National Statistical Office (NSO), M/o Statistics &amp; PI.</span></span></p>
+
+<p style="margin-right:-15.3pt; text-align:justify">&nbsp;</p>
+
+<p style="margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">As per First Revised Estimates of National Income for 2019-20 released on on 29th January 2021, Gross Capital Formation (GCF) in agriculture and allied sectors at current prices during the last three&nbsp; years (latest available) is given below.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (₹ crore)</span></span></p>
+
+<div>
+<table border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="Table" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td style="width:77.4pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Year</span></span></p>
+			</td>
+			<td style="width:4.0in">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Gross Capital Formation (GCF) of Agriculture, forestry and fishing&nbsp; at Current Price</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:77.4pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2017-18</span></span></p>
+			</td>
+			<td style="width:4.0in">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">3,62,706</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:77.4pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2018-19</span></span></p>
+			</td>
+			<td style="width:4.0in">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4,07,842</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:77.4pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2019-20</span></span></p>
+			</td>
+			<td style="width:4.0in">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4,46,044</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">&nbsp;&nbsp;&nbsp; Source: National Statistical Office (NSO), M/o Statistics &amp; PI.</span></span></p>
+
+<p style="margin-left:-9.0pt; margin-right:-15.3pt; text-align:justify">&nbsp;</p>
+
+<p style="margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Agriculture being a State subject, the State Government is primarily responsible for the growth and development of agriculture sector and developing perspective plans for their respective States and ensuring effective implementation of the programmes/schemes. However, Government of India supplements the efforts of the State Governments through various Schemes / Programmes. &nbsp; The details of various schemes, reforms and policies are given below.</span></span></p>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<ul>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Unprecedented enhancement in budget allocation </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fixing of MSP at one-and-a half times the cost of production</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Increase in procurement from farmers</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Income support to farmers through PM KISAN </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Pradhan Mantri Fasal BimaYojana (PMFBY) </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Institutional credit for agriculture sector&nbsp; </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Providing Soil Health Cards to farmers </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Promotion of organic farming in the country</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Neem Coating of Urea </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Agri Infrastructure Fund </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Promotion of FPOs Scheme</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">National Bee and Honey Mission (NBHM) </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Pradhan Mantri Krishi Sinchai Yojana (PMKSY) </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Micro Irrigation Fund </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Agricultural Mechanization </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Changes in Disaster Relief Standards</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Setting up of E-NAM extension Platform</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Improvement in farm produce logistics, Introduction of Kisan Rail</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Creation of a Start-up Eco system in agriculture and allied sector</span></span></li>
+</ul>
+
+<p style="margin-left:-9.0pt; margin-right:-15.3pt; text-align:justify">&nbsp;</p>
+
+<p style="margin-left:-9.0pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Government has taken several steps for increasing investment in agriculture sector such as enhanced institutional credit to farmers; promotion of scientific warehousing infrastructure for increasing shelf life of agricultural produce; setting up of Agri-tech Infrastructure Fund for making farming competitive and profitable; developing commercial organic farming etc. Government is implementing various schemes for supply of farm inputs, like seeds, fertilizers, agricultural machinery and equipments, irrigation facilities, institutional credit, etc., at subsidized rates to the farmers in the country. Government has recently taken several steps for increasing investment and growth in agriculture sector which include creation of Long Term Irrigation Fund (LTIF), Micro Irrigation Fund for water use efficiency, promotion of commercial organic farming, etc. The details of such major schemes /steps&nbsp; are given below.</span></span></p>
+
+<p style="margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Government of India has launched the Central Sector Scheme of financing facility under Agriculture Infrastructure Fund (AIF) to boost Agriculture Infrastructure relating to post harvest management and community farming assets. Under this scheme entities such as farmers, agri entrepreneurs, starts up, Central/ State agency or local body sponsored public private partnership projects etc. can take benefit for setting up eligible infrastructure projects. Under Rashtriya Krishi Vikas Yojana (RKVY) Scheme of Ministry of Agriculture, grants-in-aid is given to state governments on the basis of the projects approved in State Level Sanctioning Committee Meeting (SLSC). States can take up projects for the development of Agriculture and allied sector in Public Private Partnership (PPP) for Integrated Agriculture Component.</span></span></p>
+
+<p style="margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Under Mission for Integrated Development of Horticulture (MIDH) of this Ministry financial assistance in the range of 35% to 55% of eligible projects cost is available in the form of credit linked back ended for creation of Post-Harvest management infrastructure like Pack Houses, Pre-cooling units, Integrated pack houses, Refrigerator van, Primary/mobile Processing unit, cold storage etc farm gete level to consumption level. The post-harvest component is demand/entrepreneurs-driven from among entrepreneurs, private companies, cooperatives, farmers groups etc. through commercial ventures for which assistance is available through respective State Horticulture Mission.</span></span></p>
+
+<p style="margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) Scheme is being implemented with a view to provide income support to all landholding farmer families across the country, to enable them to take care of expenses related to agriculture and allied activities as well as domestic needs. The Scheme, effective from 1.12.2018, aims to provide a payment of Rs.6000/- per year for the farmers&rsquo; families with cultivable land holding, subject to certain exclusions. The financial benefit of Rs.6000/- is being released by the Central Government in three 4-monthly instalments of Rs.2000/- over the year directly into the bank accounts of the eligible farmers under Direct Benefit Transfer mode.</span></span></p>
+
+<p style="margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Further, Government of India has launched the Aatmanirbhar Bharat Abhiyan (ABA) to strengthen Infrastructure, Logistics, Capacity Building, Governance and Administrative Reforms for Agriculture.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">This information was given in a written reply by the Union Minister of Agriculture and Farmers Welfare Shri Narendra Singh Tomar in Lok Sabha today.</span></span></p>
+
+<p style="margin-left:7.1pt; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">****</span></span></p>
+
+<p style="margin-left:7.1pt"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>APS</strong></span></span></p>
+
+
+                        
+                        <div id="reel_pic">
+                        </div>
+
+
+
+                        
+                        <br />
+                        <span id="ReleaseId">(रिलीज़ आईडी: 1741942)</span>
+                        <span id="lblViews">	आगंतुक पटल  : 125880</span>
+                        <div>
+                              
+                        </div>
+                        
+
+                        <span id="lblRefPhoto"></span>
+
+                        <div class="BackgroundRelease">
+                              
+                        </div>
+                        <div>
+                              
+                        </div>
+                        
+                        
+                        
+
+                        <div class="RelTag">
+                              <ul>
+                                    
+                              </ul>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div id="RelLink" class="RelLink">
+                              <ul>
+                                    
+                                    
+                              </ul>
+                        </div>
+                        <center>
+                              
+                        </center>
+                  </div>
+
+                  <div id="update12">
+	
+                              
+                              <input type="hidden" name="Hidden" id="Hidden" />
+                              <div id="P_CategoryManagement" class="ModalWindow" style="border-width:0px;height:60%;width:60%;overflow:auto;display: none">
+		
+                                    <div>
+                                          <input type="image" name="btnClose" id="btnClose" src="images/close_flat_icon.png" />
+                                    </div>
+                                    <div id="description">
+                                    </div>
+                                    <div class="text-center">
+                                          <h2>
+                                                
+                                                <br>
+                                                
+                                          </h2>
+                                    </div>
+                                    <br />
+                                    <div class="clear">
+                                    </div>
+                                    
+                              
+	</div>
+                        
+</div>
+            </div>
+            
+            <div id="PdfDiv" style="display: none;">
+                  <table width="100%">
+                        <tr>
+                              <td style="font-weight: 200; text-align: center">
+                                    Ministry of Agriculture &
+Farmers Welfare
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                                          Contribution of Agriculture Sector towards GDP
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                                          <div style='height:30px;width:100%;'></div>Agriculture has been the bright spot in the Economy despite COVID-19<div style='height:30px;width:100%;'></div><div style='height:30px;width:100%;'></div>
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="text-align: center; font-size: 14px;">
+                                          प्रविष्टि तिथि:
+                        03 AUG 2021 5:31PM by PIB Delhi
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: left; font-size: 16px;">
+                                          <p style="margin-left:-9.0pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">As per Provisional Estimates of Annual of National Income, released by National Statistical Office (NSO), Ministry of Statistics and Programme Implementation on 31st May 2021, the share of Agriculture and Allied Sectors in Gross Value Added (GVA) of the country during the last three years at current prices is given below.</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; ( in percent)</span></span></p>
+
+<div>
+<table border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="Table" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td style="width:52.75pt">
+			<p style="margin-right:-21.15pt"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Year</span></span></p>
+			</td>
+			<td style="width:297.1pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Percentage Share of GVA of Agriculture and Allied sector to Total Economy</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:52.75pt">
+			<p style="margin-right:-21.15pt"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2018-19</span></span></p>
+			</td>
+			<td style="width:297.1pt">
+			<p style="margin-right:-21.15pt; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">17.6</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:52.75pt">
+			<p style="margin-right:-21.15pt"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2019-20</span></span></p>
+			</td>
+			<td style="width:297.1pt">
+			<p style="margin-right:-21.15pt; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">18.4</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:52.75pt">
+			<p style="margin-right:-21.15pt"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2020-21</span></span></p>
+			</td>
+			<td style="width:297.1pt">
+			<p style="margin-right:-21.15pt; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">20.2</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<p style="margin-left:9.0pt; margin-right:-21.15pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; Source: National Statistical Office (NSO), M/o Statistics &amp; PI.</span></span></p>
+
+<p style="margin-right:-15.3pt; text-align:justify">&nbsp;</p>
+
+<p style="margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">As per First Revised Estimates of National Income for 2019-20 released on on 29th January 2021, Gross Capital Formation (GCF) in agriculture and allied sectors at current prices during the last three&nbsp; years (latest available) is given below.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; (₹ crore)</span></span></p>
+
+<div>
+<table border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="Table" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td style="width:77.4pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Year</span></span></p>
+			</td>
+			<td style="width:4.0in">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Gross Capital Formation (GCF) of Agriculture, forestry and fishing&nbsp; at Current Price</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:77.4pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2017-18</span></span></p>
+			</td>
+			<td style="width:4.0in">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">3,62,706</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:77.4pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2018-19</span></span></p>
+			</td>
+			<td style="width:4.0in">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4,07,842</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:77.4pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2019-20</span></span></p>
+			</td>
+			<td style="width:4.0in">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4,46,044</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">&nbsp;&nbsp;&nbsp; Source: National Statistical Office (NSO), M/o Statistics &amp; PI.</span></span></p>
+
+<p style="margin-left:-9.0pt; margin-right:-15.3pt; text-align:justify">&nbsp;</p>
+
+<p style="margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Agriculture being a State subject, the State Government is primarily responsible for the growth and development of agriculture sector and developing perspective plans for their respective States and ensuring effective implementation of the programmes/schemes. However, Government of India supplements the efforts of the State Governments through various Schemes / Programmes. &nbsp; The details of various schemes, reforms and policies are given below.</span></span></p>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<ul>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Unprecedented enhancement in budget allocation </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fixing of MSP at one-and-a half times the cost of production</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Increase in procurement from farmers</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Income support to farmers through PM KISAN </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Pradhan Mantri Fasal BimaYojana (PMFBY) </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Institutional credit for agriculture sector&nbsp; </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Providing Soil Health Cards to farmers </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Promotion of organic farming in the country</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Neem Coating of Urea </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Agri Infrastructure Fund </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Promotion of FPOs Scheme</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">National Bee and Honey Mission (NBHM) </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Pradhan Mantri Krishi Sinchai Yojana (PMKSY) </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Micro Irrigation Fund </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Agricultural Mechanization </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Changes in Disaster Relief Standards</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Setting up of E-NAM extension Platform</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Improvement in farm produce logistics, Introduction of Kisan Rail</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Creation of a Start-up Eco system in agriculture and allied sector</span></span></li>
+</ul>
+
+<p style="margin-left:-9.0pt; margin-right:-15.3pt; text-align:justify">&nbsp;</p>
+
+<p style="margin-left:-9.0pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Government has taken several steps for increasing investment in agriculture sector such as enhanced institutional credit to farmers; promotion of scientific warehousing infrastructure for increasing shelf life of agricultural produce; setting up of Agri-tech Infrastructure Fund for making farming competitive and profitable; developing commercial organic farming etc. Government is implementing various schemes for supply of farm inputs, like seeds, fertilizers, agricultural machinery and equipments, irrigation facilities, institutional credit, etc., at subsidized rates to the farmers in the country. Government has recently taken several steps for increasing investment and growth in agriculture sector which include creation of Long Term Irrigation Fund (LTIF), Micro Irrigation Fund for water use efficiency, promotion of commercial organic farming, etc. The details of such major schemes /steps&nbsp; are given below.</span></span></p>
+
+<p style="margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Government of India has launched the Central Sector Scheme of financing facility under Agriculture Infrastructure Fund (AIF) to boost Agriculture Infrastructure relating to post harvest management and community farming assets. Under this scheme entities such as farmers, agri entrepreneurs, starts up, Central/ State agency or local body sponsored public private partnership projects etc. can take benefit for setting up eligible infrastructure projects. Under Rashtriya Krishi Vikas Yojana (RKVY) Scheme of Ministry of Agriculture, grants-in-aid is given to state governments on the basis of the projects approved in State Level Sanctioning Committee Meeting (SLSC). States can take up projects for the development of Agriculture and allied sector in Public Private Partnership (PPP) for Integrated Agriculture Component.</span></span></p>
+
+<p style="margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Under Mission for Integrated Development of Horticulture (MIDH) of this Ministry financial assistance in the range of 35% to 55% of eligible projects cost is available in the form of credit linked back ended for creation of Post-Harvest management infrastructure like Pack Houses, Pre-cooling units, Integrated pack houses, Refrigerator van, Primary/mobile Processing unit, cold storage etc farm gete level to consumption level. The post-harvest component is demand/entrepreneurs-driven from among entrepreneurs, private companies, cooperatives, farmers groups etc. through commercial ventures for which assistance is available through respective State Horticulture Mission.</span></span></p>
+
+<p style="margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) Scheme is being implemented with a view to provide income support to all landholding farmer families across the country, to enable them to take care of expenses related to agriculture and allied activities as well as domestic needs. The Scheme, effective from 1.12.2018, aims to provide a payment of Rs.6000/- per year for the farmers&rsquo; families with cultivable land holding, subject to certain exclusions. The financial benefit of Rs.6000/- is being released by the Central Government in three 4-monthly instalments of Rs.2000/- over the year directly into the bank accounts of the eligible farmers under Direct Benefit Transfer mode.</span></span></p>
+
+<p style="margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Further, Government of India has launched the Aatmanirbhar Bharat Abhiyan (ABA) to strengthen Infrastructure, Logistics, Capacity Building, Governance and Administrative Reforms for Agriculture.</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">This information was given in a written reply by the Union Minister of Agriculture and Farmers Welfare Shri Narendra Singh Tomar in Lok Sabha today.</span></span></p>
+
+<p style="margin-left:7.1pt; text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">****</span></span></p>
+
+<p style="margin-left:7.1pt"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>APS</strong></span></span></p>
+
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 100; text-align: left; font-size: 16px;">
+                                          (रिलीज़ आईडी: 1741942)
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                              </td>
+                        </tr>
+                        <tr>
+                              <td style="font-weight: 200; text-align: center; font-size: 24px;"></td>
+                        </tr>
+                  </table>
+            </div>
+            <div class="clearfix">
+            </div>
+
+            
+
+            <div class="section1">
+                  <div id="frst_t">
+                        <div id="arr_rm"><div class='sticky-social_mb'><ul class='social_mb'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=1741942' target='_blank'><li class='fb_b'   ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/facebook.jpg' alt='Share on facebook'  width='40' /></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=1741942&text=Contribution of Agriculture Sector towards GDP' target='_blank'><li class='twitter_r'  ><img  src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2023/aug/ph2023818240601.jpg' alt='Share on twitter' width='40' /> </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=1741942' target='_blank'><li class='whatsapp_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/whatsapp1.png' alt='Share on whatsapp' width='40' /></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Contribution of Agriculture Sector towards GDP&body=https://pib.gov.in/PressReleasePage.aspx?PRID=1741942&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/email1.png' alt='Share on email'  width='40' /></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=1741942&title=Contribution of Agriculture Sector towards GDP&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/linkedin.png' alt='Share on linkedin' width='40' /></li></a></ul></div></div>
+                  </div>
+                  <div id="second_t">
+                        <div id="sndr_rm"><div class='sticky-social'><ul class='social'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=1741942' target='_blank'><li class='fb_b'   ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/facebook.jpg' alt='Share on facebook'  width='35' /></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=1741942&text=Contribution of Agriculture Sector towards GDP' target='_blank'><li class='twitter_r'  ><img  src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2023/aug/ph2023818240601.jpg' alt='Share on twitter' width='35' /> </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=1741942' target='_blank'><li class='whatsapp_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/whatsapp1.png' alt='Share on whatsapp' width='35' /></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Contribution of Agriculture Sector towards GDP&body=https://pib.gov.in/PressReleasePage.aspx?PRID=1741942&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/email1.png' alt='Share on email'  width='35' /></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=1741942&title=Contribution of Agriculture Sector towards GDP&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/linkedin.png' alt='Share on linkedin' width='35' /></li></a></ul></div></div>
+                  </div>
+            </div>
+            <input type="hidden" name="ltrTitlee" id="ltrTitlee" value="Contribution of Agriculture Sector towards GDP" />
+            <input type="hidden" name="ltrSubtitlee" id="ltrSubtitlee" value="&lt;br/>Agriculture has been the bright spot in the Economy despite COVID-19&lt;br/>&lt;br/>" />
+            <input type="hidden" name="ltrDescriptionn" id="ltrDescriptionn" value="&lt;p style=&quot;margin-left:-9.0pt; margin-right:-15.3pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>As per Provisional Estimates of Annual of National Income, released by National Statistical Office (NSO), Ministry of Statistics and Programme Implementation on 31st May 2021, the share of Agriculture and Allied Sectors in Gross Value Added (GVA) of the country during the last three years at current prices is given below.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; ( in percent)&lt;/span>&lt;/span>&lt;/p>
+
+&lt;div>
+&lt;table border=&quot;1&quot; bordercolor=&quot;#ccc&quot; cellpadding=&quot;5&quot; cellspacing=&quot;0&quot; class=&quot;Table&quot; style=&quot;border-collapse:collapse&quot;>
+	&lt;tbody>
+		&lt;tr>
+			&lt;td style=&quot;width:52.75pt&quot;>
+			&lt;p style=&quot;margin-right:-21.15pt&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Year&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:297.1pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Percentage Share of GVA of Agriculture and Allied sector to Total Economy&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:52.75pt&quot;>
+			&lt;p style=&quot;margin-right:-21.15pt&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>2018-19&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:297.1pt&quot;>
+			&lt;p style=&quot;margin-right:-21.15pt; text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>17.6&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:52.75pt&quot;>
+			&lt;p style=&quot;margin-right:-21.15pt&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>2019-20&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:297.1pt&quot;>
+			&lt;p style=&quot;margin-right:-21.15pt; text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>18.4&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:52.75pt&quot;>
+			&lt;p style=&quot;margin-right:-21.15pt&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>2020-21&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:297.1pt&quot;>
+			&lt;p style=&quot;margin-right:-21.15pt; text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>20.2&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+&lt;/div>
+
+&lt;p style=&quot;margin-left:9.0pt; margin-right:-21.15pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; Source: National Statistical Office (NSO), M/o Statistics &amp;amp; PI.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-right:-15.3pt; text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;p style=&quot;margin-right:-15.3pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>As per First Revised Estimates of National Income for 2019-20 released on on 29th January 2021, Gross Capital Formation (GCF) in agriculture and allied sectors at current prices during the last three&amp;nbsp; years (latest available) is given below.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp;&amp;nbsp; (₹ crore)&lt;/span>&lt;/span>&lt;/p>
+
+&lt;div>
+&lt;table border=&quot;1&quot; bordercolor=&quot;#ccc&quot; cellpadding=&quot;5&quot; cellspacing=&quot;0&quot; class=&quot;Table&quot; style=&quot;border-collapse:collapse&quot;>
+	&lt;tbody>
+		&lt;tr>
+			&lt;td style=&quot;width:77.4pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Year&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:4.0in&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Gross Capital Formation (GCF) of Agriculture, forestry and fishing&amp;nbsp; at Current Price&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:77.4pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>2017-18&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:4.0in&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>3,62,706&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:77.4pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>2018-19&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:4.0in&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>4,07,842&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:77.4pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>2019-20&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:4.0in&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>4,46,044&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+&lt;/div>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&amp;nbsp;&amp;nbsp;&amp;nbsp; Source: National Statistical Office (NSO), M/o Statistics &amp;amp; PI.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:-9.0pt; margin-right:-15.3pt; text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;p style=&quot;margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Agriculture being a State subject, the State Government is primarily responsible for the growth and development of agriculture sector and developing perspective plans for their respective States and ensuring effective implementation of the programmes/schemes. However, Government of India supplements the efforts of the State Governments through various Schemes / Programmes. &amp;nbsp; The details of various schemes, reforms and policies are given below.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;ul>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Unprecedented enhancement in budget allocation &lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Fixing of MSP at one-and-a half times the cost of production&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Increase in procurement from farmers&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Income support to farmers through PM KISAN &lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Pradhan Mantri Fasal BimaYojana (PMFBY) &lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Institutional credit for agriculture sector&amp;nbsp; &lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Providing Soil Health Cards to farmers &lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Promotion of organic farming in the country&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Neem Coating of Urea &lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Agri Infrastructure Fund &lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Promotion of FPOs Scheme&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>National Bee and Honey Mission (NBHM) &lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Pradhan Mantri Krishi Sinchai Yojana (PMKSY) &lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Micro Irrigation Fund &lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Agricultural Mechanization &lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Changes in Disaster Relief Standards&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Setting up of E-NAM extension Platform&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Improvement in farm produce logistics, Introduction of Kisan Rail&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Creation of a Start-up Eco system in agriculture and allied sector&lt;/span>&lt;/span>&lt;/li>
+&lt;/ul>
+
+&lt;p style=&quot;margin-left:-9.0pt; margin-right:-15.3pt; text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;p style=&quot;margin-left:-9.0pt; margin-right:-15.3pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Government has taken several steps for increasing investment in agriculture sector such as enhanced institutional credit to farmers; promotion of scientific warehousing infrastructure for increasing shelf life of agricultural produce; setting up of Agri-tech Infrastructure Fund for making farming competitive and profitable; developing commercial organic farming etc. Government is implementing various schemes for supply of farm inputs, like seeds, fertilizers, agricultural machinery and equipments, irrigation facilities, institutional credit, etc., at subsidized rates to the farmers in the country. Government has recently taken several steps for increasing investment and growth in agriculture sector which include creation of Long Term Irrigation Fund (LTIF), Micro Irrigation Fund for water use efficiency, promotion of commercial organic farming, etc. The details of such major schemes /steps&amp;nbsp; are given below.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Government of India has launched the Central Sector Scheme of financing facility under Agriculture Infrastructure Fund (AIF) to boost Agriculture Infrastructure relating to post harvest management and community farming assets. Under this scheme entities such as farmers, agri entrepreneurs, starts up, Central/ State agency or local body sponsored public private partnership projects etc. can take benefit for setting up eligible infrastructure projects. Under Rashtriya Krishi Vikas Yojana (RKVY) Scheme of Ministry of Agriculture, grants-in-aid is given to state governments on the basis of the projects approved in State Level Sanctioning Committee Meeting (SLSC). States can take up projects for the development of Agriculture and allied sector in Public Private Partnership (PPP) for Integrated Agriculture Component.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Under Mission for Integrated Development of Horticulture (MIDH) of this Ministry financial assistance in the range of 35% to 55% of eligible projects cost is available in the form of credit linked back ended for creation of Post-Harvest management infrastructure like Pack Houses, Pre-cooling units, Integrated pack houses, Refrigerator van, Primary/mobile Processing unit, cold storage etc farm gete level to consumption level. The post-harvest component is demand/entrepreneurs-driven from among entrepreneurs, private companies, cooperatives, farmers groups etc. through commercial ventures for which assistance is available through respective State Horticulture Mission.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The Pradhan Mantri Kisan Samman Nidhi (PM-KISAN) Scheme is being implemented with a view to provide income support to all landholding farmer families across the country, to enable them to take care of expenses related to agriculture and allied activities as well as domestic needs. The Scheme, effective from 1.12.2018, aims to provide a payment of Rs.6000/- per year for the farmers&amp;rsquo; families with cultivable land holding, subject to certain exclusions. The financial benefit of Rs.6000/- is being released by the Central Government in three 4-monthly instalments of Rs.2000/- over the year directly into the bank accounts of the eligible farmers under Direct Benefit Transfer mode.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:-7.1pt; margin-right:-15.3pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Further, Government of India has launched the Aatmanirbhar Bharat Abhiyan (ABA) to strengthen Infrastructure, Logistics, Capacity Building, Governance and Administrative Reforms for Agriculture.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>This information was given in a written reply by the Union Minister of Agriculture and Farmers Welfare Shri Narendra Singh Tomar in Lok Sabha today.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:7.1pt; text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>****&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:7.1pt&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>APS&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+" />
+            <script type="text/javascript">
+                  var mPlayer = document.getElementById("background_music");
+                  var mPlayAction = document.getElementById("playbutton");
+
+                  var isPlaying = false;
+
+                  function playAudio() {
+                        mPlayer.play();
+                        isPlaying = true;
+                        document.getElementById('stopA').style.display = "block";
+                        document.getElementById('playA').style.display = "none";
+                  }
+
+                  function pauseAudio() {
+                        mPlayer.pause();
+                        isPlaying = false;
+                        document.getElementById('playA').style.display = "block";
+                        document.getElementById('stopA').style.display = "none";
+                  }
+                  //function HandleAudio() {
+                  //    if (isPlaying == true) {
+                  //        //Playing already Pause it
+                  //        pauseAudio();
+                  //    } else {
+                  //        //Play the music
+                  //        playAudio();
+                  //    }
+                  //}
+            </script>
+            <script type="text/javascript">
+                  var synth = window.speechSynthesis;
+
+            
+                  function CleanHtml(html) {
+
+                        html = html.replace(/<script[\s\S]*?<\/script>/gi, '');
+
+                        return html;
+                  }
+                  function stripHtml(html) {
+                        let tmp = document.createElement("DIV");
+                        tmp.innerHTML = CleanHtml(html);
+                        return tmp.textContent || tmp.innerText || "";
+                  }
+            </script>
+            <script type="text/javascript">
+                  $(document).ready(function () {
+                        //for responsive tables
+                        $("table").each(function () {
+                              if (!$(this).closest(".table-responsive").length) {
+                                    $(this).wrap("<div class='table-responsive'></div>");
+                              }
+                        });
+
+                        var width = $(window).width();
+                        if (width < 768) {
+
+                              // Extra Small Device
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                              // Small Device
+
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Medium Device
+
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Large Device
+
+                        }
+                  });
+            </script>
+            <script type="text/javascript">
+                  $(document).ready(function () {
+                        var width = $(window).width();
+                        if (width < 768) {
+
+                              // Extra Small Device
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                              // Small Device
+
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Medium Device
+
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Large Device
+
+                        }
+                  });
+            </script>
+            
+            <style type="text/css">
+                  @media print {
+                        .sticky-social, .sticky-social_mb, .pull-right, #printPDF {
+                              display: none !important;
+                        }
+                  }
+
+                  .f_vl {
+                        padding-right: 30px;
+                        font-size: 17px;
+                        cursor: pointer;
+                  }
+
+                  .log_oo {
+                        // width: 20%;
+                        display: flex;
+                        justify-content: space-between;
+                  }
+
+                        .log_oo img {
+                              width: 150px;
+                              /*width: 100%;
+                    height: auto;*/
+                        }
+
+                  .sticky-social_mb {
+                        position: fixed;
+                        bottom: 0px;
+                        padding: 0px;
+                        margin: 0px;
+                        width: 100%;
+                  }
+
+                  .social_mb {
+                        list-style: none;
+                        display: flex;
+                        width: 100%;
+                        margin-bottom: -8px;
+                  }
+
+                        .social_mb a {
+                              padding: 8px 0px;
+                              font-size: 30px;
+                              transition: all 0.8s ease-in-out;
+                              width: 20% !important;
+                              text-align: center;
+                        }
+            </style>
+            <style type="text/css">
+                  .section1 {
+                        position: relative;
+                        padding: 10px 0px;
+                        width: 100%;
+                  }
+
+
+
+                  .sticky-social {
+                        position: fixed;
+                        top: 20px;
+                        left: 0px;
+                        padding: 0px;
+                        margin: 0px;
+                  }
+
+                  .social {
+                        list-style: none;
+                  }
+
+                        .social a li {
+                              padding: 8px 12px;
+                              font-size: 25px;
+                              transition: all 0.8s ease-in-out;
+                        }
+
+                              .social a li:hover {
+                                    margin-right: -30px;
+                                    box-shadow: 2px 5px 10px grey;
+                              }
+
+                                    .social a li:hover .fa {
+                                          margin-left: 20px;
+                                    }
+
+                  .fb_b {
+                        /* background-color: rgb(59, 89, 152);*/
+                        background-color: rgba(65,103,178,255);
+                  }
+
+                  .twitter_r {
+                        /* background-color: rgb(29, 161, 242);*/
+                        background-color: #000000;
+                  }
+
+                  .whatsapp_r {
+                        /* background-color: rgb(77, 194, 71);*/
+                        background-color: rgba(13,191,67,255);
+                  }
+
+                  .fa-envelope_r {
+                        /* background-color: rgb(219, 68, 55);*/
+                        background-color: #e2123d;
+                  }
+
+                  .fa-linkedin_r {
+                        background-color: rgb(0, 119, 181);
+                  }
+            </style>
+            <style type="text/css">
+                  @media only screen and (max-device-width: 767px) {
+                        p span img {
+                              max-width: 90% !important;
+                              height: auto !important;
+                        }
+
+                        p img {
+                              max-width: 90% !important;
+                              height: auto !important;
+                        }
+
+                        h2 {
+                              font-size: 20px !important;
+                              font-weight: 600 !important;
+                        }
+
+                        h3 {
+                              font-size: 18px !important;
+                              font-weight: 600 !important;
+                        }
+                  }
+            </style>
+            <style type="text/css">
+                  /* === Film Roll Badge Styling(IFFI2025 countdown) === */
+                  .film-roll-badge {
+                        position: absolute;
+                        top:82%;
+                        right: 20px;
+                        width: 230px;
+                        height: 70px;
+                        background: repeating-linear-gradient( to right, #9a2375 0px, #9a2375 18px, #6e2b8b 18px, #6e2b8b 36px );
+                        border-top: 8px solid #9a2375;
+                        border-bottom: 8px solid #9a2375;
+                        border-radius: 8px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+                        animation: moveFilm 8s linear infinite;
+                        z-index: 10;
+                  }
+
+                        /* film sprocket holes */
+                        .film-roll-badge::before,
+                        .film-roll-badge::after {
+                              content: "";
+                              position: absolute;
+                              width: 100%;
+                              height: 10px;
+                              background: repeating-linear-gradient( to right, #9a2375 0px, #9a2375 10px, #fff 10px, #fff 20px );
+                              left: 0;
+                              z-index: 2;
+                        }
+
+                        .film-roll-badge::before {
+                              top: -4px;
+                        }
+
+                        .film-roll-badge::after {
+                              bottom: -4px;
+                        }
+
+                  .film-roll-inner {
+                        position: relative;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        animation: flicker 2s infinite ease-in-out;
+                  }
+
+                  .countdown-text {
+                        font-size: 1.3rem;
+                        font-weight: 700;
+                        color: #fff;
+                        text-shadow: 0 0 6px rgba(255, 255, 255, 0.4), 0 0 10px #000;
+                        white-space: nowrap;
+                  }
+
+                  /* === Animations === */
+                  @keyframes moveFilm {
+                        0% {
+                              background-position: 0 0;
+                        }
+
+                        100% {
+                              background-position: 120px 0;
+                        }
+                  }
+
+                  @keyframes flicker {
+                        0%, 100% {
+                              opacity: 1;
+                        }
+
+                        50% {
+                              opacity: 0.9;
+                        }
+
+                        25% {
+                              opacity: 0.95;
+                        }
+
+                        75% {
+                              opacity: 0.85;
+                        }
+                  }
+
+                  /* === Responsive Adjustments === */
+                  @media (max-width: 1500px) {
+                        .film-roll-badge {
+                              top: 68%;
+                              right: 18px;
+                              /* width: 220px; */
+                              height: 65px;
+                              font-size: 0.85rem;
+                        }
+
+                        .press-section {
+                              margin-top: 35px;
+                        }
+                  }
+
+                  @media (max-width: 992px) {
+                        .film-roll-badge {
+                              top: 52%;
+                              right: 10px;
+                               width: 200px; 
+                              height: 60px;
+                        }
+                  }
+
+                  @media (max-width: 768px) {
+                        .film-roll-badge {
+                              top: 56%;
+                              right: 10px;
+                               width: 124px; 
+                              height: 55px;
+                        }
+
+                        .countdown-text {
+                              font-size: 0.9rem;
+                        }
+                  }
+
+                  @media (max-width: 576px) {
+                        .film-roll-badge {
+                              top: 59%;
+                              right: 5px;
+                              /* width: 160px; */
+                              height: 50px;
+                        }
+
+                        .countdown-text {
+                              font-size: 0.85rem;
+                        }
+                  }
+            </style>
+          <script type="text/javascript">
+                const festivalStart = new Date("2025-11-20T00:00:00").getTime();
+                const festivalEnd = new Date("2025-11-28T23:59:59").getTime();
+
+                const countdownElement = document.getElementById("countdown");
+
+                const interval = setInterval(() => {
+                      const now = new Date().getTime();
+
+                      // BEFORE FESTIVAL — show days + hours left
+                      if (now < festivalStart) {
+                            const diff = festivalStart - now;
+                            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                            countdownElement.innerHTML = `
+              ${days} Day${days !== 1 ? 's' : ''} 
+              ${hours} Hour${hours !== 1 ? 's' : ''} to go
+          `;
+
+                      }
+
+                      // DURING FESTIVAL — show 56th IFFI - Day X
+                      else if (now >= festivalStart && now <= festivalEnd) {
+                            const dayNumber = Math.floor((now - festivalStart) / (1000 * 60 * 60 * 24)) + 1;
+                            countdownElement.innerHTML = `56th IFFI - Day ${dayNumber}`;
+                      }
+
+                      // AFTER FESTIVAL — new message
+                      else {
+                            countdownElement.innerHTML = `✨ IFFI closes but never ends…`;
+
+                            // Width change logic
+                            const elements = document.querySelectorAll('.film-roll-badge');
+                            elements.forEach(el => el.style.width = "350px");
+
+                            clearInterval(interval);
+                      }
+
+                }, 1000);
+          </script>
+ <script type="text/javascript">
+
+               const miffStart = new Date("2026-06-15T00:00:00").getTime();
+               const miffEnd = new Date("2026-06-15T23:59:59").getTime();
+
+               const miffElement = document.getElementById("miff");
+
+               if (miffElement) {
+
+                   const miffInterval = setInterval(() => {
+
+                       const now = new Date().getTime();
+
+                       // Before MIFF
+                       if (now < miffStart) {
+
+                           const diff = miffStart - now;
+                           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                           const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+        
+
+                   /*  miffElement.innerHTML = `${days} Day${days !== 1 ? 's' : ''} ${hours} Hour${hours !== 1 ? 's' : ''} to MIFF`;*/
+                           miffElement.innerHTML = `${days} Day${days === 1 ? '' : 's'} to MIFF ...`;
+
+
+                     }
+
+                       // During MIFF
+                       else if (now >= miffStart && now <= miffEnd) {
+
+                           const dayNumber =
+                               Math.floor((now - miffStart) / (1000 * 60 * 60 * 24)) + 1;
+
+                           miffElement.innerHTML = `19th MIFF - Day ${dayNumber}`;
+                       }
+
+                       // After MIFF
+                       else {
+
+                           miffElement.innerHTML = `✨ MIFF concludes, cinema lives on...`;
+
+                           document.querySelectorAll('.film-roll-badge')
+                               .forEach(el => el.style.width = "350px");
+
+                           clearInterval(miffInterval);
+                       }
+
+                   }, 1000);
+               }
+
+</script>
+
+      
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("sc_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","PopupControlID":"P_CategoryManagement","dynamicServicePath":"/PressReleasePage.aspx","id":"mpe"}, null, null, $get("Hidden"));
+});
+//]]>
+</script>
+<input type="hidden" name="__ncforminfo" value="rFFlZse1s73VMi8RdbA4IFyvLJKYIlNpgaGwPLh7G0tVecm00Cowey_VBZ1A1Eh9Kq6nSkqXw9DqK7eJrII4fo2-LEVutGtixe4vkh5hgKrJC0QvNzZxWQ=="/></form>
+</body>
+</html>
+

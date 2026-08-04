@@ -9,7 +9,6 @@ from __future__ import annotations
 import math
 import random
 
-
 # Default physical parameters
 _WHEEL_SEPARATION = 0.30  # meters between wheel centres
 _MAX_SPEED = 0.5  # m/s at full PWM (255)

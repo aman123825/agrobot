@@ -1,0 +1,1428 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1"><title>
+	Press Release Page | Press Information Bureau
+</title><link href="css/style.css" rel="stylesheet" type="text/css" /><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="alternate stylesheet" href="css/change.css" media="screen" title="change" /><link rel="alternate stylesheet" href="css/green.css" media="screen" title="green" /><link rel="alternate stylesheet" href="css/yellow.css" media="screen" title="yellow" /><link rel="stylesheet" type="text/css" href="css/prtint.css" media="print" /><link rel="stylesheet" href="css/style3.1.css" type="text/css" />
+
+
+      <script src="js/jquery.min.js" type="text/javascript"></script>
+      <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" /><link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet" />
+
+      <script type="text/javascript">
+            $(document).ready(function () {
+                  function getParameterByName(name) {
+                        var url = window.location.href;
+                        name = name.replace(/[\[\]]/g, '\\$&');
+                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                              results = regex.exec(url);
+                        if (!results) return null;
+                        if (!results[2]) return '';
+                        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                  }
+                  // Get the IDs from the current page's URL
+                  let prid = parseInt(getParameterByName('PRID'), 10);
+
+                  if (!isNaN(prid) && prid > 0) {
+                        $.ajax({
+                              type: "POST",
+                              url: "AjaxMethod.aspx/UpdatePRHitCount",
+                              async: false,
+                              data: JSON.stringify({ 'PermId': prid }),
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              success: function (response) {
+                                    console.log(response);
+                              },
+                              error: function (error) {
+                                    console.log("Error in AJAX request", error);
+                              }
+                        });
+                  } else {
+                        console.log("Invalid parameters:", prid);
+                  }
+
+            });
+      </script>
+      <style type="text/css">
+            .table-responsive {
+                  width: 100%;
+                  overflow-x: auto;
+            }
+
+            .banner {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  background-color: #000;
+                  color: #fff;
+                  padding: 20px;
+            }
+
+            full-width {
+                  width: 100%;
+            }
+
+            .logo-left, .logo-center, .countdown {
+                  display: flex;
+                  align-items: center;
+            }
+
+                  .logo-left img, .logo-center img {
+                        height: 70px;
+                  }
+
+            .countdown {
+                  text-align: center;
+                  background-color: #444;
+                  border-radius: 10px;
+                  padding: 10px;
+                  border: 2px solid grey;
+            }
+
+            .firstnumber {
+                  color: #000000;
+                  position: absolute;
+                  top: 50px;
+                  right: 90px;
+                  font-size: 30px;
+            }
+
+            .secondnumber {
+                  position: absolute;
+                  color: #000000;
+                  right: 45px;
+                  top: 50px;
+                  font-size: 30px;
+            }
+
+            .countdown .days {
+                  font-size: 35px;
+                  color: gold;
+            }
+
+            .countdown p {
+                  margin: 0;
+            }
+
+            .countdown .text {
+                  font-size: 16px;
+            }
+
+            a {
+                  word-break: break-all;
+            }
+
+            iframe, img {
+                  max-width: 100%;
+            }
+
+            @media(max-width:1199px) {
+                  .firstnumber {
+                        top: 40px;
+                        right: 72px;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 35px;
+                        top: 40px;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:990px) {
+                  .firstnumber {
+                        top: 25px;
+                        right: 54px;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 25px;
+                        top: 25px;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:768px) {
+                  .countdown, .days {
+                        font-size: 12px !important;
+                  }
+
+
+                  .firstnumber {
+                        top: 25%;
+                        right: 8%;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 4.5%;
+                        top: 25%;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:475px) {
+                  .countdown, .days {
+                        font-size: 10px !important;
+                        top: 20%;
+                  }
+
+                  .bannerimgdiv {
+                        padding: 0 !important;
+                  }
+
+                  .bannerimg {
+                        width: 108% !important;
+                  }
+            }
+      </style>
+      <script type="text/javascript">
+            $(function () {
+                  $("[id*=printPDF]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+            $(function () {
+                  $("[id*=printPDFEvent]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+      </script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112591026-1"></script>
+      <script>
+
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() { dataLayer.push(arguments); }
+
+            gtag('js', new Date());
+
+
+
+            gtag('config', 'UA-112591026-1');
+
+      </script>
+
+<meta property="og:title" content="Post Harvest Food Loss" /><meta property="og:url" content="www.pib.gov.in/Pressreleaseshare.aspx?PRID=1885038" /><meta property="og:description" content="The Ministry of Food Processing Industries is mandated to create post-harvest infrastructure and pro" /><meta property="og:image" content="https:/pib.gov.in/images/indian-emblem.png" />
+                                <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="C4E7H-KSCMC-422L4-W3EM5-U36MF",function(){function e(){if(!i){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,o.parentNode.appendChild(e),i=!0}}function t(e){i=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(o.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",o.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"C4E7H-KSCMC-422L4-W3EM5-U36MF";var o=document.currentScript||document.getElementsByTagName("script")[0],i=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!i)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),o.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="m4kx4ufydpchs2tqubsq-f-16339ee31-clientnsv4-s.akamaihd.net",o="false"=="true"?2:1,i={"ak.v":"41","ak.cp":"1825201","ak.ai":parseInt("1215205",10),"ak.ol":"0","ak.cr":3,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"d5d8004","ak.r":39689,"ak.a2":n,"ak.m":"dscb","ak.n":"ff","ak.cport":26941,"ak.gh":"184.27.196.117","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1785765989","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==4WF24AUq8f6uC7nu9O8ZHrn+asZhqna4on5gQJ29jahfPp8Er2RPHdrRAexGkeeDZ/CKqLmtvO3Af5E2GOVg25unQiHXUzTyMB+snro7H5Otz+JkHKvSpMsEnRFZyec86X0/HMysQxzUjDcK11WY/s7Y00PSR+pDEKigV15czdATwVdYt2VS039jzjrus9cIEfyTMy5OloGFxNf/SitXI6eR8YyJNIFKs9MN60+kVd9w4f3GKVRMmn/9hH/FUv3bELx3SNPMsOsZkXh/a2WjGX69DCPNkG36tnJdP7ABP9qvxuEVk/xpSfRF+XECp5VFODcakshLAHC6jtVpKIT65DZn4xdEo0noAGGsrqygXuxv7bcdLsEyiVOK33QX1tyq/kp71XRafz1/GykTP2zMzv5XzrO96tFHiFLtf3cd4tY=","ak.pv":"9","ak.dpoabenc":"","ak.tf":o};if(""!==t)i["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))i["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var e=["ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+<body>
+      <form method="post" action="./PressReleasePage.aspx?PRID=1885038&amp;reg=48&amp;lang=2" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="sc_HiddenField" id="sc_HiddenField" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="ObHHWoYGnrvKvVzwwym7UwDfYXx/avEChrBRQ1LNoN6Mn7FkAW0zhbW8aDCUcQZijhZQePikYt/O8uwerA37Hg9rxAeDVT6OG9I5iys4Mg/R8exhTJFpMckrD/h9rl0vuf/2KDo3UKjTTAOFgsK416PvsQoMTjaWD5kFfxadxlGIc8BjLyj3y8x+z+8VUvN4Q+IQpJzAIW+CJaGx7tbNgJVFnRViN3HGbL1P+ZFkb4+JCAz98WcGYJCWfInV3K+z7I7zCOZYtyu1vVqZCl7fgJlS/OrNa1lih4CCiuIHnHrzf7BGtQICAhySwyc54u0TDM5e7dUX9kbMyeW6pQHHxlrBBYFyca6np328HnSnyhffESIgsaky2n9c59mvkXr1HBJBE8O/w8BEysrfMP+sgwFUM3RB5p4wtAelx8u+nP8Nd2hVcwewW6yLPgID8cMa3VDjg+V3vpHupklSWOi1iFhm4iVhzy1NjP3ESaMtRFYqKt3B+g4bUjI3JUn5ifNlwjH/RJUOwOkWMN8E/a0FGe6roaJRXad06AsoswmROyrQd4R4b8nhnmdvpCSg0KAqcj6FGrzVvnJZ89Lp4tYPlEwYkfU7eakzpm9W5Y0qnNEjK6L71YV1eob9rNcBYqncRbLHnapAbqrJk4tJkY7+1D3jPpNdrDWRlBlcox95cyCnGQeKrNVQjbgU17Yc0TJUgGv26SFx60I/oDHlPeB9tzEZVB2n3QyB7UgxpMZC6foCDPyZX3hH1BLK16isWGv4LcyBzwZqdpQhWH0unH9S11pjh0ot82tJuAFUshZkwQXEtVfvX4m8v9uIEbYwkdMfoQTI0/b2tV1cCH83w0GFx+x3WWQK+BmD4eo0PoiKVnYccgjKBaUN+l/nb7rBr1zcunUx9TA5ThZPaLyxP/5G6sELopZeueulpri4KMve4KxdIUa6dVybN4MlnmhWB1Qp7JEGdHtfnIwjjviH1mpVePkdm9Xx4aNX5BS4NY8JxMCt0i5STQU7G99y/4EI2ld8k02Mu4r8O0p+E0I7dt7JqR3Rm8H4R06tqpbRqEN/E1Kik2fX3tUwKY1/g6idy/+v8VovxcS9RnQNZwnToH7+3qDSv8/GJUSgNAFPeVmScoPBu0T/HQrbT5c0NPfjfD/EDuV2hqjq2NBpuwas8IXjAP03KMJ48R4iVepCWGOU9ZtPzRFRDCOi7TJE8kH+mKnd+xvGN2J6HP9tHXQXuHF04hedaZwFsLtMyp2ZjHPjXBpln/Zu4ukzu0WrAVfC29/htcb8ILaupA06d/SatLDNZcc0cjU617/88xBAUsWrYxiceVvDo89JzQgW1QhcFHksJFmo6u0osCUzdpzQTu4X4cc+sYLIR+lqkFq76nLTnbLKQT9oQQ9JyYAIDT3X3YoFm58mpMUlUFGy+KcPKZNV12hqYTFVsDz/oSK6j09YMGlW73GpiuBWrv3PnpH2B2pFJgpVbwqXdjZjBQAPdAufLfm8SJovBkjcu4kpqkc7j+SFUTKVe5lFj0GfWR33wL9jF/Db8WqwIOZBVrCRpz7vJk9LuEOxV4MnhQSRxHElidpvqYt3vBG0c8yURuqN38zzIsAnO+fuTuYLiGugrn8NL9IdVhBcHB/kSs7YoSjecmGqoWQw+LNzGP7lzqcQHCqoMa64NjqoQNPHjlXKi6DMi9XHNhgdFE6rgwuvz2/jzl8sR7SsTSBfsEyiRCQTMYbJFkPFPFdepKIM1epLACOoXrtrvO3gil08JSq9+gnkuXq51K0wEeg61bqHHbhZkdHqySDDD2X+t3caPHwNUkmxQ6cm/AeZV7UKfG5fLPoLyl61vqPhyVB9SLwsLHgen1yhI+LdVAQAEKiKHHQ9w+/q066IkoBrTRKKQ868k5WuyXhudU2E3O2x8dP3Ch7ur1zOTaax3KxDjUo9iuZXJozxj3rKVl9HQJehwfNUVLpbnDo+84fgZXPl25oRtgDtbtoDHmfe7T3aJEYE5Qc/XvGfLJAU78gpFvKTXea1HzcAhgwJejayqL8OvIosUcLzj1Tf7M6pzGLGPcN+0Ty7UZvsri7coBdCrt694lLpnzSZhHg9RJz7XmcyEnsLzKwTMVUqXa1ElNzbIctnlOClwQICnSEPVa3nTxYE1vyW49VHf6nHFz/DEY0h5YsLS61XhNyR+ojumhu8qTAQfhKjPb4s06JsVlxUJg3acUCWBkPtk2unZeN1UL72fKPdtFptZz/aflJJWZB74EYNlPx4GXYWqNbH4su857owI36fCW1YLWn6t7t8sart8z/exH9WBTdeyNPgbEX+NFfOxHyKoVTGT48HigPYLun+2e4SWr1FiQbmXAeJvOaoJysszyxTjrweVJYcrCHvdxyhNWnpuwDou7m2l2rVmUtGM4pEvcxi3Ke7KIB9ma8yKZdmNupHld2Ei+aIweSu/mSttv+sHB8AbiuJ3hh/H2y+RaXqxW51nb6TUfJ/hutNr67eK/zAVdad4zlEzgqf33rBFc0sCKISaQLYQsZKguEs/nUvGXAvALCv77OiGI4eVyT6FbK5xr/e2ZpNzHxrV/Jb/ScbycNgpWhX27tRs8VPbmeEut7HvA51b+iAhEapcX9yY70v6/O3jELqPSf3YTBg+qOOGW6grIHs1kqbDjNxriL3kHpzsBwphHrTRP6qzdMarv/StPO8bVDB8C3jDpwijXO0ltniby/HyAIUvPwM9o5s+XjHwprMr3DtuPL/aTzYSii1HdS08b67zjspoJOxxVN7toCcjmSioGaLjLOQ860kWFhGueaU2alZaShfqsESxAWAZOcn7r7Is2p1+KFQVhRcm3sEgRVmdX34tVrPYZW22gHfR0NLFvZJBy0cto66EBfMkAasArWThN7vWD/OhqHSiirIorBMaEZQVgFvwWhBxZM/ucC3ftdMs79zVELJc9KKO+PM5STNHiiQy4kCJHGNO7LntETgHz/VJlD+lnR46p+GEt/GSA3IMYIvBf9H0+YBbwMXtsQzFnV0Ty6gOeMwRQIoh82ystgVCgXGzzD2VHpuIjOWNaKENLops36xyzkq6WPg/EYp8aMw2zch/m7EI5rSbeEOj3G+GtVLeYR5VM/qcUPpxJyUkukOFLZRsYWos/73dclDPrGSWSZ+SbYg18/3RwGe0raNZXYpkwTCKj/4cWyJQXMKGFzq4kv1amhnqJK3BDGk9l1HPSrmurZ1DkNOMhCB/ZElP4K2oKjmKUOB3YVa90mZrMx658+a+NEQu5JK5o0JgUu4MUz2lvplrIqjGvwh6sx7rnuh6hDHCvWxH98vOmYbYOZv6nGhsuGnFEay/WY0TG0Q3SlwV5m8MI1EX1BsDbpGTg5BVfWiakd+BX1PWO0bGhGHbEhzXyTLPTBRjVLCWFrnoI4iLZ5TeGFasy0dX+3BevpPyNtvU/FiWOWov58IfGrqeSPRWJDPpk/JmWb0W97fkV+6M783HuugVWXoGBEz+xj+vTdYxJ9eiqYG9/5EJjxuUg/jk2nz4WXq/jC273T+X2E8VsEIInvatieFySnViWP6t6Mam7RvJYK6IGZEI2OEvCndg3fRNQAvAbPekjdB1OMvM2rk297JOmfWnm5+N0hlVNSZ6LxNpxexkssucz9HUIEap2P7EcaXQTllSU3CIjI4pt+Vc1dgaMJS5nHp4dpd/Gw92p2qaxJecOn7vujrgEr4nuQ1SXpbtPks+nts4aWU/KmEXBTCC0sgl/Vx8SmXVQWH7UX65MspN9XN5dv/GOELHL5cNrW/aaW8Bj5vVevTMWhHp0UlFprd0X0qaI8U5tsVwCW3NO9S9XQlw9ZuT1OBsN4OvNB5z6SkapP7Y+u8V6Inz0Dr7kF254Iz90cYUuLLUrjUOroMKsUU70CjpTD/TxyUIh4ttSUljh8W9mj8tcWek3P9ad5wO+wLPghiDOBR7II0NYEUVt5TtihfQ08CLGoBzuRXNZQ6tESISE3o65FwQn/1Tm+wwldlhe2No1T0x2+Ft6se9AfTAgiD8B1CCY8TEDiFNopStTZ33s8HcO8JJoDNpDyvift9QgI5Hc4VZhQfbowMVWbWsWiHpdbMHEOVsrz3KnwSUxVTPkELg48Gnvj8Lg20MaIIB8t9r1U/czO18oR21HIAkpQf3/xJ5zl5tfp0F05xQgMTT+QSTyE6kHu6xxCYHpDrxHPmiZR5pbOX8GTQkxWTQ1W3/rPiMvPYZg650XK3ADo1LyjwZjWCMTxUpt6MkJ1OulBX9QGZoB6lq2m552ceXDWoLpI9bNWRYyffpAX5WJ7+NdZ++k3NLu/+BW7F/+3af4ejG4KLTrLPezj+kd+b3aRHQiw5P6wAanBT13+uT71D/o9Ck+KTKcjpEsGFAlOVyS9L65h9cBumNlyH/xu+c678NrVJ+Hm2wRkwcaZEl/OL6jR+BV4RaIVNPrf2QFf9iYF33SXpHep3ACCGYC1AiPmn5kBpe2X2tUwFG0HuLD7N1MIF5O34+RuwSQFpIDR5fEuM4YVhipGBNuQwgL7wtrcYDk9+qaZg5TYw0dw85LFTUXwU3ADvFs/cPv/cvuDIlTsJNrWQ+7wAN2iFqDeSH+k0jKhYSrwhiy6AS9tHLEEnQIbdOqj0KQtjrJkzmjKuIWpWG6RtL/4rAr03tAgMkVdIJ+oMMDvcoo6VD242xhZtsGXTRSCXQ/OQWwl7nN5PZrU5Qw4QHM7Holecvj1pQFKQQHlqJ0x9GAuFVPkKjrY/mjQSSuZC2wB3xl9oX0fVFHaqxGYwsDV5XSAc63Cz6uLxZiiWOJB6xZa2AOYpdAdRXVBf6iU/U4z1ngM/weeizfRc9/9o6Y0IzUu75HrG0q8pZtHHtS+WHmglbTiYgCKIP90ue9D0qEYIyy2U5INXpVA7GKAP7JzwVwvMoQAbDfVE/U296flGuA6LyDJGpoQsCJV4EqDsU59JWaaZ4POkiw1drBV37De24emycualZhXRtRnss/99Kzn7+wXTzkrycKCaR0Xp6L4HV44d1gvWCrh24Tau0p896AMOLlKNkWf0t0LLurscYgfIV3CLzPVpLF8oz2+OTtvWHkJkqjbJQUfakrSKswMLkcsWs29MXMhqJn+SJbawZUOyovR7hhK1rYceQfLqR5zoOE8OSCnFfICDaNBlEh/Lmnyn732Ms5O6Wnae57TDSXSXD3iOIMBGvQaHgFoQkCBjWBwCIb0LZbGFZndqgleN8aB+O3vL/8HermClhnEDAzshGdjGravw9GvlgPuYRjEJyQayL/vhFPn7/5fLJrciWD1akLoSuPAkwmRVoNnI3ohqIj6Y8ulGHxHVEWYTTJaDsfA3GYNltVEDUqKW6ck5rB3c0PTK0YZah1whILZArh5tD4U4y4rkqy1/reLQqYDrIiZELMPahmnNSr5m3K1kLZWdn7S1c9XiBuarWBSbGPxF+wUx+mtkeQ7um+DwNUh8oUeHCKJ6qnjRVFwxfl2i6jdGj7P10au+gKcKURzcUOE2LOYyf5ZFoi0xbwdCuxVFOaU/lg0bfVNwTNbexVdBfGSvjdKP6OD9ybzXjat42paGtqnTHzEvMt1ocX619V7FqeTtIiMWYtpPghGsmr3OCmTKd09D9iKiRMAcuO71EWnARKI9InMO5AuPijcYJofkqHiq5wjeihffencuOuLHX/2YTxb842oNbMxivpRrXqnoigRsJ0pvIkBH5LtX13T4LWi2yDW3UcgWO8MT+IYHEfxv5+jHn5TUI7Yq9y+3pGb3W1PH0P8WpkV8fILci72fgU4NoGi4RxFzrR4LSStI0s7IdsPEduuA0H7m1qOPpkfiG2nAmN+USQ8qPbAYi49VEycPJXD6MZCfEC8zTAVAFRlUNuIn/3KRxrVa5pI+g18UxyolbMHpb8v37AX8PpECrqCwT+qwFB35V2E9J8M/vwREOm1q4ilGMvvd31GWnPoa54UoHtgwnfNwP3owkRMAotjNJROlm6sobv2rcG+22xXV9epbD3aqTPHQJUf6vwbE1yXL9kk9I/G0GBWUXPwSk2K6lPKHI29MXYfjiYpAWHOF78/DNrlWXrh+KOgjY3upNfPTokcI7Xjemnh131OreI/Ue08qMMxoow0BDVc7P/OqnldreYRUmzXlhaG/qaNnaD+JEvWslo9fEv2EZkJf3wchK6fLDGNIrKoXnp8D1/dPtX98UyquR8LY87r3prT3xnjmI9PHQEsTIqyEvO8FAGtEkigLYLsyO4QUScavsLi68N+GiSe1H3DgSTyw2Vao9SOZBELWo3kaCoXg1uo+CGiJpTgkDP2HGlArop5PFFVl5mccnXatPgPxFw8YghMK3Zpaf20srNwDuCqNEkueiMmKFLtXbAeLTvopOAVUkGcAkY98+X6APBj+VEQVdes2kVS60xGq7T7eAwkt1SZIPmzaXNMACA/Wu9DzLsBuuXIY3Xsgftyje9PDoqIoJkgz0nuxKG1448cj+fh6Cw1zXt7uztgcCDgKbfnK1zzMioVp617TH9mPXxi8Q5hLoWQOtLh/X147Nsv+D/wjusbUp4JXrNWwxgbCu8QaFOdrENZ7bs4GSm6UmMSfEUAMYGp9LZEoaWw5Yvm4xVsF4Hkt8mrN4zZntZYXLq2vGon6Um/NqRqoZqns6IZuni7ORke37Xz7/4DPEFmJE6si1JocpsxxjcatKiz4xy9R4+VHQjuJauqrehHSlkT0B46dd4aNU9m8Xmvknrj0tNE9a+O1PKPpzFIjMHQ2MokVnVSKmUOR/ToyAEeay56ADqUwr+X4QqHFzRnnB5Dte5XfL1GJJRTdfA7pckE/NGh4ERvIld8sulado8kMJdKSHGPKp4zV0z+dc/ZRaNRt8QSnZpHx4NzumSHPy8oI+gBPrELYdGszbW0qCtt85doNEpOYd4T4ynMOlgVG0WPNCZCSmhICQOd9/CF+NZPe8mNuWKghRxLcqA+8LrxBQg0/f997acs81TYSbVL6ACryIn4XzwkN3uwEIGt2TCC8rVwS+9XekLHI7bLWcuWR+/XWSMFEFjTv9unmIhO8guDPWpXkYqH91tQToPHXSEGhALMVv/80aqtsSFZ/wcLwn/m9OZLLXzqQijopClopID/x/aiEGWzDQTkkVMlMIeSTyP/ACcqOJA/4vFfHEyU8NtiO9SVcolLO1BwLpSb0yNV7blGFc8bH5S7YbirIGHvoo3SQtdFx6kSjHGOwCym0XdM1hefWGIptmsXIeTXksPHl5lduCC1YQ5rt46lrabsGmsf8ubogadNjFb41U8AwI5O8ZRJ8owTUXm8QpZCd5Y/vPQCykwpTKJ0VynHxvw7yF0J43YQHAYDHQciq+J1n0JeTkUvr+fVyIJmSQAiX/TxG65yOetoqjsM/u879kZ2Izhrl9hSf/1Xzc6+JN2abOBt3bWIPYtUz7xXG1j2FzUnDkOTHsD/EJNmpk9fGlvaNc6Se2UbkWnWecnyAzLfEYrJxpgSPA80/ilFh0y+P9hCy+nUErLU6DZ9HveqfLGq1lyqTLrIgqrdtpvB3Glhm2vcfYE1+AGCYv3kKqrLuR+E5kyJy7ygIr8Df7HAhr9Xqh8YYPosb7OERNavZW8agvbbJJJ6hYkK07VGMHou22Z6oi3CMA0Ey9B7ldChYjty6w0wrsbDwVY4POqCrqOXwlefDmbB3bnBKcyISYee5XAGmYJ01xqWj4wdAqD2Vm8yvnU3M9WfWJOwdUosOo35uIcfv1j31WlO8QATGYP5KiB7t+rOKe8UfqZPVFGEm8i/0oKnCVYECR8HYiNPPTYBOXgfVRJmE/fwEtqatDa053/WQNeebMWTOZSc40PKlvTP7vD6LA3aRvESd41yHHMlxA1VvyhasuZXhhQSfZPShP3PTPEKaaLzqVwd2w82h3Pube/swwfimoJxN77uNepLHL0Q3SPcXtDkA7n/TdwPrLz3LoQ6Ts2kSEGda+gbxi92CQybMCgpoqDL4gJiElMbMmgyDw+IKzc1C9vf/JWs9uCtn/dBCakrRCLklYz5TioIZ0cfKzbCllPLLcs6vNZuuw2Ix9FtyZB+mWsWDV7c+DhaQhZJRepMi1Qmta0nHf6VnIEi+CMQR+R0Jxw7Ci5b1d2p3G/uRvET4oCfjgPyRmyc6agAo1XGKatftGqQVZp3MekrXmxba0L+aCI1XDHkgresHC+li3SCEHAi5YB5NPvRv7ShjeAjnJq3fM3cFZ6WotnvBug1J52for3HDN2vTul1oLLaSC8Zaeu+1/Y9azeRPUAypMEa40W2rqJ7m1RtgV+90dmlYrP6kxQzqXSONmAqFoQXvXVU4PpqVrK0HOz3PiEVWrgV0UuTQDrv6uD2zKUgHLpSCKgLpsTsbpBPSjpcOV/TW+f/cifLbJlEh14P8J/FElXU+RqhjrqQyiJbh+EBQ2kBgEeWgD7xWjW6D0zbf80QHd0IfYXtlIceDQdOjm3HqDaZ6og2z71IlVsKkHREJ9WDm3hm/GUWGMeInweN7CKUmvCY1hh/gU47yjEZhcMVPXgw+MAZ6HOEJTp5IdJjlKLGSzTWAXQ/JjF4gwwGUD+6dStfGUGsccURxAclXao5sVpvvGu6eiC6RAgVx2QgTEwOhEtca8t6bPc0c7saRC3be7NyHvK03lmqUP8JrfeapxezmHsmLe7eewchafkb3q9S3nV08anbg7K98QqD+gFtylt3Jcgv/rLzW7PWMTtYF3uDilHRJelQ7MfPT5r+xgeqaxlfZmQmMdz9gxP1ZM3l8qHDxTwUZd2s5m8HAj9L0s9YzDsUhMFU9STm5gqO1EOwsTzj4JEpX6RHGo8SrUfsxM2Wfk4gd/dFXcoChgMfBsavK1P2WN4Fffvh0xLCyhJmWPkOlBHmwcQP5Td6N5hRFcH/xooVsaJmBOQy0QS4tckF2a1O1g867e8tlpSUMImYPqP5AolzlNbWpN4O7paqH4YVN9K8eGHIP/4CGGEr8zDqvCqC12BMfD/kWrs+q49PRhyHeiW+Nb2j2XUA4pfCr7pMmBde9SzTgvhheIzPVwkT7mio07kXHDGF/IsTnY8AxpKEyoD6cxQQe8vIb9kQ5yL6/J1jLjZuHGZKMR8Nd5GjXTb2VHLx78v0keYonUleeG7+5S9B344t25mOTzT4rYu/KbQ9KVYsWZOrvljHj5dA3d9AAxubm/jKHaRK+FRjZqsuSm0yhZLk2i6ctbXj5jgLi/SZkmM4Cu+wlazlKFIekUojOBVYBKA/mQ/Ha0YN68Dte9+71Hw/j8qaWReS5oqTuhon7iXZqm8Kf+hzbRmVuB7i7V1fU1PzNlst+e252qurH4DlbFpskDA5+8qaTWRiia5Sj49UdIYi6Y46lDNl8+g76cpuTn6mA3B0diqWZHaSy8QT4YBa0soJjN69kYJyYRUk5Ujfq21Mh5Z3eBcSN3Z7rlez6j46kbKOFA7Sz0zUm7/Dj02CRg0efz5upfeHciCDeD/yQfw0e7GPfhCY8BvOz9PAZgJhmwk7In/VHXI9KnP1sAP0ACJVOL12UO7tgEgzzwEy+e42YdziTR0SnTPYRa6zMBqLlcJXPR+sYmL1TVLMbFLmOq1pEz8MtwkSo89z7UXzZZLWRbwA/ysL85+H0tSC8GCt+lAvbEgV+UHhDHcnoDTO1EK7d1xccMBwD4hPci64UrZ9dLSR1WL1+Ut3dX2Siy2FLhiGepqznJP7RmPPDZg1i7RGvR/ODfPD+LohWAg0B1y9AW3GWZ7MgiGGW/syb1ztfE/MroNDvyREf63bMXriqiViVm8lGctUCNCdu8j08KchaqIsrEoPn4w4IipNZt6bQixwNLThMUheSmCm0qSIHpQwZg5bDFW6teOkXTfG4UEuUwz+hYwN8tOifpJV21dcfjq40hqyf6KuWWtiskIlf50jmHCVRNJytEKORl7RI486c+ZOUnEz2FwIs8bT4ub2s8dtgjWXj00Lb33F5og6voDofJVvTJpNruR7ls8I7GGEz8mE/Ze+ZeXyhEbiK1ip4G/gnSA8d85+Y4dIfyrntWwAV+yTtvDuieWvNDVmYepkKhH/eBXU8RZqxNopooBqr8WfKP41l+tdJLpTRGv3Q3gbkmuNF/Tkyp5og8tqJLWpHGMWIDsUnzfDgKlyWEae6lYmZNjX+j7TodfZLIOh2F6wxIHZhh2349R7aejEMuunxdfyGCHkJKl7nW2JmTc04vESszKCxW+Sj3cQRx2q6OZBlKF2bFiHgrzc8YuK5D719XmlDpcJKif31HX7DY4D8gy0XiuLUlD1wOKPu1COO9cEM8oJJC0n+mwwQOeCcLr/mVE9bQgnXkMPZfz6TpMXyO3UN9SuvvptlOF2NQhuh5bUtuCiH4RzMQ8U/zRjdk41WhXNvGK6qiM/BAy6QvGj7txl0nBcETYC+RxKuRbpA5xkWUcGx9DtsfFRiTymTj1sA/VxuiynFv9oi628eYpTQ/e1Y98GGWnnSB3FN+OXnNcN53v8m0L+RoyS+k/zeqk60kG6vRtR3gTGYubeUml9r/DY2V7SsgwHcXvJRUirftSCt9eV0bE91tZyeEvPuKE0Jq8yt1ESTke5QystX2sl6TTIBhunJAFHxxHVc1Gguvo6Wvfmr58UrgWPFHhp4MUNCWkL6nek1uEGoA27bcADaF9mIdW25xfvkc9uGt9hb1jTEBdO2xGjyNYbgcXqj500uoaEs3F0Y2D/e+k0yWJ1PyZkzxQqtEhb8NLRNESPKJG1XrxgkD1eTH6Pk8Aihs9HDoFYU/CRSnt8QaTW2yOyjs8fOuJuE91WvYjqo6n6vx2OTfz8aLKvOJgBZDRoYHmbQsBPfnYXaqKKxoOvYgMulDONjoEikg8YOtOqJXpJZ8r4G3kMThJTXuqC0NnXGUR+P4aZbEfqa2lHbKWQamaWGxv/mhbGDT2+vo7Se6IRlfT96vBW/mledv2AYM8oXu7lM5GEgrVEm5ZqPhUC903DYDEwMoxEpM2iCKxyp0eNTaCka5Q6alc/5MAGrh4gdyCwHZ/f1yDHXURMlGyv6BJt9odN7nyNDub8bai6y1UW55ZY7vVp7KaRQPnMFXJFER2pTmmZVHu+NxpFKoI7kS/+fUWCYwa/hJaXLLNRO2FXqEIlG34K400VH3bXTGdYLRwQc0/h13i223ORz1xSf7acdzxYllcvW7x07Axs2XrnC+w4vOzmp4TcudJBnPd9DLBAvKdUDxKKmAgkX49jmlqogO4Z2ZShXFWWsxkA4SKo5IS3kPPo88Su4Urh6j1WGpn7oKCfrGl89t+puwpKnaW8K3gwr2cZ7vItJfBDcOb1MFZ8pjcYemvU/RGvoxGfM95xOX7uCgyfvP1Sd0QIVTmF3UWwKXt4bjnIlJaprdM/gZzf/6qrbDyAWZQZZ6sfY1U3hwp2Ev3fTGZTS8JqBFQESBW01Bp8M6bonQ6wtNojhvyHhk8vY4XIfmhntM5TFjA1wgiy13cnzJO9b54AfMOeKBnOvguOmqm49epK+mMeMTkHkcI44HFVU0fmj2LUxypEcxp/0TRyYyUnLiBq9o/wddol0+WOja5y6DgKnWGJle1q/htuaoJz5oKMa+TqoulnJ2nosCCKa7Hw79mCxy43BiC52HcF7OJBkO/B87kEuENshL1IogY+DBWQndcmZ8cIbxSV+pr5Mz7T2HcQdV4ocHIhqjCsDto+n4I0bU/nXCEai1Pjs5zSH1jIciYzRNVaq2Q5TXIkq9F9c5UJnxRfAXYI2UIz6PSepOQW52hmi2YKLvJ5qq36Tz671EGwSejivODsnbJQ2SqP3BqAJvZt1iDIv/mLS0VthtCSY/BnrtV+iSObp4iEqHN/r900dmadzp8MMonUcIR2eDi/lEG2nvabmgfm17jT8jOrzXy5mN93RgcpP5QggDKPmH3p2xySXrq87vgKXLbXHuQRg8ca6JP8eLKjRiaXOBXsXvOA4yJJ1re8lTkZvvA5hNTnwVb/6jkmnXiuNjfGAAeeDfZ7neERhTXEg2MANaAw3LGUKSaquSfFs3gLnypgcV+N6tKxD18HX7+L437J2xx23S2LEbKVT0h8XY61oFO3ZyRJsymJGTGSSDkc3LWFdBVyqyMxXOxIgx7BR5ARGlI09JQxKmWjFqy0o0T/n04yFFHtpHl5l3r0YAsutFPUKqriqOgGVpvq+V+xABtpZFIW5dMSyydwdcXMxb8EZTeYWpxM8ktGX76nlwWwDieZeM5C5zWErIa/6sRKQq1gSfhcY5BS/52e2tPMnGNayiONysHolOLCnafu7gqTwiWFyxITm+9JpZHAJgeEom5vLfg+0Cn4Nkp18uJsfQxAMAO8sp72D7dez8EDlHYuqun7WKLjdIsKXJGGgkC5xv+Ydi4aksdx1QcYgqzSIbzwGzfzAKdarjLX4hmNXn990qzKhavqGVWI1ALvATEIh5C8ww58JwUlb3SBvwLaJ4w7Tvv+xJ0VozwpaWsg6c4t4dBEb8pgO9xl6w7a6LK5xXe9qPQcbrAGUfjZTaW4Soa0HsuyB0bH9uCoDwGAMakzrrDgD8FdRZVAWbNaB5AP5dKmUWY3p0VW86QK68se6sGnVLOkpc4NJyGjhGaaEgZmswdvOa162d9UtqJU36h+KklDJ5oNuxq/S4W5JncRHWqr3iQaQgwO+PN8eaJ8C5n8SSSx7sJhuZOXxemQVOtuxS73RTVqRZ8TnHUgZUY3whuzlTXW2Z4ujdn3WMh/dui1DIigj1WWSGXYfXEXplAEwPU7aUPeNnHu7MRhAnXVqf212AE1EbECjoSb+28h46104Ttz0H+1Uh98I7V0WUOjeRkgc/Dviogkfcwr8nF1AfQSteyh571dujlDYg7KIZVUEJ7sq+1UxZZmLCnEUCRmI6l7VwuOl2qEEUFNoBRteLX5VJ17WmbVjLSDxQEIF2R5wUlKaBv8HzkziBdNeaUFp3nQt+DJneLkH0IQJg1M2ftSRHeJ0KxnqyePWFZIUwojHMB0aDdFZeMEBBRmJiJJBqReQoT4/DPuyInphVyfyJYvNTd60qcV2oIqGvwKaWPZQlWNIFI7p5BVlTaqarCDJdvN1Qen9M/lVxknnvS0mDXGZjTDDXKR2LkM22gU7s1kHGxDlq3uLUNAczmDB7pdyERh8zQ7GieaueTAirbeqdpGmabAcvL5dAQZJbFdorbgE5vfridWeYLqG8BV0CfYoMCFcfhyYsPMfduOxlRLApGVc2Q0cvVOkSH/jPTys8TWprxZWHG0xu+5MkR/jPDiQAg5dieCfc7cSAsw3f/7vCfYlfQ02WCbwRmEFzuzJAsjqzboZPI5vHZUJpwsmTnOco1s44WDeKAR5rIS9ANblmAmz8StWiseSonhVZW/aqH19RsEBQ4bNu+s0BNwpBepbCIiJu/Bs76u5LdibLc2qVdejOa4QKqe+07VUdkVLJdvKWvhxPxu3Ho1IoB5gb+JmAATuSOj8rnpHmlQf0832I/nRDGP12Zf7SIraEG9zSVS4gbE/6AFhmSLlbAGvE1qM66z8xRxZnHBaEd91lTihcJKQPDYgLwxX/sLCJP2uYVoetoXBxE4gygmJk6Ngk3XvWDOD6//YdmFk/8dyfWF1k76AmQKCWbgKFYxk5Fi2oTBTJMxP6m4LcVjuyLEWGVKB4XXnbly7RqqV1C7k8xESgwq0Ml887CnQ40na/607dDlrYGkwfkrWABoaazQWVbRk24vdUreUI9Hw3uWhTkm3xAM1KdU1UAPQiqiA5CVCIMRFdryDiyykZpYiN3wGoG6PQ27ncwqmWFpmr57wZACMPCf0J4T6gXk3CiUlrdO/Lt8wAw9PL7GG5ruxvIuDg6MPb8rsGNPwOTfj6FzORKIlgMRXUOm0gtY29esRbuXG8WLnhqZB3ZZ45SgZT9+63En/5dNa+nFYMb9jGGTrPmiN9L66jZORoqvPKe1IDx3mqvXH/34/UkefpwCizu+3lRqx9Eyu0Z56nK4exNvIZJ/IcY2kGozKAMu0I8a/sGWijQUnaZ+yHL2dR143E2w2y0VNHaApnBkuuaeGVuINyXaXlVbtu3FNh0puZJxv4Ho1HGygpz2ibKz8KmXc6LsHCG0aesT1pqChBskkd98NFLKcMEI97/8TMFl6+XIp8T8w2tNnJJ8lfj1jxB72lU164lThc9wXbsTiteJL57AHH88LloAqLkue7IvpCBUiVYUzUkZeoGgbFu7CmWV8zAqc4wbvaPrtc4yUxuH+28kb538bkU4oS8g8ztn08rGV5c2fC/0aM/44nPJQqSWGfcdYFXxkxW0Fb9cM2rMLwbPAyUsVghq0Qb+WDG/aJRxm/AAS5WcybiyuGdGLZQ8TVjzMXRjkzzXFbkM+1GyFwIrbcnbhdXUhRgrYWg2y0CBg8BUhqgbSsXQc2O40Cih4pr8D3mZxkxxxQghGAWevaQf7hgGBoffS10TeDMZVXvu8CZ1zwB0w9EMhjquhbl6r/TJEV+dIRDgOdBmI7o/hJWOSIjfdOxQZKmzJ/DAIAIrwaxQh2IUtptyj0/cb/aNLCFYjuEzx+TWFeVW3EUkQ40ccqvqHckbyJGMKYXZFu3aUTleWjLrFVuPlXhFEJ1ccbwsNO8RjhcGrfP7Mq3q9/BnJIb5cAt9VqBN87o9ACyDulePAd8XafUtv2FKGUlu55UMaNc1lhbJN8aM2gzp7MQTNBwSJehw6XeJxV7mUL3xw2Bw6Ozj7aSBNf0NNF1AdIBZDIODyMOAT+dG2Q/41qPk0YUqQb0KLilW0V4vuEMjdySpiIqlBclI1DNjksBvnq8c0GohML7l94TC15zK9RkkCn1VUHLF70bWVIWzJz8bBg5thNwZm3v5kKkhLPEw4W3NxxOsdZ+5QfNfMWo2NMP+CkehTNy4as4I5u/Cx5IKgtVcz+TucekuiEiZuz7QmJglOuzVB2BysMPhgkWFByr7AUnzirgM2RuHOGzafcNGQkwaGAHR/DWgKU/n91nmnnhNXzZSecaX1/IuWCDcle7Ue0+ow9j8oUSj5HpfDKkrsVGHsHZ7uWXLt+LYFoBqjwdKXMffXWdwFEkVN+2Nvhi1B6Q9b107n5cT+xa8rqBKcyDd969SNPSmqApEBnz28YTjgdN03wrz1EvTqR5cYcDW6bvCs1q+Fz0zM/u4fFPNmtL0O31aTdWCatBo0rWt3EENN1dgNAJ1IY5ylPdU/l0FDexhmrZJIDtq3hbCRPiS7XaVFoECGxrWg6VA0lP9Ois3e01cJK3sSb1Z1XDj04brKrf7Z9/sGOSVDiQYxYO79mklcEwZfm1TNrZDC+DA62Ax7DPK0wiCTZLaUKQ1ZKwrNR/be8/NCkOqY9eQctAsMH1VrveB+jsATWW/r1SJiiBEt/Bx+ddMHRy8gsiR20jhtbJpFKq5goeTMC9c5iKDjrz2k32dmRZajIKof9+FLIhIKU5M1ruNReDO7WPHjS/nSEM5nZI4RqSkI3pftCEKA4g+c/0EqnTkddP3tZbK6vZdlTyTMxmOOBA+nnXh0g+0o30BQEclmYtZm6VN+8QHBilhKEJFfSA6PEs/7ZOhg9SRSqaaB8/jhhUezKdwwJXkCmlPmOO7RIwWloDxKor2Gs+Wp6a+jMesLzu++9IlTAJ2Pqc/IERQXVJusCJcxi7S7on38kVrbvWuCcDeFe2Jd00c2AQVOAfH7+LQ/YevP+CF24WZZbb3P77+wOk+A3Zq9hen14sVa91Rxd8oFSzwK3tQsNMYIWn6hrDlSWSQU9NjumnrAhR2a8B1UjkPoRGH9KiiEWjssvsp2z/tKFln6+HaWMAyNtVhJdD+nHqoijtFlnkXeKQd2sJBJFlwMw5lfu2glm93Ksf/qQh7ervFc/kxUG+DzIgqxOS9JfSl1VjNcnzUezyfSZUL+hVl8Vh97Kg0bqv0JS1TR3YjA2ZavyESTXMVr1pBqlq11WXYPXKka8Qw/tW0OO5SVj5+q654B7dhZUMWMtVvgNyCabktJZpUAqnqn3RFjR3bPk/h5n0HrJTYivTa0u4GnO36/m2xtp3Ha93YOKa0vvUljloq2vK91E3i1pogVTxirfZXinLw519Mq6NMOA2Lf2YcVSpYkPPFVdacE5DTHTcqE96vnddP/gmXHsM2XN/fOFbk6y477yHRMj96GCLm83V9ypY44fGyNuPk0XciAuxMyFVc80YtMG4VyxVlHWd3c5nHo+iUgO9UCezIhs1icP5AHw3RXSGGjC4J+rtTSdJhU5XQ23tjJLJyH8RMZjtoo2yr6c9mkVZIHEx5vRaPa4qBi0ewO3XMhAGvg4MZEAyD75Xp37FIhfbOcqS1VgzHQq3fFxGayONjULrkQLj6kuM2lYCUB4gBLv8Q/mtCSTKkFGzKxhSf3AsJDAqkWM9Ybk37kJPwPWzTw5KBUn5nMn6sq43GIpAfPMXTveVun1PqF/ZO7TW9dnKojE5UXK9YLHU+ZSzqGGKwTf+l+ekjjdv1itJS5wnt+taUZA5KWRk9vmQkBiTRTT8Z8fz0fB/yh2Yzekf42fS8+OYuhXLi7GvP6/VqjgSLTIQaDwMo5ZpG6szV4RRSmFcEdqQHFhqG3cJcRGO5FDL7IEHfT5ALLwnxwYK7a3PprMmLo36f790pCyzNbGF8r9E8ELQOY+YwuZkaub7UhZpUS2preqb28ZXYM4h+eV0GqqWvmOgzJTXhglSutu5g//H2wu3D+fPSBjzc0QaNIwaGj5tbk55GA3XnZWwtj8YYnB07Bw0w9w2ntqyEooLfrBFpjbmKPrOX7B6fG/MhbwGnLm8BcvOWlJuR9opxKDOoVk4uss9FJYzv0177Sj8DEVNhGDyA+qQzD2nVTrMVhfVR4fFGuk1QbP79aOBZjczLStl6Ddo2rR4WxMu+sIJLFvNmYPSoA2VWizqv20PYxb9jergBVUOwOnXDJV00ivOYbh3KLfZy5JNWJfMDqX6PWNN15luLHAcDwUzZfXi3LNq9EyvYIjefrrZmGdHswSfGhiRoEQk3VLf8q5YzWnVTEDgz/CNF5JjoB8n/JM7jZoCblvfqM4BsDDsS1Pr30/y4P0kaBX4Pi9WiHffzuwwBk5/nbe19frSd8GqZfu82xO6Yd8Rr/YO9iyjMboptET2fitvytF8CokzGcGU/cB6lnmLT6Vdv4p0ZbtFcuXC5T5MSeyKBMEEpc1rmldMqKcfsq4hFhnBgpSYLhdAauPC6ux0jJgPhVwUtsDJbRbhhnka00lBcvzfhAnW7F9d8V3iGTCBtXfe59zrP986ReU0r6D8MD6w34bne1Xu3f+v9y7hhf5Ah1fRqU33mJefp2BTAU3LHahHfiHvHiJu8SUnNhIahiZ59/Kq360FvIS1Zx2erO6UkXuzHBQgoEIq6jhaHgQF61YxFAdS0u0cp/xX1WJ5UL9+lhBqaHeDguUK+YaiOJ2gHka/coQoIfMM5e9BiOu6uqN54xcMUWglJWniW2tPn/v4eJaCD992U4r+GB3INPTnH4C8Od2XmvSpPiQQkEPtY94+QiUv3JL97MCeaybzXq9oN2HkBwFqVqeac5uevMJu5SpJ1o0gb1cunjKWkkf9ooIMyrVDD2TaXH9cxpW01eyRBeZjQP0DhwuyBNQgCeDWSZQGvc+q4es6UczJm6ZbxXvK52wumzaGbJzToLgVYSa0BmtaUe/quep/GoBL4NkU1DOVm0TxdyI/Uah8t9r6HdYF9A4b0mhHQISGcWYgdJFRAroo8iRgVhzmtMwL6KYcrlbPrl7yqY3XdJpfcetqe3IDAMw4j1B2R+t6zvDq9Oe8ddXnJ6Nph/q8SN8y5d6Y/0YmE7H3KHq0nYX8qO1VdOQpMHg1dvbYgn0FCm/aac/s1DhZiUpOP5XcSOvmQePvxoo20jFgLPwxys957/Y/EVoNdrmH0vq2oHNjAlQsPTzIZ+0JN/YFQUXU4OntpHyiwUFMN7lx0qXeNZFS1yk2YUbGivPmKn8yZAbSuYWjxvDlmDX36Cgrp1T7HW4tyHO1is1LHJ15aDO0DC/hVp9ba5ikuMtIv7rYC9ST1iE8HTGeSEQYxFEEs7x1WlO6LkY9WW3C+HG3qJhOG4Inv3UwKaKbcVBW/GMPYVC30HFDDqZe1pAcqb5ynFjG226dHJqmHzUFMai6imdjn/oFTMQ05U4RnZ7wAJ5VMZNP3nBUGvLmQvEh2KAJI4LLwjCfiUPo98wluPU0zyhEIc+5yqnN3UhWizRljfdwLGg5DlxtbYyt2Go3dVb2wzmXq3H2/vfJz+EH6ESkY5a8tX25zVeJcPIVpFzhg1VzAPM1NcByEc2Nl3YOqHWb6d5JAS7kBwkuia+hI4X9PZLb1B/6aO1oXcPM+LCtwjKm5kl6WOjaqBb0PkUSgJGBRabG85k24mTnuNDablHCayG6xHJskxb/a7+emKE+EnZcSzJGwy3mZrpbdzYzsq/NT0/HE4DHugCkuDS7/QotBx0jkJFAAkCYH3z+RsfsD/3MJX6lnv1T+Tx5pDnya3ewlMmAlrqNYn7hMfI23JtmRWV2yhM0iavbZtVX/FXNWbNhtMjry5g/mrDHMyEH1cLLB4zjrc4VDdXEV+KXHmh/TXzGfKBV6QmEcP5bYuYsMwGwyErOjGeC8T8tUYtCQMs/azNa32Lmiy3LVjeKuVRcYhjwR4WgP4n+whIxID+6c4WRNc7+XJc/ehS/zmmeQeM0MjnGhjFVWoynqOqJC+kIYIk4twaOPtZA5MfkQqXq5z1Nr8wt86jOs4PSbzrh2WzPFVdIfS3VpP2evND+/0ovirX6P8Fsmb7XJDxynDRwMxJpuPW3/N8Q2DhLrg18FsVqi2JZxMGNu3X2wP3o7wnEvPD6nwpIL8tazvJocBshN4efQwfpmLvrTgWqRk8lZFgrhy7jApCsWCBO6eHMm/CAnK+QmXEtOg0Xju4ga3hW8IVDsIjWAmSYFOUOOEBlp7u9MBI+Ncp/o5g5JoAsy+WSEDkelwOW8Wyi2xnMN9ozY3w3eiZUccgv9w9xUyuP2yfkilhbsYHA4WeXcNg1ZJDlJASwkki9SZiXCpQ/juCkmdOdyK2Wqx6LGLhJ1c8qHSMjLp+mSkp2JTlyiKMG/DXATrH9YvWtWjss8IpnJkH1U0jpOoajHowwlhRAIU2VJ5bU9l6+xu+I9ofprY078SWZeUBB+mxacVPui8CjpcspWAJL1RkHAeiMzoBfms3YTmzj0xY2RYymzgxdp6QNHuiQP1QlrfGqjTDTGxARY0n3tbKIdLNylZQfqiyVq6wWmMlkN/Z6kXwcU+NgJ/pZIXX5vkvZOPE8+9q4AUTTV7xdwzVEBlfwgiNSn9hd+ReAglM/TJC486URrGXEmvQB1jC9/pSvHQnRheta63KD23zaCMjZ1U2LS02BXiig9VlpIjoXwO9slw2oz3TAvFz20L+kaPtBoW50qzWpOQqAOGwAz0qmGVS4aKRa+rzHby7US+1HlxXpVb6x8pESgIsc5ysZIlgQtmS/oTwxAkgOuYCGQRu2ARCA+4IEPRE8wuG9ijG0IeVh7u1PaEoiKvUcFVsqXu+Lt/pyUyZAFQlMaFbELC4yw+1/MTE8lClfT0xniqf+hUHPXh+/vh1JIe5/d7+CH3YvYXoxb3UXsHwtYlsaOHeCk9MugBlfyYpl0KqQzKFF8fovSeNY/P3MDSRYXJQalvDMG8rZyQNQfH7rn5fzcm6RRkNqBE3mKuZQPI9FdCm0xMtzcm6b0kAy+w6WdgM6qiNNYCg9WXXJpnTAbrtfQeAumbqyeKiJm5vV7KnWNtEdaWH6+TvDhrW0hvGgGJ8ch9VKi2a6znXCvhzNZ4/Zp/3xDnNzDMQyIlmYPU1R1gfEVmTJAIS18IK5MWHaaX6/P3EAhXC6C8UULDagp5n3KgrhzKsgQ3iuxkVN4f6D8LISDxA5QBG4ackvUzl3HY/kh44BaelYa9sIs8xr3NW3IWfBYerW9YXgTluK5t8ISL3xwzfE2SyWkSG3BVWGBsKdtHJEatD/EV/NzjmYUsOn3WltqqW9+X4dn5YsH9yNt8DQjiBqnU5SobMEw/tPzSTYoGvOYKeWWCwViEzKODK8vnggdHACs7lkpv3mejSPJdwB6e+dTu97gaA3zcUbhQZQRdby+fPuslboW5gc0LG4CPCsWphTwIaK2OejXvVi8gpwGZSV0DSxdCOMzR93tbxDnI30vW33fXRP2/uCH3kg4+tz5piUDPAH1o5QPkWiGubasW0PhmwB0Z+ZrRofknaKa6WDYfI7mCjugKtjCDYq9VP/j0D1CSi0UT4Ad5fwodZi1jMLdg5Rv5cOEbRkAh6/xk+PQF6R40u8WvNE8iBId1KVThaK7/XQmws9ZKXjFOwFORD2e3vY2Z4DC1u+0IthCwRPUelKRMLZeIqyjC+7roK1QOIfu1ZSovH0knqHqhshw5+yfcgPEWyrX1CpHPQrLE276oT72xL+XroBWmeuY+FIO9qvnR2F5N55QGTfboYHrKAWs8ftX4p9aVWSXxNcnI86T/PR6OKAdrq6jSiqV9/ncV3MCZ0VEmxaIjGYiKW4n3Ro8GlM5pBJWbxoRymRinNFw46QS8/aAT/u7DRRH5RGH7mVoDolTt4dHfkC20QaSKQ5pd3UzCtQqnbhiwbkKzRjLbzhltkGK7TsTJT/iQAPFhY6LDtjfojH1ngFIOizcasPDEYv4U1XNbj4NcwlZIwqvlUgoglS8kKriKw/P2KQJiyWR392pOouCjSxHuAbGZcz8H0ZB99NbG0hQ0tTauC+Ep9biLtSXXZMgbZAp8zQw1f5lHbMLn4q/95H/gN6d8jcqgikpv6MhaZc11NiOX3If0Ik4txcbkIqwvHvdZWk0jw8HFcovItnSyqmxe4Z4hfo08RxV9tvr0XrkaPzsTf4fAeSIRDgcPf9PfnkmGQSwwPHa8wWXoqwe/ye47GdR1QgpsRPg9yQVC3Dtz69bYgUMiAGi848S+MO378f+Afm6DcjXWswe0TZ/XwYc0sB7s1GUm0bqu/7xKaz0Az6hH/AI0TXPrTMDqQwIHMmWysMjevl4KpBfLI2k9E6jQezsDqo5s9hzF/3a9gmgP4BG7eXSz51a7bT4fHiWFfox5jztejgFhqN44+CrBmKLfndfHbZBPz9xExam5MoqYHWx2OH1vZYPYc8xLn+YUBjfWZFwt4P3DN1qY8vYI+TnuV8Yl4keaMMRIGyMFRCdi60exiPfurxG5O7st8yKdyswpt4mWFHkUKXVv7dlGEMlZteag+0WhFU9s3nOBhtUQx3J/RO7ys7auh04VKl1aCWGuOKUUXTGHfAnSjO+yBZHB6DhDy61DO1LVWlrtSe0p3uS+qKXVUeOTPvChQeZNFN9NQQ3mWN/05OfNj6D5oasUlOPxNmioQkUQA5WS/21p4B4IH+h05sysT8l0pLsuWqwe6AtljxyqTQ6MzHS9v0DavaoCxna6IGPo0JqtdL12Igk1qI6f12iuO581hPYzpHAj4zTVpiOXiDLnsPdpPmIR5WM1l2TCgILAm35FxD26Lu+cUUf3kMKX42hj2PYOZbKcZfJT6GYrAdhGveNZJ/BU+EhyebvbBBYgxHdlhvhGpVkVJVLG/O/zH2pmEDahftvdVLiujlrnh9ExvVv0Mnqy0ZrlRLu2rwj6yhFO1zFlY6ENPgHm7IIbmQKo8pXkR+0dqc8Z0f8uBIRyJHF7WNraHmfmlXjPE7cReXy4mnulA4q5V0ec2TDBFtvj3Rx+SXVEZOZNDCIWQq0o91qGh/3ZUcgjPca8qpG0mlS8/RkAddpYwGmbxl9/UVhgsFqxYkr0qfWORHuYBOIB1VDR7l6ttFv0GSzAOwxFnPDYGmlqDo+E4Jt+XVmStzkrc+Dr+1iwhvVl38eriwXPA9NqQ3nTEas2pINbXFNLWMuDucGm2D2X4m2dQ2yqmZh1qarlsK3np9vbc9blMIPE5kQXW27DthWQsRVkzKv1bWN7bbYj+iyH7H2Sy80aIcc1+3vGLyfYGi0he0bhMhjZmEwY2GAaYzLzyZTUDHXIPRbwwFeQCdattiBWOu47TpwZOGVAStt+icB9nfSbzagcugkSh3GvollYZfhTgyHXG1zeFjnVGrpokiWF1uyu/y2sxpm0HKXo+iH1L7kiPvIMI1bppBCnj4DMl+MEt8kAQ6wkEiJw7Zc080nDb3QAW/Pp6MzLBHzNSkE9UbLm5uB2i1ZUaYIFdIPlvvBJtuPpGEWqdiwx9AY50KRAeDqw4NRGcpwEPglMmCfs+Q9wsDCEsLTqOIqIBwD6LL0S8LmEbod1zQMc/YbVn8cf8SBvUCzOVureWS1hlwTsioLLYv22TlhfjgH/a8EgNUeh31LEyZqRzJVZtMz0Ng29M6vUhgb/9NKQGQm6/aT4Rd/3hGRzeHukHilwz/h04p9XksPhQB/vikBGn3QUD5DpMrY27AEEwk6r0R6tzG1cBUZm+1dqUGXBnPtPQZDVwCNricyv25+P3MPxQId2UhTICaVm5Q/ebxtPIkxNbXzzEXNy/FifHI8EDfjpCmCQOdvKjKg80RZrNDkg8RoHYNiIUMNLzY3PLacspiBILZX23/9Ie7I6kdf57fg/OIS5E/qsHWaMFsVucQqh8IJC77bd2pjMf3tJr7+4UkUbQ4ZUinvRYlfhWIWmY4I7vo1xl6MsWnCjSz+vsYsJfVlwtCx0v9zUzH6wuvOoEaEP+ZOcKS7cHZI6SbRt6/M+eX/Ehvr2G0y0VGy2ptGRcDjyOM1X3Qh5SFpSFvSuB3YwZhjavWF47vLInA+cAU099qNPU4ovDqMLWM9L+BT/zCRAARIEsxLwq9HIJrKIMbr87l2iqxbZw1xsBLkPPHEj6gmClO9BfWXx7b5Nf+++GLS7j/x8wCDPaArXdQoKFokYtoDGWGzXRSog9Y3zxWnUrHk/FSF2L12VBYJ6eIuvytAyJIQEdNIW5dOuxMDZV7rDQNEQN8mCoeJ1E02h3YZvFCQGz389j66OF4L+Ym0l6OXHNmkRfoGPjSjereIAu8vrQdtdWugAk/7Ayi5KmA23Bz7qON9dyCAOiDcVteuq+nvQFW/YSUCuTkOS7dMWxHXSWsxe6qXtXPgCbDfShDveZkzvaBCtj7RjYESCewAH1k7FclUjJpayW6nAXnZY8949czWcPeIEpizfMuhtWptkvzX4gFE5LfjREMFDfvYItG6Pc9JU6z2swuSlNd6exL4DCxHH28PYBnYQvka0fBRb7UlkdsOeM+oE+t0RJQ+aquZZm/7ywrshqEV0f+M2l9WQPBLy9IT9KpLCRCvQOVzDdqUbIz+nirZt0NudIAWhSKhh42HN23xRZ5BhHWO+bc1ts84SamAWV6xQU2IUImZ88lqsDr+I6tQ41CjQqm2/TNnDRtx+VHr2Oh8oA9kJaXx4q4zYGd2QKawd3HGkYJR7k6ERChRJDKyXVJ8yNsWSGiEd6Hy8+ePeJSYPdqT8mIPpCabcrVUGdfJ/yRlHkXNr4AgNVIZ6jxoCYWPZmRAbTi/dt7nvHeG5IFqLyn+t/hafFUzW4rDo7AHZSxEaV4AeYuf/tztWPykKVw3AOIfusAb66fafOLXr7HaFTRe/E8XwdJ2AJrpq5O8Sw8jqmY/BAh93nr5kO9OyJB4UtmoST3VNq2jHc+lSw6TMdzc/5FaSO06OwkvZ/9pLZmQkHgEWy7ydZPrcQ8Coil9pvmMLOjq0GRm3s66ZruSs3GiCvHNhFEeG7m1k6eqmLrb8kis5OXGFh6bqSIGbODIkFyC+/HhW4VmYbfhVzc3kIBk+0fqO/l1DLTkQnlDPdK7f/7a4ItJ6IU2Ig3bfztU/BQ/psnsgG5vr4gMePFvMAh7p0HL5hekKrEmeHhEeJFubbQ4cscAcKWBt7vB/mJQurRW5cfIaMUEqejQpjbrEc9KZwGB6FgGcyUnIrqvbDwdII1uoV9KM3TXGZqUUZFKUG7J4n+F0YTeaLFOp2TpUQfY6eHAwYN12ZQ26Ra8yUMixbIaCERfvAWFkiqBoFswlYYbonSrC1Hv2fM2xOs0UstDhvF2LwpG1sPWmXR/0Xvu1guqHMQKeNzG+hi9lVJ3QkyTRXY4M0v08XTpUcrI2DfERuzpQlIIWNM/SbdHpOMtBQqaACwKUy0K2K8zD05VK7pnyrq/JCnkMDRgVFti7NqP9yHzimsO8MyYkwJhF/JCG+janmouqVhU2eujwJCUfKOlTLF/IWFqe11hviXtvtObd8Rf9DxJK116771Ff3piNELg3y8Qf9hdJDx3x6d7NjeFVTA8Sgjlra2Pr64be2E6kvx1Qap2ezryU7lnIwQWmSbcMNyoh8kLG0qu0zUNQqJLH3h3RBAm4YWVdeIN6EniCHVGKWsKM2OdahYYiDN8R36wm1WlJCVX0TZVT43RSoPuyabrxWtmfxQmUfkkywbPUdmcNk1H+MLiuYsokkLgFzoCwpqoNFZs9bI1ZmztGDu6ivk1D3mQZ8WmlcoKimb8NtX5fQicCBpyKOWKp8kI4CDI3NLPqIofh6T6G2kufd/W75ygDkb5tB6JaM2T/13tjPYm9O6Ksp21QwuWTmFhMph8HRzI3TIRJmK0fH7LxSoNp+BiZkvfPx67Hzpvd2BFYlJkY3WafOSOVwTW0pMt48fZWTKoz4RYdqQVkwOj4Uzigxm4tAV8B1AO2dY0fE8FF3H5lTr2Wztwsft+LOQbE/gZV1NfwGWmvWcGjKz3kvP8jB012jXj0wSBBwZteoKFmM4pRUS3XoGIkCRaZlUPuWSFNSzhDfaiZDHJcRrND+QCpr3LNpnBbvV6lP65aAZoOsBjiA8bhHYpT2O24DcY4Joe0bArOKUh2GASuLxSTTjNctvRhk+UQbQQAt1v3jb3GG8MtSFwTF2S7CETY/WG0l0QtGVwpUZnqzJxX7X1Ok0P5yIjC33rwEpQtaRk88EI4jW/Y75LXyMcWSmSJyANMxF2ETD+pCCC/hWnZ4FcxPJPmddX4bYqnS/hhq81dR0VyFyM7O1wx9lkGfuYBAS89slPncCpB0NkVAgpCvGp0DtA9Tbw73Icxe9CBeAZXYIuPG4ZNOzra/6iFZASRncRqm8S9Ufk8Tif5g21X0eRUG8ZXgYP32uBTKxWUsQ7700gaFaLkoasnmiDKkoeH2bohZ5OAGJ+ABqcYuRslLzvr02pBWZKNcu089B1mKF5dmyFaqe1Dii+vfnRkYHBM2mPwCqDkBhIaBaiQ/Be0iGaDV0vhyy/u4+a56E46U+uKTPy2lrfWHZq84mSRmaDj6JgZy1WhmBBcoRNY/ffCH2TYt5G05rmqDI7y3ui+a5d4V6kEqQHEUu8abkdz5NisolrgTRY2WIyeYTCXlHv8jyDlOt+XyAYWtD4SezEuUHCGBszgxiV1DZzAZj9ggRr8qQaCqqTU5SCsAI2M1szcQhlikfW4eKkWOlkx6HgrVOJvUIFb7QRVTljuyFbCG7mN5OkdhUyxYgkVgckaXhNIp8PhYixF5KajCzneLSAa8U+lQhXZ6xpPRW2VTSP/YHDcHmFcYW3FSxAwaiiiy9AOcgRatS3OW985RihGq1FdpQgZ1RNAJl0WjHhFxinfyc4qya7D82myzpTiNoDSkkp8wD/W/jF6loHxEVfLyl4hkX7SAOkl5JYUoJF3MmYJyR/jqY8eJz+Cm+HCFr6f2FPf7lkj9l2oZlS7waXyDXJKgR7tRABPKaVgCihBjB1uxiszXUJo9jqB01ba0mnudsq+FQez3kvyj7//kgCdBSzLZGUoJAUKmLfpDnS4n5Moj8wKF/GGWFi9radqJzAPz55RQA2fYXKC5AIVYhpddklC1ElY+kt7bOWdLRWhMsPoRR7glbqdM3plboxcePBRHoPN/EZGWbT//rZey7pJwcrmenYJ63mRKCTCI5dvq4tPgeiX2nRT5fr66SOXBkWPnApshGDzHeDllDF38GRiepjHa9e+rxWBxgKHyKxrRIkBHjXEQwknafx5yG76T/cCQT8z3uaLXzocIaz3K7UfweV5lq+D5dgwf7eNK22trvAwf6DmQ/MmMGK38FPuLD67Nku5pGTISrWWcL4GWN7uhRS68MXzeBn3GeUqVXb1t6lFUrXZjhyz1mXQaWdav3el0PMIisXpSCl4YWlJnOQrDROpwVJwBg156yAmGYVoBypS25FBu42oQe7kyzYyp/k0bjLXw0YyLYHlfR+B/9svjV7AYg9N4Z0t3k+8HGUQsROwOU71JS1p4Ls4U8iLl+Sv5cMFSZvqfJGBNbJ/TFQZ/4usGDu7/3TtGm2cWTnVB00umiCGpcp8NzSxvzkN8gKBYBLhqpcH9M+IsK6EvJgqLkxtzc8O2quwQqVQJr9uX11XB7HeAxIdHtajBuAk4QupWM+hW8lypQSHIkv/3QNQiMG4Yr4XQlCVGCpl5FUqYGFwZ5TzbM7Jl1oaQLMQN13736sd+jytyEpHrnunwTuCFUWWU3WI6tWcqTgNnDYW1KFYZpMXCztENAOldMfuwZcbsTXsClrSd6gMZ/QF6p+OZHWv3wBNjUmE51SCYf5X0x8UYkGigx5AGUhpaRAIfAEkfocTCDujZITzBoTBPhv2PPxBVLBZHB04zof4GWRwga7xGn5vRx3opGoCcFv5c05OJPH47S75EPExj63icMacg8G2uqA3eXJCDpAJQCwXNj1WD8rYukPewawTy9gkByYpcQMp7Zo+b3XXwah43tXezlm9wJkKZM7xYe4XbBVwSlA2jeVIG0HnNPauDeyfEjee0A+NJ5cYawat0R5nVH82A9CjGSS227M35mfvdtqMb6gGtrrQhVK2CTXZ1PnOZrQ14xkWsYQwESjt9ni6Mwn6UKATTP3F2ffFSkJThxyRCn9KMrFljVPtbRRLtrvaayzkQYebRJYTWsUhVXnv0sY56/KbFhH3JQ+deIS5fuUQmJg1npkCO04n19wXDRKwLFmLB0EdwdzyA1ThXuK8pNQD3G9BTfikonTg6FLEsziFwGM4clNiM3WTNW4WCtqL5uP/3Q3BYa8+QgcimA5dz4N5g1ge8fFHNJPq/lr6OpufsUfuhp1F0aurauLfswCeviEafCisOr1WCt6ar01VsRjUxO8TKO//ARAlo8oVFGBZoiFpJmSDG/741anlNa6cKFThvAQugkWgpSjqoBoUrnsCCAcY72uSHpYw4jV35MTiDoCz3/kSHDMTGONCwgWYlyM4A0BB1VZE9iLR2TEtkP93Lrs4uZyHzGsIVyAwYY9SywdDhIgXSSslHXirT0la88ZIfEF5H65hN1BXSGfann3jcWVXCJ4N7UHx46X6UYYIdVNIB88kDSmstXe5w1cdMYUzt7PNdikhJ51CTw197JOS2ZS+VW0yPeSXPEGZTBbs2583cMfWTfaru3bD7nYpxzruIk5MfXgA4lsM8HSJEGJOgB0Ia8qF2zx+fNcq55C1bQqpQepTGe5VpEjtz3U6FhEbhuqfXiazEBtMQALMUo8HNfdwNaFT7taXbcEhJE1RhWmrTr+Ks7i6bKIy8Q2Pk1cAcGmd4bTeSbx97AybgKMllNUwkcc/GbP2TZHXx0m40Z8c+1RqQyT0LO0xQ8JXEzeIuHU5wAEVovGQLcjwLU04AdOF5OKaeEVrEzp7QtRNEiL2IARE4HJqlaenrat5Ivn47Xm6x+evxaiasBU0Ewo+aQF9KChldS5UfZp8nafWqBXN74mECh3Wc7WHHG9yygts/LNSuzcOvX1t0qd5udZvDwy3oV+8trgTRhytD52hv3cZMBTxbCkwMz0FbsAmGcd/Datbly+dkqLh2hPvWkbVEAFAmwTJX8fQt+ZP23F6RsLYQ2dDYyPpkXqNjWYW9tXHcbuZDJXtsNOF2GwUTuQuHhz6cJxPeoqXkJBRM308pUAxvSQ66Pj1XOImYIoA7F09DinPfoz4Y5YC311kEot5Pg+iRB6vdV8PaRvSMNd0mGuJK08Tt2NOcKDAjQoJEAqyN+zNM2qcqI+gnUXRAMav07kkvLFpKJgyToNHgTgCUfANdEBREmvgfImfCnqm6NVd43GY8QIZ8HVsDzJ2liCUckhVdqDLiAQDeFpb/2/jqU9A/fvn6QAwCpQqBuJTPHQLU87uv4dnHjROpRgnaGoBo/yJsZIOq72mTJbFA51TlPxPUxICdmI8BCWkMzvgGNbKnfYDKuecQqScXNznT8m6Ofanbw8IDt9w+Bb206LcFRKL7NfWxephqRa/YZykMFECPtYHfzweQ3fNYTZg9SLmtIGfHaTBhDsOWp6Zq3aErYB4K3w+3F2HD9Mro6e31sc+/BTno/OErOOo04tk04AIw73R0StFiTouSF6ZN20+GXyaqTjiB5/KNAu+qDx+/O/ADhyFKBHyjgdXCR2hD0sM/K3IGx+HJ8F9qcPjLPVSZibsuG+7IL+IS5JLloNJ9mGJgBNIfLRTPhrTOkvYtMjrO6JK3wz/TUofAzIRdjgY/Uhlv/dIzxRx2VDPbrtkqwJkK/ZF/0SgmlT2ymjWS4H2BMEvVbtwMtr4xtUAaiTO5gdR7B/C0n3ewEHAuPsHo5ELzsDTLouovkH0L92aHcHu+AnAs84Ukwizz6LuVtRHsKfmQM48bPOo98NcrvJxNmDWzz7PC3/kltaak1rJ/URpsx8/anJc3VwUTnhQuirQiTUfmpxXSErWmNYtp7MdBccslL7sx821U4erG9srhX0OYPpoh9S5SDaTa/XijynPZuN8Bm7qjCGWPLYNn37bogVczRKwXeMxioh33x+Oh5A87UO4B40tG/l0QFKLcGR7iCrsUay63ENWZRpgl7YF8OfDF7nW/ASFjCyTbrjhMq7qMOuQwFRj6GUCg4sBUIqZZuoDVyeRgYA1R+iJ1ms7/0P91USAnSfKPaKUo6QLugcCXvWnResErhbOYyr+Rrd6s9KLZ5m0d0FGZkJEuOJ8+b9tVKmdPso/EEpn0mpKgoQL4i8VmFxhJjx8r7pwJ72rODO0fIfWtz5kXsyEXxKIQMtHZeNi/MSvfy/RJGXeYRy5VNhC/KWdfBa+yEXYYd51L7pBMYHNVeMNs9TPsPmV31qHib4VG3dJWV7beOfjDPMiMTB6t4889+jpO1iiN3szhAMbVkGlPXMWrqi+gRVlJwy58H0twLB7Um14TmrLBkugoPWqOuoSl1D8i0rbQg6pBRRuyCbAhcsT3dRahJOa4xl+Fy/eqnSAtn2uF4w0eeLT8LW28Hms9t5uti+5ZVWD5n+d0CPpAF9I7UrQayTID/r6Csfnk/xAx4UpNro5OOw/jRp6CIvsYxmAKLABrk0qvXxTurOZfuLgOIDL6MSfJ0xF6vozfAdm54DP6o1zh+ZamPSPOQ73zpn6ta9T7pVj6Q6QXVry0ypRjHWhbrwRS7BB/zMNGV2hWT1qF25mFw/llxpINKIZ+jLnAJ57MVwT/2Abkh7iNPd22Q7eX3/Obdli0f61eYhkmSO3YnNXsQGaFhVkggA48qQVUs1QQ94q6bbOkrka6Vko6g6Og6QBcyJvlacz2nsI10qftUWxmPsAQlt0F6Bw0naL5txCeNu2U2rlx2LpTgzuIKnrCsySlpEE1jow8iqN3oc0Yp8zOMyhDSLJTl7mSqdPHW47tvOlEBx77jmUtU5RVInGVri3zGbT35gF7PHlvh1gxZoq/cCFhGsc869FYD1SkBoZyk6shQQcBCCJN/qE0eHH8IvIQFlOD4RibHhRalKI6W/cAYaf4wimCy46vI5P/tVx2eWXiNjejTM2xyxYPGO0Nq461rabcsaxo+nYRjpw5ZPORyRJWAHlqXTFmKG1tvEcsggNmueSLMZwwzxen1gjeLHEx9FjkSgpeKmuDsdhLWvV6UlgocYmJLiQcb+XL4VWQua2RfrtvsnMtqALBSzDOJsjCccqVJhFK9HH86psPZuT9WTD0jdwM1T0QFmIWkoErxABthgAWB30jNBDfwH+tU4v4ZiLRMn8Gv2lESo+jYY6MlN7lz9mrg+Ag52ZhqPI6CPf3sPqCcBW1S9k5RpDfTDDlrp5hyuLJ9YldlACXe1OG0hhLIv4mr7sT4KE3eLUCX+ZEaECkO2cafDJgz3HutJ3gTBUbfdBushtJssGhTJdhtASEIVOMc+S/uYqD9C1xu2JhO9AV7SdhMswPwCvAdzcRVddS4V20xDv72sKL83zvQdXtGzBdl/IAScZ9JDlDnxQEh+tf50VPBS2737Cpnt6r39Ki4wzQw/cb27odJ0z9osZXBcB2Yud1VAfFI7LpcakXjAmPxZQrcvfdFxCNDExaDWs4Yz8Ua18CqleOxvCua/X7E0cpEjsfg0JG7VYUyvqfEKjZ6v/ZjUA5UwGpH2wuds77OMVZyMA+aiZu1TZU8AlmDxMl0REL06X4zno5kIyzUg6dVDchQLGcEFo3YYyQKDKMWg1SMfXqavwM5EufE5mJa4tI2CI0VFU3eCr/rqu54HyFiaLKmN8/f5+K0nV2ABhthbvlsnS0iXyWGBAWxO19GluXprnQxAJqBNAwNMKEdF2O9Ei/e+v9nwjlcR6Js0E0zO5tNG3wHIgKlHRpcTYvot6oERxbk1yHC658ScjkgOClZLlVWFe2nwcj0ZZHWoOIWKzc8mdMfeH7yd12M+z8EBWkTUzQ0WrSRFe+wcPFeVDtQqoMrYfKc/ChJdeIPa8PqVN37nWMHDGuVq/+M8Np+zFJYv6mIhoa7QxJCntAE0l4hyTb84ygVdUZZa2qTymOPzO2JaADHaDg0AjteZaRAh4+jlyhAIFur2qZZlBeQts06u86Z2dn3AL4MSb8a9m9aPvs99EKjKcdwdl2nEwcNGaqDNlPomp7Vu9Vb8XRjfJ5JjW/2Q3s7TJH56PYrTcWyI3Xhiv6BKSlRUrd77THwcuiEr9Us0BU+oBVhveQ0IAXsG3SLlF8GXCFux2sSFPFatEziqqPHUDC6CHK8AbCIhvmegx8/3tqjEOXXEO6YlHienvwudlD6RtMO5bYXnIBQFuanA4gRVK2x89MqCOrRtW8edgHb4uxhzOPXCYyxIkbzK081IUoA6yd5K8m8JOnKHJ81UKaS0wsslh23L8FVD2ZFhxF+VLt+O9QhX0N0ROkFU981W9oqy4hdh88fnNlxTzflFJ4UkWoEqBafncEBIrZ/9BIjTfNLE/u05FCCcHvNYhLQgnI10t5521T/e+nKXp6r18Ikmpb5aS/BKFe1OrTx5qkUjSERzQd86/wTntXcWeeqZn02n73Zr5gnJgQX4Tz15WOWPE0xQ1ZouOn+gSqvV9mG49Faf6tF88BQ1pkdiGCunVN5tQEDhG+CW2mbR4yUyD0cdWmVSWu88+as0ETDriqDODCPC5G/dCs0YrjDdkq6rVSFX+xWq/7b25EBnTZp1DJrmxywNqLGQhWZ2yo+4GkFFYwtnmWhZDDCeU3/nPSdkSWnXiVoggwtdWq0droodgyopG4l0NOdLE25Kmq8vqdGfKn8Lj4atVjQVCtvYBPOGYc8fzCzbmzyUzb+U6YWKP9rLQcm6wUHvGQD7p14I+dkhnlC6mm1FvOTTn1w/qtCpGzka0Kj0OGC7ziw4ZGRbDtFK4FP26pf+3uYT1t8ME+NnA5YEFo/EHhFc7Nh6pARHUZ+SUjDuPRTOgHYQxZ6S3+4vk7ZPID5xhqVPsjffAKqVSdGhoPcimRW9Msk81LMa9V1tkAdv8uxxYYwVBcPrICfChS+QeyTgmhhWH3YkUsj0hc5M+/NzULejZ4AqfCo5sftXDcO4svnGvW5uQ17eI2allDJcZ+Od9nKbJomNAIrkdo+WxmNKRYN6STM4Hoczyr/TU/Y6TSDV1tjdZ0ycNydUoJ1qyM9LGtXoePqfQbsOnmfuJ+ND/wsCzuuXR91ubXGAQILs3uMAapMLFLESiA6zZipoJCrje4gPPbx7Rj7RgpYVY6z5xQWd7vNrhSAHBACEAe8JOFrT6qx3+mVbt5XEuft6P+/mWZRCLvmEoUHl4HJRul7KDcpKtCKSrCKSdUkExa7DvcLyo0QDh5kXAhF+fEmj2h5GWMU0SDL9oq4g19lXt8SfaOcWRZllHG+bpEN8EX0188nsH2ubBDNPJ2/k+4lKef3TfK0LCvdXCiSdcvQtKRK0Cjb711b2aiDc1LNjTrJMwTZcgv8WKM3AgcOeuHv913NdcUj2OnKEgk0cldZJVGC8bVyLjgP3tMswQqEZOLTEvvSgng34fAkb/Dkb9MwCyxhh9gs+EeXexc11q6gMipZ2nC9SFhTJgUD0VGnQNH8sAAqsx30Z7sK1lbkK7qgXzR1zJi9fl6f1wkxOXqhYovlet+sB0z/1zk7ZyzQXt+ILG52dMU4AECJI/2ukllqyFjX8ZploMjMCiEFkooWhaMwkHI2jIINE2GASq5yGmAQy2z6C9etVx5xNhZFIfT0QYdpXlMtyvffPCwpxq5zTlRp0MKp6r04gNzML+jw==" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=b94hX14NMWluUQ9a73g0LYFvtKhY52TK8cbDkYB_F2GuPre4tdh-ebiiI4xuhXnRu6Q5dQjaQA4oN3PEeL0GrtKEyEY1&amp;t=638942408819057530" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=YwOa_0w_u3oCLFqmIIOf-XEz4GWZ1DuyQIpxIA4LVkywj39sZSps12NbK5wNl5XN9JF3m7d-ey7BFDgj6i0380qRQ5IMWCL54sYNVU1IjMmiOWpp0&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=_shmykYI80CxCNR43Ii1nLy9PBGhuSe6SPp3CEYu0wDEuLqDAuIcsXVNhTIgQn0iyiwPorMflXuK31FftDX9GnB0m366MCEoOmY-eKQ3YAO9xRL0gIigzgRbtbVOgSQkJbJpFg2&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/PressReleasePage.aspx?_TSM_HiddenField_=sc_HiddenField&amp;_TSM_CombinedScripts_=%3b%3bAjaxControlToolkit%2c+Version%3d3.5.7.123%2c+Culture%3dneutral%2c+PublicKeyToken%3d28f01b0e84b6d53e%3aen-US%3a5a4df314-b4a2-4da2-a207-9284f1b1e96c%3ade1feab2%3af2c8e708%3a720a52bf%3af9cec9bc%3a589eaa30%3aa67c2700%3aab09e3fe%3a87104b7c%3a8613aea7%3a3202a5a2%3abe6fb298" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="59B53027" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="86KvdkgsJtzsikxaR9D4m25PgjPA9ARiiCJeFL7l0mceZ51gvxCUuuCqU7e+raD/plFZ2UxphHZBfmQ/wNAB3+YmqF9wVcGH3rMIT57sQ/fm3+f1b6VPjciAbOfZ3R1e2t2m6hVDDGF/lDKZ/Q+EZRCkfwK2lwdx70j55d3vjhIfwl2CXOcAlAf/Q27FOifLm49waCBrO2NTb81h5Pzz9AcAr1cuGFn+39JYDR9/jX/fPIZUVa6Hjolh24/piv/kh4VoZJ7ubbiURikOYB6toAcWlKHTBxffoxOpblG+EAivZ9jj" />
+</div>
+                              
+            <div id="templateCss"></div>
+            <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('sc', 'form1', ['tupdate12','update12'], [], [], 90, '');
+//]]>
+</script>
+
+            <input type="hidden" name="hfGridHtml" id="hfGridHtml" />
+            <div class="container" style='margin-bottom: 50px;'>
+                  <div id="accessories">
+
+                        
+                        <div class="pull-right" style="display: flex">
+                              <div id="voll"></div>
+                              <div id="vollDT"></div>
+                              
+                              
+<div class="print-icons">
+<input type="image" name="Print1$print" id="Print1_print" aria-label="Print" src="images/printer_icon.png" alt="print page button" style="padding: 5px 10px 5px 10px;" />
+</div>
+                        </div>
+                  </div>
+                  <input type="hidden" name="hydpermid" id="hydpermid" value="1885038" />
+                  
+
+
+
+                  <div class="innner-page-main-about-us-content-right-part">
+
+                        <div id="MinistryName" class="MinistryNameSubhead text-center">
+                              Ministry of Food Processing Industries
+                        </div>
+                        
+                        <div id="lg_g"><div class='log_oo'>  <img src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2021/aug/ph202183101.png' alt='azadi ka amrit mahotsav' /> </div></div>
+
+
+
+
+
+                        <div class="text-center event-heading-background">
+                              
+                              <h2 id="Titleh2">
+                                    Post Harvest Food Loss
+                              </h2>
+                              <h3 id="Subtitleh3">
+                                    <span id="ltrSubtitle"></span>
+                              </h3>
+                        </div>
+
+                        <div id="PrDateTime" class="ReleaseDateSubHeaddateTime text-center pt20">
+                              प्रविष्टि तिथि:
+                20 DEC 2022 2:02PM by PIB Delhi
+                        </div>
+                        
+                        <div class='pt20'>
+                        </div>
+                        <input type="hidden" name="hydphotoUrl" id="hydphotoUrl" />
+                        
+                        <p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Ministry of Food Processing Industries is mandated to create post-harvest infrastructure and processing facilities, inter-alia, to boost the overall development of the food processing sector including reduction in post-harvest losses; enhancing value addition etc. The Ministry estimates post-harvest losses in various agriculture commodities through various studies based on primary surveys. Two studies were commissioned by the Ministry through (i) Indian Council of Agricultural Research-Central Institute of Post-Harvest Engineering and Technology (ICAR-CIPHET) titled &ldquo;Assessment of Quantitative Harvest and Post Harvest Losses of Major Crops and commodities in India&rdquo; (2015); and (ii) NABARD Consultancy Service Pvt. Ltd (NABCONS) titled &ldquo;Study to Determine Post-Harvest Losses of Agri Produce in India&rdquo; (2022).</span></span></p>
+
+<p style="margin-left:37.5pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The comparative findings of these two studies are as under:</span></span></p>
+
+<p style="margin-left:37.5pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><u>Post-harvest losses of major crops and commodities</u></strong></span></span></p>
+
+<table align="center" border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="MsoTableGrid" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td rowspan="2" style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="background-color:white">Crops</span></strong><span style="background-color:white">/ <strong>Commodities</strong></span></span></span></p>
+			</td>
+			<td colspan="2" style="width:319.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="background-color:white">Loss (%)</span></strong></span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">As per ICAR-CIPHET Study (2015)*</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">As per NABCONS study (2022)**</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Cereals</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4.65 - 5.99</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">3.89-5.92</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Pulses</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.39 - 8.41</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">5.65-6.74</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Oil Seeds</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">3.08 - 9.96</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2.87-7.51</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fruits </span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.70-15.88</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.02-15.05</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Vegetables</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4.58-12.44</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4.87-11.61</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Plantation Crops &amp; Spices</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">1.18-7.89</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">1.29-7.33</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Milk</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">0.92</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">0.87</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fisheries (Inland)</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">5.23</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4.86</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fisheries (Marine)</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">10.52</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">8.76</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Meat</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2.71</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2.34</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Poultry</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.74</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">5.63</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Egg</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">7.19</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.03</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">This information was given by the Minister of State for Food Processing Industries, Shri </span><span style="background-color:white"><span style="color:#202124">Prahlad</span></span> Singh Patel<span style="color:black"> in a written reply in Lok Sabha today.</span></span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">*****</span></span></p>
+
+<p><strong><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">MJPS/RR</span></span></strong></p>
+
+
+                        
+                        <div id="reel_pic">
+                        </div>
+
+
+
+                        
+                        <br />
+                        <span id="ReleaseId">(रिलीज़ आईडी: 1885038)</span>
+                        <span id="lblViews">	आगंतुक पटल  : 14973</span>
+                        <div>
+                              
+                        </div>
+                        
+
+                        <span id="lblRefPhoto"></span>
+
+                        <div class="BackgroundRelease">
+                              
+                        </div>
+                        <div>
+                              
+                        </div>
+                        <div class="ReleaseLang">इस विज्ञप्ति को इन भाषाओं में पढ़ें: 
+                        
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=1885228' target="_blank">
+                                          Urdu </a>
+                              
+                                    ,
+                              
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=1885094' target="_blank">
+                                          Tamil </a>
+                              
+                                    ,
+                              
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=1885305' target="_blank">
+                                          Telugu </a>
+                              
+                        </div>
+
+                        <div class="RelTag">
+                              <ul>
+                                    
+                              </ul>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div id="RelLink" class="RelLink">
+                              <ul>
+                                    
+                                    
+                              </ul>
+                        </div>
+                        <center>
+                              
+                        </center>
+                  </div>
+
+                  <div id="update12">
+	
+                              
+                              <input type="hidden" name="Hidden" id="Hidden" />
+                              <div id="P_CategoryManagement" class="ModalWindow" style="border-width:0px;height:60%;width:60%;overflow:auto;display: none">
+		
+                                    <div>
+                                          <input type="image" name="btnClose" id="btnClose" src="images/close_flat_icon.png" />
+                                    </div>
+                                    <div id="description">
+                                    </div>
+                                    <div class="text-center">
+                                          <h2>
+                                                
+                                                <br>
+                                                
+                                          </h2>
+                                    </div>
+                                    <br />
+                                    <div class="clear">
+                                    </div>
+                                    
+                              
+	</div>
+                        
+</div>
+            </div>
+            
+            <div id="PdfDiv" style="display: none;">
+                  <table width="100%">
+                        <tr>
+                              <td style="font-weight: 200; text-align: center">
+                                    Ministry of Food Processing Industries
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                                          Post Harvest Food Loss
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                                          
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="text-align: center; font-size: 14px;">
+                                          प्रविष्टि तिथि:
+                        20 DEC 2022 2:02PM by PIB Delhi
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: left; font-size: 16px;">
+                                          <p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The Ministry of Food Processing Industries is mandated to create post-harvest infrastructure and processing facilities, inter-alia, to boost the overall development of the food processing sector including reduction in post-harvest losses; enhancing value addition etc. The Ministry estimates post-harvest losses in various agriculture commodities through various studies based on primary surveys. Two studies were commissioned by the Ministry through (i) Indian Council of Agricultural Research-Central Institute of Post-Harvest Engineering and Technology (ICAR-CIPHET) titled &ldquo;Assessment of Quantitative Harvest and Post Harvest Losses of Major Crops and commodities in India&rdquo; (2015); and (ii) NABARD Consultancy Service Pvt. Ltd (NABCONS) titled &ldquo;Study to Determine Post-Harvest Losses of Agri Produce in India&rdquo; (2022).</span></span></p>
+
+<p style="margin-left:37.5pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The comparative findings of these two studies are as under:</span></span></p>
+
+<p style="margin-left:37.5pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><u>Post-harvest losses of major crops and commodities</u></strong></span></span></p>
+
+<table align="center" border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="MsoTableGrid" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td rowspan="2" style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="background-color:white">Crops</span></strong><span style="background-color:white">/ <strong>Commodities</strong></span></span></span></p>
+			</td>
+			<td colspan="2" style="width:319.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong><span style="background-color:white">Loss (%)</span></strong></span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">As per ICAR-CIPHET Study (2015)*</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">As per NABCONS study (2022)**</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Cereals</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4.65 - 5.99</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">3.89-5.92</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Pulses</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.39 - 8.41</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">5.65-6.74</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Oil Seeds</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">3.08 - 9.96</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2.87-7.51</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fruits </span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.70-15.88</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.02-15.05</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Vegetables</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4.58-12.44</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4.87-11.61</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Plantation Crops &amp; Spices</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">1.18-7.89</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">1.29-7.33</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Milk</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">0.92</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">0.87</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fisheries (Inland)</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">5.23</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4.86</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fisheries (Marine)</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">10.52</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">8.76</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Meat</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2.71</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2.34</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Poultry</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.74</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">5.63</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:139.5pt">
+			<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Egg</span></span></p>
+			</td>
+			<td style="width:153.0pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">7.19</span></span></p>
+			</td>
+			<td style="width:166.5pt">
+			<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.03</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+
+<p><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><span style="color:black">This information was given by the Minister of State for Food Processing Industries, Shri </span><span style="background-color:white"><span style="color:#202124">Prahlad</span></span> Singh Patel<span style="color:black"> in a written reply in Lok Sabha today.</span></span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">*****</span></span></p>
+
+<p><strong><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">MJPS/RR</span></span></strong></p>
+
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 100; text-align: left; font-size: 16px;">
+                                          (रिलीज़ आईडी: 1885038)
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                              </td>
+                        </tr>
+                        <tr>
+                              <td style="font-weight: 200; text-align: center; font-size: 24px;"></td>
+                        </tr>
+                  </table>
+            </div>
+            <div class="clearfix">
+            </div>
+
+            
+
+            <div class="section1">
+                  <div id="frst_t">
+                        <div id="arr_rm"><div class='sticky-social_mb'><ul class='social_mb'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=1885038' target='_blank'><li class='fb_b'   ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/facebook.jpg' alt='Share on facebook'  width='40' /></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=1885038&text=Post Harvest Food Loss' target='_blank'><li class='twitter_r'  ><img  src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2023/aug/ph2023818240601.jpg' alt='Share on twitter' width='40' /> </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=1885038' target='_blank'><li class='whatsapp_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/whatsapp1.png' alt='Share on whatsapp' width='40' /></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Post Harvest Food Loss&body=https://pib.gov.in/PressReleasePage.aspx?PRID=1885038&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/email1.png' alt='Share on email'  width='40' /></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=1885038&title=Post Harvest Food Loss&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/linkedin.png' alt='Share on linkedin' width='40' /></li></a></ul></div></div>
+                  </div>
+                  <div id="second_t">
+                        <div id="sndr_rm"><div class='sticky-social'><ul class='social'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=1885038' target='_blank'><li class='fb_b'   ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/facebook.jpg' alt='Share on facebook'  width='35' /></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=1885038&text=Post Harvest Food Loss' target='_blank'><li class='twitter_r'  ><img  src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2023/aug/ph2023818240601.jpg' alt='Share on twitter' width='35' /> </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=1885038' target='_blank'><li class='whatsapp_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/whatsapp1.png' alt='Share on whatsapp' width='35' /></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=Post Harvest Food Loss&body=https://pib.gov.in/PressReleasePage.aspx?PRID=1885038&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/email1.png' alt='Share on email'  width='35' /></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=1885038&title=Post Harvest Food Loss&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/linkedin.png' alt='Share on linkedin' width='35' /></li></a></ul></div></div>
+                  </div>
+            </div>
+            <input type="hidden" name="ltrTitlee" id="ltrTitlee" value="Post Harvest Food Loss" />
+            <input type="hidden" name="ltrSubtitlee" id="ltrSubtitlee" />
+            <input type="hidden" name="ltrDescriptionn" id="ltrDescriptionn" value="&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The Ministry of Food Processing Industries is mandated to create post-harvest infrastructure and processing facilities, inter-alia, to boost the overall development of the food processing sector including reduction in post-harvest losses; enhancing value addition etc. The Ministry estimates post-harvest losses in various agriculture commodities through various studies based on primary surveys. Two studies were commissioned by the Ministry through (i) Indian Council of Agricultural Research-Central Institute of Post-Harvest Engineering and Technology (ICAR-CIPHET) titled &amp;ldquo;Assessment of Quantitative Harvest and Post Harvest Losses of Major Crops and commodities in India&amp;rdquo; (2015); and (ii) NABARD Consultancy Service Pvt. Ltd (NABCONS) titled &amp;ldquo;Study to Determine Post-Harvest Losses of Agri Produce in India&amp;rdquo; (2022).&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:37.5pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The comparative findings of these two studies are as under:&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;margin-left:37.5pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;u>Post-harvest losses of major crops and commodities&lt;/u>&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;table align=&quot;center&quot; border=&quot;1&quot; bordercolor=&quot;#ccc&quot; cellpadding=&quot;5&quot; cellspacing=&quot;0&quot; class=&quot;MsoTableGrid&quot; style=&quot;border-collapse:collapse&quot;>
+	&lt;tbody>
+		&lt;tr>
+			&lt;td rowspan=&quot;2&quot; style=&quot;width:139.5pt&quot;>
+			&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;background-color:white&quot;>Crops&lt;/span>&lt;/strong>&lt;span style=&quot;background-color:white&quot;>/ &lt;strong>Commodities&lt;/strong>&lt;/span>&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td colspan=&quot;2&quot; style=&quot;width:319.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>&lt;span style=&quot;background-color:white&quot;>Loss (%)&lt;/span>&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:153.0pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>As per ICAR-CIPHET Study (2015)*&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:166.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>As per NABCONS study (2022)**&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:139.5pt&quot;>
+			&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Cereals&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:153.0pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>4.65 - 5.99&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:166.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>3.89-5.92&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:139.5pt&quot;>
+			&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Pulses&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:153.0pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>6.39 - 8.41&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:166.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>5.65-6.74&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:139.5pt&quot;>
+			&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Oil Seeds&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:153.0pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>3.08 - 9.96&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:166.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>2.87-7.51&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:139.5pt&quot;>
+			&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Fruits &lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:153.0pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>6.70-15.88&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:166.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>6.02-15.05&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:139.5pt&quot;>
+			&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Vegetables&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:153.0pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>4.58-12.44&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:166.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>4.87-11.61&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:139.5pt&quot;>
+			&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Plantation Crops &amp;amp; Spices&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:153.0pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>1.18-7.89&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:166.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>1.29-7.33&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:139.5pt&quot;>
+			&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Milk&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:153.0pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>0.92&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:166.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>0.87&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:139.5pt&quot;>
+			&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Fisheries (Inland)&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:153.0pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>5.23&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:166.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>4.86&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:139.5pt&quot;>
+			&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Fisheries (Marine)&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:153.0pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>10.52&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:166.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>8.76&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:139.5pt&quot;>
+			&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Meat&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:153.0pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>2.71&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:166.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>2.34&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:139.5pt&quot;>
+			&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Poultry&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:153.0pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>6.74&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:166.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>5.63&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:139.5pt&quot;>
+			&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Egg&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:153.0pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>7.19&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:166.5pt&quot;>
+			&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>6.03&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+
+&lt;p>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;span style=&quot;color:black&quot;>This information was given by the Minister of State for Food Processing Industries, Shri &lt;/span>&lt;span style=&quot;background-color:white&quot;>&lt;span style=&quot;color:#202124&quot;>Prahlad&lt;/span>&lt;/span> Singh Patel&lt;span style=&quot;color:black&quot;> in a written reply in Lok Sabha today.&lt;/span>&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>*****&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p>&lt;strong>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>MJPS/RR&lt;/span>&lt;/span>&lt;/strong>&lt;/p>
+" />
+            <script type="text/javascript">
+                  var mPlayer = document.getElementById("background_music");
+                  var mPlayAction = document.getElementById("playbutton");
+
+                  var isPlaying = false;
+
+                  function playAudio() {
+                        mPlayer.play();
+                        isPlaying = true;
+                        document.getElementById('stopA').style.display = "block";
+                        document.getElementById('playA').style.display = "none";
+                  }
+
+                  function pauseAudio() {
+                        mPlayer.pause();
+                        isPlaying = false;
+                        document.getElementById('playA').style.display = "block";
+                        document.getElementById('stopA').style.display = "none";
+                  }
+                  //function HandleAudio() {
+                  //    if (isPlaying == true) {
+                  //        //Playing already Pause it
+                  //        pauseAudio();
+                  //    } else {
+                  //        //Play the music
+                  //        playAudio();
+                  //    }
+                  //}
+            </script>
+            <script type="text/javascript">
+                  var synth = window.speechSynthesis;
+
+            
+                  function CleanHtml(html) {
+
+                        html = html.replace(/<script[\s\S]*?<\/script>/gi, '');
+
+                        return html;
+                  }
+                  function stripHtml(html) {
+                        let tmp = document.createElement("DIV");
+                        tmp.innerHTML = CleanHtml(html);
+                        return tmp.textContent || tmp.innerText || "";
+                  }
+            </script>
+            <script type="text/javascript">
+                  $(document).ready(function () {
+                        //for responsive tables
+                        $("table").each(function () {
+                              if (!$(this).closest(".table-responsive").length) {
+                                    $(this).wrap("<div class='table-responsive'></div>");
+                              }
+                        });
+
+                        var width = $(window).width();
+                        if (width < 768) {
+
+                              // Extra Small Device
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                              // Small Device
+
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Medium Device
+
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Large Device
+
+                        }
+                  });
+            </script>
+            <script type="text/javascript">
+                  $(document).ready(function () {
+                        var width = $(window).width();
+                        if (width < 768) {
+
+                              // Extra Small Device
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                              // Small Device
+
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Medium Device
+
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Large Device
+
+                        }
+                  });
+            </script>
+            
+            <style type="text/css">
+                  @media print {
+                        .sticky-social, .sticky-social_mb, .pull-right, #printPDF {
+                              display: none !important;
+                        }
+                  }
+
+                  .f_vl {
+                        padding-right: 30px;
+                        font-size: 17px;
+                        cursor: pointer;
+                  }
+
+                  .log_oo {
+                        // width: 20%;
+                        display: flex;
+                        justify-content: space-between;
+                  }
+
+                        .log_oo img {
+                              width: 150px;
+                              /*width: 100%;
+                    height: auto;*/
+                        }
+
+                  .sticky-social_mb {
+                        position: fixed;
+                        bottom: 0px;
+                        padding: 0px;
+                        margin: 0px;
+                        width: 100%;
+                  }
+
+                  .social_mb {
+                        list-style: none;
+                        display: flex;
+                        width: 100%;
+                        margin-bottom: -8px;
+                  }
+
+                        .social_mb a {
+                              padding: 8px 0px;
+                              font-size: 30px;
+                              transition: all 0.8s ease-in-out;
+                              width: 20% !important;
+                              text-align: center;
+                        }
+            </style>
+            <style type="text/css">
+                  .section1 {
+                        position: relative;
+                        padding: 10px 0px;
+                        width: 100%;
+                  }
+
+
+
+                  .sticky-social {
+                        position: fixed;
+                        top: 20px;
+                        left: 0px;
+                        padding: 0px;
+                        margin: 0px;
+                  }
+
+                  .social {
+                        list-style: none;
+                  }
+
+                        .social a li {
+                              padding: 8px 12px;
+                              font-size: 25px;
+                              transition: all 0.8s ease-in-out;
+                        }
+
+                              .social a li:hover {
+                                    margin-right: -30px;
+                                    box-shadow: 2px 5px 10px grey;
+                              }
+
+                                    .social a li:hover .fa {
+                                          margin-left: 20px;
+                                    }
+
+                  .fb_b {
+                        /* background-color: rgb(59, 89, 152);*/
+                        background-color: rgba(65,103,178,255);
+                  }
+
+                  .twitter_r {
+                        /* background-color: rgb(29, 161, 242);*/
+                        background-color: #000000;
+                  }
+
+                  .whatsapp_r {
+                        /* background-color: rgb(77, 194, 71);*/
+                        background-color: rgba(13,191,67,255);
+                  }
+
+                  .fa-envelope_r {
+                        /* background-color: rgb(219, 68, 55);*/
+                        background-color: #e2123d;
+                  }
+
+                  .fa-linkedin_r {
+                        background-color: rgb(0, 119, 181);
+                  }
+            </style>
+            <style type="text/css">
+                  @media only screen and (max-device-width: 767px) {
+                        p span img {
+                              max-width: 90% !important;
+                              height: auto !important;
+                        }
+
+                        p img {
+                              max-width: 90% !important;
+                              height: auto !important;
+                        }
+
+                        h2 {
+                              font-size: 20px !important;
+                              font-weight: 600 !important;
+                        }
+
+                        h3 {
+                              font-size: 18px !important;
+                              font-weight: 600 !important;
+                        }
+                  }
+            </style>
+            <style type="text/css">
+                  /* === Film Roll Badge Styling(IFFI2025 countdown) === */
+                  .film-roll-badge {
+                        position: absolute;
+                        top:82%;
+                        right: 20px;
+                        width: 230px;
+                        height: 70px;
+                        background: repeating-linear-gradient( to right, #9a2375 0px, #9a2375 18px, #6e2b8b 18px, #6e2b8b 36px );
+                        border-top: 8px solid #9a2375;
+                        border-bottom: 8px solid #9a2375;
+                        border-radius: 8px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+                        animation: moveFilm 8s linear infinite;
+                        z-index: 10;
+                  }
+
+                        /* film sprocket holes */
+                        .film-roll-badge::before,
+                        .film-roll-badge::after {
+                              content: "";
+                              position: absolute;
+                              width: 100%;
+                              height: 10px;
+                              background: repeating-linear-gradient( to right, #9a2375 0px, #9a2375 10px, #fff 10px, #fff 20px );
+                              left: 0;
+                              z-index: 2;
+                        }
+
+                        .film-roll-badge::before {
+                              top: -4px;
+                        }
+
+                        .film-roll-badge::after {
+                              bottom: -4px;
+                        }
+
+                  .film-roll-inner {
+                        position: relative;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        animation: flicker 2s infinite ease-in-out;
+                  }
+
+                  .countdown-text {
+                        font-size: 1.3rem;
+                        font-weight: 700;
+                        color: #fff;
+                        text-shadow: 0 0 6px rgba(255, 255, 255, 0.4), 0 0 10px #000;
+                        white-space: nowrap;
+                  }
+
+                  /* === Animations === */
+                  @keyframes moveFilm {
+                        0% {
+                              background-position: 0 0;
+                        }
+
+                        100% {
+                              background-position: 120px 0;
+                        }
+                  }
+
+                  @keyframes flicker {
+                        0%, 100% {
+                              opacity: 1;
+                        }
+
+                        50% {
+                              opacity: 0.9;
+                        }
+
+                        25% {
+                              opacity: 0.95;
+                        }
+
+                        75% {
+                              opacity: 0.85;
+                        }
+                  }
+
+                  /* === Responsive Adjustments === */
+                  @media (max-width: 1500px) {
+                        .film-roll-badge {
+                              top: 68%;
+                              right: 18px;
+                              /* width: 220px; */
+                              height: 65px;
+                              font-size: 0.85rem;
+                        }
+
+                        .press-section {
+                              margin-top: 35px;
+                        }
+                  }
+
+                  @media (max-width: 992px) {
+                        .film-roll-badge {
+                              top: 52%;
+                              right: 10px;
+                               width: 200px; 
+                              height: 60px;
+                        }
+                  }
+
+                  @media (max-width: 768px) {
+                        .film-roll-badge {
+                              top: 56%;
+                              right: 10px;
+                               width: 124px; 
+                              height: 55px;
+                        }
+
+                        .countdown-text {
+                              font-size: 0.9rem;
+                        }
+                  }
+
+                  @media (max-width: 576px) {
+                        .film-roll-badge {
+                              top: 59%;
+                              right: 5px;
+                              /* width: 160px; */
+                              height: 50px;
+                        }
+
+                        .countdown-text {
+                              font-size: 0.85rem;
+                        }
+                  }
+            </style>
+          <script type="text/javascript">
+                const festivalStart = new Date("2025-11-20T00:00:00").getTime();
+                const festivalEnd = new Date("2025-11-28T23:59:59").getTime();
+
+                const countdownElement = document.getElementById("countdown");
+
+                const interval = setInterval(() => {
+                      const now = new Date().getTime();
+
+                      // BEFORE FESTIVAL — show days + hours left
+                      if (now < festivalStart) {
+                            const diff = festivalStart - now;
+                            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                            countdownElement.innerHTML = `
+              ${days} Day${days !== 1 ? 's' : ''} 
+              ${hours} Hour${hours !== 1 ? 's' : ''} to go
+          `;
+
+                      }
+
+                      // DURING FESTIVAL — show 56th IFFI - Day X
+                      else if (now >= festivalStart && now <= festivalEnd) {
+                            const dayNumber = Math.floor((now - festivalStart) / (1000 * 60 * 60 * 24)) + 1;
+                            countdownElement.innerHTML = `56th IFFI - Day ${dayNumber}`;
+                      }
+
+                      // AFTER FESTIVAL — new message
+                      else {
+                            countdownElement.innerHTML = `✨ IFFI closes but never ends…`;
+
+                            // Width change logic
+                            const elements = document.querySelectorAll('.film-roll-badge');
+                            elements.forEach(el => el.style.width = "350px");
+
+                            clearInterval(interval);
+                      }
+
+                }, 1000);
+          </script>
+ <script type="text/javascript">
+
+               const miffStart = new Date("2026-06-15T00:00:00").getTime();
+               const miffEnd = new Date("2026-06-15T23:59:59").getTime();
+
+               const miffElement = document.getElementById("miff");
+
+               if (miffElement) {
+
+                   const miffInterval = setInterval(() => {
+
+                       const now = new Date().getTime();
+
+                       // Before MIFF
+                       if (now < miffStart) {
+
+                           const diff = miffStart - now;
+                           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                           const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+        
+
+                   /*  miffElement.innerHTML = `${days} Day${days !== 1 ? 's' : ''} ${hours} Hour${hours !== 1 ? 's' : ''} to MIFF`;*/
+                           miffElement.innerHTML = `${days} Day${days === 1 ? '' : 's'} to MIFF ...`;
+
+
+                     }
+
+                       // During MIFF
+                       else if (now >= miffStart && now <= miffEnd) {
+
+                           const dayNumber =
+                               Math.floor((now - miffStart) / (1000 * 60 * 60 * 24)) + 1;
+
+                           miffElement.innerHTML = `19th MIFF - Day ${dayNumber}`;
+                       }
+
+                       // After MIFF
+                       else {
+
+                           miffElement.innerHTML = `✨ MIFF concludes, cinema lives on...`;
+
+                           document.querySelectorAll('.film-roll-badge')
+                               .forEach(el => el.style.width = "350px");
+
+                           clearInterval(miffInterval);
+                       }
+
+                   }, 1000);
+               }
+
+</script>
+
+      
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("sc_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","PopupControlID":"P_CategoryManagement","dynamicServicePath":"/PressReleasePage.aspx","id":"mpe"}, null, null, $get("Hidden"));
+});
+//]]>
+</script>
+<input type="hidden" name="__ncforminfo" value="X-UtjBvHWySuhjrxUbCq5276FrTxy6YTLVStaqsl7-tHwEJfRbTEsTP-l17Eg78CaFm0P2NenXhonJFtQET_LLUzmbGuAiBJXpyrJ4SWzyzUuc9O9YxXLg=="/></form>
+</body>
+</html>
+

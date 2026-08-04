@@ -13,14 +13,14 @@ mission creator at mission-add time.
 """
 from __future__ import annotations
 
-import sys
 import os
+import sys
 
 # Allow relative imports when running from the pi/ directory.
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from nav.geo import latlng_to_local, local_to_latlng  # noqa: E402
-from nav.path_planner import boustrophedon  # noqa: E402
+from nav.geo import latlng_to_local, local_to_latlng
+from nav.path_planner import boustrophedon
 
 
 def zone_bounds(

@@ -51,9 +51,9 @@
   <!-- ================= ESP32 ================= -->
   <rect class="box esp" x="420" y="94" width="250" height="470"/>
   <text x="545" y="116" class="tb" text-anchor="middle">ESP32 DevKit V1</text>
-  <text x="430" y="140" class="t">19,21 → L298N#1 IN1/IN2</text>
-  <text x="430" y="160" class="t">22,23 → L298N#2 IN3/IN4</text>
-  <text x="430" y="180" class="t">32,33 → ENA/ENB (PWM)</text>
+  <text x="430" y="140" class="t">19,21 → BTS7960#1 RPWM/LPWM</text>
+  <text x="430" y="160" class="t">22,23 → BTS7960#2 RPWM/LPWM</text>
+  <text x="430" y="180" class="t">32,33 FREE (old ENA/ENB)</text>
   <text x="430" y="200" class="t">25 → US TRIG · 18 → US ECHO*</text>
   <text x="430" y="220" class="t">27 → SG90 sweep servo</text>
   <text x="430" y="240" class="t">17/16/4 → MAX485 (NPK)</text>
@@ -83,8 +83,8 @@
   <path class="hi" d="M210,412 L260,412 L260,613 L420,613" marker-end="url(#arrow)"/>
 
   <!-- ================= DRIVE / ACTUATION (right of ESP32) ================= -->
-  <rect class="box act" x="720" y="120" width="150" height="30"/> <text x="795" y="140" class="t" text-anchor="middle">L298N #1 LEFT</text>
-  <rect class="box act" x="720" y="158" width="150" height="30"/> <text x="795" y="178" class="t" text-anchor="middle">L298N #2 RIGHT</text>
+  <rect class="box act" x="720" y="120" width="150" height="30"/> <text x="795" y="140" class="t" text-anchor="middle">BTS7960 #1 LEFT</text>
+  <rect class="box act" x="720" y="158" width="150" height="30"/> <text x="795" y="178" class="t" text-anchor="middle">BTS7960 #2 RIGHT</text>
   <rect class="box act" x="900" y="120" width="160" height="68"/> <text x="980" y="150" class="t" text-anchor="middle">4× Gear Motors</text>
   <text x="980" y="170" class="ti" text-anchor="middle">+1N5819 flyback ea.</text>
   <path class="wire" d="M670,150 L720,135" marker-end="url(#arrow)"/>
@@ -93,7 +93,7 @@
   <path class="wire" d="M870,173 L900,165" marker-end="url(#arrow)"/>
   <path class="pw" d="M360,303 L690,303 L690,143 L720,143"/>
   <path class="pw" d="M690,143 L690,181 L720,181"/>
-  <text x="540" y="298" class="lab">11.1V BUS → L298N ×2, relay COM</text>
+  <text x="540" y="298" class="lab">11.1V BUS → BTS7960 ×2, relay COM</text>
 
   <rect class="box act" x="720" y="206" width="150" height="44"/> <text x="795" y="224" class="t" text-anchor="middle">2-ch Relay</text>
   <text x="795" y="240" class="safe" text-anchor="middle">+10k pull-ups</text>

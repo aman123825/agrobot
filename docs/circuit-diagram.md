@@ -1,6 +1,6 @@
 # AgriRover — Complete Circuit & Wiring Diagram
 
-Dual-controller agricultural rover: **ESP32 DevKit V1** (real-time control) + **Raspberry Pi 4** (AI inference).
+Dual-controller agricultural rover: **ESP32 DevKit V1** (real-time control) + **Raspberry Pi 5 + Hailo-8 AI HAT+** (AI inference; Pi 4 + Coral USB is the documented fallback).
 This document is the full electrical reference: power distribution, both pin maps, every bus, drive, actuation, and protection placement.
 
 > Legend
@@ -31,8 +31,8 @@ flowchart TB
         E32["ESP32<br/>Core0: sensors/relay/MQTT<br/>Core1: drive"]
     end
 
-    subgraph PI["Raspberry Pi 4 (AI)"]
-        RPI["Pi 4 2GB<br/>YOLOv8n + Coral"]
+    subgraph PI["Raspberry Pi 5 (AI)"]
+        RPI["Pi 5 8GB<br/>YOLOv8n + Hailo-8"]
     end
 
     RAIL5 -->|ferrite bead| E32
@@ -42,10 +42,10 @@ flowchart TB
     BUS ==> RLY["2-Ch Relay COM"]
 
     E32 <-->|"UART via CP2102"| RPI
-    E32 --- L298L
-    E32 --- L298R
+    E32 ---|"19 RPWM / 21 LPWM"| L298L
+    E32 ---|"22 RPWM / 23 LPWM"| L298R
     E32 --- RLY
-    RPI --- CORAL["Coral USB TPU"]
+    RPI --- CORAL["Hailo-8 AI HAT+ (PCIe)<br/>Coral USB = fallback"]
     RPI --- CAM["Pi Camera v2 (CSI)"]
     RPI --- PCF["PCF8574 I2C expander"]
     RAIL5 --> ECAM["ESP32-CAM (isolated)<br/>5V + GND only · 16GB microSD<br/>standalone WiFi MJPEG"]
@@ -84,7 +84,8 @@ Two **independent** 5V domains by design: motors+logic from the LiPo, and the Pi
       │                      └───────────┘
       │
       │   ┌──────────────── SEPARATE PI DOMAIN ────────────────┐
-      │   │ 10000mAh Power Bank ──(5V/3A USB-C)──► Pi 4 PWR IN  │
+      │   │ Power Bank ──(5V/5A USB-C PD)──► Pi 5 + Hailo HAT   │
+      │   │  (Pi 5+Hailo needs 5V/5A; Pi 4+Coral = 5V/3A ok)   │
       │   └────────────────────────────────────────────────────┘
       │
    ╔══▼═══════════════════════════════════════════════════════════╗
@@ -348,6 +349,24 @@ ESP32 19/21 (R/LPWM) ─►│  BTS7960 #1 LEFT│  │BTS7960 #2 RIGHT │◄�
 | LEFT  | GPIO19 | GPIO21 | tie to 3.3V | 0 / 1 |
 | RIGHT | GPIO22 | GPIO23 | tie to 3.3V | 2 / 3 |
 
+> **Professional pin-level schematic:** [`bts7960-drive-schematic.svg`](bts7960-drive-schematic.svg) — open in a browser; shows every signal/power terminal of both drivers.
+
+#### BTS7960 (IBT-2) complete per-board pinout
+
+| Module terminal | Driver #1 (LEFT) | Driver #2 (RIGHT) | Dir | Notes |
+|-----------------|------------------|-------------------|-----|-------|
+| **RPWM** | ESP32 GPIO19 (LEDC0) | ESP32 GPIO22 (LEDC2) | ESP32→drv | PWM, **forward** |
+| **LPWM** | ESP32 GPIO21 (LEDC1) | ESP32 GPIO23 (LEDC3) | ESP32→drv | PWM, **reverse** |
+| **R_EN** | 3.3 V | 3.3 V | tie HIGH | half-bridge always enabled |
+| **L_EN** | 3.3 V | 3.3 V | tie HIGH | half-bridge always enabled |
+| **VCC** | 3.3 V (logic ref) | 3.3 V (logic ref) | — | module logic rail (5 V-tolerant; use 3.3 V to match ESP32) |
+| **GND** | common star GND | common star GND | — | tie to §1 star point |
+| **R_IS / L_IS** | *(opt)* ADS1115 **A0** | *(opt)* ADS1115 **A1** | drv→ADC | current-sense out; can replace the 2× ACS712 (§10.1, FC-09) |
+| **B+** | 11.1 V bus | 11.1 V bus | power | battery + (after fuse/anti-spark, §1) |
+| **B−** | common star GND | common star GND | power | battery − |
+| **M+** | Left motors + (FL+RL) | Right motors + (FR+RR) | output | per-side parallel pair |
+| **M−** | Left motors − | Right motors − | output | **1N5819 flyback across each motor** |
+
 BTS7960 is a dual half-bridge per board: **forward** = PWM on RPWM with LPWM=0,
 **reverse** = PWM on LPWM with RPWM=0, **stop** = both 0. The four PWM lines are
 LEDC-driven at 1 kHz (timers 0/1); the servo uses LEDC ch4/timer2 at 50 Hz. The
@@ -355,6 +374,24 @@ low Rds(on) MOSFET bridge gives more torque/runtime and the thermal headroom
 that solves the L298N hot-field shutdown (feeds FC-02). The old ENA/ENB speed
 pins (GPIO32/33) are now free. **Optional:** route each driver's current-sense
 **IS** output to the **ADS1115** to replace the 2× ACS712 (see §10.1).
+
+#### BTS7960 wiring checklist (terminal-to-terminal, do in this order)
+
+Repeat for **#1 LEFT** and **#2 RIGHT**:
+
+1. **Mount** the IBT-2 with its heatsink facing airflow; keep B+/B− leads short and thick (≥18 AWG).
+2. **High-current power:** `B+` → 11.1 V bus (after the fuse + anti-spark XT60, §1); `B−` → common ground star point.
+3. **Logic supply:** `VCC` → **3.3 V**; module `GND` → common ground (same star point as B−).
+4. **Enable:** tie `R_EN` **and** `L_EN` together → **3.3 V** (both half-bridges always enabled).
+5. **PWM signals:**
+   - #1 LEFT — `RPWM` ← ESP32 **GPIO19**, `LPWM` ← ESP32 **GPIO21**
+   - #2 RIGHT — `RPWM` ← ESP32 **GPIO22**, `LPWM` ← ESP32 **GPIO23**
+6. **Motor output:** `M+` / `M−` → that side's motor pair (FL+RL or FR+RR) in parallel; fit a **1N5819 flyback across each motor**.
+7. *(Optional)* `R_IS` → ADS1115 **A0** (left), `L_IS`→ **A1** (right) for current/stall sensing — then the 2× ACS712 can be dropped (§10.1, FC-09).
+8. **Pre-power checks (DMM):** R_EN/L_EN = 3.3 V · both PWM lines idle LOW · common-ground continuity B−↔VCC GND↔ESP32 GND · **no B+↔M+ short**.
+9. **First spin:** command ~20 % duty **forward**; verify wheel direction. If a side runs backward, **swap that driver's M+/M−** (do *not* swap PWM pins).
+
+> Direction truth: **forward** = RPWM = PWM, LPWM = 0 · **reverse** = LPWM = PWM, RPWM = 0 · **stop** = both 0 (coast).
 
 ### 5.2 Relay-driven actuation (dosing sequence)
 ```
@@ -632,12 +669,15 @@ strip reliably.
 ### 9.7 Items confirmed SAFE (no action)
 - Analog sensors all on **ADC1** (34/35/36) -> no WiFi/ADC2 conflict.
 - **No flash pins** (GPIO6-11) used anywhere.
-- **Strapping pins** GPIO0/2/5/12/15 left unused.
+- **Strapping pins**: GPIO0/5/12 left unused. GPIO2 carries the Branch-B
+  actuator-direction line (idle/LOW unless `ACTUATOR_DC_REVERSIBLE=1`) and GPIO15
+  is the optional DGPS TX (idles HIGH) — both are boot-strapping-safe in these roles.
 - UART1 (GPS, pin 39 RX-only) and UART2 (RS485, 16/17) correctly remapped off
   the flash pins.
 - I2C addresses unique (0x40/0x68/0x29/0x3C/0x20); Pi BCM map has no duplicates.
-- LEDC: motor channels 0/1 share timer0 at 1 kHz (OK); servo channel 2 uses
-  timer1 (must be set to 50 Hz when the sweep is implemented).
+- LEDC: the **four** BTS7960 PWM lines use channels **0–3** (timers 0/1) at
+  1 kHz; the ultrasonic-sweep servo uses channel **4** (timer 2) at 50 Hz, so the
+  1 kHz drive PWM never disturbs the 20 ms servo frame.
 
 ### 9.8 Lower-priority follow-ups
 - Servo PWM — **DONE**: implemented in `firmware/src/servo.cpp` (50 Hz LEDC on
