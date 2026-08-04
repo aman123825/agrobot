@@ -118,7 +118,7 @@ All prices **[Analyst scenario]**, to confirm against live India suppliers.
 
 ### v2 progress checklist
 - [x] (1) Verify add-on component prices vs live Indian suppliers — **done (v2.1 below)**
-- [ ] (2) Drone-vs-ground-rover cost-per-acre model
+- [x] (2) Drone-vs-ground-rover cost-per-acre model — done (v2.2 below)
 - [ ] (3) Cotton problems + rover/component fit
 - [ ] (4) Banana problems + rover/component fit
 - [ ] (5) Real farmer complaints from forums/reportage
@@ -135,6 +135,25 @@ Several v1 estimates were **too low**. Corrected, live retail figures — all **
 | Leaf-wetness sensor | ₹1,500–5,000 | **₹3,700–11,600** for a real RS485 field sensor (imports, ~$45–139); no cheap hobby module found | `[S30]` |
 
 **Correction to the v1 takeaway (important).** v1 claimed a "~₹2–6k canopy micro-climate node" unlocks the biggest grape/pomegranate problems. Verified prices push that **up**: a credible **leaf-wetness + SHT31 node is ~₹4,400–12,800** (leaf-wetness ₹3,700–11,600 + SHT31 ₹700–1,200), and adding a **thermal camera is ₹7,250–10,000**, not ₹2,500–5,000. The mildew early-warning idea still stands, but its hardware bill is **~2–3× the v1 figure** — which strengthens the argument that a *fixed* IoT station (Fyllo-type) may amortise that sensor better than a slow rover carrying one. **[Analyst scenario]** The genuinely cheap, confirmed items are the **refractometer (₹859–1,283)** for ripeness ground-truthing and **SHT31 (₹700–1,200)**.
+
+### v2.2 Drone vs ground-rover — cost per acre (why the rover is not a coverage tool)
+**The throughput gap is the whole story.** A spraying drone does **1 acre in ~7–8 min**, a Namo Drone Didi rig covers **up to 20 acres/day**, and commercial rigs claim 10–15 acres/hour. **[External result]** `[S31]`, `[S32]` A small, slow, close-row scouting rover like AgriRover moves at **~0.6–1.0 m/s** `[S34]`; driving 3 m-spaced rows is roughly **1,350 m of travel per acre ≈ 25–30 min/acre of pure driving**, so realistically **~4–6 acres/day** after turns, stops and scan pauses. **[Analyst scenario]**
+
+| Metric | Spraying drone (India) | AgriRover (ground) |
+|---|---|---|
+| What it does | Physically **sprays** | **Scouts / images** only (v1 spray subsystem is bench-only) |
+| Service price | **₹350–450/acre** (some from ₹400) | scouting pass **₹387–1,599/acre-pass** (repo analyst est.) |
+| Throughput | ~20 ac/day (Namo); 10–15 ac/hr commercial | **~4–6 ac/day** |
+| Capital | ₹5–8 lakh+ (80% subsidy → ~₹1.6 lakh to SHG) | ₹27–50k build |
+
+**Honest conclusion.** On **cost per acre for physical coverage the drone wins decisively** — it *sprays* a field for ₹350–450/acre while the rover merely *looks* at it for a similar-or-higher ₹/acre and ~4× slower. Cheap hardware (₹27–50k) does **not** translate to cheap per-acre service, because **throughput, not capital, sets the per-acre cost** (the route-density problem from the adoption dossier). The rover's **only** defensible niche is exactly where a drone physically cannot go: **close-range, under-canopy, per-plant / per-bunch / trap-level** inspection. It is not, and must not be pitched as, a cheaper sprayer. **[Analyst scenario]**
+
+Sources for this section:
+- `[S31]` Vigyan Varta — drone-as-service ₹350–450/acre; Kisan drone ~7–8 min/acre — http://www.vigyanvarta.in/adminpanel/upload_doc/VV_0526_22.pdf
+- `[S32]` Namo Drone Didi — up to 20 acres/day; 80% subsidy up to ₹8 lakh/drone — https://www.nextias.com/ca/current-affairs/05-11-2024/namo-drone-didi-scheme
+- `[S33]` Agridrone.io — spraying from ₹400/acre — https://www.agridrone.io/
+- `[S34]` Ground UGV field speeds 0.6–1.0 m/s — https://www.mdpi.com/2073-4395/15/12/2793
+- `[S35]` IIFL — agri-drone service startup ₹5–30 lakh — https://www.iifl.com/blogs/gold-loan/how-to-start-a-agri-drone-service-business
 
 ### v2 sources
 - `[S26]` Flipkart, 0–32 °Brix handheld refractometers ₹859–1,283 — https://www.flipkart.com/real-instruments-0-32-brix-hand-refractometer-atc-measuring-fruits-wine-beer-sugars-manual-handheld/p/itme5b7738d9159a
