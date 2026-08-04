@@ -93,13 +93,23 @@ built on somebody else's **[External result]**.
 
 ---
 
-## 1. Executive summary — the buying case in ten lines
+## 1. Executive summary — the buying case in fourteen lines
+
+*Lines 1–10 are the v1 case. Lines 11–14 are the v2 findings that materially
+change the conclusion; read them before acting on lines 1–10.*
 
 1. Junnar/Narayangaon is a genuinely dense, commercially sophisticated tomato
    cluster: Narayangaon is described as the country's largest open tomato auction
    market, with cultivation having grown from 500 acres across 50 villages to
    2,200 acres across 150 villages around it, and peak arrivals of 50,000–60,000
    crates (20 kg) per day. **[External result]** ([SIBM Bengaluru JTFPC case study](https://www.sibmbengaluru.edu.in/wp-content/uploads/2023/08/4_Junnar-Taluka-Farmers-Producers-Company-Ltd.pdf), [TOI, Narayangaon APMC](https://timesofindia.indiatimes.com/city/pune/deluge-ravages-tomato-crops-in-junnar-and-ambegaon-supply-plummets-by-60/articleshow/132399448.cms), [eSakal, 27-Jun-2026](https://www.esakal.com/pune/tomato-prices-fall-in-narayangaon-as-sub-market-records-season-high-arrival-of-60000-crates-pjp78))
+    *v2 caveat:* more recent estimates put the area **as high as 10,000 acres**,
+    and no official hectare series could be located; the Junnar (Narayangaon) APMC
+    modal price was **₹1,500/quintal (₹15/kg)** on 22-Jul-2026. `[F23]` The
+    **2,200 vs 10,000 acre spread is unreconciled**, and since it spans ~4.5× it
+    cannot be used to estimate **route density — the single biggest driver of
+    AgriRover's cost per pass** (§3.1, §4.4). Cluster density must be measured on
+    the ground, not inferred from press figures. **[AgriRover target]**
 2. The money at stake per acre is large and mostly *already being spent*: local
    reporting puts one acre of Junnar tomato at about **₹1.5 lakh** of cultivation
    cost, of which the GIZ Maharashtra tomato manual budgets **₹17,000/acre** for
@@ -312,6 +322,25 @@ result]** These are *trap counts*, not leaf-image classifications — which is a
 significant and under-appreciated point for AgriRover's design: **the decision
 variable the protocol actually uses is a countable insect in a trap**, a far
 easier machine-vision target than a mine on the underside of a leaf.
+
+**How often this actually reaches the produce — and why it cuts both ways.**
+Under FSSAI's national monitoring programme, **86,401 food samples were analysed
+between 2022 and 2025, with 2.8% exceeding notified MRLs**, and tomato appears
+consistently among the vegetables with frequent residue detections alongside
+brinjal, okra, cabbage and cauliflower. `[F22]` **[External result]** *Limit: the
+2.8% aggregate spans all commodities; this dossier could not isolate a
+tomato-specific Maharashtra violation rate.*
+
+Two consequences pull in opposite directions and both must be stated. The residue
+problem is **real and officially measured**, which supports §3.7's compliance
+thesis. But a ~2.8% violation rate also means **roughly 97% of samples already
+pass** — so for a grower selling into Narayangaon, "avoid an MRL breach" is a
+low-probability event and therefore a weak reason to buy anything. The buyer who
+pays for residue assurance is the one for whom a single breach is *catastrophic*
+rather than merely unlikely: an exporter facing a border rejection and the
+suspension ladder behind it `[F17]`, not a domestic-market grower. This is the
+sharpest available argument for why AgriRover's compliance product must be sold to
+persona D and not persona A. **[Analyst scenario]**
 
 PPQS requires that label dose, crop stage, spray interval, maximum number of
 sprays, equipment and **pre-harvest interval** all be respected. `[E34]`
@@ -773,7 +802,7 @@ A Nashik kharif figure of **₹5,892/ha** (~₹2,384/acre) sits in the same low 
 | Local Junnar reporting (Lokmat) | ~150,000 | — | — |
 | Maharashtra 2025-26 input breakdown `[F19]` | 31,500–46,500 | **2,000–4,000** | 0.12–0.24× |
 | Nashik kharif `[F20]` | — | ~2,384 | 0.14× |
-| Nagpur economics study, cost C3 | ~59,600 (₹147,394/ha) | ~1,586 | 0.09× |
+| Nagpur economics study, cost C3 | ~59,600 (��147,394/ha) | ~1,586 | 0.09× |
 
 **This is now the single most dangerous fact in the dossier, and it is worse than
 v1 stated.** Four of five independent sources put tomato plant protection between
