@@ -119,9 +119,14 @@ All prices **[Analyst scenario]**, to confirm against live India suppliers.
 ### v2 progress checklist
 - [x] (1) Verify add-on component prices vs live Indian suppliers — **done (v2.1 below)**
 - [x] (2) Drone-vs-ground-rover cost-per-acre model — done (v2.2 below)
-- [ ] (3) Cotton problems + rover/component fit
-- [ ] (4) Banana problems + rover/component fit
-- [ ] (5) Real farmer complaints from forums/reportage
+- [x] (3) Cotton problems + rover/component fit — done (v2.3)
+- [x] (4) Banana problems + rover/component fit — done (v2.4)
+- [x] (5) Real farmer complaints from forums/reportage — done (v2.5)
+- [ ] (6) Sugarcane problems + rover/component fit
+- [ ] (7) Chilli problems + rover/component fit
+- [ ] (8) Deepen grape downy/powdery economics (sprays/season, resistance, ₹/season)
+- [ ] (9) Verify APEDA GrapeNet / Residue Monitoring Plan specifics for the record product
+- [ ] (10) Onion storage-monitoring node: component BOM + cost
 
 ### v2.1 Add-on component prices — verified against live Indian listings (04-Aug-2026)
 Several v1 estimates were **too low**. Corrected, live retail figures — all **[External result]**:
@@ -154,6 +159,35 @@ Sources for this section:
 - `[S33]` Agridrone.io — spraying from ₹400/acre — https://www.agridrone.io/
 - `[S34]` Ground UGV field speeds 0.6–1.0 m/s — https://www.mdpi.com/2073-4395/15/12/2793
 - `[S35]` IIFL — agri-drone service startup ₹5–30 lakh — https://www.iifl.com/blogs/gold-loan/how-to-start-a-agri-drone-service-business
+
+### v2.3 Cotton — pink bollworm, and why a fixed smart-trap beats the rover here
+- **Problem & magnitude.** Pink bollworm (PBW, *Pectinophora gossypiella*) has evolved resistance to Bt cotton; field infestation **40–95%**, yield loss **20–30%**. **[External result]** `[S36]` Nationally, cotton has lost ~**20 lakh ha in six years** and production is **down 27%** from the 2013-14 peak. **[External result]** `[S37]` PBW is tied to acute distress in Vidarbha (Yavatmal: **800+ farmer suicides in 2.5 years**). **[External result]** `[S40]`
+- **The decision variable is a trap count.** ICAR/CAI action thresholds are pheromone-trap based — **8 moths/trap/night over 3 nights** (recent work revises to 4.5–5.7), with **5 traps/ha** from August. **[External result]** `[S38]` PBW larvae live **inside the boll** — not imageable — so, like the tomato pinworm, the actionable signal is a **countable moth in a trap**, not a photo of the pest.
+- **Rover/component fit — honest.** A trap is a **fixed point**: a **static AI smart-trap** (pheromone lure → sticky liner → camera → weather sensors) already exists in India and is cheaper than driving a rover to each trap. **[External result]** `[S39]` So for PBW a **fixed camera-trap beats a roving rover** — the rover only wins if it reads many farmers' traps on a dense route. RGB close-range *does* help the **visible** cotton problems (whitefly, leaf-curl virus, sucking-pest leaf damage). **Verdict: park PBW as a rover use-case; it favours a static smart-trap.** **[Analyst scenario]**
+
+### v2.4 Banana — Panama wilt (rogue-mapping) and post-harvest
+- **Problem & magnitude.** Panama/Fusarium wilt (*Foc*, incl. lethal **TR4**, in India since a 2017 UP report) causes **30–40% losses in India** (60–90% globally); it is **soil-borne, survives in soil for years, and spreads via infected planting material**. **[External result]** `[S41]`, `[S42]` Banana post-harvest loss runs **20–30%** (up to 30–40% farm-to-consumer). **[External result]** `[S43]`
+- **Rover/component fit.** Wilt shows as **progressive leaf yellowing/wilting** — RGB can **map visibly infected plants** so they're rogued and spread contained (the core lever). Honest limits: it is a **root/vascular, soil-borne** disease, so RGB catches it only once symptoms show (often too late for that plant); true early detection needs multispectral/soil assays, not a cheap add-on. Post-harvest: RGB **bunch colour/ripeness grading** fits harvest-timing (as with grapes). **Verdict: rover fits roguing-map + harvest grading, not early wilt detection.** **[Analyst scenario]**
+
+### v2.5 Farmer voice (from reportage, not video)
+- Grape (Nashik, 2015): production cost **₹25/kg** but sold at **₹8–10/kg**; berry weight down **30–40%**; spraying expense up **~30%**. **[External result]** `[S44]`
+- Grape (Nashik, 2025): a grower hit by the COVID price crash, then a 2023 hailstorm on a harvest-ready vineyard — "couldn't repay loan." **[External result]** `[S2]`
+- Cotton (Vidarbha): a farmer, crop ruined, **drank pesticide**; carrying a ~₹20 lakh loan. **[External result]** `[S45]`
+- Systemic: **Sahyadri Farms + IPH Pune** now run farmer **mental-health counselling** — growers cite unpredictable weather and rising input costs. **[External result]** `[S46]`
+- **What this means for AgriRover:** the pain is **financial survival under input cost + weather + price volatility**, not a missing dashboard. Anything sold must cut a real ₹ cost or protect a real ₹ of yield — echoing the adoption dossier. **[Analyst scenario]**
+
+Sources for these sections:
+- `[S36]` Springer — PBW 40–95% infestation, 20–30% yield loss on Bt cotton — https://link.springer.com/article/10.1007/s12600-019-00738-x
+- `[S37]` India Today — cotton lost ~20 lakh ha in 6 yrs, production −27% — https://www.indiatoday.in/science/story/bt-cotton-india-pink-bollworm-white-gold-gm-crops-mission-productivity-gene-editing-science-news-2910816-2026-05-13
+- `[S38]` CAI/ICAR — PBW trap ETL 8 moths/trap/night ×3; 5 traps/ha — https://caionline.in/uploads/publications/doc/06_08-05-2018.pdf
+- `[S39]` IndiaAI (aikosh) — AI smart pheromone trap for PBW — https://aikosh.indiaai.gov.in/home/use-cases/details/ai_smart_pheromone_trap_for_area_wide_pink_bollworm_management.html
+- `[S40]` UNI India — Yavatmal 800+ farmer suicides in 2.5 yrs — http://www.uniindia.com/news/west/farmers-suicides-in-vidarbha-region/3932428.html
+- `[S41]` IntechOpen — Panama wilt India 30–40% (world 60–90%) — https://www.intechopen.com/chapters/79683
+- `[S42]` APSnet — first TR4 report in India (2017, UP) — https://apsjournals.apsnet.org/doi/10.1094/PDIS-07-18-1263-PDN
+- `[S43]` Asian J. Hort. — banana post-harvest loss 20–30% — https://researchjournal.co.in/online/TAJH/TAJH%207(1)/7_A-9-12.pdf
+- `[S44]` TOI 2015 — grape ₹25/kg cost vs ₹8–10/kg sale; weight −30–40% — https://timesofindia.indiatimes.com/city/nashik/Grape-growers-seek-subsidy-on-plastic-net-covers-from-state/articleshow/46913058.cms
+- `[S45]` Indian Express — Vidarbha farmer drank pesticide amid ruined crop — https://indianexpress.com/article/india/india-others/amidst-his-ruined-crop-he-drank-pesticide/lite/
+- `[S46]` Indian Express 2026 — Sahyadri Farms + IPH Pune farmer mental-health initiative — https://indianexpress.com/article/cities/pune/maharashtra-sahyadri-farms-iph-pune-farmer-mental-health-initiative-10813110-https-indianexpress-com-article-c-10813750/
 
 ### v2 sources
 - `[S26]` Flipkart, 0–32 °Brix handheld refractometers ₹859–1,283 — https://www.flipkart.com/real-instruments-0-32-brix-hand-refractometer-atc-measuring-fruits-wine-beer-sugars-manual-handheld/p/itme5b7738d9159a
