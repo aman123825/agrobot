@@ -114,6 +114,37 @@ All prices **[Analyst scenario]**, to confirm against live India suppliers.
 
 ---
 
+## v2 (in progress) — deeper verification
+
+### v2 progress checklist
+- [x] (1) Verify add-on component prices vs live Indian suppliers — **done (v2.1 below)**
+- [ ] (2) Drone-vs-ground-rover cost-per-acre model
+- [ ] (3) Cotton problems + rover/component fit
+- [ ] (4) Banana problems + rover/component fit
+- [ ] (5) Real farmer complaints from forums/reportage
+
+### v2.1 Add-on component prices — verified against live Indian listings (04-Aug-2026)
+Several v1 estimates were **too low**. Corrected, live retail figures — all **[External result]**:
+
+| Component | v1 estimate | Verified live India price | Source |
+|---|---|---|---|
+| Refractometer 0–32 °Brix | ₹500–2,000 | **₹859–1,283** (Real Instruments ₹859; Labsoul ₹1,000; Erma digital ₹1,283) | `[S26]` |
+| SHT31 temp/RH module | ₹300–800 | **₹700–1,200** branded (Adafruit ~₹966); generic breakouts lower | `[S27]` |
+| MQ-137 ammonia sensor | ₹300–900 | **~₹1,199** (Robocraze) — higher than estimated | `[S28]` |
+| MLX90640 thermal camera (32×24) | ₹2,500–5,000 | **₹7,250–10,000** (ThinkRobotics ₹7,250–7,350; Adafruit ~₹8,815; M5StickC ₹10,004) — **much** higher | `[S29]` |
+| Leaf-wetness sensor | ₹1,500–5,000 | **₹3,700–11,600** for a real RS485 field sensor (imports, ~$45–139); no cheap hobby module found | `[S30]` |
+
+**Correction to the v1 takeaway (important).** v1 claimed a "~₹2–6k canopy micro-climate node" unlocks the biggest grape/pomegranate problems. Verified prices push that **up**: a credible **leaf-wetness + SHT31 node is ~₹4,400–12,800** (leaf-wetness ₹3,700–11,600 + SHT31 ₹700–1,200), and adding a **thermal camera is ₹7,250–10,000**, not ₹2,500–5,000. The mildew early-warning idea still stands, but its hardware bill is **~2–3× the v1 figure** — which strengthens the argument that a *fixed* IoT station (Fyllo-type) may amortise that sensor better than a slow rover carrying one. **[Analyst scenario]** The genuinely cheap, confirmed items are the **refractometer (₹859–1,283)** for ripeness ground-truthing and **SHT31 (₹700–1,200)**.
+
+### v2 sources
+- `[S26]` Flipkart, 0–32 °Brix handheld refractometers ₹859–1,283 — https://www.flipkart.com/real-instruments-0-32-brix-hand-refractometer-atc-measuring-fruits-wine-beer-sugars-manual-handheld/p/itme5b7738d9159a
+- `[S27]` Evelta, Adafruit SHT31-D temp/RH module (~₹966) — https://evelta.com/2857-adafruit-sensirion-sht31-d-temperature-humidity-sensor/
+- `[S28]` Robocraze, MQ-137 NH3 ammonia sensor ₹1,199 — https://robocraze.com/products/mq-137-nh3-gas-sensor-module
+- `[S29]` ThinkRobotics, MLX90640 32×24 thermal camera ₹7,249–7,349 — https://thinkrobotics.com/products/mlx90640-ir-array-thermal-imaging-camera
+- `[S30]` Industrial leaf-wetness sensors ~$45–139 (RS485) — https://www.accio.com/plp/leaf-wetness-sensor-price · research-grade METER PHYTOS 31 — https://metergroup.com/products/phytos-31/
+
+---
+
 ## Sources
 - `[S1]` NRCG/TOI, up-to-50% grape loss warning (2025) — https://timesofindia.indiatimes.com/city/pune/scientists-warn-of-50-drop-in-grape-yield-across-maharashtra-this-season/articleshow/124856506.cms
 - `[S2]` TOI Nashik, farmers axe grapevines, 35–40→3–5 bunches — https://timesofindia.indiatimes.com/city/nashik/adverse-weather-hits-grape-dreams-hard-farmers-forced-to-axe-grapevines-in-nashik/articleshow/125031286.cms
