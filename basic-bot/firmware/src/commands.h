@@ -6,5 +6,4 @@
 #include "freertos/event_groups.h"
 
 void commands_init(EventGroupHandle_t events);
-void commands_poll();                        // read + execute pending lines
-unsigned long commands_ms_since_drive_cmd(); // for the dead-man check
+void commands_poll();   // collect USB serial lines and dispatch them

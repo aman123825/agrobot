@@ -1,0 +1,512 @@
+
+===PAGE 1===
+NABARD Head Office Mumbai 
+ 
+ 
+Model Scheme on Onion Storage Structures 
+ 
+1. Introduction  
+ 
+India is one of the largest producers of onion in the world second only to China, 
+accounting for 16 percent of total area under cultivation in the world and 10 percent 
+of total production. In India, onion is cultivated in  0.39 million hectares with 
+production of 4.30 million tonnes per annum (FAO,1995). The current year's  (2013-
+14) production is estimated at 4.7 million tonnes.  Most of the onion produced in 
+India comes from the state of Maharashtra, Madhya Pradesh, Karnataka, Andhra 
+Pradesh, Bihar, Gujarat and Haryana. 
+ 
+Lack of adequate and appropriate storage facility is one the major constraint which 
+enforces distress sale on farmers . The present storage  capacities are either 
+inadequate or unscientific. As a result of glut situation the price variability has been 
+too high in the recent past.  To improve the situation, GOI desired to create 
+appropriate storage structures for onion, both at farm level as we ll as at market 
+places. It drew a capital subsidy programme for the infrastructure development in 
+which NABARD has been playing a pivotal role. It has been planned to create a 
+storage capacity of 4.5 lakh tonnes of onion during 1999 -2000 and 2000 -2001 
+through capital investment subsidy programme. Subsidy to the extent of 25% of the 
+investment cost subject to a maximum of 500 per tonne has been proposed to be 
+routed through NABARD for the credit delivery system. 
+ 
+ 
+2. Status of Onion Storage Structures and its Potential in India 
+ 
+The present storage capacity for onion is about 4.6 lakh tonnes. This is quite 
+inadequate compared to our total production. Even most of the structures available 
+are traditional and unscientific. If 40 % of the stocks are earmarked for scientific 
+storage the potential for new storage structures is about 12.6 lakh tonnes. However, 
+it has been projected by the Expert Committee on Cold Storage and Onion Storage 
+that about 1.5 lakh tonnes on -farm capacity in production areas and 3.0 lakh  tonnes 
+capacity at APMCs and other market places are required in next 5 years. Thus there 
+remains a vast potential to be tapped. 
+ 
+3. Extent of Storage Losses 
+ 
+The onion bulbs are generally stored from May to November for a period of four to 
+six months. Ho wever, 50 -90 per cent storage losses are recorded depending upon 
+genotype and storage conditions. The total storage losses are comprised of 
+physiological loss in weight (PLW) i.e. moisture loss and shrinkage (30 -40%), rotting 
+(20-30%) and sprouting (20 -40%). The PLW can be minimized by harvesting at right 
+time, proper curing of onion bulbs and subsequent storage at desired temperature 
+
+===PAGE 2===
+and humidity conditions. Generally, the rotting losses are at peak in initial months of 
+storage, particularly in June and Ju ly, when high temperature coupled with high 
+humidity result the losses. However, proper grading and selection of quality bulbs 
+and good ventilation conditions can reduce the rotting losses. Application of post 
+harvest fungicidal sprays can also reduce the rottings. But this is not a practice in 
+India. Sprouting losses are usually recorded at the end of storage period or when 
+exposed to high temperature of humid air. Noticeable sprouting losses are observed 
+because of storage of poor quality bulbs having les s rest and dormant period and 
+also having thick neck. Comparatively, more sprouting losses are recorded in dark 
+red and white onion cultivars than the light red onion cultivars 
+ 
+4. Onion and its Physiology for Storage 
+ 
+Every agricultural commodity is requi red to be stored properly to prolong the 
+availability with minimum qualitative and quantitative losses. Onion is not an 
+exception. The onion bulb is a natural food store for the plant, but it is a living 
+system undergoing a process of development towards s prouting, and is subject to 
+decay by various disease causing organisms. The objective of storage technology is to 
+maintain the bulbs for as long as possible in an unchanged sound condition with 
+longer shelf life, and allow them to transport and market afte r removal from store 
+without much losses. 
+ 
+It is necessary to have the knowledge of the physiology of dormancy and 
+epidemiology of storage disease while thinking of long term storage. Systems to 
+provide long dormant condition and suitable condition which i s unfavorable for 
+disease development can be engineered using the physical principles of temperature 
+and humidity control. Also in this process economic and technological constraints 
+will have to be looked into. For this, two basic strategies i.e. high tem perature 
+dormancy of onion bulbs and maintaining storage temperature at around 300 C need 
+to be exploited. 
+The physiological and pathological processes that proceed within a store of onion 
+bulbs interact with the physical process of heat and water vapour e xchange so as to 
+mutually influence the environment within the store. Main factors which influence 
+onion storage and bring change in the bulbs are summarized as under in sequence: 
+ 
+ With time, sprouting and internal root development proceed. 
+ Sprouting and internal root development change bulb shape, tension of skins 
+and crack the skins. 
+ This increases the conductivity of skins to water vapour and ultimately rate of 
+water loss from the bulbs. 
+ Increase in sprouting increases respiration. 
+ Increase in respirati on increases outputs of heat, CO2 and water loss from 
+the bulb. 
+ Diseases are developed in store when there are favorable conditions and 
+bulbs thus get deteriorated. 
+ Bulb deterioration due to diseases will also increase respiratory outputs. The 
+onion skins has vital role in the physical and physiological processes in the 
+===PAGE 3===
+storage, as it is the main barrier to water loss and to CO2 exchange. 65 -70% 
+relative humidity is desirable to maintain the skin fairly flexible and elastic. At 
+lower RH, the skin become ver y brittle and gets easily cracked notably when 
+skin moisture content falls below 20%. 
+ Ventilation is needed to maintain humidity between 65 -70% and lack of this 
+often adversely affects the quality and quantity by increase in water loss and 
+respiration. 
+ Ventilation is also needed to dissipate heat produced by bulbs. 
+ With time, requirement of ventilation for the above will also increase. 
+ Design of store should, therefore, match the requirements. 
+ High humidity with high temperature favours spread of pathogens within the 
+store. 
+ 
+It is necessary to counter the above changes by proper monitoring of internal 
+environment. Heat and water vapour must be removed or introduced as necessary 
+either by using heating or refrigeration or ventilation or a combination of all t he 
+mechanisms depending upon the economics. However, under Indian conditions in 
+onion growing states designs to exploit natural ventilation is most economical. 
+ 
+5. Onion Storage Structure Requirements 
+ 
+For effective long storage of onion the parameters ess ential to be looked after are 
+the bulb size, choice of cultivars, cultivation practices, time of harvest, field curing, 
+removal of tops, drying, grading, packing, storage conditions (optimum storage 
+range of relative humidity 65% to 70% with the  temperature ranging between 25° C 
+to 30°C). 
+ 
+ 
+Salient Features of Improved Storage Structures are: 
+ 
+1. Construction of structure on a raised platform to prevent moisture and 
+dampness due to direct contact of bulbs with the soil. 
+2. Use of Mangalore tile type roof or other suitable materials to prevent built up 
+of high inside temperature. 
+3. Increased centre height and more slope for better air circulation and 
+preventing humid micro climate inside godown. 
+4. Providing bottom and side ventilations for free and faster air circulatio n and 
+to avoid formation of hot and humid pockets between the onion layers. 
+5. Avoid direct sunlight or rain water falling on onion bulbs to reduce sun scald, 
+fading of colour and quality deterioration. 
+6. Maintenance of stacking height to avoid pressure bruising. 
+7. Periodical disinfection of structures and premises to check rottage. 
+8. Cost effectiveness of structures is based on utilization of locally available 
+material for the construction. 
+ 
+For onion storage, technology may be either with natural ventilatio n or with forced 
+ventilation. Although cold storage systems are used in certain countries for onion, 
+===PAGE 4===
+this is normally not adopted in India due to poor economics and lack of cold chain 
+facilities required to maintain the quality in the high ambient temperat ure prevalent 
+in our country. Onion storage in ventilation condition is quite satisfactory when the 
+temperature is maintained between 25oC to 30oC with a relative humidity range of 
+65% to 70%. This environment reduces the storage losses, which are in the f orm of 
+physiological loss in weight, rotting and sprouting. The onion storage structure 
+should be oriented in the North - South direction i.e., length facing the East -West 
+direction. The storage of onion will be on raised perforated platform of 0.60 m 
+height with bottom and side ventilations. The ground clearance may be 60 cm with 
+side opening of upto 80%. Height of storage under ventilation storage should be in 
+the range of 90 cm to 150 cm. For a 25 MT storage, the size of onion storage area 
+will be 4.5m X  6.0m. The width of storage may be reduced depending upon the 
+availability of local construction material and ambient condition. The length of 
+storage structure may be increased to suit the requirements of the individual 
+farmers. The minimum overhang of 1. 5 m on the windward side and 0.5 m on all 
+other sides should be provided to protect the produce from sunlight and rain. At 
+leeward side, the opening below the platform should be closed to direct the air 
+upward for better ventilation. Where storms/ cyclones  are expected, leeward side 
+should not be closed when the windward side is open. During storm there should be 
+a provision to close the windward side. Emphasis should be laid for better area 
+utilization efficiency. The overall dimensions of a 25 MT structure may be 6.5 m X 7.0 
+m. The dimensions can be adjusted depending upon the capacity and site conditions. 
+The roof of the structures may be either Mangalore tile type or ACC sheets for a 
+single tire arrangement or RCC for two tier systems. In case of Mangalo re tiles, 
+proper fixation should be done at the ends to prevent damage by air. If cheaper 
+materials are available which can prevent heat built up at the top of the structure, 
+they can also be used. The foundations should only support the pillars to bear th e 
+load of the structure and wind. Continuous half brick thick wall may be provided on 
+the leeward side below the storage platform to serve as a wind barrier. MS angles 
+may be used for the truss and pillars. Half split bamboo sticks supported by MS angle 
+frames may be used for storage of onion. Side walls can also be of chain link (GI wire) 
+type. It has been observed that such structures can be constructed with an 
+investment cost between 1500 to 2000 per MT. Therefore, adequate care is to be 
+taken for economizing the structures. 
+ 
+6. Onion Storage Practices 
+ 
+Onions are stored either loose or in bags. The beneficiaries may be advised to sort 
+the onions prior to storage and thereafter atleast once in thirty days to take out the 
+rotten/ infected onions in order  to avoid further spread of diseases/ losses. 
+Generally, a loss of about 20 -30 % is there during a storage season in the form of 
+weight loss of onions which can be controlled with proper care. However, the other 
+types of losses can be controlled to a great er extent if the structure is designed to 
+facilitate maximum natural ventilation through the stored onion and sorting is done 
+at regular intervals. 
+ 
+7. Promoter's Profile 
+
+===PAGE 5===
+ 
+The promoters can be individuals, group of individuals, cooperative societies, 
+proprietary/ partnership concerns and joint sector companies in public or private 
+sector. While formulating a project, complete details of the promoter(s), their 
+experience in the activity and net worth, etc. have to be incorporated. 
+ 
+8. Physical and Financial Outlay 
+ 
+The following physical provisions with their costs are considered for an onion storage 
+godown. 
+1. Land, 
+2. Site development including levelling, fencing, drainage, etc., 
+3. Construction of onion storage shed as per the principles indicated above, 
+4. Provision of wooden beams for the floor and bamboo sticks for sides and 
+floors, 
+5. Provision of poly ethylene sheets/ gunny bags for preventing sunlight or rain 
+falling on onion. 
+6. Contingency. 
+With the parameters indicated above, the average cost of an onion storage godown 
+varies from 3000 to 4000 per MT. The average cost of a 25 tonnes capacity onion 
+storage godown is considered as 1.00 lakh and accordingly the economics of the 
+investment has been worked out. The techno -financial parameters adopted for 
+working out th e economics of a 25 MT onion storage structure is placed at 
+Annexure-I. 
+ 
+9. Financial Viability 
+ 
+The financial analysis of the investment of a 25 MT capacity onion storage structure 
+has been attempted and is placed at Annexure II. The project has a margin money 
+component of 25% with the rate of interest on term loan as 14%. For this project, 
+the financial indicators of the investment are as under: 
+ 
+1. Net Present Value @ 15% DF = 33,000 
+2. Benefit Cost Ratio @ 15% DF = 1.308 : 1 
+3. Internal Rate of Return (IRR) = 36.53 % 
+4. Average Debt Service coverage Ratio = 1.9602 : 1 
+As per the cashflow statement and repayment schedule given in Annexure III, the 
+term loan can be recovered in 5 years without any grace period. 
+ 
+10. Dos and Don'ts 
+ 
+In order to safeguard the interest of bankers and borrowers, it would be necessary 
+to take certain precautionary measures. As a ready reckoner, some of the important 
+aspects are shown in the form of Dos and Don'ts in Annexure IV for success of the 
+scheme. 
+ 
+11. NABARD's role 
+
+===PAGE 6===
+ 
+NABARD provides refinance support to various eligible financing banks for financing 
+onion storage structures under its normal refinance programme, the guideline for 
+which are issued from time to time. A cheklist to be used by the bankers for 
+submitting the proposal for refinance is given at Annexure V. 
+ 
+Government of India has sanctioned a capital investment subsidy scheme for 
+construction/ modernization/ expansion of cold storages and storages for 
+horticultural produce. The details of the scheme are placed at Annexure VI . NABARD 
+has been made a nodal agency for promoting the activity through credit delivery 
+system. 
+DISCLAIMER 
+The views expressed in this model project are advisory in 
+nature.  NABARD assume no fina ncial liability to anyone using  
+the report for any purpose . The actual cost and returns of 
+project s will have to be taken on a case by case basis 
+considering the specific requirement of projects  
+===PAGE 7===
+Annexure I 
+ 
+TECHNO - FINANCIAL PARAMETERS AFDOPTED FOR WORKING OUT THE 
+ECONOMICS OF A 25 MT ONION STORAGE STRUCTURE 
+ 
+1 Land requirement 6.5 m X 7.0 m 
+2 Storage space requirement 4.5 m X 6.0 m 
+3 Technology preferred Natural or forced ventilation maintaining a 
+temperature between 25 and 30 o C with a 
+relative humidity range of 65 to 70 %. 
+4 Clearance of storage platform 
+from the ground 60 cm 
+5 Height of the storage platform 90 to 150 cm 
+6 Cost of construction 100000 ( unit cost of 4000 per MT) 
+7 Capacity 25 MT 
+8 Capacity utilization 100% 
+9 Weight loss in onion upto 3 
+months 12.50% 
+10 Onion sold upto 3 months 50% 
+11 Weight loss in onion from 3rd 
+to 6th month 12.50% 
+12 Onion sold between 3rd and 
+6th months 50% 
+13 Sale price:   
+  (a) Sale price of onion sold at 
+the time of harvest 15.00 per kg 
+  (b) Sale price of onion sold upto 
+3 months 22.00 per kg 
+  (c) Sale price of onion sold 
+between 3rd and 6th months 24.00 per kg 
+14 Handling/ transport/ grading/ 
+sorting charges 3.00 per kg 
+15 Interest loss to the farmer on 
+investment 14% 
+16 Life of the storage structure 15 years 
+ 
+
+===PAGE 8===
+Annexure II 
+ 
+ 
+MODEL BANKABLE PROJECT FOR A 25 MT ONION STORAGE STRUCTUREMODEL BANKABLE PROJECT FOR A 25 MT ONION STORAGE 
+STRUCTURE 
+CALCULATION OF IRR, BCR, NPW - 25 MT CAPACITY ONION STORAGE STRUCTURE 
+  Particulars YEAR 
+1 2 3 4 5 6 7 8 9 10 11 12 13 14 15 
+1 Capital Cost 1 - - - - - - - - - - - - - - 
+2 Recurring Cost 0.75 0.75 0.75 0.75 0.75 0.75 0.75 0.75 0.75 0.75 0.75 0.75 0.75 0.75 0.75 
+3 Interest loss on  0.14 0.14 0.14 0.14 0.14 0.14 0.14 0.14 0.14 0.14 0.14 0.14 0.14 0.14 0.14 1.00 lakh @ 14 % 
+4 Total Cost 1.89 0.89 0.89 0.89 0.89 0.89 0.89 0.89 0.89 0.89 0.89 0.89 0.89 0.89 0.89 
+5 Benefits 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 
+6 Salvage value considering the rate of depreciation as 10% 
+              0.1 
+7 Total Benefits 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.25 1.35 
+8 Net Benefits -0.64 0.36 0.36 0.36 0.36 0.36 0.36 0.36 0.36 0.36 0.36 0.36 0.36 0.36 0.46 
+9 Discounting Factor 15%                             
+10 NPW @ 15 % DF 1.25                             
+11 BCR 1.21 : 1                           
+12 IRR 56.16%                             
+===PAGE 9===
+ 
+Annexure III 
+ 
+REPAYMENT SCHEDULE - 25 MT CAPACITY ONION STORAGE STRUCTURE 
+OUTLAY = 100000 Loan/ finance 75 % of the outlay i.e. 75000 
+ Sr. 
+No.  
+Bank loan 
+outstanding 
+Net 
+Surplus  
+Payment 
+of Interest 
+@ 14 % 
+p.a. 
+Repayment 
+of Principal 
+Total 
+Outgo  
+Net 
+Availa
+ble  
+DSCR  Beginning 
+of the 
+Year 
+End of 
+the 
+Year 
+1 75000 60000 36000 10500 15000 25500 10500 1.41 
+2 60000 45000 36000 8400 15000 23400 12600 1.54 
+3 45000 30000 36000 6300 15000 21300 14700 1.69 
+4 30000 15000 36000 4200 15000 19200 16800 1.88 
+5 15000 0 36000 2100 15000 17100 18900 2.11 
+  Average 
+DSCR   1.72 : 1         
+ 
+  
+===PAGE 10===
+ANNEXURE IV 
+DO'S AND DON'TS 
+ 
+Sr. 
+No. 
+DOS DON'TS 
+1 Suitability of site with proper elevation, 
+drainage and linkages by road. 
+Site in a low lying area with poor road 
+communication must be avoided. 
+2 Adequate bottom and side natural 
+ventilation facilities should be 
+provided. 
+Any obstruction to the natural 
+ventilation should be avoided or 
+minimized. 
+3 No tall structures should be located 
+nearer to the onion sheds. 
+Tall structures within a distance of 1.5 
+times the height of onion storage 
+structures should be avoided. 
+4 For natural ventilation, storage width 
+should be restricted to 610 cm. In the 
+areas having high humidity, the storage 
+width may be reduced/ necessary 
+mechanical ventilation provision may 
+be made. 
+Wider storage structures should be 
+avoided. 
+5 Onion storage structures should be 
+oriented to face wind ward direction. 
+Structures along the wind direction 
+should be avoided. 
+6 Leeward side wall opening below the 
+platform should be closed. 
+Where storms and cyclones are 
+expected, leeward side should not be 
+closed when windward side is open. 
+7 During storm/ heavy  rains, provision 
+should be made to close the windward 
+side and wherever necessary to open 
+the leeward side. 
+During storm/ heavy rains, windward 
+side should not be kept open. 
+8 Adequate overhang should be 
+provided to prevent splashing of rain 
+water or sunlight falling on the onion 
+Structures with small overhangs should 
+be avoided. 
+9 The roof of material should prevent 
+heat built -up at the top of the 
+structure. 
+Roof materials like corrugated GI 
+sheets should be avoided. 
+ 
+  
+===PAGE 11===
+Annexure- V 
+ 
+CHECK - LIST FOR ONION STORAGE GODOWNS 
+ 
+A) General Information 
+1. Name, location and office address of the Onion storage unit. 
+2. Population of the area, crops being grown, land holding pattern, area under 
+irrigation. 
+3. Production of onions in the area. 
+4. Names of the financing bank(s) / branch(es) and whether the scheme is in 
+their service area. 
+5. Approval of the scheme/constructions from the competent authority 
+ 
+B) The Project 
+1. Objectives of the project. 
+2. Capacity of the project and justification thereof 
+ 
+C) Promoters 
+1. Status of the promoters/ company - whether individual/ society/ partnership 
+firm/private limited company/ public limited company. 
+2. Background of the promoters - educational/ technical/ agricultural/ business. 
+3. Financial health of the promoter. 
+4. Other activities being taken up/ planned 
+ 
+D) Technical Aspects 
+ 
+1. Availability of the commodity in the area. 
+2. Demand of the commodity in the area. 
+3. Price during harvest season for good storable onion. 
+4. Price normally rule after three months and six months. 
+5. Capacity and Location:  
+Locational advantage of the unit. 
+Distance from the main market for the commodity. 
+Location of the nearest onion storage godown from the proposed site & 
+its capacity. 
+Details about the site - Area of the plot/ Site plan indicating t he existing 
+roads and the natural drainage. 
+Copy of the land records clearly indicating the title and cost. 
+Other communication facilities available near the site. 
+Any other consideration for selection of proposed site 
+6. Civil Structures: 
+Items proposed under site development and their detailed specifications ( 
+storm water drainage systems, roads, boundary walls, quantum of 
+earthwork, gates etc.) 
+Details of structure clearly indicating the size (L/B/H) and justification for 
+the size. 
+===PAGE 12===
+Layout plan for the propo sed structures indicating existing structures, if 
+any. 
+Ambient temperature and humidity conditions during storage season. 
+Detailed technical & structural drawings indicating specifications. 
+Quantity and rate analysis of building materials vis-a- vis rates as per SOR. 
+Mechanical ventilation provision if any, If so the details with provision of 
+electricity. 
+Any other relevant information 
+ 
+E) Marketing 
+ 
+1. Arrangement for procurement of the commodity for storage. 
+2. Services proposed to be offered by the unit. 
+3. Existing rates of different services. 
+4. Capacity utilization proposed and justification for the same. 
+ 
+F) Organizational Set-up 
+ 
+Organization Structure , details of manpower requirement and salary structure. 
+ 
+G) Financial Information Project Outlay 
+ 
+1. Item wise cost proposed under site development. 
+2. Item wise cost proposed under Civil structures. 
+3. Cost of miscellaneous items if any. 
+4. Means of Finance: Total Outlay Margin Money Loan Requirement 
+5. Lending terms:  
+Rate of interest, grace period, repayment period, down payment, nature 
+of security, availability of government guarantee for bank loan/ refinance, 
+sources and extent of availability of subsidy etc. 
+Proposed schedule of implementation. 
+Estimates of aggregate income, expenditure and surplus from the storage. 
+Comments on the financial viability of the project along with cash flow, 
+B/C ratio, net present worth, financial rate of return , Internal rate of 
+return and Debt Service Coverage Ratio 
+Assumptions made for calculating income and expenditure statement. 
+Projected Income and Expenditure Statement for next five years. 
+Sensitivity Analysis. 
+Socio-economic benefits including employment generation and benefits to 
+farmers. 
+Comments on the financial position of the borrowers/ implementing 
+agency. 
+In case of companies,  partnership firm or society an analysis of their 
+financial position and audited financial statements for last three years. 
+6. Infrastructure available for project implementation.  
+7. SWOT Analysis. 
+ 

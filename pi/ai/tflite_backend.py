@@ -16,13 +16,18 @@ def load_interpreter(model_path: str, use_coral: bool = False):
     Interpreter = None
     load_delegate = None
     try:
-        from tflite_runtime.interpreter import Interpreter, load_delegate  # type: ignore
+        from tflite_runtime.interpreter import (  # type: ignore
+            Interpreter,
+            load_delegate,
+        )
     except Exception:
         try:
             from tensorflow.lite.python.interpreter import Interpreter  # type: ignore
 
             try:
-                from tensorflow.lite.python.interpreter import load_delegate  # type: ignore
+                from tensorflow.lite.python.interpreter import (
+                    load_delegate,  # type: ignore
+                )
             except Exception:
                 load_delegate = None
         except Exception as exc:

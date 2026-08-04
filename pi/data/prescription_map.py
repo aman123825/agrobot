@@ -14,8 +14,10 @@ import os
 import sys
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-from data.heatmap import idw_grid  # noqa: E402
-from nav.geo import latlng_to_local, local_to_latlng  # noqa: E402
+from nav.geo import latlng_to_local, local_to_latlng
+
+from data.heatmap import idw_grid
+from data.isoxml import export_isoxml
 
 
 class PrescriptionMap:
@@ -233,6 +235,39 @@ class PrescriptionMap:
 
         with open(path, "w") as fh:
             json.dump(collection, fh, indent=2)
+
+    def to_isoxml(
+        self,
+        out_dir: str,
+        nutrient: str = "total",
+        product_name: str = "NPK blend",
+        zip: bool = False,
+    ):
+        """Export as an ISO 11783-10 (ISOXML) TASKDATA set via data.isoxml.
+
+        nutrient selects the rate grid: "n", "p", "k" or "total" (sum).
+        Rates are kg/ha, encoded x100 per the isoxml module's conventions
+        (same factor as its L/ha default).  Returns the TASKDATA directory
+        path, or the .zip path when zip=True.
+        """
+        n_rate, p_rate, k_rate, bounds, lat0, lng0 = self._compute_grid()
+        grids = {"n": n_rate, "p": p_rate, "k": k_rate}
+        if nutrient == "total":
+            rates = [
+                [n_rate[j][i] + p_rate[j][i] + k_rate[j][i] for i in range(len(n_rate[0]))]
+                for j in range(len(n_rate))
+            ]
+        elif nutrient in grids:
+            rates = grids[nutrient]
+        else:
+            raise ValueError(f"Unknown nutrient {nutrient!r} (use n, p, k or total)")
+
+        return export_isoxml(
+            {"rates": rates, "bounds": bounds, "lat0": lat0, "lng0": lng0},
+            out_dir,
+            product_name=product_name,
+            zip=zip,
+        )
 
 
 # ------------------------------------------------------------------

@@ -13,10 +13,6 @@ import sys
 import threading
 import time
 import uuid
-from typing import TYPE_CHECKING
-
-if TYPE_CHECKING:
-    pass
 
 # Guard ROS 2 imports for py_compile compatibility.
 try:

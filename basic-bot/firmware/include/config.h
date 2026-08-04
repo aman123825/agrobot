@@ -1,8 +1,9 @@
 /**
  * config.h - AgriRover BASIC BOT runtime configuration.
  *
- * No WiFi, no MQTT, no secrets: the basic bot talks plain text over USB
- * serial to a laptop. Everything here is a tuning constant.
+ * No MQTT, cloud, or external router: the basic bot accepts the same plain-text
+ * commands over its private mobile WiFi page and USB serial. Network credentials
+ * shared with the ESP32-CAM live in ../../shared/network_config.h.
  */
 #pragma once
 
@@ -15,6 +16,14 @@
 
 // ---- Manual drive speed (0..255 duty, changeable at runtime via SPEED n) ----
 #define MANUAL_DRIVE_SPEED  180
+
+// ---- Drive direction correction ----
+// Fix a side that runs backwards WITHOUT rewiring the motor. Symptom: pressing
+// Forward makes the bot spin instead of going straight. Set the offending side
+// to 1 to invert it. Here the left motor was wired reversed (FWD spun the bot
+// left), so inverting LEFT makes Forward/Back/Left/Right all correct.
+#define DRIVE_INVERT_LEFT   1
+#define DRIVE_INVERT_RIGHT  0
 
 // ---- Front ultrasonic obstacle safety ----
 #define US_STOP_DISTANCE_CM 25.0f  // block forward drive below this
@@ -45,11 +54,24 @@
 #define ESP32_OVERTEMP_C        85.0f  // inhibit drive at/above this
 #define ESP32_OVERTEMP_CLEAR_C  80.0f  // clear below this (hysteresis)
 
-// ---- Dosing sequence timing (Branch A: spring-return actuator) ----
-#define DOSE_PRESOAK_MS     1500   // pump pre-soak before actuator extends
+// ---- Dosing sequence timing (probe lowered/raised by the MG995 servo) ----
+#define DOSE_PRESOAK_MS     1500   // pump pre-soak before the probe lowers
 #define DOSE_DWELL_MS        800   // hold at full insertion before dosing
 #define DOSE_INJECT_MS      1500   // micro-dose pulse
-#define ACTUATOR_TRAVEL_MS  4000   // worst-case extend/retract time
+
+// ---- Insertion servo (MG995, positional) ----
+// The NPK + moisture probe is lowered/raised by an MG995 on PIN_SERVO_INSERT.
+// CALIBRATE the two angles on the bench BEFORE driving the probe into soil:
+//   UP   = fully retracted (safe travel position, probe clear of the ground)
+//   DOWN = fully inserted   (probe seated in the soil)
+// The sweep is stepped so the probe eases in/out instead of slamming (gentler
+// on the linkage and the 5V rail). MG995 full travel is a ~0.5-2.5 ms pulse.
+#define SERVO_INSERT_UP_DEG    10    // retracted / travel angle   (TUNE)
+#define SERVO_INSERT_DOWN_DEG  95    // inserted angle             (TUNE)
+#define SERVO_MIN_US           500   // pulse width at 0 deg
+#define SERVO_MAX_US           2500  // pulse width at 180 deg
+#define SERVO_STEP_DEG         2     // degrees moved per step during a sweep
+#define SERVO_STEP_MS          15    // delay per step (smaller = faster insert)
 
 // ---- Relay module polarity (common opto modules are active-LOW) ----
 #define RELAY_ACTIVE_LOW    1

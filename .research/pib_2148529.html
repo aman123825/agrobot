@@ -1,0 +1,1349 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1"><title>
+	Press Release Page | Press Information Bureau
+</title><link href="css/style.css" rel="stylesheet" type="text/css" /><meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" /><link rel="alternate stylesheet" href="css/change.css" media="screen" title="change" /><link rel="alternate stylesheet" href="css/green.css" media="screen" title="green" /><link rel="alternate stylesheet" href="css/yellow.css" media="screen" title="yellow" /><link rel="stylesheet" type="text/css" href="css/prtint.css" media="print" /><link rel="stylesheet" href="css/style3.1.css" type="text/css" />
+
+
+      <script src="js/jquery.min.js" type="text/javascript"></script>
+      <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="true" /><link href="https://fonts.googleapis.com/css2?family=Raleway:ital,wght@0,100..900;1,100..900&amp;display=swap" rel="stylesheet" />
+
+      <script type="text/javascript">
+            $(document).ready(function () {
+                  function getParameterByName(name) {
+                        var url = window.location.href;
+                        name = name.replace(/[\[\]]/g, '\\$&');
+                        var regex = new RegExp('[?&]' + name + '(=([^&#]*)|&|#|$)'),
+                              results = regex.exec(url);
+                        if (!results) return null;
+                        if (!results[2]) return '';
+                        return decodeURIComponent(results[2].replace(/\+/g, ' '));
+                  }
+                  // Get the IDs from the current page's URL
+                  let prid = parseInt(getParameterByName('PRID'), 10);
+
+                  if (!isNaN(prid) && prid > 0) {
+                        $.ajax({
+                              type: "POST",
+                              url: "AjaxMethod.aspx/UpdatePRHitCount",
+                              async: false,
+                              data: JSON.stringify({ 'PermId': prid }),
+                              contentType: "application/json; charset=utf-8",
+                              dataType: "json",
+                              success: function (response) {
+                                    console.log(response);
+                              },
+                              error: function (error) {
+                                    console.log("Error in AJAX request", error);
+                              }
+                        });
+                  } else {
+                        console.log("Invalid parameters:", prid);
+                  }
+
+            });
+      </script>
+      <style type="text/css">
+            .table-responsive {
+                  width: 100%;
+                  overflow-x: auto;
+            }
+
+            .banner {
+                  display: flex;
+                  justify-content: space-between;
+                  align-items: center;
+                  background-color: #000;
+                  color: #fff;
+                  padding: 20px;
+            }
+
+            full-width {
+                  width: 100%;
+            }
+
+            .logo-left, .logo-center, .countdown {
+                  display: flex;
+                  align-items: center;
+            }
+
+                  .logo-left img, .logo-center img {
+                        height: 70px;
+                  }
+
+            .countdown {
+                  text-align: center;
+                  background-color: #444;
+                  border-radius: 10px;
+                  padding: 10px;
+                  border: 2px solid grey;
+            }
+
+            .firstnumber {
+                  color: #000000;
+                  position: absolute;
+                  top: 50px;
+                  right: 90px;
+                  font-size: 30px;
+            }
+
+            .secondnumber {
+                  position: absolute;
+                  color: #000000;
+                  right: 45px;
+                  top: 50px;
+                  font-size: 30px;
+            }
+
+            .countdown .days {
+                  font-size: 35px;
+                  color: gold;
+            }
+
+            .countdown p {
+                  margin: 0;
+            }
+
+            .countdown .text {
+                  font-size: 16px;
+            }
+
+            a {
+                  word-break: break-all;
+            }
+
+            iframe, img {
+                  max-width: 100%;
+            }
+
+            @media(max-width:1199px) {
+                  .firstnumber {
+                        top: 40px;
+                        right: 72px;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 35px;
+                        top: 40px;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:990px) {
+                  .firstnumber {
+                        top: 25px;
+                        right: 54px;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 25px;
+                        top: 25px;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:768px) {
+                  .countdown, .days {
+                        font-size: 12px !important;
+                  }
+
+
+                  .firstnumber {
+                        top: 25%;
+                        right: 8%;
+                        font-size: 30px;
+                  }
+
+                  .secondnumber {
+                        right: 4.5%;
+                        top: 25%;
+                        font-size: 30px;
+                  }
+            }
+
+            @media(max-width:475px) {
+                  .countdown, .days {
+                        font-size: 10px !important;
+                        top: 20%;
+                  }
+
+                  .bannerimgdiv {
+                        padding: 0 !important;
+                  }
+
+                  .bannerimg {
+                        width: 108% !important;
+                  }
+            }
+      </style>
+      <script type="text/javascript">
+            $(function () {
+                  $("[id*=printPDF]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+            $(function () {
+                  $("[id*=printPDFEvent]").click(function () {
+                        $("[id*=hfGridHtml]").val($("#PdfDiv").html());
+                  });
+            });
+      </script>
+
+      <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112591026-1"></script>
+      <script>
+
+            window.dataLayer = window.dataLayer || [];
+
+            function gtag() { dataLayer.push(arguments); }
+
+            gtag('js', new Date());
+
+
+
+            gtag('config', 'UA-112591026-1');
+
+      </script>
+
+<meta property="og:title" content="SCHEMES TO MINIMISE POST-HARVEST LOSSES" /><meta property="og:url" content="www.pib.gov.in/Pressreleaseshare.aspx?PRID=2148529" /><meta property="og:description" content="Ministry of Food Processing Industries (MoFPI) commissioned a study in 2022 namely, “Study to determ" /><meta property="og:image" content="https:/pib.gov.in/images/indian-emblem.png" />
+                                <script>!function(e){var n="https://s.go-mpulse.net/boomerang/";if("False"=="True")e.BOOMR_config=e.BOOMR_config||{},e.BOOMR_config.PageParams=e.BOOMR_config.PageParams||{},e.BOOMR_config.PageParams.pci=!0,n="https://s2.go-mpulse.net/boomerang/";if(window.BOOMR_API_key="C4E7H-KSCMC-422L4-W3EM5-U36MF",function(){function e(){if(!i){var e=document.createElement("script");e.id="boomr-scr-as",e.src=window.BOOMR.url,e.async=!0,o.parentNode.appendChild(e),i=!0}}function t(e){i=!0;var n,t,a,r,d=document,O=window;if(window.BOOMR.snippetMethod=e?"if":"i",t=function(e,n){var t=d.createElement("script");t.id=n||"boomr-if-as",t.src=window.BOOMR.url,BOOMR_lstart=(new Date).getTime(),e=e||d.body,e.appendChild(t)},!window.addEventListener&&window.attachEvent&&navigator.userAgent.match(/MSIE [67]\./))return window.BOOMR.snippetMethod="s",void t(o.parentNode,"boomr-async");a=document.createElement("IFRAME"),a.src="about:blank",a.title="",a.role="presentation",a.loading="eager",r=(a.frameElement||a).style,r.width=0,r.height=0,r.border=0,r.display="none",o.parentNode.appendChild(a);try{O=a.contentWindow,d=O.document.open()}catch(_){n=document.domain,a.src="javascript:var d=document.open();d.domain='"+n+"';void(0);",O=a.contentWindow,d=O.document.open()}if(n)d._boomrl=function(){this.domain=n,t()},d.write("<bo"+"dy onload='document._boomrl();'>");else if(O._boomrl=function(){t()},O.addEventListener)O.addEventListener("load",O._boomrl,!1);else if(O.attachEvent)O.attachEvent("onload",O._boomrl);d.close()}function a(e){window.BOOMR_onload=e&&e.timeStamp||(new Date).getTime()}if(!window.BOOMR||!window.BOOMR.version&&!window.BOOMR.snippetExecuted){window.BOOMR=window.BOOMR||{},window.BOOMR.snippetStart=(new Date).getTime(),window.BOOMR.snippetExecuted=!0,window.BOOMR.snippetVersion=12,window.BOOMR.url=n+"C4E7H-KSCMC-422L4-W3EM5-U36MF";var o=document.currentScript||document.getElementsByTagName("script")[0],i=!1,r=document.createElement("link");if(r.relList&&"function"==typeof r.relList.supports&&r.relList.supports("preload")&&"as"in r)window.BOOMR.snippetMethod="p",r.href=window.BOOMR.url,r.rel="preload",r.as="script",r.addEventListener("load",e),r.addEventListener("error",function(){t(!0)}),setTimeout(function(){if(!i)t(!0)},3e3),BOOMR_lstart=(new Date).getTime(),o.parentNode.appendChild(r);else t(!1);if(window.addEventListener)window.addEventListener("load",a,!1);else if(window.attachEvent)window.attachEvent("onload",a)}}(),"".length>0)if(e&&"performance"in e&&e.performance&&"function"==typeof e.performance.setResourceTimingBufferSize)e.performance.setResourceTimingBufferSize();!function(){if(BOOMR=e.BOOMR||{},BOOMR.plugins=BOOMR.plugins||{},!BOOMR.plugins.AK){var n=""=="true"?1:0,t="",a="m4kx4ufydpchs2tqubrq-f-2ec82d80c-clientnsv4-s.akamaihd.net",o="false"=="true"?2:1,i={"ak.v":"41","ak.cp":"1825201","ak.ai":parseInt("1215205",10),"ak.ol":"0","ak.cr":2,"ak.ipv":4,"ak.proto":"http/1.1","ak.rid":"d5d7a37","ak.r":39689,"ak.a2":n,"ak.m":"dscb","ak.n":"ff","ak.cport":52127,"ak.gh":"184.27.196.117","ak.quicv":"","ak.tlsv":"tls1.3","ak.0rtt":"","ak.0rtt.ed":"","ak.csrc":"-","ak.acc":"bbr","ak.t":"1785765987","ak.ak":"hOBiQwZUYzCg5VSAfCLimQ==3mvzWdnIjF+LB6BFZ2M1CreWCcEKP0KXcgZAyI1xvxtYVJ/Znai6bAJTQPnMcIViWAMrDwRTGP7sSPQrXncv7iQM76Cdk2sL4kB3TyUqms/FNwEPldO+3++Pnm4AUGYt3WW70UxjxM5zLo2VL6EANSGHPksBOY7mNMfuWOatjtUpRvcfGrzKxmL7MafSCbVFXiPndjBfrVcnJL00IoWubpyZK6bQY82dBwmuRnaz1/ORiuMk1DQA5Z8t2yyU/qGGisq5vxuP+50xuNdbljSRd4HEadgyfNteDhSFd4wvsIfzAihdTZAL88dsrpm0w1DuzXEfRY9FYQOiC+hjJ6yLLVRp6cuMskAay38v6d1+jcBSSX6VV2wV6fmQYN1DjYmyjM+OmEfGjGYdwCe4wkSVK3PL1tk8SM9+ry5WoBtPcgE=","ak.pv":"9","ak.dpoabenc":"","ak.tf":o};if(""!==t)i["ak.ruds"]=t;var r={i:!1,av:function(n){var t="http.initiator";if(n&&(!n[t]||"spa_hard"===n[t]))i["ak.feo"]=void 0!==e.aFeoApplied?1:0,BOOMR.addVar(i)},rv:function(){var e=["ak.cport","ak.cr","ak.csrc","ak.gh","ak.ipv","ak.m","ak.n","ak.ol","ak.proto","ak.quicv","ak.tlsv","ak.0rtt","ak.0rtt.ed","ak.r","ak.acc","ak.t","ak.tf"];BOOMR.removeVar(e)}};BOOMR.plugins.AK={akVars:i,akDNSPreFetchDomain:a,init:function(){if(!r.i){var e=BOOMR.subscribe;e("before_beacon",r.av,null,null),e("onbeacon",r.rv,null,null),r.i=!0}return this},is_complete:function(){return!0}}}}()}(window);</script></head>
+<body>
+      <form method="post" action="./PressReleasePage.aspx?PRID=2148529&amp;reg=48&amp;lang=2" id="form1">
+<div class="aspNetHidden">
+<input type="hidden" name="sc_HiddenField" id="sc_HiddenField" value="" />
+<input type="hidden" name="__EVENTTARGET" id="__EVENTTARGET" value="" />
+<input type="hidden" name="__EVENTARGUMENT" id="__EVENTARGUMENT" value="" />
+<input type="hidden" name="__VIEWSTATE" id="__VIEWSTATE" value="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" />
+</div>
+
+<script type="text/javascript">
+//<![CDATA[
+var theForm = document.forms['form1'];
+if (!theForm) {
+    theForm = document.form1;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</script>
+
+
+<script src="/WebResource.axd?d=b94hX14NMWluUQ9a73g0LYFvtKhY52TK8cbDkYB_F2GuPre4tdh-ebiiI4xuhXnRu6Q5dQjaQA4oN3PEeL0GrtKEyEY1&amp;t=638942408819057530" type="text/javascript"></script>
+
+
+<script src="/ScriptResource.axd?d=YwOa_0w_u3oCLFqmIIOf-XEz4GWZ1DuyQIpxIA4LVkywj39sZSps12NbK5wNl5XN9JF3m7d-ey7BFDgj6i0380qRQ5IMWCL54sYNVU1IjMmiOWpp0&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/ScriptResource.axd?d=_shmykYI80CxCNR43Ii1nLy9PBGhuSe6SPp3CEYu0wDEuLqDAuIcsXVNhTIgQn0iyiwPorMflXuK31FftDX9GnB0m366MCEoOmY-eKQ3YAO9xRL0gIigzgRbtbVOgSQkJbJpFg2&amp;t=ffffffffecf8d3f2" type="text/javascript"></script>
+<script src="/PressReleasePage.aspx?_TSM_HiddenField_=sc_HiddenField&amp;_TSM_CombinedScripts_=%3b%3bAjaxControlToolkit%2c+Version%3d3.5.7.123%2c+Culture%3dneutral%2c+PublicKeyToken%3d28f01b0e84b6d53e%3aen-US%3a5a4df314-b4a2-4da2-a207-9284f1b1e96c%3ade1feab2%3af2c8e708%3a720a52bf%3af9cec9bc%3a589eaa30%3aa67c2700%3aab09e3fe%3a87104b7c%3a8613aea7%3a3202a5a2%3abe6fb298" type="text/javascript"></script>
+<div class="aspNetHidden">
+
+	<input type="hidden" name="__VIEWSTATEGENERATOR" id="__VIEWSTATEGENERATOR" value="59B53027" />
+	<input type="hidden" name="__VIEWSTATEENCRYPTED" id="__VIEWSTATEENCRYPTED" value="" />
+	<input type="hidden" name="__EVENTVALIDATION" id="__EVENTVALIDATION" value="NakdwfB/kBKI5HBkmW7FOLFZTQLKZ3ju504F13BPOBZWwjHpS0cpxFPgLX6sB2R+JHkMxMUkl+v91MShc2mdFyxMA11FhO90kAQV1A2Z31ouuORCJvXHH9zbLaSsSSPo6/rCaw4haFcv9NpDiJR7hhRMMuT0GwThhgwx9cPbHFpEt8p6/D8wAgfPsAHkvoHb1vdix3Aim19sYR9+O/wIelJ+cyD9DbUHWPzkG6g0kvH5MgS4BnIqrIwuvEYU3Zd1VFaepCaBR1JsW4fHoGSwc0/jsMuQOui6VrDNw8EknLlj3twB" />
+</div>
+                              
+            <div id="templateCss"></div>
+            <script type="text/javascript">
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('sc', 'form1', ['tupdate12','update12'], [], [], 90, '');
+//]]>
+</script>
+
+            <input type="hidden" name="hfGridHtml" id="hfGridHtml" />
+            <div class="container" style='margin-bottom: 50px;'>
+                  <div id="accessories">
+
+                        
+                        <div class="pull-right" style="display: flex">
+                              <div id="voll"></div>
+                              <div id="vollDT"></div>
+                              
+                              
+<div class="print-icons">
+<input type="image" name="Print1$print" id="Print1_print" aria-label="Print" src="images/printer_icon.png" alt="print page button" style="padding: 5px 10px 5px 10px;" />
+</div>
+                        </div>
+                  </div>
+                  <input type="hidden" name="hydpermid" id="hydpermid" value="2148529" />
+                  
+
+
+
+                  <div class="innner-page-main-about-us-content-right-part">
+
+                        <div id="MinistryName" class="MinistryNameSubhead text-center">
+                              Ministry of Agriculture &
+Farmers Welfare
+                        </div>
+                        
+                        <div id="lg_g"><div class='log_oo'>  <img src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2021/aug/ph202183101.png' alt='azadi ka amrit mahotsav' /> </div></div>
+
+
+
+
+
+                        <div class="text-center event-heading-background">
+                              
+                              <h2 id="Titleh2">
+                                    SCHEMES TO MINIMISE POST-HARVEST LOSSES
+                              </h2>
+                              <h3 id="Subtitleh3">
+                                    <span id="ltrSubtitle"></span>
+                              </h3>
+                        </div>
+
+                        <div id="PrDateTime" class="ReleaseDateSubHeaddateTime text-center pt20">
+                              प्रविष्टि तिथि:
+                25 JUL 2025 6:30PM by PIB Delhi
+                        </div>
+                        
+                        <div class='pt20'>
+                        </div>
+                        <input type="hidden" name="hydphotoUrl" id="hydphotoUrl" />
+                        
+                        <p style="margin-left:pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Ministry of Food Processing Industries (MoFPI) commissioned a study in 2022 namely, &ldquo;Study to determine Post harvest losses of Agri Produces in India&rdquo; with reference year 2020-22 through NABARD Consultancy Services Pvt. Ltd. (NABCONS). The study was conducted for assessment of post-harvest losses for 54 commodities across 15 Agro-Climatic Zones for various categories, spread across 292 districts of India. The study identified the gaps in infrastructure development, technology infusion and skill requirements in the sector. The study highlighted post-harvest losses of major crops and commodities as detailed below:</span></span></p>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<div>
+<table border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="Table" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>Crops</strong>/ <strong>Commodities</strong></span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>Loss (%)</strong></span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Cereals</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">3.89-5.92</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Pulses</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">5.65-6.74</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Oil Seeds</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2.87-7.51</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fruits</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.02-15.05</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Vegetables</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4.87-11.61</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Plantation Crops &amp; Spices</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">1.29-7.33</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Milk</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">0.87</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fisheries (Inland)</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4.86</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fisheries (Marine)</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">8.76</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Meat</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2.34</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Poultry</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">5.63</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Egg</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.03</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The reported losses in vegetables, cereals, plantation crops, and fruits were primarily due to inefficient harvesting, handling, storage, and transportation. </span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Government is proactively addressing the challenge of post-harvest losses through a comprehensive and integrated approach embedded within multiple flagship schemes aimed at strengthening the agricultural value chain. Key initiatives include:</span></span></p>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<ol style="list-style-type:lower-roman">
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Mission for Integrated Development of Horticulture (MIDH): Supports creation of infrastructure for post-harvest management including cold storages, ripening chambers, and pack houses to minimize wastages in fruits and vegetables.</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Agriculture Infrastructure Fund (AIF): Provides medium to long-term debt financing for investment in viable post-harvest management infrastructure including warehousing, cold chains, and primary processing units.</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Agricultural Marketing Infrastructure (AMI) Scheme: Supports creation of storage and marketing infrastructure to strengthen supply chains and reduce post-harvest losses at the market level.</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">National Agriculture Market (e-NAM): Promotes better market access and price discovery, reducing transit losses through a more efficient supply chain.</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">In addition, Government actively promotes the formation &amp; promotion of 10,000 Farmer Producer Organisations (FPOs) to facilitate aggregation, primary processing, and market linkages. </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">In addition to above, Ministry of Food Processing Industries (MoFPI) has been implementing Central Sector Umbrella Scheme - Pradhan Mantri Kisan Sampada Yojana (PMKSY) since 2016-17 to create post-harvest infrastructure and processing facilities to boost overall development of the food processing sector including reduction in post-harvest losses, enhancing value addition etc. </span></span></li>
+</ol>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">This information was given by Minister of State for Agriculture and Farmers Welfare, shri <span style="color:black">Shri&nbsp; Ramnath Thakur </span>in a written reply in Rajya Sabha today.</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">******</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>RC/ KSR/AR</strong></span></span></p>
+
+
+                        
+                        <div id="reel_pic">
+                        </div>
+
+
+
+                        
+                        <br />
+                        <span id="ReleaseId">(रिलीज़ आईडी: 2148529)</span>
+                        <span id="lblViews">	आगंतुक पटल  : 2776</span>
+                        <div>
+                              
+                        </div>
+                        
+
+                        <span id="lblRefPhoto"></span>
+
+                        <div class="BackgroundRelease">
+                              
+                        </div>
+                        <div>
+                              
+                        </div>
+                        <div class="ReleaseLang">इस विज्ञप्ति को इन भाषाओं में पढ़ें: 
+                        
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2148637' target="_blank">
+                                          Urdu </a>
+                              
+                                    ,
+                              
+                                    
+                                    <a href='https://pib.gov.in/PressReleasePage.aspx?PRID=2148733' target="_blank">
+                                          हिन्दी </a>
+                              
+                        </div>
+
+                        <div class="RelTag">
+                              <ul>
+                                    
+                              </ul>
+                        </div>
+                        <div class="clear">
+                        </div>
+                        <div id="RelLink" class="RelLink">
+                              <ul>
+                                    
+                                    
+                              </ul>
+                        </div>
+                        <center>
+                              
+                        </center>
+                  </div>
+
+                  <div id="update12">
+	
+                              
+                              <input type="hidden" name="Hidden" id="Hidden" />
+                              <div id="P_CategoryManagement" class="ModalWindow" style="border-width:0px;height:60%;width:60%;overflow:auto;display: none">
+		
+                                    <div>
+                                          <input type="image" name="btnClose" id="btnClose" src="images/close_flat_icon.png" />
+                                    </div>
+                                    <div id="description">
+                                    </div>
+                                    <div class="text-center">
+                                          <h2>
+                                                
+                                                <br>
+                                                
+                                          </h2>
+                                    </div>
+                                    <br />
+                                    <div class="clear">
+                                    </div>
+                                    
+                              
+	</div>
+                        
+</div>
+            </div>
+            
+            <div id="PdfDiv" style="display: none;">
+                  <table width="100%">
+                        <tr>
+                              <td style="font-weight: 200; text-align: center">
+                                    Ministry of Agriculture &
+Farmers Welfare
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                                          SCHEMES TO MINIMISE POST-HARVEST LOSSES
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: center; font-size: 30px;">
+                                          
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="text-align: center; font-size: 14px;">
+                                          प्रविष्टि तिथि:
+                        25 JUL 2025 6:30PM by PIB Delhi
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 200; text-align: left; font-size: 16px;">
+                                          <p style="margin-left:pt; text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Ministry of Food Processing Industries (MoFPI) commissioned a study in 2022 namely, &ldquo;Study to determine Post harvest losses of Agri Produces in India&rdquo; with reference year 2020-22 through NABARD Consultancy Services Pvt. Ltd. (NABCONS). The study was conducted for assessment of post-harvest losses for 54 commodities across 15 Agro-Climatic Zones for various categories, spread across 292 districts of India. The study identified the gaps in infrastructure development, technology infusion and skill requirements in the sector. The study highlighted post-harvest losses of major crops and commodities as detailed below:</span></span></p>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<div>
+<table border="1" bordercolor="#ccc" cellpadding="5" cellspacing="0" class="Table" style="border-collapse:collapse">
+	<tbody>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>Crops</strong>/ <strong>Commodities</strong></span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>Loss (%)</strong></span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Cereals</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">3.89-5.92</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Pulses</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">5.65-6.74</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Oil Seeds</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2.87-7.51</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fruits</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.02-15.05</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Vegetables</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4.87-11.61</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Plantation Crops &amp; Spices</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">1.29-7.33</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Milk</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">0.87</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fisheries (Inland)</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">4.86</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Fisheries (Marine)</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">8.76</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Meat</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">2.34</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Poultry</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">5.63</span></span></p>
+			</td>
+		</tr>
+		<tr>
+			<td style="width:212.25pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Egg</span></span></p>
+			</td>
+			<td style="width:158.15pt">
+			<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">6.03</span></span></p>
+			</td>
+		</tr>
+	</tbody>
+</table>
+</div>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">The reported losses in vegetables, cereals, plantation crops, and fruits were primarily due to inefficient harvesting, handling, storage, and transportation. </span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Government is proactively addressing the challenge of post-harvest losses through a comprehensive and integrated approach embedded within multiple flagship schemes aimed at strengthening the agricultural value chain. Key initiatives include:</span></span></p>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<ol style="list-style-type:lower-roman">
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Mission for Integrated Development of Horticulture (MIDH): Supports creation of infrastructure for post-harvest management including cold storages, ripening chambers, and pack houses to minimize wastages in fruits and vegetables.</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Agriculture Infrastructure Fund (AIF): Provides medium to long-term debt financing for investment in viable post-harvest management infrastructure including warehousing, cold chains, and primary processing units.</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">Agricultural Marketing Infrastructure (AMI) Scheme: Supports creation of storage and marketing infrastructure to strengthen supply chains and reduce post-harvest losses at the market level.</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">National Agriculture Market (e-NAM): Promotes better market access and price discovery, reducing transit losses through a more efficient supply chain.</span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">In addition, Government actively promotes the formation &amp; promotion of 10,000 Farmer Producer Organisations (FPOs) to facilitate aggregation, primary processing, and market linkages. </span></span></li>
+	<li style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">In addition to above, Ministry of Food Processing Industries (MoFPI) has been implementing Central Sector Umbrella Scheme - Pradhan Mantri Kisan Sampada Yojana (PMKSY) since 2016-17 to create post-harvest infrastructure and processing facilities to boost overall development of the food processing sector including reduction in post-harvest losses, enhancing value addition etc. </span></span></li>
+</ol>
+
+<p style="text-align:justify">&nbsp;</p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">This information was given by Minister of State for Agriculture and Farmers Welfare, shri <span style="color:black">Shri&nbsp; Ramnath Thakur </span>in a written reply in Rajya Sabha today.</span></span></p>
+
+<p style="text-align:center"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px">******</span></span></p>
+
+<p style="text-align:justify"><span style="font-family:Times New Roman,Times,serif"><span style="font-size:16px"><strong>RC/ KSR/AR</strong></span></span></p>
+
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                                    <div style="font-weight: 100; text-align: left; font-size: 16px;">
+                                          (रिलीज़ आईडी: 2148529)
+                                    </div>
+                                    <div style="height: 30px; width: 100%;">
+                                    </div>
+                              </td>
+                        </tr>
+                        <tr>
+                              <td style="font-weight: 200; text-align: center; font-size: 24px;"></td>
+                        </tr>
+                  </table>
+            </div>
+            <div class="clearfix">
+            </div>
+
+            
+
+            <div class="section1">
+                  <div id="frst_t">
+                        <div id="arr_rm"><div class='sticky-social_mb'><ul class='social_mb'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2148529' target='_blank'><li class='fb_b'   ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/facebook.jpg' alt='Share on facebook'  width='40' /></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2148529&text=SCHEMES TO MINIMISE POST-HARVEST LOSSES' target='_blank'><li class='twitter_r'  ><img  src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2023/aug/ph2023818240601.jpg' alt='Share on twitter' width='40' /> </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2148529' target='_blank'><li class='whatsapp_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/whatsapp1.png' alt='Share on whatsapp' width='40' /></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=SCHEMES TO MINIMISE POST-HARVEST LOSSES&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2148529&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/email1.png' alt='Share on email'  width='40' /></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2148529&title=SCHEMES TO MINIMISE POST-HARVEST LOSSES&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/linkedin.png' alt='Share on linkedin' width='40' /></li></a></ul></div></div>
+                  </div>
+                  <div id="second_t">
+                        <div id="sndr_rm"><div class='sticky-social'><ul class='social'><a href='http://www.facebook.com/share.php?u=https://pib.gov.in/PressReleasePage.aspx?PRID=2148529' target='_blank'><li class='fb_b'   ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/facebook.jpg' alt='Share on facebook'  width='35' /></li></a><a href='https://twitter.com/intent/tweet?url=https://pib.gov.in/PressReleasePage.aspx?PRID=2148529&text=SCHEMES TO MINIMISE POST-HARVEST LOSSES' target='_blank'><li class='twitter_r'  ><img  src='https://static.pib.gov.in/WriteReadData/specificdocs/photo/2023/aug/ph2023818240601.jpg' alt='Share on twitter' width='35' /> </li></a><a href='https://api.whatsapp.com/send?text=https://pib.gov.in/PressReleasePage.aspx?PRID=2148529' target='_blank'><li class='whatsapp_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/whatsapp1.png' alt='Share on whatsapp' width='35' /></li></a><a href='https://mail.google.com/mail/?view=cm&fs=1&tf=1&to=&su=SCHEMES TO MINIMISE POST-HARVEST LOSSES&body=https://pib.gov.in/PressReleasePage.aspx?PRID=2148529&ui=2&tf=1&pli=1' title='Share by Email' target='_blank'><li class='fa-envelope_r' ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/email1.png' alt='Share on email'  width='35' /></li></a><a href='https://www.linkedin.com/shareArticle?mini=true&url=https://pib.gov.in/PressReleasePage.aspx?PRID=2148529&title=SCHEMES TO MINIMISE POST-HARVEST LOSSES&summary=My%20favorite%20developer%20program&source=LinkedIn' target='_blank'><li class='fa-linkedin_r'  ><img  src='https://static.pib.gov.in/WriteReadData/userfiles/socialmedianew/linkedin.png' alt='Share on linkedin' width='35' /></li></a></ul></div></div>
+                  </div>
+            </div>
+            <input type="hidden" name="ltrTitlee" id="ltrTitlee" value="SCHEMES TO MINIMISE POST-HARVEST LOSSES" />
+            <input type="hidden" name="ltrSubtitlee" id="ltrSubtitlee" />
+            <input type="hidden" name="ltrDescriptionn" id="ltrDescriptionn" value="&lt;p style=&quot;margin-left:pt; text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Ministry of Food Processing Industries (MoFPI) commissioned a study in 2022 namely, &amp;ldquo;Study to determine Post harvest losses of Agri Produces in India&amp;rdquo; with reference year 2020-22 through NABARD Consultancy Services Pvt. Ltd. (NABCONS). The study was conducted for assessment of post-harvest losses for 54 commodities across 15 Agro-Climatic Zones for various categories, spread across 292 districts of India. The study identified the gaps in infrastructure development, technology infusion and skill requirements in the sector. The study highlighted post-harvest losses of major crops and commodities as detailed below:&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;div>
+&lt;table border=&quot;1&quot; bordercolor=&quot;#ccc&quot; cellpadding=&quot;5&quot; cellspacing=&quot;0&quot; class=&quot;Table&quot; style=&quot;border-collapse:collapse&quot;>
+	&lt;tbody>
+		&lt;tr>
+			&lt;td style=&quot;width:212.25pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>Crops&lt;/strong>/ &lt;strong>Commodities&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:158.15pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>Loss (%)&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:212.25pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Cereals&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:158.15pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>3.89-5.92&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:212.25pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Pulses&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:158.15pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>5.65-6.74&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:212.25pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Oil Seeds&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:158.15pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>2.87-7.51&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:212.25pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Fruits&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:158.15pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>6.02-15.05&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:212.25pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Vegetables&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:158.15pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>4.87-11.61&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:212.25pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Plantation Crops &amp;amp; Spices&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:158.15pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>1.29-7.33&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:212.25pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Milk&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:158.15pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>0.87&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:212.25pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Fisheries (Inland)&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:158.15pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>4.86&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:212.25pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Fisheries (Marine)&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:158.15pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>8.76&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:212.25pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Meat&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:158.15pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>2.34&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:212.25pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Poultry&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:158.15pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>5.63&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+		&lt;tr>
+			&lt;td style=&quot;width:212.25pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Egg&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+			&lt;td style=&quot;width:158.15pt&quot;>
+			&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>6.03&lt;/span>&lt;/span>&lt;/p>
+			&lt;/td>
+		&lt;/tr>
+	&lt;/tbody>
+&lt;/table>
+&lt;/div>
+
+&lt;p style=&quot;text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>The reported losses in vegetables, cereals, plantation crops, and fruits were primarily due to inefficient harvesting, handling, storage, and transportation. &lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Government is proactively addressing the challenge of post-harvest losses through a comprehensive and integrated approach embedded within multiple flagship schemes aimed at strengthening the agricultural value chain. Key initiatives include:&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Mission for Integrated Development of Horticulture (MIDH): Supports creation of infrastructure for post-harvest management including cold storages, ripening chambers, and pack houses to minimize wastages in fruits and vegetables.&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Agriculture Infrastructure Fund (AIF): Provides medium to long-term debt financing for investment in viable post-harvest management infrastructure including warehousing, cold chains, and primary processing units.&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>Agricultural Marketing Infrastructure (AMI) Scheme: Supports creation of storage and marketing infrastructure to strengthen supply chains and reduce post-harvest losses at the market level.&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>National Agriculture Market (e-NAM): Promotes better market access and price discovery, reducing transit losses through a more efficient supply chain.&lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>In addition, Government actively promotes the formation &amp;amp; promotion of 10,000 Farmer Producer Organisations (FPOs) to facilitate aggregation, primary processing, and market linkages. &lt;/span>&lt;/span>&lt;/li>
+	&lt;li style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>In addition to above, Ministry of Food Processing Industries (MoFPI) has been implementing Central Sector Umbrella Scheme - Pradhan Mantri Kisan Sampada Yojana (PMKSY) since 2016-17 to create post-harvest infrastructure and processing facilities to boost overall development of the food processing sector including reduction in post-harvest losses, enhancing value addition etc. &lt;/span>&lt;/span>&lt;/li>
+
+
+&lt;p style=&quot;text-align:justify&quot;>&amp;nbsp;&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>This information was given by Minister of State for Agriculture and Farmers Welfare, shri &lt;span style=&quot;color:black&quot;>Shri&amp;nbsp; Ramnath Thakur &lt;/span>in a written reply in Rajya Sabha today.&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:center&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>******&lt;/span>&lt;/span>&lt;/p>
+
+&lt;p style=&quot;text-align:justify&quot;>&lt;span style=&quot;font-family:Times New Roman,Times,serif&quot;>&lt;span style=&quot;font-size:16px&quot;>&lt;strong>RC/ KSR/AR&lt;/strong>&lt;/span>&lt;/span>&lt;/p>
+" />
+            <script type="text/javascript">
+                  var mPlayer = document.getElementById("background_music");
+                  var mPlayAction = document.getElementById("playbutton");
+
+                  var isPlaying = false;
+
+                  function playAudio() {
+                        mPlayer.play();
+                        isPlaying = true;
+                        document.getElementById('stopA').style.display = "block";
+                        document.getElementById('playA').style.display = "none";
+                  }
+
+                  function pauseAudio() {
+                        mPlayer.pause();
+                        isPlaying = false;
+                        document.getElementById('playA').style.display = "block";
+                        document.getElementById('stopA').style.display = "none";
+                  }
+                  //function HandleAudio() {
+                  //    if (isPlaying == true) {
+                  //        //Playing already Pause it
+                  //        pauseAudio();
+                  //    } else {
+                  //        //Play the music
+                  //        playAudio();
+                  //    }
+                  //}
+            </script>
+            <script type="text/javascript">
+                  var synth = window.speechSynthesis;
+
+            
+                  function CleanHtml(html) {
+
+                        html = html.replace(/<script[\s\S]*?<\/script>/gi, '');
+
+                        return html;
+                  }
+                  function stripHtml(html) {
+                        let tmp = document.createElement("DIV");
+                        tmp.innerHTML = CleanHtml(html);
+                        return tmp.textContent || tmp.innerText || "";
+                  }
+            </script>
+            <script type="text/javascript">
+                  $(document).ready(function () {
+                        //for responsive tables
+                        $("table").each(function () {
+                              if (!$(this).closest(".table-responsive").length) {
+                                    $(this).wrap("<div class='table-responsive'></div>");
+                              }
+                        });
+
+                        var width = $(window).width();
+                        if (width < 768) {
+
+                              // Extra Small Device
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                              // Small Device
+
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Medium Device
+
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Large Device
+
+                        }
+                  });
+            </script>
+            <script type="text/javascript">
+                  $(document).ready(function () {
+                        var width = $(window).width();
+                        if (width < 768) {
+
+                              // Extra Small Device
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+
+                        } else if (width < 991) {
+                              document.getElementById('frst_t').style.display = "block";
+                              document.getElementById('second_t').style.display = "none";
+                              // Small Device
+
+                        } else if (width < 1199) {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Medium Device
+
+                        } else {
+                              document.getElementById('frst_t').style.display = "none";
+                              document.getElementById('second_t').style.display = "block";
+                              // Large Device
+
+                        }
+                  });
+            </script>
+            
+            <style type="text/css">
+                  @media print {
+                        .sticky-social, .sticky-social_mb, .pull-right, #printPDF {
+                              display: none !important;
+                        }
+                  }
+
+                  .f_vl {
+                        padding-right: 30px;
+                        font-size: 17px;
+                        cursor: pointer;
+                  }
+
+                  .log_oo {
+                        // width: 20%;
+                        display: flex;
+                        justify-content: space-between;
+                  }
+
+                        .log_oo img {
+                              width: 150px;
+                              /*width: 100%;
+                    height: auto;*/
+                        }
+
+                  .sticky-social_mb {
+                        position: fixed;
+                        bottom: 0px;
+                        padding: 0px;
+                        margin: 0px;
+                        width: 100%;
+                  }
+
+                  .social_mb {
+                        list-style: none;
+                        display: flex;
+                        width: 100%;
+                        margin-bottom: -8px;
+                  }
+
+                        .social_mb a {
+                              padding: 8px 0px;
+                              font-size: 30px;
+                              transition: all 0.8s ease-in-out;
+                              width: 20% !important;
+                              text-align: center;
+                        }
+            </style>
+            <style type="text/css">
+                  .section1 {
+                        position: relative;
+                        padding: 10px 0px;
+                        width: 100%;
+                  }
+
+
+
+                  .sticky-social {
+                        position: fixed;
+                        top: 20px;
+                        left: 0px;
+                        padding: 0px;
+                        margin: 0px;
+                  }
+
+                  .social {
+                        list-style: none;
+                  }
+
+                        .social a li {
+                              padding: 8px 12px;
+                              font-size: 25px;
+                              transition: all 0.8s ease-in-out;
+                        }
+
+                              .social a li:hover {
+                                    margin-right: -30px;
+                                    box-shadow: 2px 5px 10px grey;
+                              }
+
+                                    .social a li:hover .fa {
+                                          margin-left: 20px;
+                                    }
+
+                  .fb_b {
+                        /* background-color: rgb(59, 89, 152);*/
+                        background-color: rgba(65,103,178,255);
+                  }
+
+                  .twitter_r {
+                        /* background-color: rgb(29, 161, 242);*/
+                        background-color: #000000;
+                  }
+
+                  .whatsapp_r {
+                        /* background-color: rgb(77, 194, 71);*/
+                        background-color: rgba(13,191,67,255);
+                  }
+
+                  .fa-envelope_r {
+                        /* background-color: rgb(219, 68, 55);*/
+                        background-color: #e2123d;
+                  }
+
+                  .fa-linkedin_r {
+                        background-color: rgb(0, 119, 181);
+                  }
+            </style>
+            <style type="text/css">
+                  @media only screen and (max-device-width: 767px) {
+                        p span img {
+                              max-width: 90% !important;
+                              height: auto !important;
+                        }
+
+                        p img {
+                              max-width: 90% !important;
+                              height: auto !important;
+                        }
+
+                        h2 {
+                              font-size: 20px !important;
+                              font-weight: 600 !important;
+                        }
+
+                        h3 {
+                              font-size: 18px !important;
+                              font-weight: 600 !important;
+                        }
+                  }
+            </style>
+            <style type="text/css">
+                  /* === Film Roll Badge Styling(IFFI2025 countdown) === */
+                  .film-roll-badge {
+                        position: absolute;
+                        top:82%;
+                        right: 20px;
+                        width: 230px;
+                        height: 70px;
+                        background: repeating-linear-gradient( to right, #9a2375 0px, #9a2375 18px, #6e2b8b 18px, #6e2b8b 36px );
+                        border-top: 8px solid #9a2375;
+                        border-bottom: 8px solid #9a2375;
+                        border-radius: 8px;
+                        overflow: hidden;
+                        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+                        animation: moveFilm 8s linear infinite;
+                        z-index: 10;
+                  }
+
+                        /* film sprocket holes */
+                        .film-roll-badge::before,
+                        .film-roll-badge::after {
+                              content: "";
+                              position: absolute;
+                              width: 100%;
+                              height: 10px;
+                              background: repeating-linear-gradient( to right, #9a2375 0px, #9a2375 10px, #fff 10px, #fff 20px );
+                              left: 0;
+                              z-index: 2;
+                        }
+
+                        .film-roll-badge::before {
+                              top: -4px;
+                        }
+
+                        .film-roll-badge::after {
+                              bottom: -4px;
+                        }
+
+                  .film-roll-inner {
+                        position: relative;
+                        height: 100%;
+                        display: flex;
+                        align-items: center;
+                        justify-content: center;
+                        animation: flicker 2s infinite ease-in-out;
+                  }
+
+                  .countdown-text {
+                        font-size: 1.3rem;
+                        font-weight: 700;
+                        color: #fff;
+                        text-shadow: 0 0 6px rgba(255, 255, 255, 0.4), 0 0 10px #000;
+                        white-space: nowrap;
+                  }
+
+                  /* === Animations === */
+                  @keyframes moveFilm {
+                        0% {
+                              background-position: 0 0;
+                        }
+
+                        100% {
+                              background-position: 120px 0;
+                        }
+                  }
+
+                  @keyframes flicker {
+                        0%, 100% {
+                              opacity: 1;
+                        }
+
+                        50% {
+                              opacity: 0.9;
+                        }
+
+                        25% {
+                              opacity: 0.95;
+                        }
+
+                        75% {
+                              opacity: 0.85;
+                        }
+                  }
+
+                  /* === Responsive Adjustments === */
+                  @media (max-width: 1500px) {
+                        .film-roll-badge {
+                              top: 68%;
+                              right: 18px;
+                              /* width: 220px; */
+                              height: 65px;
+                              font-size: 0.85rem;
+                        }
+
+                        .press-section {
+                              margin-top: 35px;
+                        }
+                  }
+
+                  @media (max-width: 992px) {
+                        .film-roll-badge {
+                              top: 52%;
+                              right: 10px;
+                               width: 200px; 
+                              height: 60px;
+                        }
+                  }
+
+                  @media (max-width: 768px) {
+                        .film-roll-badge {
+                              top: 56%;
+                              right: 10px;
+                               width: 124px; 
+                              height: 55px;
+                        }
+
+                        .countdown-text {
+                              font-size: 0.9rem;
+                        }
+                  }
+
+                  @media (max-width: 576px) {
+                        .film-roll-badge {
+                              top: 59%;
+                              right: 5px;
+                              /* width: 160px; */
+                              height: 50px;
+                        }
+
+                        .countdown-text {
+                              font-size: 0.85rem;
+                        }
+                  }
+            </style>
+          <script type="text/javascript">
+                const festivalStart = new Date("2025-11-20T00:00:00").getTime();
+                const festivalEnd = new Date("2025-11-28T23:59:59").getTime();
+
+                const countdownElement = document.getElementById("countdown");
+
+                const interval = setInterval(() => {
+                      const now = new Date().getTime();
+
+                      // BEFORE FESTIVAL — show days + hours left
+                      if (now < festivalStart) {
+                            const diff = festivalStart - now;
+                            const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                            const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+                            countdownElement.innerHTML = `
+              ${days} Day${days !== 1 ? 's' : ''} 
+              ${hours} Hour${hours !== 1 ? 's' : ''} to go
+          `;
+
+                      }
+
+                      // DURING FESTIVAL — show 56th IFFI - Day X
+                      else if (now >= festivalStart && now <= festivalEnd) {
+                            const dayNumber = Math.floor((now - festivalStart) / (1000 * 60 * 60 * 24)) + 1;
+                            countdownElement.innerHTML = `56th IFFI - Day ${dayNumber}`;
+                      }
+
+                      // AFTER FESTIVAL — new message
+                      else {
+                            countdownElement.innerHTML = `✨ IFFI closes but never ends…`;
+
+                            // Width change logic
+                            const elements = document.querySelectorAll('.film-roll-badge');
+                            elements.forEach(el => el.style.width = "350px");
+
+                            clearInterval(interval);
+                      }
+
+                }, 1000);
+          </script>
+ <script type="text/javascript">
+
+               const miffStart = new Date("2026-06-15T00:00:00").getTime();
+               const miffEnd = new Date("2026-06-15T23:59:59").getTime();
+
+               const miffElement = document.getElementById("miff");
+
+               if (miffElement) {
+
+                   const miffInterval = setInterval(() => {
+
+                       const now = new Date().getTime();
+
+                       // Before MIFF
+                       if (now < miffStart) {
+
+                           const diff = miffStart - now;
+                           const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+                           const hours = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+
+        
+
+                   /*  miffElement.innerHTML = `${days} Day${days !== 1 ? 's' : ''} ${hours} Hour${hours !== 1 ? 's' : ''} to MIFF`;*/
+                           miffElement.innerHTML = `${days} Day${days === 1 ? '' : 's'} to MIFF ...`;
+
+
+                     }
+
+                       // During MIFF
+                       else if (now >= miffStart && now <= miffEnd) {
+
+                           const dayNumber =
+                               Math.floor((now - miffStart) / (1000 * 60 * 60 * 24)) + 1;
+
+                           miffElement.innerHTML = `19th MIFF - Day ${dayNumber}`;
+                       }
+
+                       // After MIFF
+                       else {
+
+                           miffElement.innerHTML = `✨ MIFF concludes, cinema lives on...`;
+
+                           document.querySelectorAll('.film-roll-badge')
+                               .forEach(el => el.style.width = "350px");
+
+                           clearInterval(miffInterval);
+                       }
+
+                   }, 1000);
+               }
+
+</script>
+
+      
+
+<script type="text/javascript">
+//<![CDATA[
+(function() {var fn = function() {$get("sc_HiddenField").value = '';Sys.Application.remove_init(fn);};Sys.Application.add_init(fn);})();Sys.Application.add_init(function() {
+    $create(Sys.Extended.UI.ModalPopupBehavior, {"BackgroundCssClass":"modalBackground","PopupControlID":"P_CategoryManagement","dynamicServicePath":"/PressReleasePage.aspx","id":"mpe"}, null, null, $get("Hidden"));
+});
+//]]>
+</script>
+<input type="hidden" name="__ncforminfo" value="T8ZTVhixG6Ly8oRfsUJylwme5LVRz1y30myUYAMjRUmT_06LmCvb5UWYfZcEltUFdBM6Yi3FrJyUvtrRZ_Zd4l3QU-iHLx_PiFIKoekZFwTGWHublhI9NA=="/></form>
+</body>
+</html>
+

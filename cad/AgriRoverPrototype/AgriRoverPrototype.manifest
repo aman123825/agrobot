@@ -1,0 +1,13 @@
+{
+    "autodeskProduct": "Fusion360",
+    "type": "script",
+    "id": "agrirover.prototype.generator",
+    "author": "AgriRover",
+    "description": {
+        "": "Programmatically builds the full to-scale AgriRover rover prototype (all components across the 4 decks, wheels, motors, deck plates, standoffs and sun canopy) from docs/mechanical-layout.md."
+    },
+    "version": "1.0.0",
+    "runOnStartup": false,
+    "supportedOS": "windows|mac",
+    "editEnabled": true
+}

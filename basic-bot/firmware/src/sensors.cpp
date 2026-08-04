@@ -25,8 +25,8 @@ static Telemetry      snap;
 static esp_adc_cal_characteristics_t sAdcChars;
 static uint32_t       sNpkNextAttemptMs = 0;
 
-#define CH_MOISTURE  ADC1_CHANNEL_6   // GPIO34
-#define CH_VBAT      ADC1_CHANNEL_7   // GPIO35
+#define CH_MOISTURE  ADC1_CHANNEL_4   // GPIO32
+#define CH_VBAT      ADC1_CHANNEL_3   // GPIO39
 
 // Multi-point capacitive-moisture calibration: ascending mV with the matching
 // percent (capacitive sensors read LOWER voltage when wetter). CALIBRATE for
@@ -65,22 +65,27 @@ void sensors_init() {
     pinMode(PIN_RS485_DE_RE, OUTPUT);
     digitalWrite(PIN_RS485_DE_RE, LOW);
 
-    pinMode(PIN_US_FRONT_TRIG, OUTPUT);
-    digitalWrite(PIN_US_FRONT_TRIG, LOW);
-    pinMode(PIN_US_FRONT_ECHO, INPUT);
+    // Init all 3 ultrasonic sensors (left / center / right)
+    const uint8_t usTrig[] = {PIN_US_LEFT_TRIG, PIN_US_CENTER_TRIG, PIN_US_RIGHT_TRIG};
+    const uint8_t usEcho[] = {PIN_US_LEFT_ECHO, PIN_US_CENTER_ECHO, PIN_US_RIGHT_ECHO};
+    for (int i = 0; i < 3; i++) {
+        pinMode(usTrig[i], OUTPUT);
+        digitalWrite(usTrig[i], LOW);
+        pinMode(usEcho[i], INPUT);
+    }
 
     dht.begin();
     RS485.begin(NPK_BAUD, SERIAL_8N1, PIN_RS485_RO, PIN_RS485_DI);
 }
 
-// ---- Ultrasonic ----
-static unsigned long pingOnce() {
-    digitalWrite(PIN_US_FRONT_TRIG, LOW);
+// ---- Ultrasonic (3 sensors: left, center, right) ----
+static unsigned long pingOnce(uint8_t trigPin, uint8_t echoPin) {
+    digitalWrite(trigPin, LOW);
     delayMicroseconds(2);
-    digitalWrite(PIN_US_FRONT_TRIG, HIGH);
+    digitalWrite(trigPin, HIGH);
     delayMicroseconds(10);
-    digitalWrite(PIN_US_FRONT_TRIG, LOW);
-    return pulseIn(PIN_US_FRONT_ECHO, HIGH, US_TIMEOUT_US);
+    digitalWrite(trigPin, LOW);
+    return pulseIn(echoPin, HIGH, US_TIMEOUT_US);
 }
 
 static void insertionSort(float* a, int n) {
@@ -92,19 +97,25 @@ static void insertionSort(float* a, int n) {
     }
 }
 
-void sensors_poll_fast() {
+static float medianPing(uint8_t trigPin, uint8_t echoPin, float speed_cm_per_us) {
     float samples[US_MEDIAN_SAMPLES];
     int n = 0;
-    float tempC = isnan(snap.air_temp_c) ? 20.0f : snap.air_temp_c;
-    float speed_cm_per_us = (331.4f + 0.6f * tempC) / 10000.0f;
     for (int i = 0; i < US_MEDIAN_SAMPLES; i++) {
-        unsigned long dur = pingOnce();
+        unsigned long dur = pingOnce(trigPin, echoPin);
         if (dur > 0) samples[n++] = dur * speed_cm_per_us / 2.0f;
         delay(5);
     }
-    if (n == 0) { snap.front_distance_cm = -1.0f; return; }
+    if (n == 0) return -1.0f;
     insertionSort(samples, n);
-    snap.front_distance_cm = samples[n / 2];
+    return samples[n / 2];
+}
+
+void sensors_poll_fast() {
+    float tempC = isnan(snap.air_temp_c) ? 20.0f : snap.air_temp_c;
+    float speed_cm_per_us = (331.4f + 0.6f * tempC) / 10000.0f;
+    snap.left_distance_cm   = medianPing(PIN_US_LEFT_TRIG,   PIN_US_LEFT_ECHO,   speed_cm_per_us);
+    snap.center_distance_cm = medianPing(PIN_US_CENTER_TRIG, PIN_US_CENTER_ECHO, speed_cm_per_us);
+    snap.right_distance_cm  = medianPing(PIN_US_RIGHT_TRIG,  PIN_US_RIGHT_ECHO,  speed_cm_per_us);
 }
 
 // ---- Moisture ----

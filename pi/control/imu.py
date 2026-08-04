@@ -12,7 +12,7 @@ import os
 import sys
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
-import config  # noqa: E402
+import config
 
 logger = logging.getLogger(__name__)
 

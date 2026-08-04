@@ -19,26 +19,26 @@
 #include "config.h"
 #include "events.h"
 #include "drive.h"
+#include "control_state.h"
 #include "sensors.h"
 #include "dosing.h"
 #include "commands.h"
 #include "telemetry.h"
+#include "mobile_server.h"
 
 EventGroupHandle_t gEvents;
 
-// Fail-safe: force both dosing relays OFF immediately, before tasks start.
-// Active-LOW module: OFF == pin HIGH. Closes the boot window where floating
-// pins could energize the pump/actuator. (External 10k pull-ups to 3.3V on
-// GPIO13/26 are still required to cover the time before setup() runs.)
+// Fail-safe: force the dosing pump relay OFF immediately, before tasks start.
+// Active-LOW module: OFF == pin HIGH. Closes the boot window where a floating
+// pin could energize the pump. (An external 10k pull-up to 3.3V on GPIO26 is
+// still required to cover the time before setup() runs.) The insertion servo
+// on GPIO13 is moved to its retracted position by dosing_init().
 static void relaysFailSafeOff() {
     pinMode(PIN_RELAY_PUMP, OUTPUT);
-    pinMode(PIN_RELAY_ACTUATOR, OUTPUT);
 #if RELAY_ACTIVE_LOW
     digitalWrite(PIN_RELAY_PUMP, HIGH);
-    digitalWrite(PIN_RELAY_ACTUATOR, HIGH);
 #else
     digitalWrite(PIN_RELAY_PUMP, LOW);
-    digitalWrite(PIN_RELAY_ACTUATOR, LOW);
 #endif
 }
 
@@ -54,9 +54,10 @@ static void driveTask(void* pv) {
         int16_t l, r;
         drive_get(&l, &r);
 
-        // Dead-man: setpoints expire if the operator stops sending drive
-        // commands (key released in the console, cable pulled, app crashed).
-        if ((l || r) && commands_ms_since_drive_cmd() > CMD_DEADMAN_MS) {
+        // Dead-man: setpoints expire if the active USB/mobile controller
+        // stops refreshing them (release, cable pull, WiFi loss, app crash).
+        if ((l || r) && control_ms_since_motion(millis()) > CMD_DEADMAN_MS) {
+            control_force_stop();
             drive_stop();
             l = r = 0;
             if (!deadmanStopped) { Serial.println("EVT deadman_stop"); deadmanStopped = true; }
@@ -67,11 +68,14 @@ static void driveTask(void* pv) {
         EventBits_t bits = xEventGroupGetBits(gEvents);
         if (bits & EVT_DRIVE_INHIBIT) {          // halt | low-batt | dosing | overtemp
             drive_stop();
-        } else if ((bits & EVT_OBSTACLE) && l > 0 && r > 0) {
-            drive_stop();                        // block forward only; turning/reverse OK
+        } else if ((bits & EVT_OBSTACLE) &&
+                   ((l > 0 && r >= 0) || (r > 0 && l >= 0))) {
+            drive_stop();   // block straight/arc/single-wheel forward; reverse/spin OK
         } else {
             drive_update();
         }
+        // Also expire an owner whose setpoint was cleared by a safety inhibit.
+        control_release_if_expired(millis(), CMD_DEADMAN_MS);
         vTaskDelay(pdMS_TO_TICKS(DRIVE_LOOP_MS));
     }
 }
@@ -86,7 +90,15 @@ static void sensorTask(void* pv) {
         sensors_poll_fast();   // ultrasonic @5 Hz - obstacle reaction stays quick
         const Telemetry& t = sensors_snapshot();
 
-        if (t.front_distance_cm > 0 && t.front_distance_cm < US_STOP_DISTANCE_CM) {
+        // Check all 3 ultrasonic sensors for obstacles
+        auto belowThresh = [](float d) {
+            return d > 0 && d < US_STOP_DISTANCE_CM;
+        };
+        bool anyObstacle = belowThresh(t.left_distance_cm) ||
+                           belowThresh(t.center_distance_cm) ||
+                           belowThresh(t.right_distance_cm);
+
+        if (anyObstacle) {
             xEventGroupSetBits(gEvents, EVT_OBSTACLE);
             if (!obstacleAlerted) {
                 Serial.println("ALERT {\"type\":\"obstacle\"}");
@@ -127,9 +139,18 @@ static void sensorTask(void* pv) {
             telemetry_print();
         }
 
-        if (xEventGroupGetBits(gEvents) & EVT_DOSE_REQUEST) {
+        EventBits_t reqBits = xEventGroupGetBits(gEvents);
+        if (reqBits & EVT_DOSE_REQUEST) {
             dosing_run_sequence();   // sets EVT_DOSING internally -> drive halts
             xEventGroupClearBits(gEvents, EVT_DOSE_REQUEST);
+        }
+        if (reqBits & EVT_PROBE_DOWN_REQ) {   // manual: lower probe (freezes drive)
+            dosing_probe_down();
+            xEventGroupClearBits(gEvents, EVT_PROBE_DOWN_REQ);
+        }
+        if (reqBits & EVT_PROBE_UP_REQ) {     // manual: raise probe (releases freeze)
+            dosing_probe_up();
+            xEventGroupClearBits(gEvents, EVT_PROBE_UP_REQ);
         }
         vTaskDelay(pdMS_TO_TICKS(FAST_SENSE_MS));
     }
@@ -142,6 +163,7 @@ void setup() {
     gEvents = xEventGroupCreate();
     commands_init(gEvents);
     telemetry_init(gEvents);
+    mobile_server_start();
 
     esp_task_wdt_init(WDT_TIMEOUT_S, true);
 
@@ -154,5 +176,6 @@ void setup() {
 }
 
 void loop() {
-    vTaskDelay(pdMS_TO_TICKS(1000));   // everything runs in FreeRTOS tasks
+    mobile_server_poll();
+    vTaskDelay(pdMS_TO_TICKS(1000));   // drive/sensing run in FreeRTOS tasks
 }

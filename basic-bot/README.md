@@ -1,8 +1,10 @@
 # AgriRover — Basic Bot (Step 1, no AI)
 
-Self-contained code for the **Core-tier build**: ESP32 only — no Raspberry Pi,
-no camera, no Coral, no WiFi/MQTT. You drive the rover and read its sensors
-from a **laptop over USB serial**.
+Self-contained code for the **Core-tier build**: the ESP32 DevKit handles drive,
+sensing, safety, and a private WiFi mobile-control page without a Raspberry Pi,
+Coral, MQTT, or router. You can operate it from a **phone over WiFi** or retain
+the **laptop USB serial** console. An AI-Thinker **ESP32-CAM** supplies live video
+on the same rover WiFi network (see `camera/`).
 
 Everything that runs on this bot lives in this folder. The pin map is the same
 as the full firmware (`../firmware`), so nothing gets rewired when you upgrade.
@@ -11,12 +13,12 @@ as the full firmware (`../firmware`), so nothing gets rewired when you upgrade.
 
 - **Tank drive** via 2× BTS7960 (hold a key on the laptop to drive; a dead-man
   timer stops the motors the moment you release it or the cable drops).
-- **Obstacle guard**: front HC-SR04 blocks *forward* motion under 25 cm
+- **Obstacle guard**: 3× HC-SR04 (left/center/right) block *forward* motion under 25 cm
   (turning and reversing still work so you can back away).
 - **Soil sensing**: 7-in-1 NPK probe (RS485/Modbus), capacitive moisture,
   DHT22 air temp/humidity, battery voltage.
-- **Fertilizer dosing**: pre-soak → actuator extend → micro-dose →
-  spring retract, with the drive frozen for the whole sequence.
+- **Fertilizer dosing**: pre-soak → MG995 servo lowers the probe → micro-dose →
+  servo raises the probe, with the drive frozen for the whole sequence.
 - **Safety**: latched emergency halt command, low-battery drive inhibit,
   ESP32 overtemp inhibit, relays forced off at boot.
 - **Telemetry**: one JSON line per second over USB; the laptop console shows
@@ -35,13 +37,16 @@ basic-bot/
 │       ├── main.cpp        # 2 FreeRTOS tasks: drive @50Hz, sensors @5Hz/1Hz
 │       ├── drive.*         # BTS7960 tank drive (LEDC PWM)
 │       ├── sensors.*       # moisture, battery, DHT22, HC-SR04, NPK Modbus
-│       ├── dosing.*        # relay dosing state machine (spring-return)
+│       ├── dosing.*        # dosing state machine (MG995 servo insertion)
 │       ├── commands.*      # plain-text serial command protocol
 │       ├── telemetry.*     # "TLM {json}" output line
 │       └── events.h        # cross-core event bits
-└── laptop/
-    ├── rover.py            # keyboard teleop + telemetry console + CSV log
-    └── requirements.txt    # pyserial
+├── laptop/
+│   ├── rover.py            # keyboard teleop + telemetry console + CSV log
+│   └── requirements.txt    # pyserial
+└── camera/                 # optional ESP32-CAM MJPEG video (separate board)
+    ├── platformio.ini
+    └── src/main.cpp
 ```
 
 ## Wiring (subset actually used)
@@ -50,21 +55,24 @@ basic-bot/
 |---|---|---|
 | GPIO19 / GPIO21 | BTS7960 #1 RPWM / LPWM (left) | R_EN+L_EN of both drivers → 3.3 V |
 | GPIO22 / GPIO23 | BTS7960 #2 RPWM / LPWM (right) | |
-| GPIO25 | HC-SR04 TRIG | |
-| GPIO18 | HC-SR04 ECHO | **via 2.2k/3.9k divider** — never raw 5 V |
+| GPIO25 / GPIO18 | HC-SR04 Left TRIG / ECHO | ECHO **via 10k/10k divider** (2.5 V) |
+| GPIO32 / GPIO33 | HC-SR04 Center TRIG / ECHO | ECHO **via 10k/10k divider** (2.5 V) |
+| GPIO15 / GPIO39 | HC-SR04 Right TRIG / ECHO | GPIO39 input-only; ECHO **via 10k/10k divider** |
 | GPIO17 / GPIO16 / GPIO4 | MAX485 DI / RO / DE+RE | NPK probe A/B on the MAX485 |
 | GPIO14 | DHT22 data | 10k pull-up to 3.3 V |
 | GPIO34 | Moisture AOUT | **power the sensor from 3.3 V, not 5 V** |
 | GPIO35 | Battery divider 39k/10k | ~2.57 V at 12.6 V full charge |
-| GPIO26 / GPIO13 | Relay Ch1 pump / Ch2 actuator | **10k pull-ups to 3.3 V on both** |
-| EN | E-stop button (NC → GND) | hardware kill, independent of software |
+| GPIO26 | Relay Ch1 pump | **10k pull-up to 3.3 V** |
+| GPIO13 | MG995 insertion servo signal | servo on **5 V** rail, common ground |
+| Hardware E-stop | NC latching switch in actuator power feed | physically cuts motor/pump power; do not wire NC directly from EN to GND |
 | VIN | 5 V from LM2596 buck | via ferrite bead; set buck to **5.00 V first** |
 
-Full electrical detail: [`../docs/circuit-diagram.md`](../docs/circuit-diagram.md).
+Complete circuit guide: [`docs/circuit-connections.md`](docs/circuit-connections.md).  
+Visual wiring overview: [`docs/circuit-connections.svg`](docs/circuit-connections.svg).
 
-> ⚠️ The three hardware-damage rules from [`../BUILD.md`](../BUILD.md) apply
-> unchanged: buck to 5.00 V **before** connecting the ESP32; moisture sensor on
-> **3.3 V**; **10k pull-ups** on the relay pins.
+> ⚠️ Set the buck to 5.00 V **before** connecting either ESP32; power the
+> moisture sensor from **3.3 V**; use a **10k pull-up** on the active-low relay
+> input; and use a real latching hardware E-stop in the actuator power feed.
 
 ## Flash the firmware
 
@@ -77,6 +85,18 @@ pio device monitor      # optional: watch raw output @115200
 
 You should see `BOOT agrirover-basic ready (type HELP)` and a `TLM {...}` line
 every second. Relays must stay silent at boot (fail-safe working).
+
+## Control it from a phone
+
+1. Flash both `firmware/` and `camera/`, then power the DevKit and camera.
+2. Join WiFi **`AgriRover-Control`** using password **`agrirover123`**.
+3. Ignore the phone's no-internet warning and stay connected.
+4. Open **http://192.168.4.1/**.
+
+The page provides press-and-hold drive controls, emergency halt/resume, speed,
+dosing, pump control, all telemetry, safety banners, and the live camera feed.
+No mobile app installation or router is required. Full setup and troubleshooting:
+[`docs/mobile-control.md`](docs/mobile-control.md).
 
 ## Drive it from the laptop
 
@@ -94,6 +114,14 @@ python rover.py --port COM5 --log field1.csv
 | space | stop motors | `f` | run dosing sequence |
 | `+`/`-` | speed up / down | `u` | toggle pump disable |
 | `t` | telemetry now | `q` | quit (sends stop) |
+| `c` | open camera stream | | |
+
+## Camera (optional ESP32-CAM)
+
+An AI-Thinker **ESP32-CAM** joins the DevKit's `AgriRover-Control` network at
+**192.168.4.2** and streams live MJPEG into the phone controller. You can also
+press **`c`** in the laptop console or open **http://192.168.4.2/** directly.
+Details in [`camera/README.md`](camera/README.md).
 
 ## Command protocol (if you script it yourself)
 
@@ -109,6 +137,10 @@ moving. Telemetry arrives as `TLM {json}`, events as `ALERT {json}` /
 
 ## Calibrate (once assembled)
 
+**Quick path:** run `python laptop/calibrate.py` — it reads live telemetry and
+prints the exact `MOIST_CAL_MV[]` and `VBAT_DIVIDER_RATIO` values to paste
+(steps 1–2 below, automated). Manual reference:
+
 1. **Moisture**: watch `moist_mv` in the telemetry with the probe in dry air,
    then in water; put those two values into `MOIST_CAL_MV[]` in
    `firmware/src/sensors.cpp`.
@@ -117,13 +149,13 @@ moving. Telemetry arrives as `TLM {json}`, events as `ALERT {json}` /
 3. **NPK register order**: vendor-dependent — if N/P/K look swapped, reorder
    the mapping at the bottom of `readNpk()` in `sensors.cpp` per your
    probe's datasheet.
-4. **Dead-man vs key repeat**: if the rover stutters while holding a key,
-   raise `CMD_DEADMAN_MS` (your OS key-repeat delay is longer than 1 s) or
-   increase your OS key-repeat rate.
+4. **Drive stutter**: the console now drives on key press/release (not OS key
+   auto-repeat), so holding a key should be smooth. If it still stutters,
+   check the USB link/port rather than raising `CMD_DEADMAN_MS`.
 
 ## Deliberately left out (comes with the full firmware later)
 
-WiFi/MQTT, the HMAC-authenticated Pi link, GPS/navigation, camera + AI
+WiFi/MQTT, the HMAC-authenticated Pi link, GPS/navigation, on-board AI
 (weed/disease detection), OTA updates, encoders, OLED/LED interface, LoRa.
 When you add the Raspberry Pi, switch to [`../firmware`](../firmware) — the
 wiring you did here carries over as-is.

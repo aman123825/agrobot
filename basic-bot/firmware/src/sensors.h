@@ -21,7 +21,9 @@ struct Telemetry {
     float soil_moisture_mv  = 0;// raw calibrated millivolts (for calibration)
     float battery_v    = 0;
     float battery_pct  = 0;
-    float front_distance_cm = -1.0f;  // -1 = no echo
+    float left_distance_cm   = -1.0f;  // -1 = no echo
+    float center_distance_cm = -1.0f;
+    float right_distance_cm  = -1.0f;
     float chip_temp_c  = 0;     // ESP32 die temperature
 };
 

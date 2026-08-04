@@ -1,6 +1,6 @@
 # AgriRover — Complete Circuit & Wiring Diagram
 
-Dual-controller agricultural rover: **ESP32 DevKit V1** (real-time control) + **Raspberry Pi 4** (AI inference).
+Dual-controller agricultural rover: **ESP32 DevKit V1** (real-time control) + **Raspberry Pi 5 + Hailo-8 AI HAT+** (AI inference; Pi 4 + Coral USB is the documented fallback).
 This document is the full electrical reference: power distribution, both pin maps, every bus, drive, actuation, and protection placement.
 
 > Legend
@@ -31,8 +31,8 @@ flowchart TB
         E32["ESP32<br/>Core0: sensors/relay/MQTT<br/>Core1: drive"]
     end
 
-    subgraph PI["Raspberry Pi 4 (AI)"]
-        RPI["Pi 4 2GB<br/>YOLOv8n + Coral"]
+    subgraph PI["Raspberry Pi 5 (AI)"]
+        RPI["Pi 5 8GB<br/>YOLOv8n + Hailo-8"]
     end
 
     RAIL5 -->|ferrite bead| E32
@@ -45,7 +45,7 @@ flowchart TB
     E32 ---|"19 RPWM / 21 LPWM"| L298L
     E32 ---|"22 RPWM / 23 LPWM"| L298R
     E32 --- RLY
-    RPI --- CORAL["Coral USB TPU"]
+    RPI --- CORAL["Hailo-8 AI HAT+ (PCIe)<br/>Coral USB = fallback"]
     RPI --- CAM["Pi Camera v2 (CSI)"]
     RPI --- PCF["PCF8574 I2C expander"]
     RAIL5 --> ECAM["ESP32-CAM (isolated)<br/>5V + GND only · 16GB microSD<br/>standalone WiFi MJPEG"]
@@ -84,7 +84,8 @@ Two **independent** 5V domains by design: motors+logic from the LiPo, and the Pi
       │                      └───────────┘
       │
       │   ┌──────────────── SEPARATE PI DOMAIN ────────────────┐
-      │   │ 10000mAh Power Bank ──(5V/3A USB-C)──► Pi 4 PWR IN  │
+      │   │ Power Bank ──(5V/5A USB-C PD)──► Pi 5 + Hailo HAT   │
+      │   │  (Pi 5+Hailo needs 5V/5A; Pi 4+Coral = 5V/3A ok)   │
       │   └────────────────────────────────────────────────────┘
       │
    ╔══▼═══════════════════════════════════════════════════════════╗

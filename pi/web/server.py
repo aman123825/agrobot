@@ -75,7 +75,7 @@ _WS_AUTH_TOKEN = os.getenv("AGROBOT_WEB_TOKEN", "")
 _scheduler: MissionScheduler | None = None
 _plant_db: PlantDB | None = None
 _serial: object | None = None
-_ws_clients: list["WebSocketClient"] = []
+_ws_clients: list[WebSocketClient] = []
 _ws_clients_lock = threading.Lock()
 _telemetry: dict = {
     "battery_pct": 0,
@@ -99,7 +99,7 @@ _DEFAULT_STATIC_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), "
 def _ws_accept_key(client_key: str) -> str:
     """Compute the Sec-WebSocket-Accept value per RFC 6455 section 4.2.2."""
     raw = client_key.strip() + _WS_MAGIC_GUID
-    sha1 = hashlib.sha1(raw.encode("utf-8")).digest()  # noqa: S324
+    sha1 = hashlib.sha1(raw.encode("utf-8")).digest()
     return base64.b64encode(sha1).decode("utf-8")
 
 
@@ -326,7 +326,7 @@ class RoverRequestHandler(BaseHTTPRequestHandler):
 
     static_dir: str = _DEFAULT_STATIC_DIR
 
-    def log_message(self, format, *args):  # noqa: A002
+    def log_message(self, format, *args):
         logger.info("HTTP %s %s", self.address_string(), format % args)
 
     # ------------------------------------------------------------------
@@ -377,7 +377,7 @@ class RoverRequestHandler(BaseHTTPRequestHandler):
     # GET
     # ------------------------------------------------------------------
 
-    def do_GET(self) -> None:  # noqa: N802
+    def do_GET(self) -> None:
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
@@ -404,7 +404,7 @@ class RoverRequestHandler(BaseHTTPRequestHandler):
     # POST
     # ------------------------------------------------------------------
 
-    def do_POST(self) -> None:  # noqa: N802
+    def do_POST(self) -> None:
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
@@ -418,7 +418,7 @@ class RoverRequestHandler(BaseHTTPRequestHandler):
     # DELETE
     # ------------------------------------------------------------------
 
-    def do_DELETE(self) -> None:  # noqa: N802
+    def do_DELETE(self) -> None:
         parsed = urllib.parse.urlparse(self.path)
         path = parsed.path
 
@@ -627,7 +627,7 @@ def main() -> None:
     RoverRequestHandler.static_dir = os.path.abspath(args.static_dir)
 
     # Initialize optional integrations
-    global _scheduler, _plant_db, _serial  # noqa: PLW0603
+    global _scheduler, _plant_db, _serial
 
     if MissionScheduler is not None:
         try:

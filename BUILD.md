@@ -8,6 +8,8 @@ hardware and only work if earlier steps are done.
 - Wiring detail & pin maps → [`docs/circuit-diagram.md`](docs/circuit-diagram.md)
 - Security setup → [`SECURITY.md`](SECURITY.md)
 - Firmware notes → [`firmware/test/README.md`](firmware/test/README.md)
+- 3D CAD prototype (Fusion 360) → [`cad/README.md`](cad/README.md)
+- To-scale mechanical layout → [`docs/mechanical-layout.md`](docs/mechanical-layout.md)
 
 > ⚠️ **Three things that prevent hardware damage — never skip them** (details in
 > their phases): (1) set the buck converter to 5.00 V *before* connecting the
@@ -28,8 +30,8 @@ hardware and only work if earlier steps are done.
       (non-negotiable), wire stripper/crimper, precision screwdrivers, heat-shrink,
       hot-air or lighter, zip ties, calipers, a LiPo balance charger (iMAX B6).
 - [ ] Buy consumables from the gap audit: blade fuse + holder, anti-spark XT60,
-      L298N + Pi heatsinks, 30 mm fan, Loctite 243, conformal coat, cable glands,
-      grommets, ferrite bead, nylon trimmer line.
+      BTS7960 thermal pads + Pi heatsinks, 30 mm fan, Loctite 243, conformal coat,
+      cable glands, grommets, ferrite bead, nylon trimmer line.
 
 ---
 
@@ -49,6 +51,14 @@ Test each module on the bench so you never debug a bad part inside the chassis.
 ---
 
 ## Phase 2 — Mechanical assembly (chassis & drive)
+
+> 🧩 **Build the digital prototype first (recommended).** Before you cut acrylic,
+> generate the complete to-scale 3D model of the rover in **Fusion 360** so you
+> can see exactly how all 58 components sit across the four decks and check
+> clearances. Run the generator in [`cad/README.md`](cad/README.md) — it is
+> built from the same [`docs/mechanical-layout.md`](docs/mechanical-layout.md)
+> footprints and positions you follow below, and exports STEP/STL for the
+> 3D-printed parts (motor mounts, brackets).
 
 - [ ] Laser-cut / prepare the two acrylic chassis layers; deburr edges.
 - [ ] Mount the **aluminum angle extrusion** perimeter frame (absorbs actuator
@@ -80,8 +90,10 @@ battery bus before anything else.
       across the 5 V rail; **ferrite bead** in series with the ESP32 VIN feed.
 - [ ] Wire the **battery sense divider** (39 kΩ/10 kΩ) → ESP32 GPIO35. Confirm
       ~2.57 V at full charge with the meter (must be < 3.3 V).
-- [ ] Power the **Raspberry Pi from its own 10,000 mAh power bank** — NEVER from
-      the buck rail (ripple causes Pi undervoltage throttling).
+- [ ] Power the **Raspberry Pi from its own power bank** — NEVER from the buck
+      rail (ripple causes Pi undervoltage throttling). Use a **5V/5A USB-C PD**
+      bank for the Pi 5 + Hailo HAT (5V/3A is only enough for the Pi 4 + Coral
+      fallback).
 - [ ] (Optional) Wire solar → TP4056 → LiPo trickle charge.
 
 **Checkpoint:** main bus reads ~11–12.6 V; logic rail reads exactly 5.00 V;
@@ -91,11 +103,11 @@ everything else still disconnected.
 
 ## Phase 4 — Controllers, drive & protection
 
-- [ ] Bond **14×14 mm heatsinks** to both L298N ICs; **heatsink kit + 30 mm fan**
-      on the Pi.
-- [ ] Wire both L298N per circuit **§2 / §5.1**: IN1=19, IN2=21, IN3=22, IN4=23,
-      ENA=32, ENB=33. Drive 12 V from the bus; ENA/ENB to the PWM pins (not
-      jumpered high).
+- [ ] Attach **thermal pads** to both BTS7960 (IBT-2) heatsinks; **heatsink kit +
+      30 mm fan** on the Pi.
+- [ ] Wire both BTS7960 per circuit **§2 / §5.1**: LEFT RPWM=19, LPWM=21;
+      RIGHT RPWM=22, LPWM=23. Tie R_EN + L_EN to 3.3V (always enabled).
+      Drive 12 V from the bus to each IBT-2 B+ terminal.
 - [ ] Add a **1N5819 flyback diode** across every motor terminal.
 - [ ] Feed ESP32 **VIN from 5 V via the ferrite bead**; tie grounds to the star
       point.
@@ -153,6 +165,13 @@ Then power on with **no firmware loaded**:
   sudo raspi-config         # enable I2C, SPI, Serial (login shell OFF, hw ON), Camera
   ```
 - [ ] Enable OneWire for DS18B20: add `dtoverlay=w1-gpio` to `/boot/firmware/config.txt`.
+- [ ] **Primary platform — Pi 5 + Hailo-8 AI HAT+:** seat the HAT on the PCIe
+      connector, then install the runtime: `sudo apt install hailo-all` and
+      reboot; confirm with `hailortcli fw-control identify`. Deploy the
+      `*.hef` models to `models/` (detectors load `.hef` first — see
+      `models/README.md`). Requires the Pi 5 5V/5A PSU.
+- [ ] **Fallback — Pi 4 + Coral USB:** install the Edge TPU runtime + plug the
+      Coral into a USB 3 port; the detectors auto-fall-back to `*_edgetpu.tflite`.
 - [ ] Reboot.
 
 ---
@@ -229,7 +248,8 @@ sudo systemctl start agrobot-orchestrator agrobot-pipeline agrobot-dashboard
 
 - [ ] Train on Google Colab (free T4) using PlantVillage + DeepWeeds (see
       [`training/README.md`](training/README.md)).
-- [ ] Export `.tflite` (+ Edge-TPU compiled variant for Coral) and `.pt` files.
+- [ ] Export the models: **`.hef`** (Hailo DFC, for the Pi 5 + Hailo-8 primary
+      path), **`.tflite`** + Edge-TPU variant (Coral fallback), and `.pt`.
 - [ ] Copy them into `pi/models/` with the names referenced in
       [`models/README.md`](models/README.md).
 - [ ] Without models, detection degrades gracefully (the orchestrator logs

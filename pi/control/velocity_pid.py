@@ -25,7 +25,7 @@ class PID:
 
     @staticmethod
     def _clamp(v: float, lo: float, hi: float) -> float:
-        return lo if v < lo else hi if v > hi else v
+        return lo if v < lo else min(v, hi)
 
     def update(self, target: float, measured: float, dt: float) -> float:
         if dt <= 0:

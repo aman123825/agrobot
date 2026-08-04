@@ -1,0 +1,14 @@
+[Unit]
+Description=Weekly AgriRover model OTA check (docs/UPGRADES.md §8)
+
+[Timer]
+# Sunday early morning, off the :00 mark; RandomizedDelaySec spreads a fleet
+# so all rovers don't hit the release server at the same instant.
+OnCalendar=Sun 03:17
+RandomizedDelaySec=1h
+# Catch up after downtime (rover was powered off on Sunday).
+Persistent=true
+Unit=agrobot-model-ota.service
+
+[Install]
+WantedBy=timers.target

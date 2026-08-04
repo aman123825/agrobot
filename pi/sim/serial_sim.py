@@ -22,7 +22,7 @@ from collections import deque
 
 sys.path.append(os.path.dirname(os.path.dirname(__file__)))
 
-from sim.rover_model import RoverSim  # noqa: E402
+from sim.rover_model import RoverSim
 
 _KEY = os.getenv("AGRO_LINK_KEY", "").encode()
 _TRUNC_HEX = 32  # 16 bytes, 32 hex chars

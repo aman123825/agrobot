@@ -9,6 +9,7 @@
 #include "config.h"
 #include "events.h"
 #include "sensors.h"
+#include "mobile_server.h"
 #include "telemetry.h"
 
 static EventGroupHandle_t sEvents = nullptr;
@@ -34,11 +35,12 @@ void telemetry_print() {
     const Telemetry& t = sensors_snapshot();
     EventBits_t bits = sEvents ? xEventGroupGetBits(sEvents) : 0;
 
-    char air_c[16], air_rh[16], dist[16];
+    char air_c[16], air_rh[16], dist_l[16], dist_c[16], dist_r[16];
     numOrNull(air_c,  sizeof(air_c),  t.air_temp_c, 1);
     numOrNull(air_rh, sizeof(air_rh), t.air_humidity, 1);
-    numOrNull(dist,   sizeof(dist),
-              t.front_distance_cm < 0 ? NAN : t.front_distance_cm, 1);
+    numOrNull(dist_l, sizeof(dist_l), t.left_distance_cm   < 0 ? NAN : t.left_distance_cm,   1);
+    numOrNull(dist_c, sizeof(dist_c), t.center_distance_cm < 0 ? NAN : t.center_distance_cm, 1);
+    numOrNull(dist_r, sizeof(dist_r), t.right_distance_cm  < 0 ? NAN : t.right_distance_cm,  1);
 
     char npk[160];
     if (t.npk.valid) {
@@ -55,11 +57,13 @@ void telemetry_print() {
     snprintf(line, sizeof(line),
              "TLM {\"up_ms\":%lu,\"state\":\"%s\",\"batt_v\":%.2f,"
              "\"batt_pct\":%.0f,\"moist_pct\":%.1f,\"moist_mv\":%.0f,"
-             "\"air_c\":%s,\"air_rh\":%s,\"dist_cm\":%s,\"chip_c\":%.1f,"
-             "\"pump_disabled\":%s,\"npk\":%s}",
+             "\"air_c\":%s,\"air_rh\":%s,"
+             "\"dist_l\":%s,\"dist_c\":%s,\"dist_r\":%s,"
+             "\"chip_c\":%.1f,\"pump_disabled\":%s,\"npk\":%s}",
              (unsigned long)millis(), stateStr(bits), t.battery_v,
              t.battery_pct, t.soil_moisture_pct, t.soil_moisture_mv,
-             air_c, air_rh, dist, t.chip_temp_c,
+             air_c, air_rh, dist_l, dist_c, dist_r, t.chip_temp_c,
              (bits & EVT_PUMP_DISABLE) ? "true" : "false", npk);
     Serial.println(line);
+    mobile_server_broadcast_line(line);
 }
