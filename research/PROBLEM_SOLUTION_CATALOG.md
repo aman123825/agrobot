@@ -1,6 +1,6 @@
 # AgriRover Problem-to-Solution Opportunity Catalog
 
-**Research artefact | 04-Aug-2026 | 18 opportunities, ranked**
+**Research artefact | 04-Aug-2026 | 20 opportunities ranked, 11 killed, 1 mandatory prerequisite**
 
 > **Purpose.** A ranked catalog of PROBLEM → AGRIROVER-ENABLED SOLUTION
 > opportunities across Indian horticulture and field crops, scored by (value at
@@ -57,9 +57,15 @@ technical elegance:
 - **[AgriRover target]** — a gate the product must pass before the claim may be
   used in a sales conversation.
 
-New evidence introduced by this document is tagged **`[H01]`…`[H24]`** (the
+New evidence introduced by this document is tagged **`[H01]`…`[H18]`**, listed
+in full with sources in §6.6 (the
 prefixes `E`, `F`, `G` and `P` are already in use by the other dossiers and are
 cited unchanged).
+
+**Cross-reference convention.** `§1`–`§6` always mean sections of *this*
+document. `§11.x` and `§12` refer to the v3 farmer-adoption dossier's unit-
+economics and subsidy sections; references to other dossiers' §-numbers name the
+dossier explicitly.
 
 **Standing caveat.** AgriRover has **no field-validation data**. No measured
 accuracy, coverage rate, saving, yield effect or payback exists. Every
@@ -97,7 +103,8 @@ the deck. **Design only within this envelope.**
 
 **The fiducial scale (BOM #19) and the macro + ring light (BOM #6) are the two
 most under-valued items in the whole BOM.** They are what turn a photograph
-into a *measurement*, and §1.2, §1.7 and §1.9 below depend on them entirely.
+into a *measurement*, and §1.2, §1.4, §1.7 and §4.3 below depend on them
+entirely.
 
 ### Sensing
 
@@ -445,7 +452,8 @@ sensor's relative-only limitation does not bite.**
 **4. Value & who pays.** The grower feels this most, and **the grower will not
 pay** `[F01]`, `[G01]`. The payer is again the aggregator, whose contracted
 volume is what is being salvaged, or — the interesting variant — an **insurer**.
-`P28`/§3.14 notes crop insurance already sells risk protection; a geotagged,
+`P28` (AGRI_PROBLEMS §3.14) notes crop insurance already sells risk
+protection; a geotagged,
 timestamped pre-event condition record is a **loss-adjustment artefact**. That
 is an audit artefact for a liable party, which is the one object v3 says is
 sellable `[G19]`. Flagged as a distinct payer hypothesis worth its own research;
@@ -668,8 +676,8 @@ which is a major BOM decision, not an add-on.
 The moisture probe itself is real but **point-sampled**: a rover visiting weekly
 gives ~52 readings/point/year, while a ₹6,000–16,000 Fyllo Nero sits in the soil
 and reads continuously `[F05]`. **For a slowly varying state variable, a cheap
-fixed sensor beats an expensive mobile one, decisively.** This is §4.7's
-argument and it is unanswerable here.
+fixed sensor beats an expensive mobile one, decisively.** This is the
+competitor dossier's core objection `[F05]`, and it is unanswerable here.
 
 **4. Value & who pays.** **Nobody, for the rover version.** The competitor is
 Fyllo/Fasal at **₹400–750/month** with a device the farmer owns, never moves,
@@ -690,7 +698,8 @@ never as a reason for the pass.
 
 **1. Problem + magnitude.** Fertilizer is applied blind; Soil Health Card
 coverage and utility are weak; NPK imbalance is a national price-policy problem
-`P18`, `P19`, §3.4. The value at stake is genuinely large — fertilizer is a top-3
+`P18`, `P19` (AGRI_PROBLEMS §3.4). The value at stake is genuinely large —
+fertilizer is a top-3
 line item on most crops.
 
 **2. Rover mechanism (as designed in the repo).** RS485/Modbus 7-in-1 probe →
@@ -880,7 +889,7 @@ which is the adjacent idea that *does* work.
 
 **1. Problem + magnitude.** A threshold recommendation assumes the product in
 the can matches the label; spurious pesticides are a documented Indian problem
-§3.10, `P21`.
+`P21` (AGRI_PROBLEMS §3.10).
 
 **2. Rover mechanism.** The rover cannot authenticate a chemical. But
 **before/after CV on the same tagged plants** (`plant_db.py`) produces an
@@ -1099,3 +1108,252 @@ against a Niqo-class quote. **[AgriRover target]** — expect to lose.
 **6. Verdict: park as a commercial offering; retain as a free by-product.** Weed
 maps generated during passes made for §3.1/§4.2 reasons cost nothing extra and
 add report value. Do not sell a weeding pass.
+
+---
+
+### §4.5 Sucking pests (thrips, mites, whitefly, jassids)
+
+**1. Problem + magnitude.** Thrips are the primary reason for cosmetic
+downgrading of export grapes and a major driver of spray frequency; mites and
+whitefly are chronic in cotton and vegetables.
+
+**2/3. Feasibility: [not feasible for a slow ground rover].** Adult thrips are
+**~1–2 mm** and mites smaller still. Resolving them requires macro optics at a
+few centimetres standoff with the insect **in the plane of focus** — which is
+static microscopy, not a drive-by pass from a moving platform. The dossiers
+already exclude this class explicitly `[E27]`, `[E28]`, and that exclusion is
+correct on optics alone, independent of any model quality. The **damage
+symptoms** (silvering, scarring, leaf curl) are visible, but they appear
+**after** the cosmetic downgrade has already occurred, so detection carries no
+decision value for the export grade it was meant to protect.
+
+**4–5.** No payer, no gate.
+
+**6. Verdict: park.** Recorded to fix the boundary of §4.2/§4.3: **AgriRover can
+see mildew colonies and moths; it cannot see thrips.** Stating the boundary
+precisely is what makes the positive claims credible.
+
+---
+
+### §4.6 Nematodes, soil-borne disease and root-zone pathogens
+
+**1. Problem + magnitude.** Root-knot nematode and soil-borne wilt are
+persistent, yield-limiting and effectively invisible until severe.
+
+**2/3. Feasibility: [not feasible].** The pathogen and its damage are
+**below ground**. Above-ground symptoms (stunting, patchy vigour) are
+non-specific — indistinguishable from water stress, salinity or nutrient
+problems — so a detection cannot be attributed to a cause, and an unattributed
+detection is not actionable. Diagnosis requires soil/root sampling and lab
+assay.
+
+**4–6. Verdict: park.** No sensor on this platform, at any price, reaches the
+root zone.
+
+---
+
+## §5. Labour, mechanization and the "who does the walking" cluster
+
+### §5.1 Replacing manual scouting labour on large aggregated acreage
+
+**1. Problem + magnitude.** **34 million workers left Indian agriculture**
+between 2004-05 and 2011-12, and labour scarcity documentably **shifts operations
+off their agronomic optimum** `P9` **[External result]**. Hired labour is
+**16.9% of Nashik grape Cost C** (~₹117,000/ha) `[H10]`. An aggregator with
+30,000+ farmers `[G11]` cannot physically send an agronomist to every plot
+weekly; scouting is rationed, so problems are found late.
+
+**2. Rover mechanism.** This is not a new sensing capability — it is the
+**framing** under which §1.2, §1.7, §3.1 and §4.2 are all one product: a machine
+that **walks the rows so a human does not have to**, capturing a consistent,
+geotagged, timestamped record on every plant, every week.
+
+**3. Feasibility: [buildable now] for the capture; the economics are the open
+question.** Coverage is the constraint: **~0.4 acre/hour** fully traversed at
+~0.3 m/s `[G26]`, with sentinel sampling covering far more ground per hour than
+full traversal. **The rover does not replace an agronomist's judgement — it
+replaces the agronomist's walking**, feeding a review desk priced at
+**₹43–₹1,730/pass** depending on utilisation §11.5.
+
+**4. Value & who pays.** The aggregator, and this is the **honest core of the
+whole business case**: the buyer is not purchasing robotics, they are purchasing
+**scouting coverage they currently cannot staff**. This reframing matters because
+it changes the benchmark from "₹300–500/acre Niqo spray" `[F04]` — which
+AgriRover loses — to "**the cost of an agronomist visit**", which is a much
+higher number and which the aggregator is **already paying** `[G01]`'s existing-
+spend test. It is also the only framing in which §11.3's ₹387/acre-pass dense
+figure looks cheap rather than expensive.
+
+**5. Proof gate.** The decisive commercial experiment for the entire programme:
+**agronomist-visits-displaced per rover-week**, measured, plus whether the
+aggregator's field-ops budget line actually moves. Threshold: rover cost/plot/
+season **< current scouting cost/plot/season** at the same or better problem-
+detection latency. **[AgriRover target]**
+
+**6. Verdict: pursue now — as the commercial framing for the bundle, not as a
+separate feature.** Nothing new is built; this is how §1.2 + §1.7 + §3.1 + §4.2
+should be *sold*.
+
+---
+
+### §5.2 Market price intelligence and mandi timing
+
+**1. Problem + magnitude.** Large — farmer's share of consumer rupee is
+**33–35%** for tomato/grape **[External result]**, and the 2023 Kolar collapse
+(₹2,300 → ₹45–120 per 15 kg box) was a **pure market-timing failure with the
+lowest post-harvest losses in the country** `P8`.
+
+**2/3. Feasibility: [not feasible for a rover] — wrong machine, again.** Price
+data comes from Agmarknet/eNAM APIs and a mobile phone. A rover contributes
+**nothing** to it; there is no sensing content in a mandi price.
+
+**4–6. Verdict: park.** Recorded because it is the largest *farmer-felt*
+problem in this entire catalog and the rover is **completely irrelevant** to it.
+That asymmetry is worth stating out loud at Baramati: it is the clearest evidence
+that "biggest problem" and "problem this machine can address" are different
+lists — which is the discipline this document exists to enforce.
+
+---
+
+## §6. Synthesis
+
+### §6.1 The decision rule that emerged
+
+Sorting twenty-plus candidate problems produced one rule that predicted the
+grade better than crop, cluster or magnitude:
+
+> **AgriRover is credible when the agronomic decision is a COUNT or a LENGTH
+> compared against a documented threshold. It is not credible when the decision
+> is a PHYSICOCHEMICAL QUANTITY.**
+
+The evidence for the rule is internal to this catalog:
+
+| Decision type | Entry | Native sensor output | Grade |
+|---|---|---|---|
+| Count vs integer threshold | §4.3 — 8 moths/trap, 10% rosette | count | **buildable** |
+| Count vs count (paired) | §1.7 — berries removed by thinning | count delta | **buildable** |
+| Count → forecast | §1.2 — flowers per vine | count | **buildable** |
+| **Length vs banded standard** | §1.4 — banana caliper 46–50 mm | **millimetres** | **buildable (cleanest)** |
+| Presence vs absence | §4.2 — mildew lesion present | detection | **buildable (post-§4.1)** |
+| Timestamped act performed | §3.1 — spray record + PHI clock | metadata | **buildable (no CV needed)** |
+| **Sugar concentration** | §1.1a — 16 °Brix pass/fail | skin reflectance | **NOT feasible** |
+| **Three chemical species** | §2.2 — soil N, P, K | bulk EC | **NOT feasible** |
+| Canopy water potential | §2.1 — irrigate or not | visible wilt (late) | **needs thermal** |
+
+The two hard failures (§1.1a, §2.2) are both **"infer chemistry from a cheap
+electrical or optical proxy"**. Both have the same signature: a credible-looking
+number, produced by a sensor that does not measure the quantity, feeding a
+decision with a sharp threshold. **That signature is the thing to refuse.**
+
+### §6.2 Ranked shortlist
+
+**Ranking criterion: (payer proven) × (feasibility on current BOM) × (fit with
+route-density and active-days constraints).** Magnitude of the problem is
+deliberately *not* the primary axis — §5.2 and §3.2 have the largest numbers and
+the lowest scores.
+
+| Rank | Entry | Feasibility | Payer | Why it ranks here |
+|---|---|---|---|---|
+| **1** | **§3.1** Residue/PHI audit artefact | buildable, no new CV | **Proven** (exporter/FPO, liable party `[G15]`) | Only entry whose payer prior research already validated. Least robot-dependent — hence the necessity test. |
+| **2** | **§1.2** Pre-bloom count → volume forecast | buildable, R²>0.90 `[H08]` | Strong (procurement desk) | Only entry where the literature explicitly endorses **this platform's** night-plus-controlled-light configuration `[H08]`, `[H14]`. |
+| **3** | **§4.2** Mildew early detection | buildable **after §4.1** | Strong (same buyer; cost + residue coupling) | Supplies the **active days** §1.1 lacks; 16.93% of Cost C `P3`. Hard-gated on §4.1. |
+| **4** | **§1.7** Thinning verification | buildable (paired diff) | Plausible (₹117k/ha labour bill `[H10]`) | Same product shape as §3.1 — a verified physical act `[G19]`. No new hardware. |
+| **5** | **§1.1** Sampling allocator + crate forecast | buildable **only as restructured** | Strong, but seasonal | Survives only as queue discipline; **Brix claim deleted**. Fails active-days alone. |
+| **6** | **§5.1** Scouting-labour displacement | buildable | **The framing for 1–5** | Not a feature; the correct **benchmark** (agronomist cost, not Niqo's ₹300–500). |
+| 7 | §1.3 Salvage cut-order | buildable (bundled) | Unproven (insurer?) | Free on top of 2+5; emotive; payer unproven. |
+| 8 | §1.4 Banana caliper | **best physics** | Plausible | New crop/district/buyer. Port after grape proves. |
+| 9 | §3.3 Spray-efficacy record | post-§4.1 | Unproven | Novel; strictly downstream of §4.1. |
+| 10 | §4.3 Pink bollworm / FAW ETL | buildable | **Weak (grant only)** | Best health case `P1`, worst commercial case. |
+| — | **§1.5, §1.6, §2.1, §2.2, §2.3, §3.2, §4.4, §4.5, §4.6, §5.2** | **park** | none | See §6.3. |
+
+### §6.3 The kill list — and why saying it matters
+
+| Entry | Killed by | One-line reason |
+|---|---|---|
+| §1.1a Brix/ripeness index | `[H06]`, `[H07]` | Field MAE 1.05 °Brix straddles a 16.0 threshold; **acidity has no RGB correlate at all**. A ₹500 refractometer is better. |
+| §2.2 NPK prescription maps | `[H12]` | Probe reports **EC × factory constant**, not N/P/K. `prescription_map.py` is a valid pipeline on an invalid input. |
+| §1.5 Onion/tomato lot screening | `P4`, throughput | Conveyor + line-scan camera wins; decisive losses are **internal**, invisible to surface RGB. |
+| §1.6 Mango | `P13` | Fruit is in the overhead crown; a ground rover cannot see it. |
+| §2.1 Irrigation | `[F05]`, `[H11]` | A ₹6,000 buried probe beats a ₹27k mobile one for a slow state variable; real stress sensing needs thermal. |
+| §2.3 pH / compaction | physics | ISE needs buffers; penetrometer needs reaction mass a 25 kg platform lacks. |
+| §3.2 Cold-chain transit | wrong machine | A ₹1,500 logger rides in the crate. The rover does not board trucks. |
+| §4.4 Weeding as a service | `[F04]`, `[G18]`, `[G26]` | Niqo **sprays** for ₹300–500/acre; AgriRover **scouts** for ₹387–1,599. Full-coverage task, throughput-bound platform. |
+| §4.5 Thrips/mites | `[E27]`, `[E28]`, optics | 1–2 mm targets need static macro, not a drive-by pass. |
+| §4.6 Nematodes | physics | Below ground; above-ground symptoms non-specific. |
+| §5.2 Market prices | wrong machine | Largest farmer-felt problem; **zero** rover relevance. |
+
+**These eleven are the document's main contribution.** Each is a direction that
+looks fundable in a slide deck and fails on physics, throughput or competition.
+
+### §6.4 The recommended bundle
+
+No entry survives alone. §1.1 fails the **≥100 active days/year** gate `[G13]`;
+§3.1 does not need a robot; §4.2 is gated on §4.1. Bundled on **the same
+Sahyadri-class vineyard acreage, same season, same payer**, they cover the
+calendar:
+
+| Window | Mission | Entry |
+|---|---|---|
+| Pre-bloom → fruit set | flower/cluster counts (night, ring light) | §1.2 |
+| Thinning window | before/after berry-removal verification | §1.7 |
+| Whole season, every pass | spray record, PHI clock, geotagged evidence | §3.1 |
+| Whole season, every pass | mildew scouting (undersides) | §4.2 |
+| Pre-harvest 4–8 weeks | sampling allocation, crate forecast, cut order | §1.1, §1.3 |
+| Free by-products | weed map, soil moisture/salinity trend | §4.4, §2.1 |
+
+Sold as **§5.1: contracted scouting coverage the aggregator cannot staff** —
+benchmarked against agronomist visit cost, not against Niqo's spray price.
+
+### §6.5 Named research gaps
+
+1. **The NPK lab correlation (§2.2) — highest priority.** Split-sample vs an
+   NABL lab. `[H12]` predicts failure; until it is run, `prescription_map.py`
+   should stay feature-flagged off.
+2. **Route density on aggregator acreage.** §11.4's survey `[G04]` has never been
+   run on Sahyadri-class contiguous plots, where the ₹387 dense figure — the only
+   one that closes — might actually hold.
+3. **Indian trellis occlusion.** All bunch/flower CV results `[H04]`, `[H05]`,
+   `[H08]` come from VSP canopies. Y-trellis and flat bower are denser. **Unknown
+   transfer.**
+4. **Insurer WTP for pre-event condition records (§1.3).** A distinct payer
+   hypothesis with zero evidence located.
+5. **Banana bunch bagging (§1.4).** If export bunches are bagged, caliper
+   measurement is occluded and the entry dies. Survey before building.
+6. **The §3.1 necessity test.** Phone + agronomist vs rover. If the phone
+   matches, sell the phone workflow.
+7. **Aggregator scouting cost baseline (§5.1).** The denominator of the entire
+   business case is currently unknown.
+
+### §6.6 New evidence tags introduced
+
+| Tag | Claim | Source |
+|---|---|---|
+| `[H01]` | Pack-houses 70,080 required vs 249 created; reefers 61,826 vs ~9,000 | NCCD demand-driven gap assessment, as reported |
+| `[H02]` | 395 lakh MT cold storage, 8,698 facilities (May 2024); bulk gap ~10% | Govt./NCCD capacity reporting |
+| `[H03]` | Grape exports 2024-25: 271,253 MT ≈ ₹3,050 crore | APEDA/trade reporting |
+| `[H04]` | Multi-view raises tracked bunch ratio 23% → 74%; motion blur and ID-matching unsolved | Vineyard yield-estimation literature |
+| `[H05]` | YOLOv11 cluster detection 94.3% precision; ~5–7% yield-mass error | Grape detection literature |
+| `[H06]` | Brix from RGB: lab RMSE 0.78; field MAE 1.05; field RMSE up to 4.63; hyperspectral 0.25–1.27 | Non-destructive TSS estimation literature |
+| `[H07]` | EU table grape maturity: min 16 °Brix, or 20:1 (12.5–14) / 18:1 (14–16) sugar:acid | EU/Codex table grape standard |
+| `[H08]` | Grapevine flower counting R² > 0.90; daylight pre-bloom unreliable; **night + artificial light significantly better** | Early yield prediction literature |
+| `[H09]` | Banana PHL 20–30%; Jalgaon 6.81% farm + 3.90% transport + 14.12% retail; export at 75–80% maturity; caliper bands e.g. 46–50 mm | Banana post-harvest/grading literature |
+| `[H10]` | Nashik grape Cost C ₹690,422/ha; hired labour 16.9% | Grape cost-of-cultivation study |
+| `[H11]` | RGB detects water stress only via visible colour change, less accurate than thermal; CWSI itself prone to late detection | Water-stress sensing review |
+| `[H12]` | 7-in-1 NPK sensors measure EC × fixed factor; poor lab correlation; K worst; qualitative trends only | Low-cost NPK sensor validation |
+| `[H13]` | RASFF 2025: India highest, 124 pesticide notifications | RASFF reporting (corroborates `[F17]`) |
+| `[H14]` | Controlled artificial lighting improves field detection stability | Field imaging literature |
+| `[H15]` | PlantVillage models >99% lab → **33–50% field**; complexity does not fix domain shift | Domain-generalization studies |
+| `[H16]` | Grape downy mildew 30–100% loss (50–100% typical on clusters); powdery 11.56–38.22% Maharashtra; ~4 sprays/season Nashik trials | Indian grape pathology literature |
+| `[H17]` | Pink bollworm up to 30% loss; ETL 8 moths/trap/night ×3, 10% rosette, 10% boll damage; proposed 4.5–5.7 | Cotton IPM literature |
+| `[H18]` | Weeds ~USD 11 bn/yr across ten crops; cotton 40–85% early-growth loss | ICAR-DWR and weed-science literature |
+
+### §6.7 What this catalog does not do
+
+It does not produce a rupee-per-acre benefit figure for any entry. Every attempt
+to do so required multiplying a national loss percentage by a national crop value
+and then by an **unmeasured** "addressable fraction" — the third term does not
+exist in any source located, and inventing it is the exact failure mode the
+earlier dossiers were written to stop. **The proof gates in each entry are the
+substitute: measure the fraction, then compute the value.** Until a gate is
+passed, the honest answer to "what is it worth?" is *"we have a method to find
+out and a threshold we have agreed to respect."*
