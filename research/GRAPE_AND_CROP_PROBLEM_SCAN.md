@@ -129,6 +129,13 @@ All prices **[Analyst scenario]**, to confirm against live India suppliers.
 - [x] (10) Onion storage-monitoring node BOM + cost — done (v2.10)
 - [x] v2 queue COMPLETE (items 1–10)
 
+### v3 queue (deepening — auto-continue works these next)
+- [ ] (11) Pomegranate economics + forecast-node fit (deep)
+- [ ] (12) Mango problems + rover/component fit
+- [ ] (13) Competitor deep-dive: Niqo / Fyllo / Fasal pricing & coverage vs AgriRover
+- [ ] (14) Synthesis: top-5 AgriRover opportunities re-ranked after the v2 price corrections
+- [ ] (15) Concrete pilot design for the grape mildew-node use case (metrics, cost, kill-gate)
+
 ### v2.1 Add-on component prices — verified against live Indian listings (04-Aug-2026)
 Several v1 estimates were **too low**. Corrected, live retail figures — all **[External result]**:
 
