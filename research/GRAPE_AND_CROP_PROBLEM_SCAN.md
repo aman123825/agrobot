@@ -124,9 +124,10 @@ All prices **[Analyst scenario]**, to confirm against live India suppliers.
 - [x] (5) Real farmer complaints from forums/reportage — done (v2.5)
 - [x] (6) Sugarcane problems + rover/component fit — done (v2.6)
 - [x] (7) Chilli problems + rover/component fit — done (v2.7)
-- [ ] (8) Deepen grape downy/powdery economics (sprays/season, resistance, ₹/season)
-- [ ] (9) Verify APEDA GrapeNet / Residue Monitoring Plan specifics for the record product
-- [ ] (10) Onion storage-monitoring node: component BOM + cost
+- [x] (8) Deepen grape downy/powdery economics — done (v2.8)
+- [x] (9) APEDA GrapeNet / Residue Monitoring Plan specifics — done (v2.9)
+- [x] (10) Onion storage-monitoring node BOM + cost — done (v2.10)
+- [x] v2 queue COMPLETE (items 1–10)
 
 ### v2.1 Add-on component prices — verified against live Indian listings (04-Aug-2026)
 Several v1 estimates were **too low**. Corrected, live retail figures — all **[External result]**:
@@ -205,6 +206,38 @@ Sources for these sections:
 - `[S51]` TradeBrains/PTI — Govt: 40–80% chilli damage in AP & Telangana — https://tradebrains.in/features/rsq-chilli-crop/
 - `[S52]` Reuters — chilli hit by thrips despite heavy pesticide; prices surge — https://www.reuters.com/world/india/red-chilli-pepper-prices-surge-crop-damage-top-exporter-india-2022-03-07/
 - `[S53]` Plant Archives — blue sticky traps most effective for T. parvispinus — http://plantarchives.org/article/313-%20Evaluation%20of%20Coloured%20Sticky%20Traps%20for%20Thrips%20parvispinus%20(Karny)%20Management%20and%20Its%20Impact%20on%20Chilli%20Yield.pdf
+
+### v2.8 Grape mildew economics (deepened) — the spray treadmill + resistance is the target
+- **Spray load.** Downy mildew alone needs ~**7–8 fungicide sprays/season** (US benchmark); Indian grape POP schedules run from foundation pruning **through the monsoon**, with a decision-support system placing the first sprays **25–45 days after pruning**. **[External result]** `[S24]`, `[S56]` Tropical Indian table grape carries an even heavier total program across downy + powdery + pests (growers reported spraying cost up ~30% in a bad year, `[S44]`).
+- **Why it never stops: resistance.** *Plasmopara viticola* is a **high-risk pathogen for fungicide resistance and has developed resistance to most fungicide classes** (the metalaxyl/phenylamide case is classic). **[External result]** `[S55]` Calendar spraying accelerates that treadmill.
+- **What this means for the sensor node (§1.1).** A leaf-wetness + RH/temp forecast node earns its keep by **cutting unneeded sprays** (spray on risk, not calendar) — protecting both cost and the useful life of each chemistry. **Honest gap:** a clean *India ₹-per-season* spray total needs **local grower invoices** (manuals disagree, per §3.2); do not quote a single figure in a pitch. **[Analyst scenario]**
+
+### v2.9 APEDA GrapeNet / Residue Monitoring Plan — the record must plug INTO an existing system
+- **What already exists.** EU grape export is **permitted only with APEDA registration**, under a **Residue Monitoring Plan (RMP)** monitoring residues of **CIB&RC-permitted chemicals**, with **farmer + exporter registration, plot registration, inspection authorities, accredited-lab residue testing, and traceability** via the **GrapeNet** system; the trade notice ships per-chemical MRL annexures. **[External result]** `[S57]`, `[S7]`
+- **Implication for AgriRover's "record" product.** The compliance apparatus is **already built** — GrapeNet already demands a spray diary, plot registration and lab residue tests. A rover-generated geotagged, timestamped treatment/PHI record therefore does **not create a new need; it can only make the existing GrapeNet record easier and more trustworthy to compile**. Residue itself stays a **lab test**, never rover-measurable. The exporter wedge (adoption dossier) holds — *sell a cleaner GrapeNet-ready evidence trail* — but it is an **integration into GrapeNet, not a standalone product**. **[Analyst scenario]**
+
+### v2.10 Onion storage-monitoring node — cheap, viable, but a separate product (not the rover)
+- **Problem.** ~**25–45%** of stored onion is lost, largely from **unmonitored temperature, humidity and rot-gas build-up**; low-cost IoT monitoring aims to cut this toward **15–20%**. **[External result]** `[S58]`, `[S59]`
+- **BOM (indicative India prices) for one static node:**
+
+| Part | Role | ₹ (indicative) |
+|---|---|---|
+| ESP32 dev board | MCU + WiFi | **₹250–400** `[S60]` |
+| DHT22 (or SHT31) | temp / RH | ₹200–400 (SHT31 ₹700–1,200, `[S27]`) |
+| MQ-135 (or MQ-137) gas sensor | rot / ammonia gases | ₹150–300 (MQ-137 ₹1,199, `[S28]`) |
+| Relay module + fan | ventilation trigger | ₹150–400 |
+| Enclosure, wiring, power | — | ₹300–500 |
+| **Node total** | | **~₹1,050–2,500** (cheap build) |
+
+- **Verdict.** A **~₹1–2.5k static node per chawl** is genuinely viable and cheap — but it is a **fixed storage sensor, not the field rover**. Treat it as an **adjacent product**, exactly as v1 §2 flagged. **[Analyst scenario]**
+
+Sources for these sections:
+- `[S55]` MDPI Microorganisms — *P. viticola* high-risk, resistant to most fungicide classes — https://www.mdpi.com/2076-2607/9/1/119
+- `[S56]` MASU / Indian grape POP — DM spray schedule, first sprays 25–45 days after pruning — https://www.masujournal.org/107/lxjAVbDrcjXNomWCZcotEkXPG03InT.pdf
+- `[S57]` APEDA — grape export procedure 2026 (APEDA registration + RMP + GrapeNet) — https://apeda.gov.in/sites/default/files/export_procedures/procedureforexportofgrapes_17Feb_2026.pdf · MRL annexure — https://apeda.gov.in/sites/default/files/export_procedures/Annexure_9_17012026.pdf
+- `[S58]` IJARSCT — onion 25–40% lost from poor temp/humidity/gas monitoring — https://www.ijarsct.co.in/Paper36761.pdf
+- `[S59]` arXiv — IoT onion storage (ESP32 + DHT22 + MQ-135 + UV-C), target 15–20% — https://arxiv.org/html/2601.10745v1
+- `[S60]` Robocraze — ESP32 NodeMCU dev board ₹383 — https://robocraze.com/products/nodemcu-32-wifi-bluetooth-esp32-development-board30-pin
 
 ### v2 sources
 - `[S26]` Flipkart, 0–32 °Brix handheld refractometers ₹859–1,283 — https://www.flipkart.com/real-instruments-0-32-brix-hand-refractometer-atc-measuring-fruits-wine-beer-sugars-manual-handheld/p/itme5b7738d9159a
