@@ -122,8 +122,8 @@ All prices **[Analyst scenario]**, to confirm against live India suppliers.
 - [x] (3) Cotton problems + rover/component fit — done (v2.3)
 - [x] (4) Banana problems + rover/component fit — done (v2.4)
 - [x] (5) Real farmer complaints from forums/reportage — done (v2.5)
-- [ ] (6) Sugarcane problems + rover/component fit
-- [ ] (7) Chilli problems + rover/component fit
+- [x] (6) Sugarcane problems + rover/component fit — done (v2.6)
+- [x] (7) Chilli problems + rover/component fit — done (v2.7)
 - [ ] (8) Deepen grape downy/powdery economics (sprays/season, resistance, ₹/season)
 - [ ] (9) Verify APEDA GrapeNet / Residue Monitoring Plan specifics for the record product
 - [ ] (10) Onion storage-monitoring node: component BOM + cost
@@ -188,6 +188,23 @@ Sources for these sections:
 - `[S44]` TOI 2015 — grape ₹25/kg cost vs ₹8–10/kg sale; weight −30–40% — https://timesofindia.indiatimes.com/city/nashik/Grape-growers-seek-subsidy-on-plastic-net-covers-from-state/articleshow/46913058.cms
 - `[S45]` Indian Express — Vidarbha farmer drank pesticide amid ruined crop — https://indianexpress.com/article/india/india-others/amidst-his-ruined-crop-he-drank-pesticide/lite/
 - `[S46]` Indian Express 2026 — Sahyadri Farms + IPH Pune farmer mental-health initiative — https://indianexpress.com/article/cities/pune/maharashtra-sahyadri-farms-iph-pune-farmer-mental-health-initiative-10813110-https-indianexpress-com-article-c-10813750/
+
+### v2.6 Sugarcane — weak fit (tall dense canopy; the real problem is water, not scouting)
+- **Problem & magnitude.** Sugarcane's dominant issue in Maharashtra is **water**: it occupies only ~**4–6%** of farmland but consumes ~**70%** of the state's irrigation water, uses **10–15× more water** than traditional crops, and ~**79.5%** of the state's cane grows in **drought-prone** regions. **[External result]** `[S49]` Disease: **red rot** (*Colletotrichum falcatum*), "the cancer of sugarcane," causes severe yield/quality loss and repeatedly breaks resistant varieties; **woolly aphid** (*Ceratovacuna lanigera*) has hit ~**1.32 lakh ha** across Maharashtra/Karnataka. **[External result]** `[S47]`, `[S48]`
+- **Rover/component fit — honest and mostly negative.** (a) The biggest problem, **water over-use**, is a policy/irrigation-infrastructure issue, not something a scouting rover solves. (b) Cane grows **2–4 m tall with a dense closing canopy**, so a small ground rover can only scout **early season**; once the canopy closes it drives under a wall of cane with no useful view. (c) **Red rot is internal** (reddened internodes) with late external symptoms — RGB can't catch it early. (d) Woolly-aphid colonies sit **high on tall cane**, out of a ground rover's close-range view. **Verdict: weak fit — park sugarcane.** **[Analyst scenario]**
+
+### v2.7 Chilli — pests too small for a drive-by camera (confirms the adoption dossier)
+- **Problem & magnitude.** The invasive thrips **_Thrips parvispinus_** caused a 2021–22 outbreak with reported **80–100% yield loss** (official estimate **40–80%** across AP & Telangana); yields crashed from ~**25 quintals/acre to 3–4**, over **0.4 million ha** affected, worsened by leaf-curl virus. **[External result]** `[S50]`, `[S51]`, `[S52]`
+- **Rover/component fit — honest and negative for direct detection.** Thrips and the leaf-curl "murda" **mites are sub-millimetre** — **not** resolvable by a drive-by RGB camera, and the invasive species makes an old image classifier unsafe (as the adoption dossier warned). Recommended monitoring is **coloured (blue) sticky traps** + terminal-leaf/flower tapping — a **fixed smart-trap** job, not a rover pass. **[External result]** `[S53]` RGB can at best **map already-curled/bronzed plants** (symptom, not pest, and late). **Verdict: park chilli for direct scouting; at most symptom-mapping.** **[Analyst scenario]**
+
+Sources for these sections:
+- `[S47]` ResearchGate — red rot, "the cancer of sugarcane" — https://www.researchgate.net/publication/333194052_A_Review_on_Red_Rot_The_Cancer_of_Sugarcane
+- `[S48]` Springer — woolly aphid (*Ceratovacuna lanigera*) impact on sugarcane — https://link.springer.com/article/10.1007/s12355-008-0025-x
+- `[S49]` TOI — sugarcane ~4–6% of land, ~70% of Maharashtra irrigation water — https://timesofindia.indiatimes.com/india/cane-crops-get-bulk-of-dam-water-industry-8/articleshow/50261163.cms · Copernicus EGU25 — 79.5% of cane in drought-prone regions — https://meetingorganizer.copernicus.org/EGU25/EGU25-925.html
+- `[S50]` ResearchGate/IIHR — T. parvispinus 80–100% chilli yield loss (2021) — https://www.researchgate.net/publication/359108075_Dominance_of_invasive_species_Thrips_parvispinus_Karny_over_the_existing_chilli_thrips_Scirtothrips_dorsalis_Hood_on_chilli_in_the_southern_states_of_India
+- `[S51]` TradeBrains/PTI — Govt: 40–80% chilli damage in AP & Telangana — https://tradebrains.in/features/rsq-chilli-crop/
+- `[S52]` Reuters — chilli hit by thrips despite heavy pesticide; prices surge — https://www.reuters.com/world/india/red-chilli-pepper-prices-surge-crop-damage-top-exporter-india-2022-03-07/
+- `[S53]` Plant Archives — blue sticky traps most effective for T. parvispinus — http://plantarchives.org/article/313-%20Evaluation%20of%20Coloured%20Sticky%20Traps%20for%20Thrips%20parvispinus%20(Karny)%20Management%20and%20Its%20Impact%20on%20Chilli%20Yield.pdf
 
 ### v2 sources
 - `[S26]` Flipkart, 0–32 °Brix handheld refractometers ₹859–1,283 — https://www.flipkart.com/real-instruments-0-32-brix-hand-refractometer-atc-measuring-fruits-wine-beer-sugars-manual-handheld/p/itme5b7738d9159a
