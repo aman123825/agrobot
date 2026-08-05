@@ -9,7 +9,7 @@ import pytest
 
 from ai import model_ota
 from ai.model_ota import (STATE_NAME, check_and_update, make_manifest,
-                          rollback, sha256_file)
+                          rollback)
 
 MANIFEST_URL = "https://example.test/releases/model_manifest.json"
 BASE_URL = "https://github.com/acme/agrobot/releases/download/v2"

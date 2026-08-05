@@ -28,9 +28,12 @@ class FakeInterp:
 
     def get_tensor(self, index):
         out = np.zeros((1, 11, 3), dtype=np.float32)
-        out[0, :4, 0] = [0.5, 0.5, 0.2, 0.4]; out[0, 4, 0] = 0.95   # person
-        out[0, :4, 1] = [0.51, 0.5, 0.2, 0.4]; out[0, 4, 1] = 0.90  # duplicate
-        out[0, :4, 2] = [0.1, 0.1, 0.05, 0.05]; out[0, 6, 2] = 0.10 # weak
+        out[0, :4, 0] = [0.5, 0.5, 0.2, 0.4]  # person
+        out[0, 4, 0] = 0.95
+        out[0, :4, 1] = [0.51, 0.5, 0.2, 0.4]  # duplicate
+        out[0, 4, 1] = 0.90
+        out[0, :4, 2] = [0.1, 0.1, 0.05, 0.05]  # weak
+        out[0, 6, 2] = 0.10
         return out
 
 
