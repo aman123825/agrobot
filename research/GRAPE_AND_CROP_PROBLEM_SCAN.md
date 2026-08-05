@@ -132,9 +132,10 @@ All prices **[Analyst scenario]**, to confirm against live India suppliers.
 ### v3 queue (deepening — auto-continue works these next)
 - [x] (11) Pomegranate economics + forecast-node fit — done (v3.11)
 - [x] (12) Mango problems + rover/component fit — done (v3.12)
-- [ ] (13) Competitor deep-dive: Niqo / Fyllo / Fasal pricing & coverage vs AgriRover
-- [ ] (14) Synthesis: top-5 AgriRover opportunities re-ranked after the v2 price corrections
-- [ ] (15) Concrete pilot design for the grape mildew-node use case (metrics, cost, kill-gate)
+- [x] (13) Competitor deep-dive — done (v3.13)
+- [x] (14) Synthesis: top-5 re-ranked — done (v3.14)
+- [x] (15) Concrete pilot design — done (v3.15)
+- [x] v3 queue COMPLETE (items 11–15) — full scan done
 
 ### v2.1 Add-on component prices — verified against live Indian listings (04-Aug-2026)
 Several v1 estimates were **too low**. Corrected, live retail figures — all **[External result]**:
@@ -265,6 +266,37 @@ Sources for these sections:
 - `[S67]` ICAR/IAEA — methyl-eugenol MAT traps; infestation cut to ~5% from 17–66% — https://inis.iaea.org/records/rwk0x-z6j63/files/42109323.pdf
 - `[S68]` ResearchGate — mango powdery mildew up to 90% loss in India — https://www.researchgate.net/publication/281590887_Powdery_mildew_-A_serious_disease_of_mango
 - `[S69]` Mango anthracnose post-harvest decay ~35–40% — https://sdiopr.s3.ap-south-1.amazonaws.com/2024/Feb/19-Feb-24/2024_ACRI_113011/Ms_ACRI_113011.pdf
+
+### v3.13 Competitor deep-dive — AgriRover's two best ideas are already occupied
+- **Niqo Robotics (physical spot-spray).** AI "Niqo Sense" turns sprayers into spot-sprayers; **₹350/acre** service, **500+ farmers** in Karnataka & Maharashtra, cuts pesticide cost **up to 60%**; **~$21 M raised** (Series B $13 M; backers include Omnivore, Blume, **FMC Corporation**). **[External result]** `[S70]`, `[S71]` This owns the "AI spot-spray" niche — and AgriRover's spray subsystem is **bench-only**. It cannot compete here.
+- **Fyllo / Fasal (fixed micro-climate node + AI advisory).** Fyllo sells IoT soil sensors + AI weather stations; its **"Kairo" station covers 100+ acres** as shared cluster intelligence, forecasts disease **48 h** ahead, and serves grapes (Nashik/Sangli), pomegranate (Solapur) and chilli (~₹400–750/month class per the adoption dossier §5). **[External result]** `[S72]`
+- **The squeeze (honest).** AgriRover's **two best ideas from this scan are both already taken by better-funded incumbents doing them more cheaply**: (1) spot-spray → Niqo at ₹350/acre; (2) the leaf-wetness/RH forecast node (§1.1) → Fyllo's **one fixed station amortised over 100+ acres**, which beats a slow rover carrying one sensor on cost-per-acre. Same both-sides squeeze the adoption dossier flagged, now with 2024–26 pricing, funding and coverage.
+- **What's left that they don't do.** Neither a fixed point-station (Fyllo) nor a spray robot (Niqo) produces **close-range, under-canopy, per-plant/per-bunch imagery + a geotagged, timestamped evidence/PHI record**. That narrow sliver — auditable evidence & traceability — is AgriRover's only non-contested ground. **[Analyst scenario]**
+
+### v3.14 Synthesis — top-5 AgriRover opportunities, re-ranked after v2/v3 corrections
+Ranked by (value × feasibility on THIS platform × a payer who actually exists):
+1. **Export evidence + PHI record, GrapeNet-ready** (grape/pomegranate). Non-contested; real payer (exporter/pack-house); no new hardware. Weakness: it's a record, not a measurement — must integrate into APEDA GrapeNet. **#1.**
+2. **Close-range, under-canopy scouting/evidence maps** where drones & fixed stations can't see — the rover's one true physical edge. **#2 (route-density/throughput is the cost risk).**
+3. **Ripeness index → storage-matched harvest sequencing** (grape) — relative RGB ripeness, sidesteps the Brix kill; refractometer (₹859–1,283) for ground-truth. **#3.**
+4. **Disease early-warning micro-climate node** (grape/pomegranate) — valuable, but **Fyllo sells it cheaper per acre** via a fixed 100-acre station; pursue only if the rover's spatial map beats a point station. **#4 (contested).**
+5. **Onion storage-monitoring node** (~₹1–2.5k) — cheap, viable, but an **adjacent static product, not the rover**. **#5 (pivot).**
+**Killed/parked:** RGB→Brix pass/fail; cotton PBW, mango fruit fly, chilli thrips (favour fixed smart-traps / sub-mm / canopy-height); sugarcane (water + tall canopy); grower-paid scouting (WTP ~₹14.89/acre, adoption dossier). **[Analyst scenario]**
+
+### v3.15 Concrete pilot design — grape disease-evidence + PHI record (the #1 wedge)
+- **Objective.** Prove an exporter/FPO will accept and value a rover-generated, geotagged, agronomist-signed treatment/PHI evidence record feeding APEDA GrapeNet.
+- **Site/partner.** One solvent exporter/pack-house or a large FPO (Sahyadri-type) in Nashik; 8–12 grower plots on a dense route.
+- **What the rover does.** Weekly close-range row scan → geotagged canopy/bunch images + visible lesions → agronomist review → product/dose/PHI record → verification revisit. No spraying; no Brix claim.
+- **Kill-gates (numeric, cheapest-first).**
+  - Route density: **≥ target acres/day** at a ₹/acre-pass **below** the exporter's willingness — else throughput kills it (measure with a GPS walk first).
+  - Record acceptance: exporter QA accepts **≥ 90%** of records into their GrapeNet/RMP file unedited.
+  - Value: measurable drop in rejected-consignment risk or audit time vs baseline.
+- **Cost.** Rover ₹27–50k + optional leaf-wetness/RH node ₹4.4–12.8k (§v2.1); pilot-funded, not farmer-paid.
+- **Honest gate.** If the exporter won't pay for the record, or route-density cost/acre exceeds value, **stop**. Three of these checks need **only invoices, one exporter interview, and a GPS walk** — no hardware — matching the adoption dossier's Stage-1 gates. **[AgriRover target]**
+
+Sources for these sections:
+- `[S70]` NITI Frontier Tech — Niqo ₹350/acre, 500+ farmers, up to 60% pesticide cut — https://frontiertech.niti.gov.in/story/ai-robots-cut-pesticide-use-and-costs-with-precision-spraying-for-indian-farmers/
+- `[S71]` Entrepreneur — Niqo ~$21 M raised (Series B $13 M; FMC, Omnivore, Blume) — https://www.entrepreneur.com/en-in/news-and-trends/agritech-robotics-startup-niqo-robotics-bags-usd-13-mn-in/474183/
+- `[S72]` Fyllo — "Kairo" weather station covers 100+ acres; 48 h disease forecast — https://www.fyllo.in/devices/kairo
 
 ### v2 sources
 - `[S26]` Flipkart, 0–32 °Brix handheld refractometers ₹859–1,283 — https://www.flipkart.com/real-instruments-0-32-brix-hand-refractometer-atc-measuring-fruits-wine-beer-sugars-manual-handheld/p/itme5b7738d9159a
