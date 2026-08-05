@@ -130,8 +130,8 @@ All prices **[Analyst scenario]**, to confirm against live India suppliers.
 - [x] v2 queue COMPLETE (items 1–10)
 
 ### v3 queue (deepening — auto-continue works these next)
-- [ ] (11) Pomegranate economics + forecast-node fit (deep)
-- [ ] (12) Mango problems + rover/component fit
+- [x] (11) Pomegranate economics + forecast-node fit — done (v3.11)
+- [x] (12) Mango problems + rover/component fit — done (v3.12)
 - [ ] (13) Competitor deep-dive: Niqo / Fyllo / Fasal pricing & coverage vs AgriRover
 - [ ] (14) Synthesis: top-5 AgriRover opportunities re-ranked after the v2 price corrections
 - [ ] (15) Concrete pilot design for the grape mildew-node use case (metrics, cost, kill-gate)
@@ -245,6 +245,26 @@ Sources for these sections:
 - `[S58]` IJARSCT — onion 25–40% lost from poor temp/humidity/gas monitoring — https://www.ijarsct.co.in/Paper36761.pdf
 - `[S59]` arXiv — IoT onion storage (ESP32 + DHT22 + MQ-135 + UV-C), target 15–20% — https://arxiv.org/html/2601.10745v1
 - `[S60]` Robocraze — ESP32 NodeMCU dev board ₹383 — https://robocraze.com/products/nodemcu-32-wifi-bluetooth-esp32-development-board30-pin
+
+### v3.11 Pomegranate — a strong second crop for the grape micro-climate node
+- **Problem & magnitude.** Bacterial blight (Telya, *Xanthomonas axonopodis* pv. *punicae*) causes **60–80% losses** under epidemic conditions (prevalence Maharashtra 52.5%, Karnataka 58.3%, AP 43.5%), cracks fruit and destroys exportability — it has driven **removal of whole orchards**. **[External result]** `[S61]` In 2024, Maharashtra growers reported **quitting pomegranate**, yields halving from **8 → 4 t/acre** on rain-driven disease. **[External result]** `[S62]`
+- **Value & export.** High-value crop (establishment ~₹1.9 lakh/ha); India exported **72,011 MT worth ~USD 69 million** in FY23-24 (UAE, Netherlands, Saudi, etc.), with new sea-freight access to Australia from Solapur. **[External result]** `[S63]` Export runs under an **APEDA Residue Monitoring Plan** with per-chemical PHIs (blight: streptomycin+tetracycline / copper, PHI 55–60 d). **[External result]** `[S64]`
+- **Rover/component fit — good adjacency.** Blight is **weather-driven** (rain + humidity), so the **same leaf-wetness + RH/temp forecast node** from §1.1 applies (Fyllo already forecasts blight risk in Solapur/Nashik). **[External result]** `[S65]` The rover's RGB maps **visible oily leaf/fruit lesions for roguing**, and the APEDA-RMP record angle mirrors grapes. Same caveat as grape (a fixed IoT station may amortise the sensor better; the rover's edge is spatial mapping + close fruit inspection). **Verdict: pursue as the #2 crop after grapes — it reuses the node, the roguing-map, and the export-record play.** **[Analyst scenario]**
+
+### v3.12 Mango — poor fit: a tall-tree canopy a ground rover cannot reach
+- **Problem & magnitude.** Fruit fly (*Bactrocera dorsalis*) is mango's most destructive pest — **5–80% fruit loss** and a quarantine/export barrier. **[External result]** `[S66]` Powdery mildew (*Oidium*) can cause **up to 90% loss**; anthracnose drives **~30–40% post-harvest decay**. **[External result]** `[S68]`, `[S69]`
+- **Rover/component fit — mostly negative.** Mango is a **tall tree (often 5–15 m)**; a small ground rover **cannot image the canopy, panicles or hanging fruit** where every one of these problems lives. Fruit fly is managed by **methyl-eugenol traps (~6–10/acre)** — a **trap-count** signal favouring a **fixed smart-trap** (reachable height), not a drive-by (MAT + sanitation cut infestation to ~5% from 17–66%). **[External result]** `[S67]` Powdery mildew and anthracnose sit **up in the canopy** — a **drone's** domain. **Verdict: park mango for the ground rover; fruit-fly smart-traps and drones fit far better.** **[Analyst scenario]**
+
+Sources for these sections:
+- `[S61]` Springer — pomegranate bacterial blight 60–80% loss; state prevalence — https://link.springer.com/article/10.1007/s13314-018-0311-8/fulltext.html
+- `[S62]` Indian Express 2024 — Maharashtra growers quitting pomegranate; yield 8→4 t/acre — https://indianexpress.com/article/cities/pune/excess-rain-disease-maharashtra-farmers-pomegranate-cultivation-9157032/lite/
+- `[S63]` APEDA/PIB — pomegranate exports FY23-24: 72,011 MT, ~USD 69 M — https://apeda.gov.in/sites/default/files/press_release/PIB2052170.pdf
+- `[S64]` APEDA — pomegranate RMP annexure (blight/wilt chemicals + PHI) — https://apeda.gov.in/sites/default/files/2024-11/annexure5rmpcorrected06012016bynrcpom.pdf
+- `[S65]` Fyllo — pomegranate blight prediction (Solapur/Nashik) — https://www.fyllo.in/solutions/pomegranate
+- `[S66]` CCARI/ICAR — *B. dorsalis* most destructive mango pest, 5–80% loss — https://ccari.res.in/Successstory2022-7.pdf
+- `[S67]` ICAR/IAEA — methyl-eugenol MAT traps; infestation cut to ~5% from 17–66% — https://inis.iaea.org/records/rwk0x-z6j63/files/42109323.pdf
+- `[S68]` ResearchGate — mango powdery mildew up to 90% loss in India — https://www.researchgate.net/publication/281590887_Powdery_mildew_-A_serious_disease_of_mango
+- `[S69]` Mango anthracnose post-harvest decay ~35–40% — https://sdiopr.s3.ap-south-1.amazonaws.com/2024/Feb/19-Feb-24/2024_ACRI_113011/Ms_ACRI_113011.pdf
 
 ### v2 sources
 - `[S26]` Flipkart, 0–32 °Brix handheld refractometers ₹859–1,283 — https://www.flipkart.com/real-instruments-0-32-brix-hand-refractometer-atc-measuring-fruits-wine-beer-sugars-manual-handheld/p/itme5b7738d9159a
