@@ -56,13 +56,24 @@ both builders; adding a table means adding its caption there.
 `experiments/make_diagrams.py` writes the architecture and safety-chain
 diagrams. Figures are committed so the paper builds without matplotlib.
 
+## Covering e-mail
+
+`SUBMISSION_EMAIL.md` holds the ready-to-send covering e-mail to the National
+Convenor, stating **online presentation** as the preferred mode. It still has
+three `[[placeholders]]` — the payment reference, the co-author certificate
+clause, and a phone number — listed under "Open items" in that file.
+
+It also flags one substantive point: the accepted abstract title differs from
+the current paper title, and the e-mail declares the change and offers to
+revert it.
+
 ## Submission checklist (IEI, on or before 12 August 2026, 17:00 IST)
 
 - [ ] Full-length paper in `.docx` — generated above
 - [ ] PDF copy of the same paper — generated above
 - [ ] Registration payment receipt / transaction reference
-- [ ] Preferred presentation mode stated in the covering e-mail: **offline
-      (physical)** or **online**
+- [ ] Preferred presentation mode stated in the covering e-mail: **online**
+      (drafted in `SUBMISSION_EMAIL.md`)
 - [ ] Separate registration + receipt for any co-author who needs their own
       presentation certificate (the single registration covers only the
       corresponding author)
