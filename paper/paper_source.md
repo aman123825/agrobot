@@ -241,7 +241,7 @@ Data and export layer | Pipeline and ISO-XML tests | End-to-end record from a re
 
 # 9. Cost Analysis
 
-The design is costed in two configurations against a hard ceiling of Rs 50,000. The sensing-only scout configuration -- the machine that navigates, images and logs, but carries no chemical -- is costed at Rs 41,150. Fitting the needle-injection dosing head and the seven-parameter soil probe described in Sections 5 and 6 adds Rs 5,850, bringing the full machine to approximately Rs 47,000 and leaving roughly Rs 3,000 of the ceiling unallocated against price variance. Both figures are planning totals against Indian retail pricing at the time of specification, exclusive of fabrication labour, taxes, shipping and the spare-parts allowance that a field campaign requires.
+The design is costed in two configurations against a hard ceiling of Rs 50,000. The sensing-only scout configuration -- the machine that navigates, images and logs, but carries no chemical -- is costed at Rs 41,150. Fitting the needle-injection dosing head and the seven-parameter soil probe described in Sections 5 and 6 adds approximately Rs 5,850, bringing the full machine to approximately Rs 47,000. The six scout-configuration rows of Table 5 are point planning prices and sum exactly to Rs 41,150; the dosing increment is different in kind, and we flag it as such. Its components are quoted only as supplier ranges, the probe alone spanning Rs 2,000 to Rs 5,000, so the honest increment is Rs 3,600 to Rs 8,300 and Rs 5,850 is its midpoint. The upper bound of that range would place the machine near Rs 49,500, still under the ceiling but with the contingency exhausted. The residual headroom under the ceiling is in any case committed, not free: the costing sheet earmarks it for replacement motors and connectors, spare storage and camera contingency, which a field campaign consumes. Both figures are planning totals against Indian retail pricing at the time of specification, exclusive of fabrication labour, taxes and shipping. A durability upgrade for sustained field exposure is a further Rs 4,000 to Rs 7,000 above these figures and is not included.
 
 We state the two configurations separately because they are not the same claim. The scout configuration is what the first supervised pilot is expected to field, on the reasoning of Section 10 that no dosing efficacy claim can be made before the perception and localisation gates pass. The dosing configuration is the machine this paper specifies in full. Reporting only the lower number would understate the cost of the design actually described.
 
@@ -256,8 +256,8 @@ Structure and integration | Chassis with adjustable camera mast, guards and cano
 Navigation and safety sensing | Front and rear ToF, six-axis IMU, GNSS receiver, latching E-stop with bumper and ultrasonic backup | 2,300
 Drive and odometry | Four 12 V geared motors, two BTS7960 half-bridge modules, Hall-effect wheel encoders | 2,000
 Scout configuration subtotal | | 41,150
-Dosing and soil increment | RS485 seven-parameter NPK probe with MAX485 transceiver, 150 N linear actuator with limit switches, peristaltic pump, needle head with tubing, 500 ml tank with float sensor, relay driver | 5,850
-Dosing configuration total | | 47,000
+Dosing and soil increment | RS485 seven-parameter NPK probe with MAX485 transceiver, 150 N linear actuator with limit switches, peristaltic pump, needle head with tubing, 500 ml tank with float sensor, relay driver | 3,600-8,300 (mid 5,850)
+Dosing configuration total | | approx. 47,000
 
 Two features of this structure are worth naming. First, compute and power together account for Rs 23,750, or well over half the scout configuration, while the parts that move the machine account for Rs 2,000. The cost of this design is the cost of deciding and the cost of running, not the cost of driving; a cheaper machine is obtained by weakening perception, which is precisely the capability the design exists to provide.
 
