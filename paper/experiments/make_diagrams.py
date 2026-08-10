@@ -56,8 +56,12 @@ def canvas(w, h):
 def fig1():
     fig, ax = canvas(7.0, 5.2)
 
-    box(ax, 0.115, 0.930, 0.34, 0.058,
+    # Centred over the layers below, with its annotation on a line of its own:
+    # a left-aligned label beside this box collides with the box text.
+    box(ax, 0.315, 0.930, 0.37, 0.058,
         "Farmer / agronomist  ·  Telegram bot, web UI", FILL_HW, 6.6, "bold")
+    ax.text(0.500, 1.002, "advisory reports  ·  remote stop  ·  status queries",
+            ha="center", va="bottom", fontsize=6.2, color=LINE)
 
     # Supervisory layer
     ax.add_patch(FancyBboxPatch((0.035, 0.575), 0.93, 0.315,
@@ -85,10 +89,8 @@ def fig1():
         "Health + savings\nthermal, current, disk,\nper-acre chemical audit", "#ffffff", 6.2)
 
     # Links
-    arrow(ax, (0.225, 0.930), (0.225, 0.893))
-    arrow(ax, (0.345, 0.893), (0.345, 0.930))
-    ax.text(0.475, 0.958, "advisory reports, remote stop, status queries",
-            fontsize=6.2, color=LINE, va="center")
+    arrow(ax, (0.455, 0.930), (0.455, 0.893))
+    arrow(ax, (0.545, 0.893), (0.545, 0.930))
 
     box(ax, 0.055, 0.470, 0.42, 0.062,
         "UART 115200 baud\nHMAC-SHA256/128 signed, monotonic counter", FILL_HW, 6.2)

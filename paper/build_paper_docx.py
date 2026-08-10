@@ -39,8 +39,14 @@ INK = RGBColor(0x1A, 0x1C, 0x1A)
 ACCENT = RGBColor(0x2F, 0x5D, 0x3A)
 MUTED = RGBColor(0x5D, 0x66, 0x60)
 
-# Content width inside 2.2 cm side margins on A4.
-CONTENT_W_CM = 21.0 - 4.4
+# Content width inside the 2.54 cm side margins the IEI guidelines specify.
+MARGIN_CM = 2.54
+CONTENT_W_CM = 21.0 - 2 * MARGIN_CM
+
+# IEI author guidelines: 12 pt body, 1.5 line spacing, 14 pt bold centred
+# title, 12 pt bold main headings, 12 pt bold italic sub headings.
+BODY_PT = 12
+LEADING = 1.5
 
 FIG_WIDTHS = {
     "fig1_architecture.png": 1.00,
@@ -69,9 +75,9 @@ def cell_margins(table, twips=80):
     tblPr.append(mar)
 
 
-def para(doc, text_runs, *, size=11, align=WD_ALIGN_PARAGRAPH.JUSTIFY,
+def para(doc, text_runs, *, size=BODY_PT, align=WD_ALIGN_PARAGRAPH.JUSTIFY,
          bold=False, italic=False, color=INK, before=0, after=6,
-         leading=1.15, font=BODY_FONT, keep_with_next=False):
+         leading=LEADING, font=BODY_FONT, keep_with_next=False):
     """text_runs is a plain string or a list of (text, bold, italic) tuples."""
     p = doc.add_paragraph()
     p.alignment = align
@@ -313,14 +319,15 @@ def page_setup(doc):
     sec.start_type = WD_SECTION.NEW_PAGE
     sec.page_width = Cm(21.0)
     sec.page_height = Cm(29.7)
-    sec.left_margin = Cm(2.2)
-    sec.right_margin = Cm(2.2)
-    sec.top_margin = Cm(2.0)
-    sec.bottom_margin = Cm(2.0)
+    sec.left_margin = Cm(MARGIN_CM)
+    sec.right_margin = Cm(MARGIN_CM)
+    sec.top_margin = Cm(MARGIN_CM)
+    sec.bottom_margin = Cm(MARGIN_CM)
 
     normal = doc.styles["Normal"]
     normal.font.name = BODY_FONT
-    normal.font.size = Pt(11)
+    normal.font.size = Pt(BODY_PT)
+    normal.paragraph_format.line_spacing = LEADING
     normal.element.rPr.rFonts.set(qn("w:eastAsia"), BODY_FONT)
 
     # Running head, suppressed on the title page by Word's own first-page flag.
@@ -355,20 +362,21 @@ def add_page_number(paragraph):
 
 
 def masthead(doc, meta):
-    para(doc, meta["TITLE"], size=16, bold=True, color=INK,
-         align=WD_ALIGN_PARAGRAPH.CENTER, after=4, leading=1.05)
-    para(doc, meta["SUBTITLE"], size=12, italic=True, color=ACCENT,
-         align=WD_ALIGN_PARAGRAPH.CENTER, after=10)
+    # Title is 14 pt bold centred exactly as the guidelines require.
+    para(doc, meta["TITLE"], size=14, bold=True, color=INK,
+         align=WD_ALIGN_PARAGRAPH.CENTER, after=4, leading=1.15)
+    para(doc, meta["SUBTITLE"], size=BODY_PT, italic=True, color=INK,
+         align=WD_ALIGN_PARAGRAPH.CENTER, after=10, leading=1.15)
 
     authors = " \u00b7 ".join(a.strip() for a in meta["AUTHORS"].split("|"))
-    para(doc, authors, size=11, bold=True,
-         align=WD_ALIGN_PARAGRAPH.CENTER, after=3)
-    para(doc, meta["AFFILIATION"], size=9, color=MUTED,
-         align=WD_ALIGN_PARAGRAPH.CENTER, after=2)
-    para(doc, meta["CONTACT"], size=9, color=MUTED,
-         align=WD_ALIGN_PARAGRAPH.CENTER, after=2)
-    para(doc, meta["VENUE"], size=9, italic=True, color=MUTED,
-         align=WD_ALIGN_PARAGRAPH.CENTER, after=10)
+    para(doc, authors, size=BODY_PT, bold=True,
+         align=WD_ALIGN_PARAGRAPH.CENTER, after=3, leading=1.15)
+    para(doc, meta["AFFILIATION"], size=10, color=MUTED,
+         align=WD_ALIGN_PARAGRAPH.CENTER, after=2, leading=1.15)
+    para(doc, meta["CONTACT"], size=10, color=MUTED,
+         align=WD_ALIGN_PARAGRAPH.CENTER, after=2, leading=1.15)
+    para(doc, meta["VENUE"], size=10, italic=True, color=MUTED,
+         align=WD_ALIGN_PARAGRAPH.CENTER, after=10, leading=1.15)
 
     # Abstract in a single shaded cell, mirroring the PDF layout.
     t = doc.add_table(rows=1, cols=1)
@@ -383,16 +391,17 @@ def masthead(doc, meta):
     h = cell.add_paragraph()
     hr = h.add_run("ABSTRACT")
     hr.font.name = BODY_FONT
-    hr.font.size = Pt(10)
+    hr.font.size = Pt(BODY_PT)
     hr.font.bold = True
     hr.font.color.rgb = ACCENT
 
     b = cell.add_paragraph()
     b.alignment = WD_ALIGN_PARAGRAPH.JUSTIFY
+    b.paragraph_format.line_spacing = LEADING
     for txt, bo, it, sub, sup in (norm(t) for t in runs_from(meta["ABSTRACT"])):
         r = b.add_run(txt)
         r.font.name = BODY_FONT
-        r.font.size = Pt(10)
+        r.font.size = Pt(BODY_PT)
         r.font.bold = bo
         r.font.italic = it
         r.font.subscript = sub or None
@@ -400,7 +409,7 @@ def masthead(doc, meta):
         r.font.color.rgb = INK
 
     para(doc, [("Keywords: ", True, False)] + runs_from(meta["KEYWORDS"]),
-         size=10, align=WD_ALIGN_PARAGRAPH.LEFT, before=8, after=4)
+         size=BODY_PT, align=WD_ALIGN_PARAGRAPH.LEFT, before=8, after=4)
 
 
 def build():
@@ -420,14 +429,16 @@ def build():
     fig_no = tbl_no = ref_no = 0
     for kind, payload in blocks:
         if kind == "h1":
-            p = para(doc, payload, size=13, bold=True, color=ACCENT,
+            # Main heading: 12 pt bold, per the IEI paper format table.
+            p = para(doc, payload, size=BODY_PT, bold=True, color=INK,
                      align=WD_ALIGN_PARAGRAPH.LEFT, before=12, after=5,
-                     keep_with_next=True)
+                     leading=1.15, keep_with_next=True)
             hrule(p)
         elif kind == "h2":
-            para(doc, payload, size=11, bold=True, color=INK,
+            # Sub heading: 12 pt bold italic.
+            para(doc, payload, size=BODY_PT, bold=True, italic=True, color=INK,
                  align=WD_ALIGN_PARAGRAPH.LEFT, before=9, after=3,
-                 keep_with_next=True)
+                 leading=1.15, keep_with_next=True)
         elif kind == "p":
             para(doc, runs_from(payload))
         elif kind == "math":
