@@ -255,7 +255,27 @@ def parse(path):
         i += 1
 
     flush(para)
+    check_guidelines(meta)
     return meta, blocks
+
+
+# The IEI author guidelines cap the abstract at 300 words and the keyword list
+# at five entries. Both outputs share this parser, so failing here is the
+# cheapest place to catch a violation -- before either file is written.
+ABSTRACT_MAX_WORDS = 300
+KEYWORDS_MAX = 5
+
+
+def check_guidelines(meta):
+    words = len(meta["ABSTRACT"].split())
+    if words > ABSTRACT_MAX_WORDS:
+        raise SystemExit(
+            f"abstract is {words} words; the guidelines allow "
+            f"{ABSTRACT_MAX_WORDS} (250-300). Trim paper_source.md.")
+    keys = [k for k in re.split(r"[;,]", meta["KEYWORDS"]) if k.strip()]
+    if len(keys) > KEYWORDS_MAX:
+        raise SystemExit(
+            f"{len(keys)} keywords; the guidelines allow {KEYWORDS_MAX}.")
 
 
 # ---------------------------------------------------------------- build

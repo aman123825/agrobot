@@ -207,7 +207,9 @@ def math_paragraph(doc, tex):
             return
         r = p.add_run(txt)
         r.font.name = BODY_FONT
-        r.font.size = Pt(11)
+        # Display maths is set at the body size the guidelines specify, so an
+        # equation does not read as a smaller class of text than the prose.
+        r.font.size = Pt(BODY_PT)
         r.font.italic = italic
         r.font.color.rgb = INK
         r._element.rPr.rFonts.set(qn("w:eastAsia"), BODY_FONT)
