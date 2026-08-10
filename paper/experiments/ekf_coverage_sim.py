@@ -215,11 +215,12 @@ def main():
     axb.plot([r["tx"] for r in ek_recs[:cut]], [r["ty"] for r in ek_recs[:cut]],
              color=accent, lw=1.0, label="Executed track, EKF guidance")
     axb.set_xlim(-1.0, 2.6)
-    axb.set_ylim(0, 30)
+    # Headroom above the 30 m pass so the legend never sits on the track.
+    axb.set_ylim(0, 35)
     axb.set_xlabel("Across-row x (m)", fontsize=8)
     axb.set_title("(b) First four passes, 0.60 m row spacing",
                   fontsize=8.5, color=ink)
-    axb.legend(fontsize=6.5, frameon=False, loc="lower right")
+    axb.legend(fontsize=6.5, frameon=False, loc="upper center")
 
     for ax in (axa, axb):
         ax.tick_params(labelsize=7)
@@ -229,17 +230,37 @@ def main():
     fig.savefig(os.path.join(out_fig, "fig3_coverage_path.png"))
     plt.close(fig)
 
-    # Fig 4 - localisation error
+    # Fig 4 - localisation error for all three conditions of Table 3, against
+    # distance travelled, on a log axis: the three curves span two decades and
+    # a linear axis would flatten the fused trace onto the baseline.
+    def travelled(recs):
+        d, out, prev = 0.0, [], None
+        for r in recs:
+            if prev is not None:
+                d += math.dist(prev, (r["tx"], r["ty"]))
+            out.append(d)
+            prev = (r["tx"], r["ty"])
+        return out
+
+    dr_s, ek_s = travelled(dr_recs), travelled(ek_recs)
+    gnss_s = [s for s, r in zip(dr_s, dr_recs) if r["gps_err"] is not None]
+    gnss_e = [r["gps_err"] for r in dr_recs if r["gps_err"] is not None]
+
     fig, ax = plt.subplots(figsize=(6.2, 3.2), dpi=200)
-    ax.plot([r["t"] for r in dr_recs], [r["err"] for r in dr_recs],
+    ax.plot(dr_s, [r["err"] for r in dr_recs],
             color=muted, lw=0.9, label="Dead reckoning only")
-    ax.plot([r["t"] for r in ek_recs], [r["err"] for r in ek_recs],
+    ax.plot(gnss_s, gnss_e, color="#b08a3e", lw=0.0, marker=".",
+            markersize=1.6, label="Raw GNSS fixes (1 Hz)")
+    ax.plot(ek_s, [r["err"] for r in ek_recs],
             color=accent, lw=0.9, label="EKF (odometry + gyro + 1 Hz GNSS)")
-    ax.set_xlabel("Mission time (s)")
-    ax.set_ylabel("Position error (m)")
+    ax.set_yscale("log")
+    ax.set_xlabel("Distance travelled (m)")
+    ax.set_ylabel("Position error (m), log scale")
     ax.set_title("Localisation error over one simulated coverage mission",
                  fontsize=9, color=ink)
-    ax.legend(fontsize=7, frameon=False)
+    ax.grid(True, which="major", axis="y", lw=0.3, color="#dcdcdc")
+    ax.set_axisbelow(True)
+    ax.legend(fontsize=7, frameon=False, loc="lower right")
     ax.tick_params(labelsize=7)
     for s in ("top", "right"):
         ax.spines[s].set_visible(False)

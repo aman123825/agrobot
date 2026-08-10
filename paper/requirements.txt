@@ -1,0 +1,8 @@
+# Build dependencies for the IEI full-length paper.
+#   python paper/build_paper.py       -> PDF   (reportlab)
+#   python paper/build_paper_docx.py  -> DOCX  (python-docx, Pillow for images)
+#   python paper/experiments/ekf_coverage_sim.py -> figures (matplotlib)
+reportlab>=4.0
+python-docx>=1.1
+Pillow>=10.0
+matplotlib>=3.8

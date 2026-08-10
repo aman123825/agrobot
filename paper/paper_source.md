@@ -184,7 +184,7 @@ with covariance propagated as
 
 MATH: P_{k|k-1} = F_k P_{k-1} F_k^{\top} + Q_k
 
-where F_k is the Jacobian of the motion model about the previous estimate and Q_k is the process noise reflecting wheel slip and heading-rate error. A GNSS fix, converted to a local tangent frame, is applied as a linear position measurement:
+where $F_k$ is the Jacobian of the motion model about the previous estimate and $Q_k$ is the process noise reflecting wheel slip and heading-rate error. A GNSS fix, converted to a local tangent frame, is applied as a linear position measurement:
 
 MATH: K_k = P_{k|k-1} H^{\top} \left( H P_{k|k-1} H^{\top} + R_k \right)^{-1}, \qquad x_{k|k} = x_{k|k-1} + K_k \left( z_k - H x_{k|k-1} \right)
 

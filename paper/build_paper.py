@@ -19,7 +19,6 @@ from reportlab.platypus import (
     Frame,
     Image,
     KeepTogether,
-    PageBreak,
     PageTemplate,
     Paragraph,
     Spacer,
@@ -122,9 +121,14 @@ def styles():
 
 
 # ---------------------------------------------------------------- math
+ROMAN = 'Times-Roman'
+
+# Symbols are emitted as self-contained fragments so they can appear anywhere,
+# including inside <super>/<sub>, without unbalancing the surrounding <i> span.
 GREEK = {
     r"\Delta": "&#916;", r"\theta": "&#952;", r"\omega": "&#969;",
-    r"\top": "T", r"\times": "&#215;", r"\cdot": "&#183;",
+    r"\top": f'<font face="{ROMAN}">T</font>',
+    r"\times": "&#215;", r"\cdot": "&#183;",
     r"\sigma": "&#963;", r"\mu": "&#956;", r"\phi": "&#966;",
 }
 
@@ -134,11 +138,13 @@ def math_markup(tex):
     t = t.replace(r"\qquad", "&nbsp;" * 8).replace(r"\quad", "&nbsp;" * 4)
     t = t.replace(r"\left(", "(").replace(r"\right)", ")")
     t = t.replace(r"\left[", "[").replace(r"\right]", "]")
+    # Operator names are set upright, per convention, without closing the
+    # italic span that wraps the whole expression.
     for fn in ("cos", "sin", "tan", "exp", "log"):
-        t = t.replace("\\" + fn, f"</i>{fn}&#8201;<i>")
+        t = t.replace("\\" + fn, f'<font face="{ROMAN}">{fn}</font>&#8201;')
     for k, v in GREEK.items():
-        t = t.replace(k, f"</i>{v}<i>")
-    t = re.sub(r"\^\{([^{}]*)\}", r"<super>\1</super>", t)
+        t = t.replace(k, v)
+    t = re.sub(r"\^\{(.*?)\}", r"<super>\1</super>", t)
     t = re.sub(r"_\{([^{}]*)\}", r"<sub>\1</sub>", t)
     t = re.sub(r"\^([A-Za-z0-9])", r"<super>\1</super>", t)
     t = re.sub(r"_([A-Za-z0-9])", r"<sub>\1</sub>", t)
@@ -147,11 +153,21 @@ def math_markup(tex):
 
 
 def inline(text):
-    """Minimal inline markup: **bold**, EVT_NAME kept as-is."""
-    text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
-    text = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
-    text = text.replace("--", "&#8212;")
-    return text
+    """Inline markup: **bold**, $math$, EVT_NAME kept as-is.
+
+    Math spans are extracted before entity escaping so that the markup emitted
+    by math_markup survives, and so an author's plain '&' still escapes.
+    """
+    out = []
+    for i, part in enumerate(re.split(r"\$(.+?)\$", text)):
+        if i % 2:
+            out.append(math_markup(part))
+            continue
+        part = (part.replace("&", "&amp;")
+                    .replace("<", "&lt;").replace(">", "&gt;"))
+        part = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", part)
+        out.append(part.replace("--", "&#8212;"))
+    return "".join(out)
 
 
 # ---------------------------------------------------------------- parse
@@ -251,8 +267,10 @@ def build():
     # ---- masthead
     flow.append(Paragraph(inline(meta["TITLE"]), S["title"]))
     flow.append(Paragraph(inline(meta["SUBTITLE"]), S["subtitle"]))
-    authors = " &#183; ".join(a.strip() for a in meta["AUTHORS"].split("|"))
-    flow.append(Paragraph(inline(authors), S["authors"]))
+    # Escape each name first: the separator is markup and must not be escaped.
+    authors = " &#183; ".join(
+        inline(a.strip()) for a in meta["AUTHORS"].split("|"))
+    flow.append(Paragraph(authors, S["authors"]))
     flow.append(Paragraph(inline(meta["AFFILIATION"]), S["affil"]))
     flow.append(Paragraph(inline(meta["CONTACT"]), S["affil"]))
     flow.append(Paragraph(inline(meta["VENUE"]), S["venue"]))
