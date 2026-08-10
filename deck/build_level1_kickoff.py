@@ -72,14 +72,14 @@ def rule(slide, x, y, w, color=LINE, thick=.012):
 
 def header(slide, number, title, dark=False):
     color = WHITE if dark else INK
-    txt(slide, .62, .32, 3.4, .25, "IDEAS · IIT BOMBAY · L1C19", 8.5, color, True)
-    txt(slide, 10.2, .32, 2.5, .25, title.upper(), 8.5, color, True, align=PP_ALIGN.RIGHT)
-    txt(slide, 12.2, 7.08, .5, .18, f"0{number}", 8, color, True, align=PP_ALIGN.RIGHT)
+    txt(slide, .62, .32, 4.2, .3, "IDEAS L1C19 — KICKOFF", 11, color, True)
+    txt(slide, 8.5, .32, 4.2, .3, title.upper(), 11, color, True, align=PP_ALIGN.RIGHT)
 
 
 def source(slide, value, dark=False):
-    rule(slide, .62, 6.86, 12.08, RGBColor(62, 68, 64) if dark else LINE)
-    txt(slide, .62, 6.98, 11.5, .24, value, 7.2, RGBColor(173, 180, 175) if dark else MUTED)
+    rule(slide, .62, 6.82, 12.08, RGBColor(62, 68, 64) if dark else LINE)
+    txt(slide, .62, 6.93, 10.6, .28, value, 9, RGBColor(173, 180, 175) if dark else MUTED)
+    txt(slide, 11.35, 6.93, 1.35, .28, "TEAM: AGROBOT", 9, WHITE if dark else INK, True, align=PP_ALIGN.RIGHT)
 
 
 def tag(slide, x, y, label, dark=False, width=1.55):
@@ -92,8 +92,8 @@ def tag(slide, x, y, label, dark=False, width=1.55):
 def bullet(slide, x, y, w, title, body, dark=False):
     fg = WHITE if dark else INK; sub = RGBColor(188,195,190) if dark else MUTED
     shape(slide, x, y+.06, .11, .11, LIME if dark else GREEN, True)
-    txt(slide, x+.28, y, w-.28, .28, title, 13, fg, True)
-    txt(slide, x+.28, y+.34, w-.28, .55, body, 10.5, sub)
+    txt(slide, x+.28, y, w-.28, .32, title, 15, fg, True)
+    txt(slide, x+.28, y+.36, w-.28, .58, body, 13, sub)
 
 # 1 — cinematic cover
 s = prs.slides.add_slide(blank); base(s, True)
@@ -106,14 +106,15 @@ tag(s, .64, 1.02, "14 AUGUST 2026", True, 1.72)
 txt(s, .62, 1.72, 6.3, .72, "AGROBOT", 46, WHITE, True, DISPLAY)
 txt(s, .62, 2.55, 6.25, 1.55, "Before we build,\nwe need to know.", 38, WHITE, True, DISPLAY)
 txt(s, .65, 4.42, 5.95, .9, "Is there a painful, frequent and paid problem in agricultural compliance evidence?", 18, RGBColor(221,226,222), True)
-txt(s, .65, 5.78, 5.95, .5, "LEVEL 1 · CUSTOMER DISCOVERY", 11, LIME, True)
-txt(s, .65, 6.18, 5.95, .45, "Customer  ·  Pain  ·  Payer  ·  Value", 11, WHITE)
+txt(s, .65, 5.55, 5.95, .34, "TEAM NAME: AGROBOT", 14, WHITE, True)
+txt(s, .65, 5.96, 5.95, .34, "DATE: 14 AUGUST 2026", 14, LIME, True)
+txt(s, .65, 6.37, 5.95, .34, "LEVEL 1 · CUSTOMER DISCOVERY", 13, WHITE, True)
 
 # 2 — problem, an argument not a dashboard
-s = prs.slides.add_slide(blank); base(s); header(s, 2, "Problem & customer")
+s = prs.slides.add_slide(blank); base(s); header(s, 2, "Problem & Customer Segment")
 tag(s, .62, .86, "OUR STARTING THESIS", False, 1.75)
 txt(s, .62, 1.38, 9.5, .68, "The record may matter more than the robot.", 31, INK, True, DISPLAY)
-txt(s, .62, 2.08, 8.8, .48, "Export-linked agriculture requires credible treatment and PHI evidence. Today, that evidence may be fragmented, late or expensive to verify.", 14, MUTED)
+txt(s, .62, 2.08, 10.9, .58, "Export-linked agriculture requires credible treatment and PHI evidence. Today, that evidence may be fragmented, late or expensive to verify.", 16, MUTED)
 # main customer and consequence
 shape(s, .62, 2.92, 4.05, 2.87, MIST, True, LINE)
 txt(s, .94, 3.24, 3.4, .25, "BEACHHEAD CUSTOMER HYPOTHESIS", 8.5, GREEN, True)
@@ -128,23 +129,23 @@ shape(s, 8.7, 2.92, 4.0, 2.87, WHITE, True, LINE)
 txt(s, 9.02, 3.24, 3.35, .25, "FOUR QUESTIONS DECIDE THE THESIS", 8.5, GREEN, True)
 for i, line in enumerate(["Is the problem frequent and costly?", "Who owns the loss and budget?", "What evidence is trusted today?", "Will the payer name a ₹ value?"]):
     y=3.72+i*.47
-    txt(s, 9.02, y, .28, .25, f"{i+1}", 10, GREEN, True)
-    txt(s, 9.42, y, 2.85, .34, line, 11.2, INK, True)
+    txt(s, 9.02, y, .28, .28, f"{i+1}", 12, GREEN, True)
+    txt(s, 9.42, y-.02, 2.85, .38, line, 13.5, INK, True)
 source(s, "Sources: APEDA GrapeNet / Residue Monitoring workflow; repository evidence [E05–E06], [F17], [G03]. Status: secondary evidence only; 0 Agrobot interviews completed.")
 
 # 3 — solution as hypothesis with explicit boundary
 s = prs.slides.add_slide(blank); base(s); header(s, 3, "Proposed solution")
 tag(s, .62, .86, "HYPOTHESIS · NOT BUILT", False, 1.78)
 txt(s, .62, 1.38, 10.7, .68, "One trusted evidence record.", 31, INK, True, DISPLAY)
-txt(s, .62, 2.05, 10.5, .48, "A geotagged, time-stamped treatment + PHI record, reviewed by an agronomist and usable by the buyer’s QA workflow.", 14, MUTED)
+txt(s, .62, 2.05, 11.4, .58, "A geotagged, time-stamped treatment + PHI record, reviewed by an agronomist and usable by the buyer’s QA workflow.", 16, MUTED)
 # keynote sequence
 sequence=[("01", "Observe", "Capture what happened in the field."), ("02", "Verify", "Attach place, time and accountable review."), ("03", "Record", "Map evidence to the buyer’s workflow."), ("04", "Decide", "Test whether the buyer will pay.")]
 for i,(n,h,b) in enumerate(sequence):
     x=.62+i*3.03
-    txt(s,x,3.0,.5,.3,n,10,GREEN,True)
+    txt(s,x,3.0,.5,.3,n,12,GREEN,True)
     rule(s,x,3.42,2.65,FOREST if i==3 else LINE,.025)
-    txt(s,x,3.68,2.56,.38,h,18,INK,True,DISPLAY)
-    txt(s,x,4.18,2.55,.66,b,11,MUTED)
+    txt(s,x,3.68,2.56,.4,h,19,INK,True,DISPLAY)
+    txt(s,x,4.18,2.55,.72,b,14,MUTED)
 # boundary statement
 shape(s, .62, 5.17, 12.08, 1.15, INK, True, INK)
 txt(s, .94, 5.48, 2.05, .26, "LEVEL 1 BOUNDARY", 9, LIME, True)
@@ -156,14 +157,14 @@ s = prs.slides.add_slide(blank); base(s); header(s, 4, "Why us · why now")
 tag(s, .62, .86, "TEAM + TIMING", False, 1.45)
 txt(s, .62, 1.38, 9.8, .98, "Close enough to the field.\nDisciplined enough to question the thesis.", 28, INK, True, DISPLAY)
 # members in clean editorial bands
-people=[("HITANSHU KAPADIYA", "Customer discovery · ENT101"), ("VIVEK GUPTA", "Systems thinking · discovery owner"), ("SHREYASH WAGH", "Nashik context · field access")]
+people=[("HITANSHU KAPADIYA", "Customer discovery · wants to reduce field-to-audit friction"), ("VIVEK GUPTA", "Systems thinking · interested in evidence-led farm operations"), ("SHREYASH WAGH", "Nashik context · connected to real horticulture workflows")]
 for i,(name,role) in enumerate(people):
     y=3.15+i*.92
     ph=shape(s,.62,y,.68,.68,MIST,True,GREEN)
     ph.line.dash_style = MSO_LINE_DASH_STYLE.DASH
     txt(s,.62,y+.2,.68,.24,"PHOTO",7.5,GREEN,True,align=PP_ALIGN.CENTER)
-    txt(s,1.55,y+.04,3.2,.28,name,12.5,INK,True)
-    txt(s,1.55,y+.37,3.2,.25,role,10.5,MUTED)
+    txt(s,1.55,y+.01,4.1,.3,name,15,INK,True)
+    txt(s,1.55,y+.34,4.1,.34,role,12.5,MUTED)
 # right-side timing case
 shape(s, 6.02, 2.78, 6.68, 3.15, FOREST, True, FOREST)
 txt(s, 6.38, 3.15, 5.8, .26, "WHY THIS IS THE RIGHT MOMENT TO DISCOVER", 9, LIME, True)
@@ -172,21 +173,15 @@ bullet(s, 6.38, 4.57, 5.72, "Information-only economics are weak", "Repository r
 bullet(s, 6.38, 5.44, 5.72, "Learning is still cheap", "Interviews can invalidate the thesis before capital, hardware or field claims.", True)
 source(s, "Team: repository IDEAS roster. Timing: APEDA workflow; [F01] information WTP; [G01–G03] advisory market and liability evidence. Photo boxes remain editable.")
 
-# 5 — finish with commitments, not vanity
-s = prs.slides.add_slide(blank); base(s, True); header(s, 5, "Level 1 commitment", True)
-tag(s, .62, .86, "NEXT: DISCOVER", True, 1.5)
-txt(s, .62, 1.4, 10.8, 1.08, "We do not need a prototype\nto learn what matters next.", 34, WHITE, True, DISPLAY)
-txt(s, .65, 2.78, 10.9, .52, "Our commitment for Level 1", 15, RGBColor(195,204,198), True)
-# three large commitments
-items=[("40–50", "conversations", "Grower → agronomist → FPO/exporter → QA"), ("H1–H8", "hypotheses", "Validated · invalidated · still unclear"), ("1+", "real advancement", "Named ₹, buyer intro, data access or future pilot slot")]
-for i,(n,h,b) in enumerate(items):
-    x=.62+i*4.02
-    rule(s,x,3.58,3.55,RGBColor(68,76,71),.025)
-    txt(s,x,3.86,3.52,.6,n,29,LIME,True,DISPLAY)
-    txt(s,x,4.58,3.52,.32,h,13,WHITE,True)
-    txt(s,x,5.08,3.48,.62,b,10.5,RGBColor(183,192,186))
-txt(s, .62, 6.24, 11.7, .38, "Listen. Quantify. Falsify. Then decide: go, pivot or stop.", 16, WHITE, True)
-source(s, "Discovery targets and guardrails: CUSTOMER_DISCOVERY_KIT.md. This deck makes no prototype or field-validation claim.", True)
+# 5 — preserve the template's required closing slide
+s = prs.slides.add_slide(blank); base(s, True); header(s, 5, "Thank You", True)
+shape(s, .62, 1.18, .12, 4.85, LIME)
+txt(s, 1.08, 1.48, 10.9, 1.08, "THANK YOU", 52, WHITE, True, DISPLAY)
+txt(s, 1.1, 2.78, 9.8, .58, "Level 1 begins with listening—not building.", 24, LIME, True, DISPLAY)
+txt(s, 1.1, 3.72, 10.6, .55, "Next: test the customer, pain, payer and value hypotheses through structured discovery.", 17, RGBColor(210,218,212))
+txt(s, 1.1, 5.2, 5.0, .35, "TEAM NAME: AGROBOT", 15, WHITE, True)
+txt(s, 1.1, 5.65, 5.0, .35, "14 AUGUST 2026", 15, RGBColor(183,192,186))
+source(s, "IDEAS L1C19 — Kickoff · Desai Sethi School of Entrepreneurship, IIT Bombay", True)
 
 prs.save(OUT)
 print(OUT)
