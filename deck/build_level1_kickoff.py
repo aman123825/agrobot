@@ -155,23 +155,28 @@ source(s, "No prototype, accuracy, coverage, savings or payback claim is made. T
 # 4 — why team / why now; photo-ready without fake portraits
 s = prs.slides.add_slide(blank); base(s); header(s, 4, "Why us · why now")
 tag(s, .62, .86, "TEAM + TIMING", False, 1.45)
-txt(s, .62, 1.38, 9.8, .98, "Close enough to the field.\nDisciplined enough to question the thesis.", 28, INK, True, DISPLAY)
-# members in clean editorial bands
-people=[("HITANSHU KAPADIYA", "Customer discovery · wants to reduce field-to-audit friction"), ("VIVEK GUPTA", "Systems thinking · interested in evidence-led farm operations"), ("SHREYASH WAGH", "Nashik context · connected to real horticulture workflows")]
+txt(s, .62, 1.38, 11.2, .98, "A team with agricultural context—and access to people who can challenge our assumptions.", 27, INK, True, DISPLAY)
+# members in clean editorial bands; photo boxes remain editable for later replacement
+people=[
+    ("PRITISH NANDY", "Team Head · coordinates Level 1 customer-discovery execution"),
+    ("HITANSHU KAPADIYA", "Customer discovery · wants to reduce field-to-audit friction"),
+    ("VIVEK KUMAR GUPTA", "From Jaunpur, Uttar Pradesh · agriculture-family background"),
+    ("SHREYASH WAGH", "Nashik context · connected to real horticulture workflows"),
+]
 for i,(name,role) in enumerate(people):
-    y=3.15+i*.92
-    ph=shape(s,.62,y,.68,.68,MIST,True,GREEN)
+    y=2.72+i*.82
+    ph=shape(s,.62,y,.62,.62,MIST,True,GREEN)
     ph.line.dash_style = MSO_LINE_DASH_STYLE.DASH
-    txt(s,.62,y+.2,.68,.24,"PHOTO",7.5,GREEN,True,align=PP_ALIGN.CENTER)
-    txt(s,1.55,y+.01,4.1,.3,name,15,INK,True)
-    txt(s,1.55,y+.34,4.1,.34,role,12.5,MUTED)
-# right-side timing case
-shape(s, 6.02, 2.78, 6.68, 3.15, FOREST, True, FOREST)
-txt(s, 6.38, 3.15, 5.8, .26, "WHY THIS IS THE RIGHT MOMENT TO DISCOVER", 9, LIME, True)
-bullet(s, 6.38, 3.7, 5.72, "Compliance evidence has a defined workflow", "APEDA traceability and PHI requirements create an observable context—not yet proof of willingness to pay.", True)
-bullet(s, 6.38, 4.57, 5.72, "Information-only economics are weak", "Repository research finds farmer WTP near ₹14.89/acre, making the buyer and outcome critical.", True)
-bullet(s, 6.38, 5.44, 5.72, "Learning is still cheap", "Interviews can invalidate the thesis before capital, hardware or field claims.", True)
-source(s, "Team: repository IDEAS roster. Timing: APEDA workflow; [F01] information WTP; [G01–G03] advisory market and liability evidence. Photo boxes remain editable.")
+    txt(s,.62,y+.18,.62,.22,"PHOTO",7,GREEN,True,align=PP_ALIGN.CENTER)
+    txt(s,1.46,y,4.15,.3,name,14,INK,True)
+    txt(s,1.46,y+.32,4.25,.34,role,11.5,MUTED)
+# right-side discovery-access case
+shape(s, 6.02, 2.56, 6.68, 3.62, FOREST, True, FOREST)
+txt(s, 6.38, 2.91, 5.8, .3, "CUSTOMER-DISCOVERY ACCESS", 11, LIME, True)
+bullet(s, 6.38, 3.42, 5.72, "Tinkerers’ Lab, IIT Bombay", "We are in contact with Ashwini Ma’am to seek guidance and relevant discovery connections; this is access, not validation.", True)
+bullet(s, 6.38, 4.42, 5.72, "Agricultural context in the team", "Vivek’s Jaunpur agriculture background and Shreyash’s Nashik context can help recruit grounded conversations.", True)
+bullet(s, 6.38, 5.42, 5.72, "Online evidence guides—not replaces—interviews", "APEDA traceability, PHI and market evidence will shape questions; customer statements will test the thesis.", True)
+source(s, "Team/access details: supplied by Agrobot team. Public discovery context: APEDA traceability and PHI guidance; repository evidence register. No endorsement or validation is implied.")
 
 # 5 — preserve the template's required closing slide
 s = prs.slides.add_slide(blank); base(s, True); header(s, 5, "Thank You", True)
