@@ -55,6 +55,15 @@ def fit_fontsize(ax, text, w, fs, weight):
     return max(4.4, fs * avail / widest)
 
 
+def row_fontsize(ax, texts, w, fs, weight="normal"):
+    """One size that fits every label in a row of equal-width boxes.
+
+    Sizing each box independently makes a row of siblings read as a hierarchy
+    it does not have: the longest identifier shrinks and its neighbours do not.
+    """
+    return min(fit_fontsize(ax, t, w, fs, weight) for t in texts)
+
+
 def box(ax, x, y, w, h, text, fill, fs=6.6, weight="normal", edge=EDGE, lw=0.7):
     ax.add_patch(FancyBboxPatch(
         (x, y), w, h, boxstyle="round,pad=0.0,rounding_size=0.02",
@@ -111,21 +120,26 @@ def fig1():
             fontsize=7.2, fontweight="bold", color=ACCENT, va="center")
 
     xs, w = track(IN_L, IN_R, 4, 0.012)
-    for x, txt in zip(xs, (
+    sup_top = (
         "Perception\nYOLOv8n-INT8 weed +\nobstacle detection",
         "Classification\nMobileNetV2, 38-class\nPlantVillage disease",
         "Accelerator abstraction\nHailo-8L HEF → Coral\nEdge TPU → CPU INT8",
         "Aimed spray targeting\npinhole back-projection +\npan/tilt solution",
-    )):
-        box(ax, x, 0.752, w, 0.092, txt, "#ffffff", 6.2)
-
-    for x, txt in zip(xs, (
+    )
+    sup_bot = (
         "Localisation\n3-state pose EKF,\nodometry + gyro + GNSS",
         "Mission planning\nboustrophedon coverage,\ncross-track guidance",
         "Evidence store\nplant DB, black-box log,\nISO 11783-10 export",
         "Health + savings\nthermal, current, disk,\nper-acre chemical audit",
-    )):
-        box(ax, x, 0.636, w, 0.092, txt, "#ffffff", 6.2)
+    )
+    # One size across both rows of the layer, so the eight peer capabilities
+    # are set at the same weight on the page.
+    sup_fs = row_fontsize(ax, sup_top + sup_bot, w, 6.2)
+    for x, txt in zip(xs, sup_top):
+        box(ax, x, 0.752, w, 0.092, txt, "#ffffff", sup_fs)
+
+    for x, txt in zip(xs, sup_bot):
+        box(ax, x, 0.636, w, 0.092, txt, "#ffffff", sup_fs)
 
     # Links
     arrow(ax, (0.455, 0.928), (0.455, 0.894))
@@ -153,12 +167,14 @@ def fig1():
             fontsize=7.2, fontweight="bold", color=ACCENT, va="center")
 
     rxs, rw = track(IN_L, IN_R, 3, 0.014)
-    for x, txt in zip(rxs, (
+    rt_tasks = (
         "Core 1 · driveTask · 50 Hz\nskid-steer PWM, gated by\nEVT_DRIVE_INHIBIT",
         "Core 0 · sensorTask · 5 Hz\nModbus NPK, DHT22, GNSS,\nADC oversampling ×16",
         "Dosing state machine\npre-soak 1500 ms · dwell 800 ms ·\ninject 1500 ms · travel 4000 ms",
-    )):
-        box(ax, x, 0.297, rw, 0.092, txt, "#ffffff", 6.2)
+    )
+    rt_fs = row_fontsize(ax, rt_tasks, rw, 6.2)
+    for x, txt in zip(rxs, rt_tasks):
+        box(ax, x, 0.297, rw, 0.092, txt, "#ffffff", rt_fs)
 
     box(ax, IN_L, 0.223, IN_R - IN_L, 0.058,
         "FreeRTOS event group  ·  9 event bits  ·  task watchdog 5 s  ·  "
@@ -169,12 +185,14 @@ def fig1():
 
     # Hardware
     hxs, hw = track(FRAME_L, FRAME_R, 3, 0.016)
-    for x, txt in zip(hxs, (
+    hardware = (
         "Drive\n2 × BTS7960 half-bridge,\n4 × 12 V geared motors",
         "Application\nperistaltic pump, linear\nactuator, pan/tilt nozzle",
         "Sensing\nVL53L1X ToF, HC-SR04, IMU,\nencoders, INA219, GNSS",
-    )):
-        box(ax, x, 0.096, hw, 0.082, txt, FILL_HW, 6.2)
+    )
+    hw_fs = row_fontsize(ax, hardware, hw, 6.2)
+    for x, txt in zip(hxs, hardware):
+        box(ax, x, 0.096, hw, 0.082, txt, FILL_HW, hw_fs)
     for x in (hxs[0] + hw / 2, hxs[1] + hw / 2, hxs[2] + hw / 2):
         arrow(ax, (x, 0.205), (x, 0.178))
 
@@ -200,9 +218,11 @@ def fig2():
         ("Die temperature\nat or above 85 °C", "EVT_OVERTEMP"),
     ]
     xs, w = track(0.014, 0.986, 6, 0.013)
+    cause_fs = row_fontsize(ax, [c for c, _ in triggers], w, 6.0)
+    bit_fs = row_fontsize(ax, [b for _, b in triggers], w, 5.8, "bold")
     for x, (cause, bit) in zip(xs, triggers):
-        box(ax, x, 0.775, w, 0.16, cause, "#ffffff", 6.0)
-        box(ax, x, 0.585, w, 0.115, bit, FILL_RT, 5.8, "bold")
+        box(ax, x, 0.775, w, 0.16, cause, "#ffffff", cause_fs)
+        box(ax, x, 0.585, w, 0.115, bit, FILL_RT, bit_fs, "bold")
         arrow(ax, (x + w / 2, 0.775), (x + w / 2, 0.700))
         arrow(ax, (x + w / 2, 0.585), (x + w / 2, 0.470))
 
@@ -212,12 +232,14 @@ def fig2():
         FILL_SUP, 6.8, "bold")
 
     cxs, cw = track(0.014, 0.986, 3, 0.016)
-    for x, txt in zip(cxs, (
+    consumers = (
         "driveTask, 50 Hz\ntests the mask before every\nPWM write → motors to 0",
         "dosingTask\nasserts EVT_DOSING for the\nwhole sequence duration",
         "Supervisory layer\nfail-safe stop when ToF\nrange is unavailable",
-    )):
-        box(ax, x, 0.190, cw, 0.115, txt, "#ffffff", 6.2)
+    )
+    cons_fs = row_fontsize(ax, consumers, cw, 6.2)
+    for x, txt in zip(cxs, consumers):
+        box(ax, x, 0.190, cw, 0.115, txt, "#ffffff", cons_fs)
     for x in cxs:
         arrow(ax, (x + cw / 2, 0.360), (x + cw / 2, 0.305))
 

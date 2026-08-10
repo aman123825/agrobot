@@ -4,9 +4,9 @@ The IEI submission instructions make the .doc/.docx file mandatory and the PDF
 a companion copy, so this script and build_paper.py read the SAME source file.
 paper_source.md is the single point of truth; neither output is hand-edited.
 
-Formatting follows the conventional IEI author guidelines: A4, Times New Roman,
-11 pt body, single column, justified body text, numbered headings, figures and
-tables captioned in sequence.
+Formatting follows the IEI paper format table: A4, 2.54 cm margins, Times New
+Roman, 12 pt body at 1.5 line spacing, 14 pt bold centred title, 12 pt bold
+main headings, 12 pt bold italic sub headings, page number bottom centre.
 
 Usage:  python paper/build_paper_docx.py
 Output: paper/AgriRover_IEI_38th_National_Convention_Full_Paper.docx

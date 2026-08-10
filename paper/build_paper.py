@@ -1,5 +1,10 @@
 """Build the IEI full-length paper PDF from paper/paper_source.md.
 
+The PDF is the companion copy of the mandatory .docx and is set to the same
+IEI paper format: A4, 2.54 cm margins on all four sides, Times New Roman
+12 pt at 1.5 line spacing, 14 pt bold centred title, 12 pt bold main headings,
+12 pt bold italic sub headings, page number at the bottom centre.
+
 Usage:  python paper/build_paper.py
 Output: paper/AgriRover_IEI_38th_National_Convention_Full_Paper.pdf
 
@@ -38,84 +43,95 @@ RULE = colors.HexColor("#c8cec9")
 BAND = colors.HexColor("#eef2ef")
 
 PAGE_W, PAGE_H = A4
-MARGIN_X = 22 * mm
-MARGIN_T = 20 * mm
-MARGIN_B = 20 * mm
+# IEI paper format: A4, top/bottom/left/right margins of 2.54 cm. The running
+# head and the page number sit inside the margin band, outside the text frame.
+MARGIN = 25.4 * mm
+MARGIN_X = MARGIN
+MARGIN_T = MARGIN
+MARGIN_B = MARGIN
 CONTENT_W = PAGE_W - 2 * MARGIN_X
+
+# Body text: Times New Roman 12 pt at 1.5 line spacing.
+BODY_PT = 12
+LEADING = BODY_PT * 1.5
 
 
 # ---------------------------------------------------------------- styles
 def styles():
     s = {}
+    # Title: 14 pt, bold, centred -- exactly as the paper format table states.
     s["title"] = ParagraphStyle(
-        "title", fontName="Times-Bold", fontSize=17, leading=21,
+        "title", fontName="Times-Bold", fontSize=14, leading=17.5,
         alignment=TA_CENTER, textColor=INK, spaceAfter=4,
     )
     s["subtitle"] = ParagraphStyle(
-        "subtitle", fontName="Times-Italic", fontSize=11.5, leading=15,
-        alignment=TA_CENTER, textColor=ACCENT, spaceAfter=10,
+        "subtitle", fontName="Times-Italic", fontSize=BODY_PT, leading=15,
+        alignment=TA_CENTER, textColor=INK, spaceAfter=10,
     )
     s["authors"] = ParagraphStyle(
-        "authors", fontName="Times-Bold", fontSize=10.5, leading=14,
+        "authors", fontName="Times-Bold", fontSize=BODY_PT, leading=15,
         alignment=TA_CENTER, textColor=INK, spaceAfter=3,
     )
     s["affil"] = ParagraphStyle(
-        "affil", fontName="Times-Roman", fontSize=8.6, leading=11.4,
+        "affil", fontName="Times-Roman", fontSize=10, leading=13,
         alignment=TA_CENTER, textColor=MUTED, spaceAfter=2,
     )
     s["venue"] = ParagraphStyle(
-        "venue", fontName="Times-Italic", fontSize=8.6, leading=11.4,
+        "venue", fontName="Times-Italic", fontSize=10, leading=13,
         alignment=TA_CENTER, textColor=MUTED, spaceAfter=2,
     )
     s["abshead"] = ParagraphStyle(
-        "abshead", fontName="Times-Bold", fontSize=10, leading=13,
+        "abshead", fontName="Times-Bold", fontSize=BODY_PT, leading=15,
         textColor=ACCENT, spaceAfter=4,
     )
     s["abstract"] = ParagraphStyle(
-        "abstract", fontName="Times-Roman", fontSize=9.2, leading=13.0,
+        "abstract", fontName="Times-Roman", fontSize=BODY_PT, leading=LEADING,
         alignment=TA_JUSTIFY, textColor=INK, firstLineIndent=0,
     )
     s["keywords"] = ParagraphStyle(
-        "keywords", fontName="Times-Roman", fontSize=9.0, leading=12.5,
+        "keywords", fontName="Times-Roman", fontSize=BODY_PT, leading=LEADING,
         alignment=TA_LEFT, textColor=INK, spaceBefore=6,
     )
+    # Main heading: 12 pt, bold. Sub heading: 12 pt, bold italic.
     s["h1"] = ParagraphStyle(
-        "h1", fontName="Times-Bold", fontSize=12.5, leading=16,
-        textColor=ACCENT, spaceBefore=13, spaceAfter=5,
+        "h1", fontName="Times-Bold", fontSize=BODY_PT, leading=15,
+        textColor=INK, spaceBefore=13, spaceAfter=5,
     )
     s["h2"] = ParagraphStyle(
-        "h2", fontName="Times-Bold", fontSize=10.4, leading=13.5,
+        "h2", fontName="Times-BoldItalic", fontSize=BODY_PT, leading=15,
         textColor=INK, spaceBefore=9, spaceAfter=3,
     )
     s["body"] = ParagraphStyle(
-        "body", fontName="Times-Roman", fontSize=9.9, leading=13.8,
+        "body", fontName="Times-Roman", fontSize=BODY_PT, leading=LEADING,
         alignment=TA_JUSTIFY, textColor=INK, spaceAfter=6,
     )
     s["math"] = ParagraphStyle(
-        "math", fontName="Times-Italic", fontSize=9.9, leading=15,
+        "math", fontName="Times-Italic", fontSize=BODY_PT, leading=LEADING,
         alignment=TA_CENTER, textColor=INK,
         spaceBefore=6, spaceAfter=8,
     )
+    # Captions and table matter stay below the body size, as is conventional
+    # for figure and table apparatus, which the format table does not govern.
     s["caption"] = ParagraphStyle(
-        "caption", fontName="Times-Roman", fontSize=8.3, leading=11.2,
+        "caption", fontName="Times-Roman", fontSize=9, leading=12.5,
         alignment=TA_JUSTIFY, textColor=MUTED, spaceBefore=5, spaceAfter=10,
     )
     s["tabcap"] = ParagraphStyle(
-        "tabcap", fontName="Times-Bold", fontSize=8.6, leading=11.4,
+        "tabcap", fontName="Times-Bold", fontSize=9.5, leading=12.5,
         alignment=TA_LEFT, textColor=INK, spaceBefore=8, spaceAfter=4,
     )
     s["cell"] = ParagraphStyle(
-        "cell", fontName="Times-Roman", fontSize=8.3, leading=10.8,
+        "cell", fontName="Times-Roman", fontSize=9, leading=11.6,
         textColor=INK,
     )
     s["cellh"] = ParagraphStyle(
-        "cellh", fontName="Times-Bold", fontSize=8.3, leading=10.8,
+        "cellh", fontName="Times-Bold", fontSize=9, leading=11.6,
         textColor=colors.white,
     )
     s["ref"] = ParagraphStyle(
-        "ref", fontName="Times-Roman", fontSize=8.6, leading=11.6,
+        "ref", fontName="Times-Roman", fontSize=9.5, leading=13,
         alignment=TA_JUSTIFY, textColor=INK,
-        leftIndent=13, firstLineIndent=-13, spaceAfter=3.5,
+        leftIndent=14, firstLineIndent=-14, spaceAfter=3.5,
     )
     return s
 
@@ -262,16 +278,18 @@ def parse(path):
 # The IEI author guidelines cap the abstract at 300 words and the keyword list
 # at five entries. Both outputs share this parser, so failing here is the
 # cheapest place to catch a violation -- before either file is written.
+ABSTRACT_MIN_WORDS = 250
 ABSTRACT_MAX_WORDS = 300
 KEYWORDS_MAX = 5
 
 
 def check_guidelines(meta):
     words = len(meta["ABSTRACT"].split())
-    if words > ABSTRACT_MAX_WORDS:
+    if not ABSTRACT_MIN_WORDS <= words <= ABSTRACT_MAX_WORDS:
         raise SystemExit(
-            f"abstract is {words} words; the guidelines allow "
-            f"{ABSTRACT_MAX_WORDS} (250-300). Trim paper_source.md.")
+            f"abstract is {words} words; the guidelines require "
+            f"{ABSTRACT_MIN_WORDS}-{ABSTRACT_MAX_WORDS}. "
+            "Adjust paper_source.md.")
     keys = [k for k in re.split(r"[;,]", meta["KEYWORDS"]) if k.strip()]
     if len(keys) > KEYWORDS_MAX:
         raise SystemExit(
