@@ -29,6 +29,7 @@
   <rect x="0" y="0" width="1600" height="1180" fill="#ffffff"/>
   <text x="40" y="40" class="th">AgriRover — Verified Pin-Point Circuit Diagram</text>
   <text x="40" y="62" class="ti">Every pin cross-checked against firmware/include/pins.h, firmware/src/sensors.cpp, pi/config.py and docs/circuit-diagram.md §2–§6. Colour = pin function (see legend).</text>
+  <text x="40" y="80" class="ti" fill="#b26a00">Field build: 4S LiFePO4 — divider example below shows the 3S LiPo bench pack; with 39k/10k the 4S full-charge tap is 14.6 V ⇒ 2.98 V (&lt; 3.3 V ✓).</text>
 
   <!-- =====================  ESP32 DevKit V1  ===================== -->
   <text x="60" y="100" class="tb">ESP32 DevKit V1 (WROOM-32, 38-pin)  —  real-time control</text>
@@ -328,7 +329,7 @@
   <text x="390" y="1074" class="tn">Pi is powered separately from a 10000mAh bank — two independent 5V domains.</text>
 
   <!-- Battery divider detail -->
-  <text x="60" y="1104" class="ti">Battery sense: LiPo+ (12.6V) —[39k]—•— GPIO35 ; •—[10k]—GND  ⇒  2.57V @ full charge (&lt; 3.3V ✓)</text>
+  <text x="60" y="1104" class="ti">Battery sense: BAT+ —[39k]—•— GPIO35 ; •—[10k]—GND  ⇒  2.98V @ 14.6V (4S LiFePO4 full) / 2.57V @ 12.6V (3S LiPo bench)  (&lt; 3.3V ✓)</text>
   <text x="60" y="1120" class="ti">HC-SR04 echo: ECHO(5V) —[2.2k]—•— GPIO18 ; •—[3.9k]—GND  ⇒  3.2V (&lt; 3.3V ✓)</text>
 
   <!-- =====================  LEGEND  ===================== -->

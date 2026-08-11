@@ -19,6 +19,7 @@
   <rect x="0" y="0" width="1200" height="820" fill="#ffffff"/>
   <text x="30" y="34" class="title">AgriRover — BTS7960 (IBT-2) Drive Schematic</text>
   <text x="30" y="52" class="sub">FC-10: 2× L298N replaced by 2× BTS7960, one per side. Tank drive, 4× 12 V gear motors. Every signal/power pin shown.</text>
+  <text x="30" y="68" class="sub" fill="#b26a00">Scope: voltages shown are the 3S LiPo (11.1 V) bench rig. Field build = 4S LiFePO4 (12.8 V nom / 14.6 V full) with P6KE20A TVS — wiring identical; see firmware config.h.</text>
 
   <!-- ===== POWER RAIL (top) ===== -->
   <line x1="360" y1="96" x2="1140" y2="96" class="wpwr"/>
