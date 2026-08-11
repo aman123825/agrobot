@@ -26,15 +26,19 @@ BODY = "Aptos"
 
 # "Angry Birds" is the team; "AgriRover" is the project the team is working on.
 # Keeping the two in separate constants stops the deck from presenting the
-# product name where the template asks for the team name.
+# product name where the template asks for the team name. Slides set both in
+# caps; the document metadata carries the proper mixed-case spellings, because
+# .title() would flatten the internal capital in "AgriRover".
 TEAM = "ANGRY BIRDS"
 PROJECT = "AGRIROVER"
+TEAM_MIXED = "Angry Birds"
+PROJECT_MIXED = "AgriRover"
 
 prs = Presentation()
 prs.slide_width, prs.slide_height = Inches(13.333), Inches(7.5)
-prs.core_properties.title = f"{PROJECT.title()} — IDEAS IIT Bombay Level 1 Kickoff"
+prs.core_properties.title = f"{PROJECT_MIXED} — IDEAS IIT Bombay Level 1 Kickoff"
 prs.core_properties.subject = "Customer discovery: customer, pain, payer and value hypothesis"
-prs.core_properties.author = f"Team {TEAM.title()}, IIT Bombay"
+prs.core_properties.author = f"Team {TEAM_MIXED}, IIT Bombay"
 prs.core_properties.comments = "14 August 2026. Secondary evidence is identified; no prototype or field validation claim is made."
 blank = prs.slide_layouts[6]
 
@@ -184,7 +188,7 @@ txt(s, 6.38, 2.91, 5.8, .3, "CUSTOMER-DISCOVERY ACCESS", 11, LIME, True)
 bullet(s, 6.38, 3.42, 5.72, "Tinkerers’ Lab, IIT Bombay", "We are in contact with Ashwini Ma’am to seek guidance and relevant discovery connections; this is access, not validation.", True)
 bullet(s, 6.38, 4.42, 5.72, "Agricultural context in the team", "Vivek’s Jaunpur agriculture background and Shreyash’s Nashik context can help recruit grounded conversations.", True)
 bullet(s, 6.38, 5.42, 5.72, "Online evidence guides—not replaces—interviews", "APEDA traceability, PHI and market evidence will shape questions; customer statements will test the thesis.", True)
-source(s, "Team/access details: supplied by Team Angry Birds. Public discovery context: APEDA traceability and PHI guidance; repository evidence register. No endorsement or validation is implied.")
+source(s, f"Team/access details: supplied by Team {TEAM_MIXED}. Public discovery context: APEDA traceability and PHI guidance; repository evidence register. No endorsement or validation is implied.")
 
 # 5 — preserve the template's required closing slide
 s = prs.slides.add_slide(blank); base(s, True); header(s, 5, "Thank You", True)
