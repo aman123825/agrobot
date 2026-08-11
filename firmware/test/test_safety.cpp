@@ -17,6 +17,7 @@
 #include <cstdio>
 #include <cstring>
 #include <cstdint>
+#include <initializer_list>
 
 // ---- controllable fake clock (secure_link uses millis() for lockout) ----
 static unsigned long gFakeMillis = 0;
@@ -210,6 +211,11 @@ static void test_auth_and_replay() {
 
 static void test_lockout() {
     char env[256], cmd[128];
+
+    // A valid command first: clears any failure count carried over from the
+    // previous test (the firmware resets it only on a successful check).
+    sign_envelope(50, "STATUS", env, sizeof(env));
+    assert(secure_link_check(env, cmd, sizeof(cmd)) == SECURE_OK);
 
     // Drive the failure counter to the threshold with bad signatures.
     for (int i = 0; i < CMD_FAIL_LOCK_THRESHOLD; i++) {

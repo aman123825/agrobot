@@ -108,7 +108,7 @@ The choice of differential drive over Ackermann steering was made for turning ra
 
 Targeted application uses a needle-injection head rather than a nozzle. A linear actuator carries the needle down to a commanded insertion depth beside the target plant; a peristaltic pump then delivers a metered volume. The sequence is deliberately conservative in its timing: a 1500 ms pre-soak on the delivery channel before the actuator extends, a 4000 ms worst-case travel time backed by limit switches rather than by dead reckoning on the actuator, an 800 ms dwell at full insertion, and a 1500 ms injection pulse corresponding to approximately 1 mL at the peristaltic pump's rated 40 mL/min.
 
-Injection rather than spraying is the more consequential choice. It eliminates the drift cloud that is the principal operator-exposure pathway [3] and the principal off-target loss pathway. It also imposes a hard constraint on the rest of the machine, and it is the constraint that shapes the safety design: the vehicle must be stationary, and provably stationary, for the entire two-and-a-half-second dosing sequence with a needle below the soil surface. Section 6 describes how that is enforced.
+Injection rather than spraying is the more consequential choice. It eliminates the drift cloud that is the principal operator-exposure pathway [3] and the principal off-target loss pathway. It also imposes a hard constraint on the rest of the machine, and it is the constraint that shapes the safety design: the vehicle must be stationary, and provably stationary, for the entire dosing sequence -- approximately twelve seconds from pre-soak through worst-case actuator retraction, including the 2.3 s dwell-and-inject phase with the needle at full insertion below the soil surface. Section 6 describes how that is enforced.
 
 ## 5.3 Soil probe
 
@@ -116,7 +116,7 @@ A seven-parameter probe is read over Modbus RTU [12] at 9600 baud, returning soi
 
 ## 5.4 Power and thermal
 
-The platform runs from a three-cell lithium-polymer pack, 12.6 V full and 11.1 V nominal, monitored through a 39 kΩ / 10 kΩ divider into the ESP32 analogue-to-digital converter with sixteen-fold oversampling and eFuse-calibrated reference. Crossing 9.9 V asserts a low-battery event that both inhibits drive and initiates return-to-base, so that the machine does not strand itself with a needle deployed. Die temperature is monitored with hysteresis, asserting an over-temperature event at 85 °C and clearing it only below 80 °C, which prevents the oscillation that a single-threshold design would produce at the margin.
+The platform runs from a four-cell lithium iron phosphate pack, 14.6 V full and 12.8 V nominal, a chemistry chosen over lithium-polymer for its thermal tolerance under sustained hot-climate exposure. Pack voltage is monitored through a 39 kΩ / 10 kΩ divider into the ESP32 analogue-to-digital converter with sixteen-fold oversampling and eFuse-calibrated reference. Crossing 11.0 V, corresponding to 2.75 V per cell, asserts a low-battery event that both inhibits drive and initiates return-to-base, so that the machine does not strand itself with a needle deployed. Die temperature is monitored with hysteresis, asserting an over-temperature event at 85 °C and clearing it only below 80 °C, which prevents the oscillation that a single-threshold design would produce at the margin.
 
 # 6. Embedded Firmware and the Safety Architecture
 
@@ -131,7 +131,7 @@ The central design decision in the firmware is that the condition under which th
 TABLE:
 Event bit | Asserting condition | In drive-inhibit mask
 EVT_HALT | Emergency stop asserted, tilt limit exceeded, or supervisory halt | Yes
-EVT_LOW_BATTERY | Pack voltage below the 9.9 V cutoff; also triggers return-to-base | Yes
+EVT_LOW_BATTERY | Pack voltage below the 11.0 V cutoff; also triggers return-to-base | Yes
 EVT_DOSING | Dosing sequence in progress; needle is or may be below soil | Yes
 EVT_OBSTACLE | Ultrasonic range inside the 250 mm stop envelope | Yes
 EVT_LINK_LOST | No valid signed command within the 1500 ms dead-man window | Yes

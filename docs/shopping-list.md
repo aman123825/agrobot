@@ -115,6 +115,29 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 > sweep (§4), 1 seed sower (§6), and **2 new pan/tilt** for the aimed spray
 > (§6, FC-01). Buy accordingly.
 
+### Dosing + soil-probe increment (paper §9 / Table 5 audit trail)
+
+The paper quotes the dosing-and-soil increment over the scout configuration as
+**₹3,600–8,300 (midpoint ₹5,850)**. That range is the sum of exactly these
+line items (from §4 and §6 above, plus the needle head):
+
+| Line item | ₹ range |
+|-----------|---------|
+| RS485 NPK 7-in-1 probe (§4) | 2,000–5,000 |
+| MAX485 module (§4) | 60–100 |
+| 12V linear actuator 150N, limit-switch backed (§6) | 600–1,200 |
+| Peristaltic pump (§6) | 500–1,200 |
+| 2-channel relay module (§6) | 80–150 |
+| Water/fertilizer tank 500ml (§6) | 100–200 |
+| Float sensor (§6) | 50–80 |
+| Silicone tubing 6mm (§6) | 50–100 |
+| Needle-injection head (needle, luer fittings, mount) | 160–270 |
+| **Increment total** | **3,600–8,300** |
+
+The probe alone (₹2,000–5,000) is the dominant swing item. The needle head is
+fabricated from a blunt dosing needle plus luer fittings on a printed mount;
+it is priced here and not elsewhere in this list.
+
 ## 7. Communication
 | Component | Qty | Unit ₹ | Line ₹ |
 |-----------|-----|--------|--------|
