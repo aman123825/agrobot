@@ -2,7 +2,7 @@
 
 Integrating measured current over time gives a far better SoC estimate than
 voltage alone (which sags under load). Voltage is used once at startup to seed
-the initial SoC from the LiPo discharge curve.
+the initial SoC from the LiFePO4 discharge curve.
 
 The CoulombCounter is pure logic (unit-testable); FuelGauge wraps an INA219
 read via the pi-ina219 library, guarded so it runs without hardware.
@@ -19,9 +19,13 @@ import config
 
 logger = logging.getLogger(__name__)
 
-# 3S LiPo open-circuit voltage -> approximate SoC (pack volts, percent).
+# 4S LiFePO4 open-circuit voltage -> approximate SoC (pack volts, percent).
+# Matches firmware config.h: BATT_FULL_V=14.6, BATT_NOMINAL_V=12.8,
+# BATT_CUTOFF_V=11.0 (2.75 V/cell). The LiFePO4 curve is very flat between
+# ~20% and ~90%, hence the tight voltage spacing in the middle of the table.
 _OCV_CURVE = [
-    (12.6, 100), (12.0, 80), (11.7, 60), (11.4, 40), (11.1, 20), (10.5, 5), (9.9, 0)
+    (14.6, 100), (13.4, 95), (13.3, 80), (13.2, 60), (13.1, 40),
+    (13.0, 20), (12.8, 10), (12.0, 5), (11.0, 0)
 ]
 
 
@@ -41,7 +45,9 @@ def soc_from_voltage(pack_v: float) -> float:
 class CoulombCounter:
     """Tracks consumed mAh and remaining SoC by integrating current."""
 
-    def __init__(self, capacity_mah: float = 2200.0, initial_soc: float = 100.0):
+    # Default matches the swappable 4S LiFePO4 pack (BOM #13); override to the
+    # fitted pack's rated capacity when it differs.
+    def __init__(self, capacity_mah: float = 6000.0, initial_soc: float = 100.0):
         self.capacity_mah = capacity_mah
         self.consumed_mah = capacity_mah * (1.0 - initial_soc / 100.0)
 
@@ -60,7 +66,7 @@ class CoulombCounter:
 
 
 class FuelGauge:
-    def __init__(self, capacity_mah: float = 2200.0, shunt_ohms: float = 0.1,
+    def __init__(self, capacity_mah: float = 6000.0, shunt_ohms: float = 0.1,
                  max_amps: float = 5.0, addr: int | None = None):
         self.addr = addr if addr is not None else config.I2C_ADDR["ina219"]
         self._ina = None

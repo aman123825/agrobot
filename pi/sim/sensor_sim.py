@@ -59,7 +59,7 @@ class SensorSim:
         lat0: float = _DEFAULT_LAT0,
         lng0: float = _DEFAULT_LNG0,
         gps_noise_m: float = 1.5,
-        battery_start_v: float = 12.6,
+        battery_start_v: float = 13.3,  # 4S LiFePO4, freshly charged and rested
         battery_drain_per_step: float = 0.01,
         obstacles: list[Obstacle] | None = None,
         anomaly_probability: float = 0.05,
@@ -158,8 +158,8 @@ class SensorSim:
         """Generate a rover/status payload."""
         self._step_count += 1
         self.battery_v = max(
-            9.0, self.battery_v - self.battery_drain_per_step
-        )
+            10.5, self.battery_v - self.battery_drain_per_step
+        )  # floor below the 11.0 V LiFePO4 cutoff so low-battery paths trigger
         front_cm = self._front_distance(x, y, theta)
         return {
             "battery_v": round(self.battery_v, 2),
