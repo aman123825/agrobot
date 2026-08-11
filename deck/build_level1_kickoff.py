@@ -24,11 +24,17 @@ WHITE = RGBColor(255, 255, 255)
 DISPLAY = "Aptos Display"
 BODY = "Aptos"
 
+# "Angry Birds" is the team; "AgriRover" is the project the team is working on.
+# Keeping the two in separate constants stops the deck from presenting the
+# product name where the template asks for the team name.
+TEAM = "ANGRY BIRDS"
+PROJECT = "AGRIROVER"
+
 prs = Presentation()
 prs.slide_width, prs.slide_height = Inches(13.333), Inches(7.5)
-prs.core_properties.title = "AgriRover — IDEAS IIT Bombay Level 1 Kickoff"
+prs.core_properties.title = f"{PROJECT.title()} — IDEAS IIT Bombay Level 1 Kickoff"
 prs.core_properties.subject = "Customer discovery: customer, pain, payer and value hypothesis"
-prs.core_properties.author = "AgriRover Team, IIT Bombay"
+prs.core_properties.author = f"Team {TEAM.title()}, IIT Bombay"
 prs.core_properties.comments = "14 August 2026. Secondary evidence is identified; no prototype or field validation claim is made."
 blank = prs.slide_layouts[6]
 
@@ -78,8 +84,10 @@ def header(slide, number, title, dark=False):
 
 def source(slide, value, dark=False):
     rule(slide, .62, 6.82, 12.08, RGBColor(62, 68, 64) if dark else LINE)
-    txt(slide, .62, 6.93, 10.6, .28, value, 9, RGBColor(173, 180, 175) if dark else MUTED)
-    txt(slide, 11.35, 6.93, 1.35, .28, "TEAM: AGRIROVER", 9, WHITE if dark else INK, True, align=PP_ALIGN.RIGHT)
+    # The team credit is wider than the project name was, so the source note
+    # gives up the matching amount of width rather than being overprinted.
+    txt(slide, .62, 6.93, 9.7, .28, value, 9, RGBColor(173, 180, 175) if dark else MUTED)
+    txt(slide, 10.45, 6.93, 2.25, .28, f"TEAM: {TEAM}", 9, WHITE if dark else INK, True, align=PP_ALIGN.RIGHT)
 
 
 def tag(slide, x, y, label, dark=False, width=1.55):
@@ -103,10 +111,10 @@ shape(s, 7.55, 0, 5.78, 7.5, INK, transparency=42)
 shape(s, 7.53, 0, .04, 7.5, LIME)
 header(s, 1, "Level 1 kickoff", True)
 tag(s, .64, 1.02, "14 AUGUST 2026", True, 1.72)
-txt(s, .62, 1.72, 6.3, .72, "AGRIROVER", 46, WHITE, True, DISPLAY)
+txt(s, .62, 1.72, 6.3, .72, PROJECT, 46, WHITE, True, DISPLAY)
 txt(s, .62, 2.55, 6.25, 1.55, "Before we build,\nwe need to know.", 38, WHITE, True, DISPLAY)
 txt(s, .65, 4.42, 5.95, .9, "Is there a painful, frequent and paid problem in agricultural compliance evidence?", 18, RGBColor(221,226,222), True)
-txt(s, .65, 5.55, 5.95, .34, "TEAM NAME: AGRIROVER", 14, WHITE, True)
+txt(s, .65, 5.55, 5.95, .34, f"TEAM NAME: {TEAM}", 14, WHITE, True)
 txt(s, .65, 5.96, 5.95, .34, "DATE: 14 AUGUST 2026", 14, LIME, True)
 txt(s, .65, 6.37, 5.95, .34, "LEVEL 1 · CUSTOMER DISCOVERY", 13, WHITE, True)
 
@@ -176,7 +184,7 @@ txt(s, 6.38, 2.91, 5.8, .3, "CUSTOMER-DISCOVERY ACCESS", 11, LIME, True)
 bullet(s, 6.38, 3.42, 5.72, "Tinkerers’ Lab, IIT Bombay", "We are in contact with Ashwini Ma’am to seek guidance and relevant discovery connections; this is access, not validation.", True)
 bullet(s, 6.38, 4.42, 5.72, "Agricultural context in the team", "Vivek’s Jaunpur agriculture background and Shreyash’s Nashik context can help recruit grounded conversations.", True)
 bullet(s, 6.38, 5.42, 5.72, "Online evidence guides—not replaces—interviews", "APEDA traceability, PHI and market evidence will shape questions; customer statements will test the thesis.", True)
-source(s, "Team/access details: supplied by AgriRover team. Public discovery context: APEDA traceability and PHI guidance; repository evidence register. No endorsement or validation is implied.")
+source(s, "Team/access details: supplied by Team Angry Birds. Public discovery context: APEDA traceability and PHI guidance; repository evidence register. No endorsement or validation is implied.")
 
 # 5 — preserve the template's required closing slide
 s = prs.slides.add_slide(blank); base(s, True); header(s, 5, "Thank You", True)
@@ -184,7 +192,7 @@ shape(s, .62, 1.18, .12, 4.85, LIME)
 txt(s, 1.08, 1.48, 10.9, 1.08, "THANK YOU", 52, WHITE, True, DISPLAY)
 txt(s, 1.1, 2.78, 9.8, .58, "Level 1 begins with listening—not building.", 24, LIME, True, DISPLAY)
 txt(s, 1.1, 3.72, 10.6, .55, "Next: test the customer, pain, payer and value hypotheses through structured discovery.", 17, RGBColor(210,218,212))
-txt(s, 1.1, 5.2, 5.0, .35, "TEAM NAME: AGRIROVER", 15, WHITE, True)
+txt(s, 1.1, 5.2, 5.0, .35, f"TEAM NAME: {TEAM}", 15, WHITE, True)
 txt(s, 1.1, 5.65, 5.0, .35, "14 AUGUST 2026", 15, RGBColor(183,192,186))
 source(s, "IDEAS L1C19 — Kickoff · Desai Sethi School of Entrepreneurship, IIT Bombay", True)
 
