@@ -34,5 +34,10 @@ const Telemetry& sensors_snapshot();  // latest readings (read by comms / main)
 float sensors_read_battery_v();
 float sensors_read_distance_cm();      // single HC-SR04 ping (front)
 
-// Modbus helper exposed for host unit-testing of the CRC/parse logic.
+// Modbus helpers exposed for host unit-testing of the CRC/parse logic.
 uint16_t modbus_crc16(const uint8_t* buf, uint32_t len);
+
+// Validate a Modbus function-0x03 response frame (address, function code,
+// byte count, CRC) and, if valid, unpack `count` big-endian registers into
+// `regs`. Pure function: host unit tests exercise it directly.
+bool npk_frame_valid(const uint8_t* resp, uint32_t len, uint16_t count, uint16_t* regs);

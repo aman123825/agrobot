@@ -170,7 +170,13 @@ static bool readHoldingRegisters(uint16_t start, uint16_t count, uint16_t* regs)
     while (got < expected && millis() < deadline) {
         if (RS485.available()) resp[got++] = (uint8_t)RS485.read();
     }
-    if (got < expected)            return false;
+    return npk_frame_valid(resp, got, count, regs);
+}
+
+// Pure frame validation + register unpack (host unit-tested; see test/).
+bool npk_frame_valid(const uint8_t* resp, uint32_t len, uint16_t count, uint16_t* regs) {
+    const uint32_t expected = 5 + 2 * (uint32_t)count;
+    if (len < expected)            return false;
     if (resp[0] != NPK_SLAVE_ADDR) return false;
     if (resp[1] != 0x03)           return false;
     if (resp[2] != 2 * count)      return false;
