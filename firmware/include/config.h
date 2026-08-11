@@ -118,10 +118,20 @@
 
 // ---- Battery (4S LiFePO4) thresholds ----
 // LiFePO4 chosen over LiPo for hot-climate thermal tolerance (FC-02).
+// Guarded so the legacy 3S LiPo bench rig can override at build time, e.g.
+// -DBATT_FULL_V=12.6f -DBATT_NOMINAL_V=11.1f -DBATT_CUTOFF_V=9.9f
+#ifndef BATT_FULL_V
 #define BATT_FULL_V       14.6f   // 3.65 V/cell
+#endif
+#ifndef BATT_NOMINAL_V
 #define BATT_NOMINAL_V    12.8f   // 3.20 V/cell
+#endif
+#ifndef BATT_CUTOFF_V
 #define BATT_CUTOFF_V     11.0f   // 2.75 V/cell; triggers EVT_LOW_BATTERY -> return-to-base
+#endif
+#ifndef VBAT_DIVIDER_RATIO
 #define VBAT_DIVIDER_RATIO (10.0f / (39.0f + 10.0f))  // 39k/10k (14.6 V -> 2.98 V at ADC)
+#endif
 
 // ---- Thermal guardian (FC-02): ESP32 die-temperature limits ----
 // temperatureRead() returns the internal SoC temperature (degC). Above the

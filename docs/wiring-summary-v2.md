@@ -4,7 +4,13 @@ One-page reference of **every final connection** after all upgrades. Redraw from
 this instead of patching the old diagram. Full detail lives in
 [`circuit-diagram.md`](circuit-diagram.md); this is the single-glance version.
 
-> Power legend: `===` 11.1 V high-current · `--` logic/signal · I²C/SPI/UART noted on the edge.
+> Power legend: `===` battery-bus high-current · `--` logic/signal · I²C/SPI/UART noted on the edge.
+>
+> **Battery-chemistry scope:** voltages below are drawn for the **3S LiPo bench
+> rig** (11.1 V bus, 2.57 V divider tap, P6KE15A TVS). The **field build uses a
+> 4S LiFePO4 pack** (12.8 V nominal / 14.6 V charged; divider tap 2.98 V; TVS
+> P6KE20A; 25 V bulk caps) — see the scope note in `circuit-diagram.md` and
+> `firmware/include/config.h`. The wiring topology is identical for both.
 
 ---
 

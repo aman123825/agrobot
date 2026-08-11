@@ -50,7 +50,10 @@ From `BUILD.md`, non-negotiable:
 
 ## 2. Power distribution
 
-- [ ] 3S LiPo charged; pack voltage 11.1–12.6 V measured at the connector.
+- [ ] 4S LiFePO4 charged; pack voltage 12.8–14.6 V measured at the connector
+      (matches `BATT_NOMINAL_V`/`BATT_FULL_V` in `firmware/include/config.h`).
+      *(Legacy 3S LiPo bench pack: 11.1–12.6 V — requires overriding the
+      battery thresholds at build time.)*
 - [ ] Buck output confirmed 5.00 V under a small load.
 - [ ] All grounds common (ESP32, BTS7960 logic gnd, servo, sensors, buck).
 - [ ] Current headroom: motors + MG995 (stall ~1–2.5 A) + Pi/CAM within the

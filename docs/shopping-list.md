@@ -26,27 +26,29 @@ verify before ordering). Line total = Qty × unit price range. Software is free.
 ## 2. Power
 | Component | Qty | Unit ₹ | Line ₹ |
 |-----------|-----|--------|--------|
-| 3S LiPo 2200mAh | 1 | 800–1,200 | 800–1,200 |
-| 4S LiFePO4 *(recommended hot-climate alt to LiPo — FC-02)* | 1 | 1,500–2,800 | (alt) |
+| 4S LiFePO4 pack *(baseline — FC-02, matches firmware thresholds)* | 1 | 1,500–2,800 | 1,500–2,800 |
+| 3S LiPo 2200mAh *(legacy bench-rig alt — needs firmware threshold overrides)* | 1 | 800–1,200 | (alt) |
 | LM2596 buck | 1 | 100–200 | 100–200 |
 | 10,000mAh power bank | 1 | 600–1,000 | 600–1,000 |
 | INA219 | 1 | 100–200 | 100–200 |
-| 1000µF 16V cap | 2 | 10–20 | 20–40 |
+| 1000µF 25V cap *(25 V rating for the 14.6 V LiFePO4 bus)* | 2 | 10–20 | 20–40 |
 | 1N5819 diode | 4 | 10–20 | 40–80 |
-| P6KE15A TVS | 2 | 10–20 | 20–40 |
+| P6KE20A TVS *(P6KE15A only for the 11.1 V LiPo bench rig — 15 V part conducts on a full 14.6 V LiFePO4 bus)* | 2 | 10–20 | 20–40 |
 | XT60 connector pair | 1 | 80–150 | 80–150 |
 | Rocker switch 20A | 1 | 30–60 | 30–60 |
 | 5W solar panel | 1 | 400–800 | 400–800 |
 | TP4056+DW01 | 1 | 80–150 | 80–150 |
 | Velcro strap + tray | 2 | 40–60 | 80–120 |
-| **Subtotal** | | | **2,350–4,040** |
+| **Subtotal** | | | **3,050–5,640** |
 
-> **Battery chemistry (FC-02):** the LiPo above remains the baseline. For hot
-> climates a **4S LiFePO4** pack is the *recommended* alternative — it tolerates
-> 45 °C+ and will not catch fire. It is listed *(alt)* and excluded from the
-> running total; swap it in (not added on top) if you choose LiFePO4. Either way,
-> add the **10k pack NTC** (section 12) for the thermal guardian and keep the
-> pack shaded/ventilated.
+> **Battery chemistry (FC-02):** the **4S LiFePO4 pack is the baseline** — it
+> tolerates 45 °C+ and will not catch fire, and it matches the firmware
+> thresholds in `firmware/include/config.h` (14.6 V full / 12.8 V nominal /
+> 11.0 V cutoff) and the SoC curve in `pi/sensors/fuel_gauge.py`. The 3S LiPo
+> is the *legacy bench-rig alternative* — listed *(alt)*, excluded from the
+> running total, and only valid if you also override the battery thresholds and
+> the P6KE20A→P6KE15A TVS at build time. Either way, add the **10k pack NTC**
+> (section 12) for the thermal guardian and keep the pack shaded/ventilated.
 
 ## 3. Motor & Drive
 | Component | Qty | Unit ₹ | Line ₹ |
@@ -191,7 +193,7 @@ it is priced here and not elsewhere in this list.
 |-----------|-----|--------|--------|
 | Blade fuse 25–30A + holder | 1 | 30–60 | 30–60 |
 | Anti-spark XT60 | 1 | 80–150 | 80–150 |
-| LiPo balance charger (iMAX B6) | 1 | 800–1,500 | 800–1,500 |
+| Balance charger (iMAX B6 — has both LiFe and LiPo modes) | 1 | 800–1,500 | 800–1,500 |
 | BTS7960 thermal pads / spare heatsink (IBT-2 ships with one) | 2 | 20–50 | 40–100 |
 | Pi 4 heatsink kit | 1 | 150–300 | 150–300 |
 | 30mm 5V fan | 1 | 80–150 | 80–150 |
@@ -260,7 +262,7 @@ it is priced here and not elsewhere in this list.
 | Section | ₹ range |
 |---------|---------|
 | 1. Brain & Compute | 9,880–11,850 |
-| 2. Power | 2,350–4,040 |
+| 2. Power | 3,050–5,640 |
 | 3. Motor & Drive | 1,840–3,600 |
 | 4. Sensing (ESP32) | 3,740–8,080 |
 | 5. AI Sensing (Pi) | 11,680–13,600 |
@@ -273,7 +275,7 @@ it is priced here and not elsewhere in this list.
 | 12. v2 Upgrade parts | 760–1,570 |
 | 13. Tools | 1,410–2,760 |
 | 14. Durability pack | 4,020–7,350 |
-| **TOTAL (Full AI build + durability)** | **₹42,850 – 66,460** |
+| **TOTAL (Full AI build + durability)** | **₹43,550 – 68,060** |
 
 > **Compute (primary vs fallback):** the total uses the **Pi 5 + Hailo-8 AI HAT+**
 > primary platform (`docs/accelerator-alternatives.md` Tier B). The **Pi 4** and
@@ -282,11 +284,11 @@ it is priced here and not elsewhere in this list.
 > HAT (~₹6,350) instead of the 26-TOPS Hailo-8 trims ~₹4,000.
 
 ### Build-tier shortcuts
-- **Core only (ITSP demo):** sections 2, 3, 6 (relay dosing), 9 + ESP32 + moisture + NPK ≈ **₹8,000–14,000**
-- **Core + Navigation:** add GPS, encoders, INA219, OLED, safety ≈ **₹12,000–20,000**
-- **Full AI, Pi 4 + Coral fallback:** everything on the prototype path ≈ **₹28,000–49,000**
-- **Full AI, Pi 5 + Hailo primary:** everything on the production path ≈ **₹39,000–61,000**
-- **Field-deployable (Pi 5 + Hailo + §14 durability pack):** ≈ **₹43,000–66,000** — the only tier meant to survive 5+ seasons with a farmer
+- **Core only (ITSP demo):** sections 2, 3, 6 (relay dosing), 9 + ESP32 + moisture + NPK ≈ **₹8,700–15,600**
+- **Core + Navigation:** add GPS, encoders, INA219, OLED, safety ≈ **₹12,700–21,600**
+- **Full AI, Pi 4 + Coral fallback:** everything on the prototype path ≈ **₹28,700–50,600**
+- **Full AI, Pi 5 + Hailo primary:** everything on the production path ≈ **₹39,700–62,600**
+- **Field-deployable (Pi 5 + Hailo + §14 durability pack):** ≈ **₹43,500–68,000** — the only tier meant to survive 5+ seasons with a farmer
 
 ### Optional future upgrades (NOT in total)
 | Component | Qty | ₹ | For |

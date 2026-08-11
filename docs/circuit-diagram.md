@@ -3,6 +3,14 @@
 Dual-controller agricultural rover: **ESP32 DevKit V1** (real-time control) + **Raspberry Pi 5 + Hailo-8 AI HAT+** (AI inference; Pi 4 + Coral USB is the documented fallback).
 This document is the full electrical reference: power distribution, both pin maps, every bus, drive, actuation, and protection placement.
 
+> **Battery-chemistry scope:** the voltages drawn below (11.1 V bus, 12.6 V max,
+> 2.57 V divider tap, P6KE15A TVS, 16 V caps) describe the original **3S LiPo
+> bench prototype**. The **funded field build uses a 4S LiFePO4 pack** — see the
+> BOM (#13), `firmware/include/config.h` (14.6 V full / 12.8 V nominal / 11.0 V
+> cutoff), and `pi/sensors/fuel_gauge.py`. For the LiFePO4 bus apply these
+> deltas: bus/nominal ≈ 12.8 V (14.6 V charged), TVS → **P6KE20A**, bulk caps →
+> **25 V**, and the §6.2 divider maps to the LiFePO4 curve (14.6 V → 2.98 V tap).
+>
 > Legend
 > `===` high-current path (LiPo / motor) · `---` logic signal · `~~~` analog · `:::` I2C/serial bus
 > All grounds are common (single star point at the LiPo negative bus — see §1).
@@ -286,7 +294,7 @@ flowchart LR
 ### 4.1 I2C bus (Pi side)
 ```
 3.3V ──[4.7k]──┬───────┬───────┬───────┬───────┬───────┬─── SDA (GPIO2)
-3.3V ──[4.7k]──┼──┬────┼──┬────┼──┬────┼──┬────┼──┬────┼──┬ SCL (GPIO3)
+3.3V ──[4.7k]──┼──┬────┼──┬────┼──┬────┼──┬────┼──┬────┼──�� SCL (GPIO3)
                │  │    │  │    │  │    │  │    │  │    │  │
             INA219  MPU6050  VL53L1X  SSD1306  PCF8574  ADS1115
             0x40    0x68     0x29     0x3C     0x20     0x48
@@ -432,14 +440,17 @@ ECHO(5V) ──[2.2kΩ]──┬── ESP32 GPIO18
    Vout = 5 × 3.9/(2.2+3.9) = 3.2V  ✓ (< 3.3V max)
 ```
 
-### 6.2 Battery sense divider (12.6V → 2.57V)
+### 6.2 Battery sense divider (39k/10k, same network for both chemistries)
 ```
-LiPo+ (12.6V max) ──[39kΩ]──┬── ESP32 GPIO35 (ADC1_CH7)
-                            │
-                         [10kΩ]
-                            │
-                           GND
-   Vout = 12.6 × 10/(39+10) = 2.57V  ✓  (firmware maps to LiPo discharge curve)
+BATT+ ──[39kΩ]──┬── ESP32 GPIO35 (ADC1_CH7)
+                │
+             [10kΩ]
+                │
+               GND
+   4S LiFePO4 (field build):  Vout = 14.6 × 10/(39+10) = 2.98V  ✓ (< 3.1V ADC limit @ 11dB)
+   3S LiPo (bench rig):       Vout = 12.6 × 10/(39+10) = 2.57V  ✓
+   Firmware maps the tap through the LiFePO4 curve (config.h BATT_* thresholds);
+   override the thresholds at build time if running the LiPo bench pack.
 ```
 
 ### 6.3 DHT22 / DS18B20 / button pull-ups

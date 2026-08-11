@@ -8,7 +8,7 @@ Coordinates are **mm from the chassis front-left corner**; sizes are real part f
 
 ## Why double-decker
 - Fluid (tank/pumps) sits **below** electronics so leaks drain away.
-- 11.1 V motor wiring + BTS7960 heat kept on the lower deck, away from Pi/I2C/camera.
+- Battery-bus motor wiring + BTS7960 heat kept on the lower deck, away from Pi/I2C/camera.
 - Heavy battery + tank low and centered = low CoG, stable on uneven fields.
 
 ### 1. Underside (ground-facing mechanicals)
@@ -39,7 +39,7 @@ Coordinates are **mm from the chassis front-left corner**; sizes are real part f
 | Fertilizer tank 500ml | 90 x 70 | (178, 12) | fluid |
 | Float | 16 x 16 | (250, 18) | fluid |
 | Power bank 10Ah | 70 x 140 | (10, 150) | power |
-| LiPo 3S 2200mAh | 34 x 105 | (150, 165) | power |
+| Battery: 4S LiFePO4 pack (or legacy 3S LiPo 2200mAh, 34 x 105) | 40 x 130 | (150, 165) | power |
 | 2-ch Relay | 51 x 39 | (250, 150) | drive |
 | ACS712 x2 | 34 x 22 | (250, 300) | drive |
 | BTS7960 #1 | 50 x 50 | (95, 372) | drive |
@@ -78,7 +78,7 @@ Coordinates are **mm from the chassis front-left corner**; sizes are real part f
 1. **MPU6050 at CoG**, square to axes (clean heading/tilt).
 2. **GPS + LoRa antenna on the mast**, away from BTS7960/motors (RF noise).
 3. **Encoders on the rear wheels** (Pi GPIO17/27).
-4. **CSI ribbon + I2C on the upper deck only** - never parallel to 11.1 V motor leads.
+4. **CSI ribbon + I2C on the upper deck only** - never parallel to battery-bus motor leads.
 5. **NPK probe + actuator center-rear underside**; rover halts while dosing (EVT_DOSING).
 6. **Tank slightly forward of the axle** so CoG barely shifts as it empties.
 7. **BTS7960 x2 at the rear** of the lower deck: shortest motor leads + best airflow + heatsinks facing the fan intake.
