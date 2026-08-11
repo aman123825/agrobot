@@ -1,5 +1,8 @@
 # AgriRover Raspberry Pi dependencies (BOM Layer 12).
 # Pin major versions to the stack documented in docs/circuit-diagram.md.
+#
+# To run the test suite on a development machine, install
+# dev-requirements.txt instead (pytest + the minimal subset the tests need).
 
 # --- Vision / AI ---
 opencv-python==4.8.*

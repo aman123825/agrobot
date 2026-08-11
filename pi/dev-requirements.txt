@@ -1,0 +1,16 @@
+# AgriRover development / test dependencies.
+#
+# The runtime requirements (requirements.txt) target the Raspberry Pi image;
+# this file adds only what a development machine needs to run the test suite:
+#
+#   pip install -r pi/dev-requirements.txt
+#   pytest pi/tests
+#
+# numpy and pyserial are also runtime dependencies, but they are repeated here
+# so the suite collects out-of-the-box without installing the full Pi stack
+# (opencv, tflite-runtime, RPi.GPIO, etc. do not install on most dev machines;
+# the tests stub or skip around them).
+
+pytest>=7.0
+numpy
+pyserial==3.5
