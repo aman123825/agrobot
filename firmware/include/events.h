@@ -8,8 +8,8 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/event_groups.h"
 
-#define EVT_HALT          (1 << 0)  // e-stop / tilt / obstacle -> stop motors
-#define EVT_LOW_BATTERY   (1 << 1)  // LiPo below cutoff -> return-to-base
+#define EVT_HALT          (1 << 0)  // e-stop / tilt / supervisory halt -> stop motors
+#define EVT_LOW_BATTERY   (1 << 1)  // pack below cutoff -> return-to-base
 #define EVT_DOSE_REQUEST  (1 << 2)  // waypoint reached -> run dosing sequence
 #define EVT_PAUSE_IRRIG   (1 << 3)  // rain detected (relayed from Pi)
 #define EVT_DOSING        (1 << 4)  // dosing in progress -> drive MUST stay stopped

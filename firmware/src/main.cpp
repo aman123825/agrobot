@@ -80,13 +80,13 @@ static void sensorTask(void *pv) {
             xEventGroupClearBits(gEvents, EVT_OBSTACLE);
 
         // Battery cutoff -> latch low-battery (return-to-base) + one alert.
-        if (t.battery_v < LIPO_CUTOFF_V) {
+        if (t.battery_v < BATT_CUTOFF_V) {
             xEventGroupSetBits(gEvents, EVT_LOW_BATTERY);
             if (!lowBattAlerted) {
                 comms_publish_alert("{\"type\":\"low_battery\"}");
                 lowBattAlerted = true;
             }
-        } else if (t.battery_v > LIPO_CUTOFF_V + 0.3f) {
+        } else if (t.battery_v > BATT_CUTOFF_V + 0.3f) {
             xEventGroupClearBits(gEvents, EVT_LOW_BATTERY);  // hysteresis
             lowBattAlerted = false;
         }

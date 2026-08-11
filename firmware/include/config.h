@@ -116,11 +116,12 @@
 #define OTA_PASSWORD        "CHANGE_ME_OTA_PASSWORD"  // set in secrets.h
 #endif
 
-// ---- Battery (3S LiPo) thresholds ----
-#define LIPO_FULL_V       12.6f
-#define LIPO_NOMINAL_V    11.1f
-#define LIPO_CUTOFF_V      9.9f   // triggers EVT_LOW_BATTERY -> return-to-base
-#define VBAT_DIVIDER_RATIO (10.0f / (39.0f + 10.0f))  // 39k/10k
+// ---- Battery (4S LiFePO4) thresholds ----
+// LiFePO4 chosen over LiPo for hot-climate thermal tolerance (FC-02).
+#define BATT_FULL_V       14.6f   // 3.65 V/cell
+#define BATT_NOMINAL_V    12.8f   // 3.20 V/cell
+#define BATT_CUTOFF_V     11.0f   // 2.75 V/cell; triggers EVT_LOW_BATTERY -> return-to-base
+#define VBAT_DIVIDER_RATIO (10.0f / (39.0f + 10.0f))  // 39k/10k (14.6 V -> 2.98 V at ADC)
 
 // ---- Thermal guardian (FC-02): ESP32 die-temperature limits ----
 // temperatureRead() returns the internal SoC temperature (degC). Above the
