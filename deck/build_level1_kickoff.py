@@ -113,10 +113,12 @@ s.shapes.add_picture(str(HERO), Inches(7.55), Inches(0), width=Inches(5.78), hei
 # dark veil makes the image feel photographic rather than illustrative
 shape(s, 7.55, 0, 5.78, 7.5, INK, transparency=42)
 shape(s, 7.53, 0, .04, 7.5, LIME)
-header(s, 1, "Level 1 kickoff", True)
+header(s, 1, PROJECT_MIXED, True)
 tag(s, .64, 1.02, "14 AUGUST 2026", True, 1.72)
-txt(s, .62, 1.72, 6.3, .72, PROJECT, 46, WHITE, True, DISPLAY)
-txt(s, .62, 2.55, 6.25, 1.55, "Before we build,\nwe need to know.", 38, WHITE, True, DISPLAY)
+# The template's slide 1 heading is "Kickoff" — it must stay the headline.
+# The project name and tagline move to the supporting lines beneath it.
+txt(s, .62, 1.72, 6.3, .72, "KICKOFF", 46, WHITE, True, DISPLAY)
+txt(s, .62, 2.55, 6.25, 1.55, f"{PROJECT}: before we build,\nwe need to know.", 32, WHITE, True, DISPLAY)
 txt(s, .65, 4.42, 5.95, .9, "Is there a painful, frequent and paid problem in agricultural compliance evidence?", 18, RGBColor(221,226,222), True)
 txt(s, .65, 5.55, 5.95, .34, f"TEAM NAME: {TEAM}", 14, WHITE, True)
 txt(s, .65, 5.96, 5.95, .34, "DATE: 14 AUGUST 2026", 14, LIME, True)
@@ -125,8 +127,9 @@ txt(s, .65, 6.37, 5.95, .34, "LEVEL 1 · CUSTOMER DISCOVERY", 13, WHITE, True)
 # 2 — problem, an argument not a dashboard
 s = prs.slides.add_slide(blank); base(s); header(s, 2, "Problem & Customer Segment")
 tag(s, .62, .86, "OUR STARTING THESIS", False, 1.75)
-txt(s, .62, 1.38, 9.5, .68, "The record may matter more than the robot.", 31, INK, True, DISPLAY)
-txt(s, .62, 2.08, 10.9, .58, "Export-linked agriculture requires credible treatment and PHI evidence. Today, that evidence may be fragmented, late or expensive to verify.", 16, MUTED)
+# Template heading, verbatim; the thesis line is demoted to the subtitle.
+txt(s, .62, 1.38, 9.5, .68, "Problem & Customer Segment", 31, INK, True, DISPLAY)
+txt(s, .62, 2.08, 11.4, .72, "The record may matter more than the robot: export-linked agriculture requires credible treatment and PHI evidence. Today, that evidence may be fragmented, late or expensive to verify.", 15, MUTED)
 # main customer and consequence
 shape(s, .62, 2.92, 4.05, 2.87, MIST, True, LINE)
 txt(s, .94, 3.24, 3.4, .25, "BEACHHEAD CUSTOMER HYPOTHESIS", 8.5, GREEN, True)
@@ -148,8 +151,9 @@ source(s, "Sources: APEDA GrapeNet / Residue Monitoring workflow; repository evi
 # 3 — solution as hypothesis with explicit boundary
 s = prs.slides.add_slide(blank); base(s); header(s, 3, "Proposed solution")
 tag(s, .62, .86, "HYPOTHESIS · NOT BUILT", False, 1.78)
-txt(s, .62, 1.38, 10.7, .68, "One trusted evidence record.", 31, INK, True, DISPLAY)
-txt(s, .62, 2.05, 11.4, .58, "A geotagged, time-stamped treatment + PHI record, reviewed by an agronomist and usable by the buyer’s QA workflow.", 16, MUTED)
+# Template heading, verbatim; the value line is demoted to the subtitle.
+txt(s, .62, 1.38, 10.7, .68, "Proposed Solution", 31, INK, True, DISPLAY)
+txt(s, .62, 2.05, 11.4, .58, "One trusted evidence record: geotagged, time-stamped treatment + PHI, reviewed by an agronomist and usable by the buyer’s QA workflow.", 16, MUTED)
 # keynote sequence
 sequence=[("01", "Observe", "Capture what happened in the field."), ("02", "Verify", "Attach place, time and accountable review."), ("03", "Record", "Map evidence to the buyer’s workflow."), ("04", "Decide", "Test whether the buyer will pay.")]
 for i,(n,h,b) in enumerate(sequence):
@@ -165,9 +169,11 @@ txt(s, 3.1, 5.4, 9.1, .48, "Interview first. Quantify pain. Identify payer. Seek
 source(s, "No prototype, accuracy, coverage, savings or payback claim is made. The solution is an early value hypothesis to be tested through H1–H8 interviews.")
 
 # 4 — why team / why now; photo-ready without fake portraits
-s = prs.slides.add_slide(blank); base(s); header(s, 4, "Why us · why now")
+s = prs.slides.add_slide(blank); base(s); header(s, 4, "Why Us? Why Now?")
 tag(s, .62, .86, "TEAM + TIMING", False, 1.45)
-txt(s, .62, 1.38, 11.2, .98, "A team with agricultural context—and access to people who can challenge our assumptions.", 27, INK, True, DISPLAY)
+# Template heading, verbatim; the team-context line is demoted to the subtitle.
+txt(s, .62, 1.38, 11.2, .68, "Why Us? Why Now?", 31, INK, True, DISPLAY)
+txt(s, .62, 2.12, 11.4, .42, "A team with agricultural context—and access to people who can challenge our assumptions.", 15, MUTED)
 # members in clean editorial bands; photo boxes remain editable for later replacement
 people=[
     ("PRITISH NANDY", "Team Head · coordinates Level 1 customer-discovery execution"),
