@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AgriRover Basic Bot — ITSP Poster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#101512;
+    --paper:#F5F6F2;
+    --green:#15532F;
+    --green-deep:#0A2517;
+    --yellow:#F4C430;
+    --muted:#5C6660;
+    --line:#CBD2C9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  @page{size:A4 portrait;margin:0}
+  html,body{background:var(--paper);color:var(--ink)}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    font-size:7.3pt;
+    line-height:1.36;
+  }
+  .page{
+    width:210mm;height:297mm;
+    display:flex;flex-direction:column;
+    background:var(--paper);
+    overflow:hidden;
+  }
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+
+  /* ---------- top rule ---------- */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--green-deep);color:var(--paper);
+    padding:2.6mm 8mm;
+    font-size:6.6pt;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+  }
+  .topbar .tag{display:flex;align-items:center;gap:2.5mm}
+  .chip{background:var(--yellow);color:var(--green-deep);padding:.6mm 2mm;border-radius:1mm;letter-spacing:.1em}
+
+  .body{flex:1;display:flex;flex-direction:column;gap:1.8mm;padding:3mm 8mm 0}
+
+  /* ---------- masthead ---------- */
+  .masthead{display:flex;align-items:flex-end;justify-content:space-between;gap:6mm}
+  h1{
+    font-size:29pt;line-height:.88;font-weight:900;letter-spacing:-.035em;
+    color:var(--green-deep);
+  }
+  h1 span{color:var(--green)}
+  h1 .sub{display:block;font-size:11pt;line-height:1.1;letter-spacing:.02em;font-weight:700;color:var(--green);margin-top:1.4mm}
+  .kicker{
+    font-size:6.6pt;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;margin-bottom:1.6mm;
+  }
+  .deck{
+    margin-top:1.6mm;font-size:8.4pt;line-height:1.3;font-weight:500;max-width:112mm;
+    color:#26302A;
+  }
+  .deck b{color:var(--green);font-weight:700}
+  .team{
+    border:.45mm solid var(--line);border-top:1.2mm solid var(--green-deep);
+    padding:2.4mm 3mm;min-width:52mm;background:#fff;
+  }
+  .team h4{font-size:6.2pt;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1.4mm}
+  .team ul{list-style:none;display:flex;flex-direction:column;gap:1mm}
+  .team li{display:flex;justify-content:space-between;gap:3mm;font-size:7.4pt}
+  .team li b{font-weight:600}
+  .team .roll{color:var(--muted);font-size:6.8pt}
+  .team .foot{margin-top:1.8mm;padding-top:1.4mm;border-top:.4mm dotted var(--line);font-size:6.4pt;color:var(--muted);letter-spacing:.04em}
+
+  /* ---------- section headers ---------- */
+  .sh{display:flex;align-items:center;gap:2.4mm;margin-bottom:1.4mm}
+  .sh .n{
+    font-size:6.2pt;font-weight:700;background:var(--green-deep);color:var(--paper);
+    width:4.6mm;height:4.6mm;display:flex;align-items:center;justify-content:center;border-radius:.8mm;
+  }
+  .sh h2{font-size:8.6pt;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--green-deep)}
+  .sh .rule{flex:1;height:.4mm;background:var(--line)}
+
+  /* ---------- hero + scope ---------- */
+  .split{display:flex;gap:5mm;align-items:stretch}
+  .hero{width:78mm;flex:none;display:flex;flex-direction:column}
+    .hero .frame{height:30mm;overflow:hidden;border:.45mm solid var(--line);background:#fff}
+  .hero img{width:100%;height:100%;object-fit:cover;display:block}
+  .cap{font-size:6.2pt;color:var(--muted);margin-top:1.4mm;letter-spacing:.03em}
+  .colright{flex:1;display:flex;flex-direction:column;gap:2.4mm}
+
+  .facts{display:flex;flex-direction:column;gap:2mm}
+  .fact{display:flex;gap:2.6mm;align-items:baseline}
+  .fact .b{width:2mm;height:2mm;background:var(--yellow);flex:none;margin-top:1mm}
+  .fact p{flex:1}
+  .fact strong{font-weight:700;color:var(--green-deep)}
+
+  /* scope in / out */
+  .scope{display:flex;gap:3mm;margin-top:2mm}
+  .scopecol{flex:1;border:.4mm solid var(--line);background:#fff;padding:2.2mm 2.6mm}
+  .scopecol.out{background:#EFF1EC}
+  .scopecol h5{font-size:6pt;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:1.4mm}
+  .scopecol p{font-size:6.8pt;color:#2C352F}
+  .scopecol.out p{color:var(--muted)}
+
+  /* ---------- architecture ---------- */
+  .arch{display:flex;gap:3mm;align-items:stretch}
+  .node{
+    flex:1;border:.45mm solid var(--line);background:#fff;padding:2.2mm 2.6mm;
+    display:flex;flex-direction:column;gap:1.2mm;
+  }
+  .node.dark{background:var(--green-deep);border-color:var(--green-deep);color:var(--paper)}
+  .node.dark .nlabel{color:var(--yellow)}
+  .node.dark li{color:#D8E3DA}
+  .node.dark li::before{background:var(--yellow)}
+  .nlabel{font-size:5.9pt;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .ntitle{font-size:9pt;font-weight:800;line-height:1.1;letter-spacing:-.01em}
+  .nsub{font-size:6.4pt;color:var(--muted);margin-top:-1mm}
+  .node.dark .nsub{color:#9FB6A6}
+  .node ul{list-style:none;display:flex;flex-direction:column;gap:.9mm}
+  .node li{font-size:6.9pt;padding-left:2.6mm;position:relative;color:#2C352F}
+  .node li::before{content:'';position:absolute;left:0;top:1.5mm;width:1.3mm;height:1.3mm;background:var(--green)}
+  .link{flex:none;width:19mm;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1mm}
+  .link .wire{width:100%;height:.5mm;background:var(--green);position:relative}
+  .link .wire::before,.link .wire::after{content:'';position:absolute;top:-1.05mm;border:1.1mm solid transparent}
+  .link .wire::before{left:0;border-right-color:var(--green)}
+  .link .wire::after{right:0;border-left-color:var(--green)}
+  .link span{font-size:5.7pt;letter-spacing:.06em;color:var(--muted);text-align:center;line-height:1.25}
+
+  /* ---------- cards ---------- */
+  .cards{display:flex;gap:3mm}
+  .card{flex:1;border:.45mm solid var(--line);border-top:1.2mm solid var(--green);background:#fff;padding:2.2mm 2.6mm;display:flex;flex-direction:column;gap:1.2mm}
+  .card h3{font-size:8pt;font-weight:800;letter-spacing:-.01em;color:var(--green-deep)}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:1mm}
+  .card li{font-size:6.8pt;padding-left:2.6mm;position:relative;color:#2C352F}
+  .card li::before{content:'';position:absolute;left:0;top:1.4mm;width:1.3mm;height:1.3mm;background:var(--yellow)}
+
+  /* ---------- dosing sequence ---------- */
+  .loopwrap{display:flex;align-items:center;gap:3mm;margin-top:2mm}
+  .loopwrap .nlabel{width:26mm;flex:none;line-height:1.3}
+  .loop{flex:1;display:flex;gap:1.4mm}
+  .step{flex:1;border:.4mm solid var(--line);background:#fff;padding:1.4mm 2mm;font-size:6.5pt;font-weight:600;color:#26302A;line-height:1.2}
+  .step em{display:block;font-style:normal;font-size:5.9pt;font-weight:500;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+
+  /* ---------- status ---------- */
+  .status{display:flex;gap:4mm;border:.45mm solid var(--line);background:#fff;padding:2.4mm 3mm}
+  .status .left{width:58mm;flex:none}
+  .status h3{font-size:8pt;font-weight:800;color:var(--green-deep);margin-bottom:1.2mm}
+  .status p{font-size:6.9pt;color:#2C352F}
+  .status p b{color:var(--green)}
+  .gates{flex:1;display:flex;flex-direction:column;gap:1.4mm}
+  .gate{display:flex;align-items:center;gap:2.4mm}
+  .gate .lab{font-size:6.6pt;width:40mm;flex:none;color:#2C352F;font-weight:500}
+  .gate .track{flex:1;height:2mm;background:#E7EAE4;position:relative}
+  .gate .fill{position:absolute;left:0;top:0;bottom:0;background:var(--green)}
+  .gate .pct{font-size:6.2pt;color:var(--muted);width:16mm;flex:none;text-align:right;letter-spacing:.04em}
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:auto;display:flex;align-items:center;justify-content:space-between;
+    background:var(--green-deep);color:#C9D6CC;padding:2.6mm 8mm;font-size:6.4pt;letter-spacing:.08em;
+  }
+  footer b{color:var(--paper);letter-spacing:.02em}
+  footer .yellow{color:var(--yellow)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="tag">
+      <span class="chip mono">ITSP 2026</span>
+      <span>Institute Technical Summer Project · IIT Bombay</span>
+    </div>
+    <div class="mono">Track&nbsp;: Robotics &amp; Embedded Systems</div>
+  </div>
+
+  <div class="body">
+
+    <!-- MASTHEAD -->
+    <div class="masthead">
+      <div>
+        <div class="kicker">Step 1 · Core-tier build · no AI, no cloud</div>
+        <h1>Agri<span>Rover</span><span class="sub">Basic Bot — phone-driven soil rover</span></h1>
+        <p class="deck">
+          A single <b>ESP32 DevKit V1</b> runs the whole machine: tank drive, ultrasonic obstacle
+          guard, 7-in-1 soil probe, fertilizer micro-dosing and one-second-per-line telemetry.
+          It hosts its <b>own WiFi network and control page</b>, so a farmer drives it from any
+          phone with <b>no router, no app install and no internet</b>.
+        </p>
+      </div>
+      <div class="team">
+        <h4>Team</h4>
+        <ul>
+          <li><b>Hitanshu Kapadiya</b><span class="roll mono">25B2228</span></li>
+          <li><b>Vivek Kumar Gupta</b><span class="roll mono">25B2269</span></li>
+          <li><b>Shreyash Wagh</b><span class="roll mono">25B2227</span></li>
+        </ul>
+        <div class="foot">B.Tech Mechanical Engineering · IIT Bombay<br />Pilot cluster: Narayangaon / Junnar, Maharashtra</div>
+      </div>
+    </div>
+
+    <!-- WHY + SCOPE -->
+    <div>
+      <div class="sh"><span class="n mono">01</span><h2>Why build the basic bot first</h2><span class="rule"></span></div>
+      <div class="split">
+        <div class="hero">
+          <div class="frame">
+            <img src="assets/basic-bot-hero.png" alt="AgriRover Basic Bot prototype beside a tomato row, driven from a phone" />
+          </div>
+          <div class="cap">Core-tier bot: aluminium chassis, 2× BTS7960 tank drive, 3× HC-SR04 front bumper, servo-lowered NPK probe, ESP32-CAM.</div>
+        </div>
+        <div class="colright">
+          <div class="facts">
+            <div class="fact"><span class="b"></span><p><strong>Soil testing today is a queue, not a habit.</strong> A grower sends one sample to a lab per season, so fertilizer goes on by convention rather than by reading.</p></div>
+            <div class="fact"><span class="b"></span><p><strong>The mechanics must be trustworthy before intelligence is added.</strong> Drive, power, grounding, interlocks and dosing have to survive the field first — autonomy on an unreliable base only hides faults.</p></div>
+            <div class="fact"><span class="b"></span><p><strong>Every part of it must be repairable in a village.</strong> One ₹-cheap ESP32, hobby modules, a phone browser and a USB cable: no Pi, no accelerator, no subscription, no coverage.</p></div>
+          </div>
+          <div class="scope">
+            <div class="scopecol">
+              <h5>In this build</h5>
+              <p>Tank drive · obstacle guard · NPK / moisture / DHT22 / battery · servo probe insertion · micro-dosing · latched halt · phone page · ESP32-CAM video · USB teleop + CSV log</p>
+            </div>
+            <div class="scopecol out">
+              <h5>Deliberately deferred</h5>
+              <p>On-board AI (weed / disease), Raspberry Pi link, MQTT &amp; cloud, GPS navigation, encoders, OTA, LoRa. Wiring is pin-compatible with the full firmware, so the upgrade needs no rewiring.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURE -->
+    <div>
+      <div class="sh"><span class="n mono">02</span><h2>Architecture — one controller, private network</h2><span class="rule"></span></div>
+      <div class="arch">
+        <div class="node dark">
+          <div class="nlabel">Controller</div>
+          <div class="ntitle">ESP32 DevKit V1</div>
+          <div class="nsub mono">FreeRTOS · 2 tasks · 5 s task WDT</div>
+          <ul>
+            <li>Drive + command loop @ 50 Hz on core 1</li>
+            <li>Sensors @ 5 Hz, telemetry @ 1 Hz on core 0</li>
+            <li>2× BTS7960 tank drive on LEDC PWM</li>
+            <li>NPK 7-in-1 over RS485 / Modbus RTU</li>
+            <li>Moisture, DHT22, 3S divider, relay pump, MG995 probe</li>
+          </ul>
+        </div>
+        <div class="link">
+          <div class="wire"></div>
+          <span class="mono">SOFT-AP<br />WPA2 · CH 6</span>
+        </div>
+        <div class="node">
+          <div class="nlabel">Operator</div>
+          <div class="ntitle">Phone browser</div>
+          <div class="nsub mono">192.168.4.1 · no app, no router</div>
+          <ul>
+            <li>Press-and-hold drive pads, PWM 60–255</li>
+            <li>EMERGENCY STOP / RESUME, latched in firmware</li>
+            <li>DOSE, manual probe ↓ ↑, pump disable</li>
+            <li>Single drive owner: second client gets <span class="mono">NAK controller_busy</span></li>
+          </ul>
+        </div>
+        <div class="link">
+          <div class="wire"></div>
+          <span class="mono">MJPEG<br />192.168.4.2</span>
+        </div>
+        <div class="node">
+          <div class="nlabel">Optional tiers</div>
+          <div class="ntitle">ESP32-CAM &amp; laptop</div>
+          <div class="nsub mono">video · USB 115200 console</div>
+          <ul>
+            <li>AI-Thinker CAM joins the rover AP, static IP</li>
+            <li>Python keyboard teleop with CSV telemetry log</li>
+            <li>Plain-text protocol: <span class="mono">ACK</span> / <span class="mono">NAK</span> per line</li>
+            <li><span class="mono">calibrate.py</span> prints moisture &amp; battery constants</li>
+          </ul>
+        </div>
+      </div>
+      <div class="loopwrap">
+        <div class="nlabel">Dosing sequence — drive frozen throughout</div>
+        <div class="loop">
+          <span class="step"><em>01</em>Pre-soak pump 1.5&nbsp;s</span>
+          <span class="step"><em>02</em>Servo eases probe down</span>
+          <span class="step"><em>03</em>Dwell 0.8 s, read soil</span>
+          <span class="step"><em>04</em>Micro-dose 1.5 s</span>
+          <span class="step"><em>05</em>Probe retracts, relays off</span>
+          <span class="step"><em>06</em>Drive released</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <div>
+      <div class="sh"><span class="n mono">03</span><h2>Engineering that keeps it safe and honest</h2><span class="rule"></span></div>
+      <div class="cards">
+        <div class="card">
+          <h3>Layered stop logic</h3>
+          <ul>
+            <li>1 s dead-man: closing the page stops the motors</li>
+            <li>Forward blocked below 25 cm on any of 3 sonars</li>
+            <li>Latched emergency halt, explicit RESUME only</li>
+            <li>Drive inhibited below 9.9 V pack voltage</li>
+            <li>ESP32 overtemp inhibit 85&nbsp;°C, clears at 80&nbsp;°C</li>
+            </ul>
+        </div>
+        <div class="card">
+          <h3>Signal &amp; power discipline</h3>
+          <ul>
+            <li>Sonar echoes through 10k/10k dividers to 3.3 V</li>
+            <li>Moisture sensor on 3.3 V, never 5 V</li>
+            <li>10k pull-up on the active-low relay input</li>
+            <li>LM2596 buck set to 5.00 V before any board is attached</li>
+            <li>16× ADC oversampling, median-of-3 ultrasonic</li>
+            </ul>
+        </div>
+        <div class="card">
+          <h3>Made to be reproduced</h3>
+          <ul>
+            <li>Pin map identical to the full rover firmware</li>
+            <li>Every tuning constant in one <span class="mono">config.h</span></li>
+            <li>Circuit guide + wiring and pinout SVGs</li>
+            <li>Shared network header so both boards cannot drift</li>
+            <li>One-command PlatformIO build and flash</li>
+            </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATUS -->
+    <div>
+      <div class="sh"><span class="n mono">04</span><h2>Honest status &amp; validation gates</h2><span class="rule"></span></div>
+      <div class="status">
+        <div class="left">
+          <h3>Working bench build, field trial pending</h3>
+          <p>Firmware, mobile control page, camera firmware, laptop console, calibration tool, wiring guide and BOM are complete in <span class="mono">basic-bot/</span>. Agronomic claims are <b>not made</b>: the low-cost NPK probe is logged as a trend, not used to prescribe fertilizer, and spraying stays manual. What this poster claims is a controllable, interlocked, instrumented rover — nothing about yield.</p>
+        </div>
+        <div class="gates">
+          <div class="gate"><span class="lab">Firmware, mobile page &amp; console</span><span class="track"><span class="fill" style="width:92%"></span></span><span class="pct mono">built</span></div>
+          <div class="gate"><span class="lab">Wiring guide, BOM &amp; pin map</span><span class="track"><span class="fill" style="width:85%"></span></span><span class="pct mono">built</span></div>
+          <div class="gate"><span class="lab">Bench test: drive, sonar, dosing</span><span class="track"><span class="fill" style="width:70%"></span></span><span class="pct mono">in progress</span></div>
+          <div class="gate"><span class="lab">Soil-plot traversal on battery</span><span class="track"><span class="fill" style="width:40%"></span></span><span class="pct mono">in progress</span></div>
+          <div class="gate"><span class="lab">Probe vs. lab soil-test correlation</span><span class="track"><span class="fill" style="width:15%"></span></span><span class="pct mono">gate</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div><b>github.com/aman123825/agrobot</b><span class="yellow"> · </span>basic-bot/ · ESP32 + FreeRTOS · PlatformIO · ESP32-CAM · Python teleop</div>
+    <div class="mono">Poster Submission — ITSP</div>
+  </footer>
+
+</div>
+</body>
+</html>

@@ -35,3 +35,8 @@ field_log_*.csv
 # --- Agent tooling / scratch (not project deliverables) ---
 .claude/
 .workbuddy-ai/
+
+# --- Poster render toolchain (puppeteer + downloaded headless chrome) ---
+node_modules/
+package-lock.json
+chrome-headless-shell/

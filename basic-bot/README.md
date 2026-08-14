@@ -153,6 +153,23 @@ prints the exact `MOIST_CAL_MV[]` and `VBAT_DIVIDER_RATIO` values to paste
    auto-repeat), so holding a key should be smooth. If it still stutters,
    check the USB link/port rather than raising `CMD_DEADMAN_MS`.
 
+## Poster
+
+A one-page A4 ITSP poster for **this** build (no AI, no Pi) lives at
+[`../poster/basic-bot-poster.html`](../poster/basic-bot-poster.html). Rebuild the
+PDF and PNG proof with:
+
+```bash
+npm i puppeteer-core
+npx @puppeteer/browsers install chrome-headless-shell@stable
+CHROME=<path to chrome-headless-shell> \
+POSTER_FILE=basic-bot-poster.html POSTER_OUT=AgriRover_BasicBot_Poster \
+  node poster/build-poster.mjs
+```
+
+The script prints a fit check and fails visibly if the content ever spills past
+one A4 sheet. Omit the two `POSTER_*` variables to rebuild the full-rover poster.
+
 ## Deliberately left out (comes with the full firmware later)
 
 WiFi/MQTT, the HMAC-authenticated Pi link, GPS/navigation, on-board AI
