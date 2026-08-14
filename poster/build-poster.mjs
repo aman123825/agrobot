@@ -21,6 +21,18 @@ await page.goto(src, { waitUntil: "networkidle0", timeout: 120000 })
 await page.evaluate(() => document.fonts.ready)
 await new Promise((r) => setTimeout(r, 600))
 
+// Guard against silent page-2 spill: the poster must fit exactly one A4 sheet.
+const fit = await page.evaluate(() => {
+  const page = document.querySelector(".page")
+  const body = document.querySelector(".body")
+  return {
+    pageH: page.getBoundingClientRect().height,
+    contentH: page.scrollHeight,
+    bodyOverflow: body.scrollHeight - body.clientHeight,
+  }
+})
+console.log("[v0] fit check", fit)
+
 await page.screenshot({ path: path.join(dir, "proof.png"), fullPage: true })
 await page.pdf({
   path: path.join(dir, "AgriRover_ITSP_Poster.pdf"),

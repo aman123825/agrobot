@@ -43,12 +43,12 @@
   .topbar .tag{display:flex;align-items:center;gap:2.5mm}
   .chip{background:var(--yellow);color:var(--green-deep);padding:.6mm 2mm;border-radius:1mm;letter-spacing:.1em}
 
-  .body{flex:1;display:flex;flex-direction:column;gap:4mm;padding:5.5mm 8mm 0}
+  .body{flex:1;display:flex;flex-direction:column;gap:3.6mm;padding:5mm 8mm 0}
 
   /* ---------- masthead ---------- */
   .masthead{display:flex;align-items:flex-end;justify-content:space-between;gap:6mm}
   h1{
-    font-size:44pt;line-height:.86;font-weight:900;letter-spacing:-.035em;
+    font-size:40pt;line-height:.86;font-weight:900;letter-spacing:-.035em;
     color:var(--green-deep);
   }
   h1 span{color:var(--green)}
@@ -85,8 +85,8 @@
 
   /* ---------- hero + problem ---------- */
   .split{display:flex;gap:5mm;align-items:stretch}
-  .hero{width:82mm;flex:none;display:flex;flex-direction:column}
-  .hero .frame{flex:1;overflow:hidden;border:.45mm solid var(--line);background:#fff}
+  .hero{width:78mm;flex:none;display:flex;flex-direction:column}
+  .hero .frame{height:41mm;overflow:hidden;border:.45mm solid var(--line);background:#fff}
   .hero img{width:100%;height:100%;object-fit:cover;display:block}
   .cap{font-size:6.2pt;color:var(--muted);margin-top:1.4mm;letter-spacing:.03em}
   .colright{flex:1;display:flex;flex-direction:column;gap:3.4mm}
@@ -97,10 +97,12 @@
   .fact p{flex:1}
   .fact strong{font-weight:700;color:var(--green-deep)}
 
-  .loop{display:flex;flex-wrap:wrap;gap:1.4mm}
+  .loopwrap{margin-top:3mm;display:flex;align-items:center;gap:3mm}
+  .loopwrap .nlabel{width:26mm;flex:none;line-height:1.3}
+  .loop{flex:1;display:flex;gap:1.4mm}
   .step{
-    border:.4mm solid var(--line);background:#fff;padding:1.5mm 2.2mm;
-    font-size:6.9pt;font-weight:600;color:#26302A;
+    flex:1;border:.4mm solid var(--line);background:#fff;padding:1.4mm 2mm;
+    font-size:6.6pt;font-weight:600;color:#26302A;line-height:1.2;
   }
   .step em{display:block;font-style:normal;font-size:5.9pt;font-weight:500;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
 
@@ -213,17 +215,17 @@
             <div class="fact"><span class="b"></span><p><strong>Spray decisions are made blind.</strong> Without dated, located evidence, treatment turns into calendar spraying — cost, residue and pre-harvest-interval risk.</p></div>
             <div class="fact"><span class="b"></span><p><strong>Nothing is written down.</strong> No image trail, no treatment log, no way to check whether an intervention actually worked.</p></div>
           </div>
-          <div>
-            <div class="nlabel" style="margin-bottom:1.4mm">The service loop we automate</div>
-            <div class="loop">
-              <span class="step"><em>01</em>Sentinel samples</span>
-              <span class="step"><em>02</em>Trap images</span>
-              <span class="step"><em>03</em>Triggered close-row scan</span>
-              <span class="step"><em>04</em>Agronomist review</span>
-              <span class="step"><em>05</em>Treatment + PHI record</span>
-              <span class="step"><em>06</em>Outcome verification</span>
-            </div>
-          </div>
+        </div>
+      </div>
+      <div class="loopwrap">
+        <div class="nlabel">The service loop we automate</div>
+        <div class="loop">
+          <span class="step"><em>01</em>Sentinel samples</span>
+          <span class="step"><em>02</em>Trap images</span>
+          <span class="step"><em>03</em>Triggered close-row scan</span>
+          <span class="step"><em>04</em>Agronomist review</span>
+          <span class="step"><em>05</em>Treatment + PHI record</span>
+          <span class="step"><em>06</em>Outcome verification</span>
         </div>
       </div>
     </div>
@@ -322,7 +324,7 @@
       <div class="status">
         <div class="left">
           <h3>Production-intent prototype</h3>
-          <p>Firmware, Pi services, ROS 2 nodes, CAD, wiring, a 110-item BOM, simulation and model artifacts are in the repository. Field evidence for crop accuracy, acres/day, chemical reduction and payback is deliberately <b>not yet claimed</b>. The first pilot keeps spraying manual and does not prescribe fertilizer from the low-cost NPK probe.</p>
+          <p>Firmware, Pi services, ROS 2 nodes, CAD, wiring, a costed BOM and shopping list, simulation and model artifacts are in the repository. Field evidence for crop accuracy, acres/day, chemical reduction and payback is deliberately <b>not yet claimed</b>. The first pilot keeps spraying manual and does not prescribe fertilizer from the low-cost NPK probe.</p>
         </div>
         <div class="gates">
           <div class="gate"><span class="lab">Software, firmware &amp; simulation</span><span class="track"><span class="fill" style="width:88%"></span></span><span class="pct mono">built</span></div>
