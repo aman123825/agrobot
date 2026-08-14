@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<title>AgriRover — ITSP Poster</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ink:#101512;
+    --paper:#F5F6F2;
+    --green:#15532F;
+    --green-deep:#0A2517;
+    --yellow:#F4C430;
+    --muted:#5C6660;
+    --line:#CBD2C9;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  @page{size:A4 portrait;margin:0}
+  html,body{background:var(--paper);color:var(--ink)}
+  body{
+    font-family:'Inter',system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased;
+    font-size:8.1pt;
+    line-height:1.42;
+  }
+  .page{
+    width:210mm;height:297mm;
+    display:flex;flex-direction:column;
+    background:var(--paper);
+    overflow:hidden;
+  }
+  .mono{font-family:'IBM Plex Mono',ui-monospace,monospace}
+
+  /* ---------- top rule ---------- */
+  .topbar{
+    display:flex;align-items:center;justify-content:space-between;
+    background:var(--green-deep);color:var(--paper);
+    padding:2.6mm 8mm;
+    font-size:6.6pt;letter-spacing:.14em;text-transform:uppercase;font-weight:600;
+  }
+  .topbar .tag{display:flex;align-items:center;gap:2.5mm}
+  .chip{background:var(--yellow);color:var(--green-deep);padding:.6mm 2mm;border-radius:1mm;letter-spacing:.1em}
+
+  .body{flex:1;display:flex;flex-direction:column;gap:4mm;padding:5.5mm 8mm 0}
+
+  /* ---------- masthead ---------- */
+  .masthead{display:flex;align-items:flex-end;justify-content:space-between;gap:6mm}
+  h1{
+    font-size:44pt;line-height:.86;font-weight:900;letter-spacing:-.035em;
+    color:var(--green-deep);
+  }
+  h1 span{color:var(--green)}
+  .kicker{
+    font-size:6.6pt;letter-spacing:.22em;text-transform:uppercase;
+    color:var(--muted);font-weight:600;margin-bottom:1.6mm;
+  }
+  .deck{
+    margin-top:2mm;font-size:9.6pt;line-height:1.32;font-weight:500;max-width:112mm;
+    color:#26302A;
+  }
+  .deck b{color:var(--green);font-weight:700}
+  .team{
+    border:.45mm solid var(--line);border-top:1.2mm solid var(--green-deep);
+    padding:2.4mm 3mm;min-width:52mm;background:#fff;
+  }
+  .team h4{font-size:6.2pt;letter-spacing:.18em;text-transform:uppercase;color:var(--muted);margin-bottom:1.4mm}
+  .team ul{list-style:none;display:flex;flex-direction:column;gap:1mm}
+  .team li{display:flex;justify-content:space-between;gap:3mm;font-size:7.4pt}
+  .team li b{font-weight:600}
+  .team .roll{color:var(--muted);font-size:6.8pt}
+  .team .foot{margin-top:1.8mm;padding-top:1.4mm;border-top:.4mm dotted var(--line);font-size:6.4pt;color:var(--muted);letter-spacing:.04em}
+
+  /* ---------- section headers ---------- */
+  .sh{
+    display:flex;align-items:center;gap:2.4mm;margin-bottom:1.8mm;
+  }
+  .sh .n{
+    font-size:6.2pt;font-weight:700;background:var(--green-deep);color:var(--paper);
+    width:4.6mm;height:4.6mm;display:flex;align-items:center;justify-content:center;border-radius:.8mm;
+  }
+  .sh h2{font-size:8.6pt;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--green-deep)}
+  .sh .rule{flex:1;height:.4mm;background:var(--line)}
+
+  /* ---------- hero + problem ---------- */
+  .split{display:flex;gap:5mm;align-items:stretch}
+  .hero{width:82mm;flex:none;display:flex;flex-direction:column}
+  .hero .frame{flex:1;overflow:hidden;border:.45mm solid var(--line);background:#fff}
+  .hero img{width:100%;height:100%;object-fit:cover;display:block}
+  .cap{font-size:6.2pt;color:var(--muted);margin-top:1.4mm;letter-spacing:.03em}
+  .colright{flex:1;display:flex;flex-direction:column;gap:3.4mm}
+
+  .facts{display:flex;flex-direction:column;gap:2mm}
+  .fact{display:flex;gap:2.6mm;align-items:baseline}
+  .fact .b{width:2mm;height:2mm;background:var(--yellow);flex:none;margin-top:1mm}
+  .fact p{flex:1}
+  .fact strong{font-weight:700;color:var(--green-deep)}
+
+  .loop{display:flex;flex-wrap:wrap;gap:1.4mm}
+  .step{
+    border:.4mm solid var(--line);background:#fff;padding:1.5mm 2.2mm;
+    font-size:6.9pt;font-weight:600;color:#26302A;
+  }
+  .step em{display:block;font-style:normal;font-size:5.9pt;font-weight:500;color:var(--muted);letter-spacing:.06em;text-transform:uppercase}
+
+  /* ---------- architecture ---------- */
+  .arch{display:flex;gap:3mm;align-items:stretch}
+  .node{
+    flex:1;border:.45mm solid var(--line);background:#fff;padding:2.6mm 2.8mm;
+    display:flex;flex-direction:column;gap:1.6mm;
+  }
+  .node.dark{background:var(--green-deep);border-color:var(--green-deep);color:var(--paper)}
+  .node.dark .nlabel{color:var(--yellow)}
+  .node.dark li{color:#D8E3DA}
+  .node.dark li::before{background:var(--yellow)}
+  .nlabel{font-size:5.9pt;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:600}
+  .ntitle{font-size:9pt;font-weight:800;line-height:1.1;letter-spacing:-.01em}
+  .nsub{font-size:6.4pt;color:var(--muted);margin-top:-1mm}
+  .node.dark .nsub{color:#9FB6A6}
+  .node ul{list-style:none;display:flex;flex-direction:column;gap:.9mm}
+  .node li{font-size:6.9pt;padding-left:2.6mm;position:relative;color:#2C352F}
+  .node li::before{content:'';position:absolute;left:0;top:1.5mm;width:1.3mm;height:1.3mm;background:var(--green)}
+  .link{
+    flex:none;width:20mm;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1mm;
+  }
+  .link .wire{width:100%;height:.5mm;background:var(--green);position:relative}
+  .link .wire::before,.link .wire::after{
+    content:'';position:absolute;top:-1.05mm;border:1.1mm solid transparent;
+  }
+  .link .wire::before{left:0;border-right-color:var(--green)}
+  .link .wire::after{right:0;border-left-color:var(--green)}
+  .link span{font-size:5.7pt;letter-spacing:.06em;color:var(--muted);text-align:center;line-height:1.25}
+
+  /* ---------- three cards ---------- */
+  .cards{display:flex;gap:3mm}
+  .card{flex:1;border:.45mm solid var(--line);border-top:1.2mm solid var(--green);background:#fff;padding:2.6mm 2.8mm;display:flex;flex-direction:column;gap:1.5mm}
+  .card h3{font-size:8pt;font-weight:800;letter-spacing:-.01em;color:var(--green-deep)}
+  .card ul{list-style:none;display:flex;flex-direction:column;gap:1mm}
+  .card li{font-size:6.8pt;padding-left:2.6mm;position:relative;color:#2C352F}
+  .card li::before{content:'';position:absolute;left:0;top:1.4mm;width:1.3mm;height:1.3mm;background:var(--yellow)}
+
+  /* ---------- status ---------- */
+  .status{display:flex;gap:4mm;border:.45mm solid var(--line);background:#fff;padding:3mm 3.2mm}
+  .status .left{width:58mm;flex:none}
+  .status h3{font-size:8pt;font-weight:800;color:var(--green-deep);margin-bottom:1.2mm}
+  .status p{font-size:6.9pt;color:#2C352F}
+  .gates{flex:1;display:flex;flex-direction:column;gap:1.4mm}
+  .gate{display:flex;align-items:center;gap:2.4mm}
+  .gate .lab{font-size:6.6pt;width:38mm;flex:none;color:#2C352F;font-weight:500}
+  .gate .track{flex:1;height:2mm;background:#E7EAE4;position:relative}
+  .gate .fill{position:absolute;left:0;top:0;bottom:0;background:var(--green)}
+  .gate .pct{font-size:6.2pt;color:var(--muted);width:16mm;flex:none;text-align:right;letter-spacing:.04em}
+
+  /* ---------- footer ---------- */
+  footer{
+    margin-top:auto;display:flex;align-items:center;justify-content:space-between;
+    background:var(--green-deep);color:#C9D6CC;padding:2.6mm 8mm;font-size:6.4pt;letter-spacing:.08em;
+  }
+  footer b{color:var(--paper);letter-spacing:.02em}
+  footer .yellow{color:var(--yellow)}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="topbar">
+    <div class="tag">
+      <span class="chip mono">ITSP 2026</span>
+      <span>Institute Technical Summer Project · IIT Bombay</span>
+    </div>
+    <div class="mono">Track&nbsp;: Robotics &amp; Embedded AI</div>
+  </div>
+
+  <div class="body">
+
+    <!-- MASTHEAD -->
+    <div class="masthead">
+      <div>
+        <div class="kicker">Autonomous crop-scouting rover</div>
+        <h1>Agri<span>Rover</span></h1>
+        <p class="deck">
+          A rugged, low-cost field rover that walks tomato rows for smallholder farms,
+          captures <b>geotagged crop evidence</b>, runs <b>on-device AI</b> for weeds,
+          disease and obstacles, and hands an agronomist a reviewable record —
+          instead of asking a farmer to guess.
+        </p>
+      </div>
+      <div class="team">
+        <h4>Team</h4>
+        <ul>
+          <li><b>Hitanshu Kapadiya</b><span class="roll mono">25B2228</span></li>
+          <li><b>Vivek Kumar Gupta</b><span class="roll mono">25B2269</span></li>
+          <li><b>Shreyash Wagh</b><span class="roll mono">25B2227</span></li>
+        </ul>
+        <div class="foot">B.Tech Mechanical Engineering · IIT Bombay<br />Pilot cluster: Narayangaon / Junnar, Maharashtra</div>
+      </div>
+    </div>
+
+    <!-- PROBLEM + LOOP -->
+    <div>
+      <div class="sh"><span class="n mono">01</span><h2>Problem &amp; approach</h2><span class="rule"></span></div>
+      <div class="split">
+        <div class="hero">
+          <div class="frame">
+            <img src="assets/rover-hero.png" alt="AgriRover prototype driving between staked tomato rows" />
+          </div>
+          <div class="cap">Prototype rover on a close-row scouting pass. Tank drive, pan-tilt camera, GPS mast, rear utility deck.</div>
+        </div>
+        <div class="colright">
+          <div class="facts">
+            <div class="fact"><span class="b"></span><p><strong>Scouting does not scale by walking.</strong> Pest and disease outbreaks in tomato are caught late because nobody inspects every row every week.</p></div>
+            <div class="fact"><span class="b"></span><p><strong>Spray decisions are made blind.</strong> Without dated, located evidence, treatment turns into calendar spraying — cost, residue and pre-harvest-interval risk.</p></div>
+            <div class="fact"><span class="b"></span><p><strong>Nothing is written down.</strong> No image trail, no treatment log, no way to check whether an intervention actually worked.</p></div>
+          </div>
+          <div>
+            <div class="nlabel" style="margin-bottom:1.4mm">The service loop we automate</div>
+            <div class="loop">
+              <span class="step"><em>01</em>Sentinel samples</span>
+              <span class="step"><em>02</em>Trap images</span>
+              <span class="step"><em>03</em>Triggered close-row scan</span>
+              <span class="step"><em>04</em>Agronomist review</span>
+              <span class="step"><em>05</em>Treatment + PHI record</span>
+              <span class="step"><em>06</em>Outcome verification</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ARCHITECTURE -->
+    <div>
+      <div class="sh"><span class="n mono">02</span><h2>System architecture — dual controller</h2><span class="rule"></span></div>
+      <div class="arch">
+        <div class="node">
+          <div class="nlabel">Real-time tier</div>
+          <div class="ntitle">ESP32 DevKit V1</div>
+          <div class="nsub mono">FreeRTOS · dual core</div>
+          <ul>
+            <li>2× BTS7960 tank drive, LEDC PWM</li>
+            <li>NPK/RS-485, DHT22, moisture, TDS</li>
+            <li>GPS, battery and current sensing</li>
+            <li>Sequential pump + actuator dosing</li>
+            <li>MQTT telemetry over WiFi</li>
+          </ul>
+        </div>
+        <div class="link">
+          <div class="wire"></div>
+          <span class="mono">HMAC-AUTH<br />UART LINK</span>
+        </div>
+        <div class="node dark">
+          <div class="nlabel">Perception tier</div>
+          <div class="ntitle">Raspberry Pi 5 + Hailo-8 AI HAT+</div>
+          <div class="nsub mono">26 TOPS · Coral USB fallback</div>
+          <ul>
+            <li>Obstacle / weed / leaf-disease inference</li>
+            <li>EKF pose fusion: GPS + encoders + IMU</li>
+            <li>Geotagged evidence capture &amp; plant DB</li>
+            <li>Active-learning frame capture, model OTA</li>
+            <li>Streamlit dashboard + Pathway streaming</li>
+          </ul>
+        </div>
+        <div class="link">
+          <div class="wire"></div>
+          <span class="mono">MQTT / TLS<br />+ TELEGRAM</span>
+        </div>
+        <div class="node">
+          <div class="nlabel">Operator tier</div>
+          <div class="ntitle">Phone &amp; field ops</div>
+          <div class="nsub mono">any handset, no app install</div>
+          <ul>
+            <li>Two-way Telegram: /stop /go /status /photo</li>
+            <li>Live dashboard, map and scan reports</li>
+            <li>Push alerts on detection or fault</li>
+            <li>ISOXML export path (ISO 11783)</li>
+            <li>systemd services, hardware watchdog</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- CARDS -->
+    <div>
+      <div class="sh"><span class="n mono">03</span><h2>Engineering that makes it survivable</h2><span class="rule"></span></div>
+      <div class="cards">
+        <div class="card">
+          <h3>Layered stop logic</h3>
+          <ul>
+            <li>VL53L1X ToF proximity cut-off</li>
+            <li>Obstacle inference veto on drive</li>
+            <li>IMU tilt and rollover threshold</li>
+            <li>Heartbeat watchdog on the link</li>
+            <li>Motor-stall current detection</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Field robustness</h3>
+          <ul>
+            <li>Thermal guardian: CPU, pack, ambient</li>
+            <li>Fuel gauge + current monitor budgeting</li>
+            <li>Encoder + IMU odometry for row keeping</li>
+            <li>Simulation rig — full stack, no hardware</li>
+            <li>pytest suite over AI, nav, data, safety</li>
+          </ul>
+        </div>
+        <div class="card">
+          <h3>Trust &amp; security</h3>
+          <ul>
+            <li>HMAC-authenticated, encrypted commands</li>
+            <li>MQTT over TLS with broker auth</li>
+            <li>ESP32 secure-boot path, hardened Pi image</li>
+            <li>Immutable evidence and treatment records</li>
+            <li>Published threat model in SECURITY.md</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- STATUS -->
+    <div>
+      <div class="sh"><span class="n mono">04</span><h2>Honest status &amp; validation gates</h2><span class="rule"></span></div>
+      <div class="status">
+        <div class="left">
+          <h3>Production-intent prototype</h3>
+          <p>Firmware, Pi services, ROS 2 nodes, CAD, wiring, a 110-item BOM, simulation and model artifacts are in the repository. Field evidence for crop accuracy, acres/day, chemical reduction and payback is deliberately <b>not yet claimed</b>. The first pilot keeps spraying manual and does not prescribe fertilizer from the low-cost NPK probe.</p>
+        </div>
+        <div class="gates">
+          <div class="gate"><span class="lab">Software, firmware &amp; simulation</span><span class="track"><span class="fill" style="width:88%"></span></span><span class="pct mono">built</span></div>
+          <div class="gate"><span class="lab">Wiring, BOM &amp; mechanical design</span><span class="track"><span class="fill" style="width:80%"></span></span><span class="pct mono">built</span></div>
+          <div class="gate"><span class="lab">Supervised physical traversal</span><span class="track"><span class="fill" style="width:45%"></span></span><span class="pct mono">in progress</span></div>
+          <div class="gate"><span class="lab">Local tomato dataset + per-class val.</span><span class="track"><span class="fill" style="width:30%"></span></span><span class="pct mono">gate</span></div>
+          <div class="gate"><span class="lab">12-grower paired pilot, KVK review</span><span class="track"><span class="fill" style="width:12%"></span></span><span class="pct mono">gate</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <footer>
+    <div><b>github.com/aman123825/agrobot</b><span class="yellow"> · </span>ESP32 + FreeRTOS · Raspberry Pi 5 · Hailo-8 · ROS 2 · Python · PlatformIO</div>
+    <div class="mono">Poster Submission — ITSP</div>
+  </footer>
+
+</div>
+</body>
+</html>
